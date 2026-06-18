@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Scan · SIMPL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="simpl.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="simpl.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+/* ------------------------------------------------------------------ */
+/* What SIMPL checks — the four surfaces, expanded                     */
+/* ------------------------------------------------------------------ */
+
+const SURFACES = [
+  {
+    code: "01 / DISCOVERABILITY",
+    title: "Whether Google can find you.",
+    items: [
+      "Indexing health across every page",
+      "Google Business Profile status & integrity",
+      "Schema, sitemap, robots regressions",
+      "Branded search results & SERP layout",
+      "Map pack ranking & competitor displacement",
+    ],
+  },
+  {
+    code: "02 / PERFORMANCE",
+    title: "Whether your site actually works.",
+    items: [
+      "Uptime monitoring (60-second resolution)",
+      "Core Web Vitals across mobile & desktop",
+      "Form submission delivery (silent fails)",
+      "Checkout & order flow integrity",
+      "Plugin / CMS / framework regressions",
+    ],
+  },
+  {
+    code: "03 / REPUTATION",
+    title: "What people are saying about you.",
+    items: [
+      "Review monitoring across Google, Yelp, industry sites",
+      "Sentiment drift & rating velocity",
+      "Response cadence on negative reviews",
+      "Competitor rating delta over time",
+      "New mentions across the social web",
+    ],
+  },
+  {
+    code: "04 / SPEND",
+    title: "Where your marketing dollars go.",
+    items: [
+      "Branded search defense (competitor bidding)",
+      "Wasted spend detection on dead keywords",
+      "Landing-page mismatch with ad copy",
+      "Bid efficiency vs. category benchmarks",
+      "Inventory audit across Google, Meta, Bing",
+    ],
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/* The findings catalog — what you're missing without SIMPL           */
+/* ------------------------------------------------------------------ */
+
+const CATALOG = [
+  { tag: "Indexing",   line: "Service pages drop out of Google's index after a site update.",          freq: "Common"   },
+  { tag: "GBP",        line: "Google Business Profile gets suspended over a duplicate or violation.",  freq: "Frequent" },
+  { tag: "Forms",      line: "Contact forms stop delivering after a plugin update.",                   freq: "Common"   },
+  { tag: "Checkout",   line: "Checkout breaks after a third-party script change.",                     freq: "Critical" },
+  { tag: "Reviews",    line: "Negative reviews accumulate without responses.",                         freq: "Frequent" },
+  { tag: "Branded",    line: "Competitors bid on your name and intercept earned traffic.",             freq: "Common"   },
+  { tag: "Schema",     line: "Structured data breaks; rich results disappear.",                        freq: "Quiet"    },
+  { tag: "SSL",        line: "SSL certificate expires; browsers warn visitors away.",                  freq: "Critical" },
+  { tag: "Speed",      line: "Mobile speed drops below ranking threshold after image bloat.",          freq: "Quiet"    },
+  { tag: "Maps",       line: "Map pack ranking falls behind a new competitor.",                        freq: "Frequent" },
+  { tag: "Hours",      line: "Holiday hours never get updated; calls don't connect.",                  freq: "Common"   },
+  { tag: "Photos",     line: "Profile photos get replaced by user uploads of poor quality.",           freq: "Quiet"    },
+];
+
+/* ------------------------------------------------------------------ */
+/* App                                                                 */
+/* ------------------------------------------------------------------ */
+
+function ScanHero() {
+  return (
+    <section style={{ ...pageStyles.shell, paddingTop: 140, paddingBottom: 96 }}>
+      <Reveal>
+        <div style={{ ...pageStyles.eyebrow, marginBottom: 48, display: "flex", alignItems: "center", gap: 14 }}>
+          <PulseDot size={6} />
+          <span>The SIMPL Scan</span>
+          <span className="shimmer-line" aria-hidden="true" style={{ marginLeft: 6 }} />
+        </div>
+      </Reveal>
+      <Reveal delay={120}>
+        <h1 style={{
+          margin: 0,
+          fontSize: "clamp(40px, 6.4vw, 81px)",
+          lineHeight: 1.04,
+          letterSpacing: "-0.025em",
+          fontWeight: 400,
+          maxWidth: 1000,
+        }}>
+          Type your domain.<br />
+          <span style={{ color: "var(--muted)" }}>See what nobody told you.</span>
+        </h1>
+      </Reveal>
+      <Reveal delay={260}>
+        <p style={{ marginTop: 40, maxWidth: 680, fontSize: 19, lineHeight: 1.55 }}>
+          One scan. No signup. No email. SIMPL surfaces one finding for free — usually the one you'd have wanted to know about months ago. The other four wait behind a trial.
+        </p>
+      </Reveal>
+      <Reveal delay={380}>
+        <div style={{ marginTop: 56 }}>
+          <ScanTool />
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+function HowItWorks() {
+  const steps = [
+    { n: "01", h: "You give us a domain.",      p: "No login, no credit card, no questionnaire. A field and a button." },
+    { n: "02", h: "SIMPL runs the four checks.", p: "Discoverability, performance, reputation, spend. Roughly 200 individual signals across the four surfaces." },
+    { n: "03", h: "We rank what's wrong.",       p: "Findings get sorted by likely revenue impact. The cheapest fixes with the largest upside surface first." },
+    { n: "04", h: "You see one finding.",        p: "Free. Specific. Actionable. Usually something you can fix in an afternoon if you choose." },
+    { n: "05", h: "The other four wait.",        p: "Start a trial to see them and turn on continuous monitoring. Or take the one and walk." },
+  ];
+  return (
+    <section style={{ ...pageStyles.shell, paddingTop: 159, paddingBottom: 159 }}>
+      <SectionTitle
+        eyebrow="How the scan works"
+        h2="Five steps. Thirty seconds. No conversation required."
+        sub="The scan is the same one we run every hour for paying customers — except they get all five findings, not one, and they get them again every hour, forever."
+      />
+      <div style={{ marginTop: 72, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+        {steps.map((s, i) => (
+          <Reveal key={s.n} delay={i * 80}>
+            <div style={{
+              background: "var(--bg)",
+              padding: "32px 36px",
+              display: "grid",
+              gridTemplateColumns: "60px minmax(220px, 1fr) minmax(0, 2fr)",
+              gap: 28, alignItems: "baseline",
+            }}>
+              <div className="mono" style={{ color: "var(--accent)", fontSize: 13, letterSpacing: "0.14em" }}>{s.n}</div>
+              <div style={{ fontSize: 22, letterSpacing: "-0.01em", fontWeight: 400 }}>{s.h}</div>
+              <div style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.55 }}>{s.p}</div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FourSurfaces() {
+  return (
+    <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+      <div style={{ ...pageStyles.shell, paddingTop: 159, paddingBottom: 159 }}>
+        <SectionTitle
+          eyebrow="What gets checked"
+          h2="Four surfaces. Roughly 200 signals."
+          sub="Every scan runs the same checks. The free finding is whichever is most expensive to ignore. The trial unlocks the rest and turns it all on continuously."
+        />
+        <div style={{
+          marginTop: 72, display: "grid", gap: 1,
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          background: "var(--rule)", border: "1px solid var(--rule)",
+        }}>
+          {SURFACES.map((s, i) => (
+            <Reveal key={s.code} delay={i * 80}>
+              <div style={{
+                background: "var(--bg)",
+                padding: "44px 36px 40px",
+                minHeight: 360,
+                display: "flex", flexDirection: "column", gap: 24,
+              }}>
+                <div className="mono" style={{
+                  fontSize: 11, letterSpacing: "0.18em",
+                  color: "var(--accent)", textTransform: "uppercase",
+                }}>{s.code}</div>
+                <div style={{ fontSize: 24, letterSpacing: "-0.01em", lineHeight: 1.2, fontWeight: 400 }}>{s.title}</div>
+                <ul style={{
+                  margin: 0, padding: 0, listStyle: "none",
+                  display: "grid", gap: 12, color: "var(--muted)", fontSize: 15, lineHeight: 1.5,
+                }}>
+                  {s.items.map((it) => (
+                    <li key={it} style={{ display: "grid", gridTemplateColumns: "14px 1fr", gap: 10 }}>
+                      <span className="mono" style={{ color: "var(--accent)", fontSize: 11, lineHeight: 1.5 }}>+</span>
+                      <span>{it}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MissingCatalog() {
+  return (
+    <section style={{ ...pageStyles.shell, paddingTop: 159, paddingBottom: 159 }}>
+      <SectionTitle
+        eyebrow="What you're missing without it"
+        h2="The patterns that cost you money quietly."
+        sub="A non-exhaustive list. Every item below is something SIMPL is built to catch — and most owners don't until quarterly numbers come in."
+      />
+      <div style={{
+        marginTop: 64,
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+        gap: 1, background: "var(--rule)", border: "1px solid var(--rule)",
+      }}>
+        {CATALOG.map((c, i) => (
+          <Reveal key={c.tag + i} delay={(i % 6) * 50}>
+            <div style={{
+              background: "var(--bg)", padding: "24px 28px",
+              display: "grid", gridTemplateColumns: "auto 1fr auto", gap: 16,
+              alignItems: "baseline", minHeight: 92,
+            }}>
+              <div className="mono" style={{
+                fontSize: 10, letterSpacing: "0.16em",
+                color: "var(--muted)", textTransform: "uppercase",
+                paddingTop: 4,
+              }}>{c.tag}</div>
+              <div style={{ fontSize: 15, lineHeight: 1.5 }}>{c.line}</div>
+              <div className="mono" style={{
+                fontSize: 10, letterSpacing: "0.14em",
+                color: "var(--accent)", textTransform: "uppercase",
+                paddingTop: 4,
+              }}>{c.freq}</div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CTA() {
+  return (
+    <section style={{
+      borderTop: "1px solid var(--rule)",
+      position: "relative", overflow: "hidden",
+    }}>
+      <div className="grid-bg" aria-hidden="true" style={{
+        position: "absolute", inset: 0, opacity: 0.35, pointerEvents: "none",
+      }} />
+      <div style={{ ...pageStyles.shell, paddingTop: 140, paddingBottom: 140, position: "relative", textAlign: "center" }}>
+        <Reveal>
+          <h2 style={{
+            margin: 0,
+            fontSize: "clamp(36px, 5.2vw, 64px)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.025em",
+            fontWeight: 400,
+            maxWidth: 880, marginLeft: "auto", marginRight: "auto",
+          }}>
+            Run the scan now.<br />
+            <span style={{ color: "var(--muted)" }}>You'll know more in thirty seconds than you did this morning.</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={180}>
+          <div style={{ marginTop: 56, maxWidth: 760, marginLeft: "auto", marginRight: "auto", textAlign: "left" }}>
+            <ScanTool />
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <Header active="scan" />
+      <main>
+        <ScanHero />
+        <HowItWorks />
+        <FourSurfaces />
+        <MissingCatalog />
+        <CTA />
+      </main>
+      <Footer tag="The scan that runs once for free, and every hour for everyone else." />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

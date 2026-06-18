@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SIMPL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="simpl.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="simpl.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useRef } = React;
+
+/* ------------------------------------------------------------------ */
+/* Hero — with the SIMPL tool right in it                              */
+/* ------------------------------------------------------------------ */
+
+function Hero() {
+  return (
+    <section id="top" style={{ ...pageStyles.shell, paddingTop: 140, paddingBottom: 96 }}>
+      <Reveal>
+        <div style={{ ...pageStyles.eyebrow, marginBottom: 48, display: "flex", alignItems: "center", gap: 14 }}>
+          <PulseDot size={6} />
+          <span>SIMPL.PRO  ·  Monitoring  ·  Protection  ·  Repair</span>
+          <span className="shimmer-line" aria-hidden="true" style={{ marginLeft: 6 }} />
+        </div>
+      </Reveal>
+      <Reveal delay={120}>
+        <h1 style={{
+          margin: 0,
+          fontSize: "clamp(40px, 6.4vw, 81px)",
+          lineHeight: 1.04,
+          letterSpacing: "-0.025em",
+          fontWeight: 400,
+          maxWidth: 1000,
+        }}>
+          Your business is always online.<br />
+          <span style={{ color: "var(--muted)" }}>SIMPL makes sure it's always working.</span>
+        </h1>
+      </Reveal>
+      <Reveal delay={260}>
+        <p style={{ marginTop: 40, marginBottom: 0, maxWidth: 620, fontSize: 19, lineHeight: 1.55 }}>
+          We watch your site, your listings, your reviews, and your ads. We fix what we can. We tell you when you need to decide something.
+        </p>
+      </Reveal>
+      <Reveal delay={380}>
+        <div style={{ marginTop: 56 }}>
+          <div className="mono" style={{
+            ...pageStyles.eyebrow, marginBottom: 16,
+            display: "flex", alignItems: "center", gap: 12,
+          }}>
+            <span>Try the scan — type your domain</span>
+            <a href="Scan.html" style={{
+              color: "var(--accent)", textDecoration: "none",
+              borderBottom: "1px solid var(--accent)", paddingBottom: 1,
+              fontSize: 11,
+            }}>How it works ↗</a>
+          </div>
+          <ScanTool />
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Coverage — the four surfaces, each linking to its page              */
+/* ------------------------------------------------------------------ */
+
+const SURFACES = [
+  { code: "01", id: "disc",  href: "Discoverability.html", title: "Discoverability", line: "Whether Google can find you at all.",          tag: "Index, GBP, maps, schema" },
+  { code: "02", id: "perf",  href: "Performance.html",     title: "Performance",     line: "Whether your site actually works.",            tag: "Uptime, vitals, forms, checkout" },
+  { code: "03", id: "rep",   href: "Reputation.html",      title: "Reputation",      line: "What people say when you're not in the room.", tag: "Reviews, sentiment, mentions" },
+  { code: "04", id: "spend", href: "Spend.html",           title: "Spend",           line: "Where your marketing dollars actually go.",    tag: "Branded, waste, bids, audit" },
+];
+
+function Coverage() {
+  return (
+    <section id="coverage" style={{
+      background: "var(--bg-soft)",
+      borderTop: "1px solid var(--rule)",
+      borderBottom: "1px solid var(--rule)",
+    }}>
+      <div style={{ ...pageStyles.shell, paddingTop: 159, paddingBottom: 159 }}>
+        <SectionTitle
+          eyebrow="Coverage"
+          h2="Four surfaces. Watched continuously. Quietly."
+          sub="SIMPL doesn't replace your site or your ads or your team. It watches the four places where things break and tells you what's wrong before the next quarterly review."
+        />
+        <div style={{
+          marginTop: 72, display: "grid", gap: 1,
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          background: "var(--rule)", border: "1px solid var(--rule)",
+        }}>
+          {SURFACES.map((s, i) => (
+            <Reveal key={s.id} delay={i * 80}>
+              <a href={s.href} className="finding-row" style={{
+                background: "var(--bg)",
+                padding: "44px 36px 40px",
+                minHeight: 280,
+                display: "flex", flexDirection: "column", gap: 18,
+                textDecoration: "none", color: "var(--fg)",
+              }}>
+                <div className="mono" style={{
+                  fontSize: 11, letterSpacing: "0.18em",
+                  color: "var(--accent)", textTransform: "uppercase",
+                }}>{s.code} / {s.title}</div>
+                <div style={{ fontSize: 24, letterSpacing: "-0.01em", lineHeight: 1.2, fontWeight: 400 }}>{s.line}</div>
+                <div style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.55 }}>{s.tag}</div>
+                <div className="mono" style={{
+                  marginTop: "auto", fontSize: 12, letterSpacing: "0.14em",
+                  color: "var(--accent)", textTransform: "uppercase",
+                }}>Read more →</div>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Audience selector                                                   */
+/* ------------------------------------------------------------------ */
+
+const AUDIENCES = [
+  { id: "home",  label: "Home services",
+    anxiety: "When the phone stops ringing, you're the last to know why.",
+    example: "When your Google Maps listing drops, SIMPL sees it the same day. You hear about it before the phone stops ringing." },
+  { id: "smb",   label: "Small business",
+    anxiety: "Small things break quietly. Then revenue follows.",
+    example: "When a plugin update breaks your contact form, SIMPL notices the silence. You hear about it before a week of leads disappears." },
+  { id: "agency", label: "Agency",
+    anxiety: "Forty client sites. One person watching them. You already know how that ends.",
+    example: "When one client's site quietly de-indexes on a Friday afternoon, SIMPL catches it. You handle it before Monday's call." },
+];
+
+function AudienceSelector() {
+  const [active, setActive] = useState("home");
+  const data = AUDIENCES.find((a) => a.id === active);
+  return (
+    <section style={{ ...pageStyles.shell, paddingTop: 159, paddingBottom: 159 }}>
+      <SectionTitle
+        eyebrow="Who is this for"
+        h2="It depends on what you're afraid of."
+      />
+      <Reveal delay={160}>
+        <div role="tablist" style={{
+          marginTop: 56, display: "inline-flex",
+          border: "1px solid var(--rule)", borderRadius: 2,
+          padding: 4, flexWrap: "wrap",
+        }}>
+          {AUDIENCES.map((a) => {
+            const on = a.id === active;
+            return (
+              <button key={a.id} role="tab" aria-selected={on}
+                onClick={() => setActive(a.id)}
+                style={{
+                  border: 0,
+                  background: on ? "var(--fg)" : "transparent",
+                  color: on ? "var(--bg)" : "var(--fg)",
+                  padding: "12px 22px", fontSize: 14,
+                  cursor: "pointer", borderRadius: 0,
+                  transition: "background 200ms ease, color 200ms ease",
+                }}>
+                {a.label}
+              </button>
+            );
+          })}
+        </div>
+      </Reveal>
+      <Reveal delay={220}>
+        <div key={active} style={{
+          marginTop: 56, maxWidth: 780, display: "grid", gap: 28,
+          animation: "fadeSwap 400ms ease",
+        }}>
+          <p style={{
+            margin: 0,
+            fontSize: "clamp(22px, 2.3vw, 30px)",
+            lineHeight: 1.3, letterSpacing: "-0.01em",
+            fontWeight: 400,
+          }}>{data.anxiety}</p>
+          <div style={{
+            paddingLeft: 24, borderLeft: "2px solid var(--accent)",
+            color: "var(--muted)", fontSize: 17, lineHeight: 1.6,
+          }}>{data.example}</div>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Proof — what SIMPL catches                                          */
+/* ------------------------------------------------------------------ */
+
+const FINDINGS = [
+  { num: "01", biz: "Indexing regression",  place: "Cost: lost traffic",  finding: "Service pages drop out of Google's index after a site update.",                           cost: "Lost traffic" },
+  { num: "02", biz: "Profile suspension",   place: "Cost: lost calls",    finding: "Google Business Profile gets suspended over a duplicate or violation.",                 cost: "Lost calls"   },
+  { num: "03", biz: "Silent breakage",      place: "Cost: lost revenue",  finding: "Contact forms or order flows stop working after a plugin or platform update.",          cost: "Lost revenue" },
+  { num: "04", biz: "Reputation drift",     place: "Cost: reputation",    finding: "Negative reviews accumulate without responses while conversion declines.",              cost: "Reputation"   },
+  { num: "05", biz: "Branded search leak",  place: "Cost: paid leak",     finding: "Competitors bid on your brand name and intercept traffic you already earned.",         cost: "Paid leak"    },
+];
+
+function Proof() {
+  return (
+    <section id="findings" style={{ ...pageStyles.shell, paddingTop: 159, paddingBottom: 159 }}>
+      <SectionTitle
+        eyebrow="What SIMPL catches"
+        h2="The kinds of things that go wrong quietly."
+        sub="These are the patterns SIMPL is built to catch. Most owners never see them coming."
+      />
+      <div style={{ marginTop: 64, borderTop: "1px solid var(--rule)" }}>
+        {FINDINGS.map((f, i) => (
+          <Reveal key={f.num} delay={i * 60}>
+            <FindingRow f={f} />
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function FindingRow({ f }) {
+  return (
+    <div className="finding-row" style={{
+      display: "grid",
+      gridTemplateColumns: "48px minmax(180px, 1.1fr) minmax(0, 3fr) auto",
+      gap: 28, alignItems: "baseline",
+      padding: "28px 16px", borderBottom: "1px solid var(--rule)",
+      marginLeft: -16, marginRight: -16,
+    }}>
+      <div className="mono" style={{ color: "var(--muted)", fontSize: 12, letterSpacing: "0.12em" }}>{f.num}</div>
+      <div>
+        <div style={{ fontSize: 16, fontWeight: 500 }}>{f.biz}</div>
+        <div style={{ color: "var(--muted)", fontSize: 14, marginTop: 2 }}>{f.place}</div>
+      </div>
+      <div style={{ fontSize: 17, lineHeight: 1.5 }}>{f.finding}</div>
+      <div className="mono" style={{ color: "var(--accent)", fontSize: 14, whiteSpace: "nowrap", textAlign: "right" }}>{f.cost}</div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Score                                                               */
+/* ------------------------------------------------------------------ */
+
+function useCountUp(target, durationMs, start) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    let raf; const t0 = performance.now();
+    const tick = (now) => {
+      const t = Math.min(1, (now - t0) / durationMs);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setVal(Math.round(target * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, durationMs, start]);
+  return val;
+}
+
+function ScoreDial({ value, size }) {
+  const stroke = 2;
+  const r = size / 2 - stroke;
+  const c = 2 * Math.PI * r;
+  const offset = c * (1 - value / 100);
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
+      style={{ position: "absolute", inset: 0, margin: "auto", opacity: 0.55 }}>
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--rule)" strokeWidth={stroke} />
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--accent)" strokeWidth={stroke}
+        strokeLinecap="round"
+        strokeDasharray={c}
+        strokeDashoffset={offset}
+        transform={`rotate(-90 ${size/2} ${size/2})`}
+        style={{ transition: "stroke-dashoffset 1400ms cubic-bezier(.2,.6,.2,1)" }} />
+    </svg>
+  );
+}
+
+function Score() {
+  const ref = useRef(null);
+  const [start, setStart] = useState(false);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { setStart(true); io.disconnect(); }}), { threshold: 0.3 });
+    io.observe(el); return () => io.disconnect();
+  }, []);
+  const num = useCountUp(72, 1400, start);
+  const dialSize = Math.round(263 * 1.35);
+  return (
+    <section ref={ref} style={{
+      position: "relative",
+      paddingTop: 182, paddingBottom: 182,
+      textAlign: "center", overflow: "hidden",
+    }}>
+      <div className="grid-bg" aria-hidden="true" style={{
+        position: "absolute", inset: 0, opacity: 0.45, pointerEvents: "none",
+      }} />
+      <div style={{ ...pageStyles.shell, position: "relative" }}>
+        <Reveal>
+          <div style={{ ...pageStyles.eyebrow, marginBottom: 40, display: "inline-flex", alignItems: "center", gap: 12 }}>
+            <span className="shimmer-line" aria-hidden="true" />
+            <span>The SIMPL Score</span>
+            <span className="shimmer-line" aria-hidden="true" />
+          </div>
+        </Reveal>
+        <Reveal delay={120}>
+          <div style={{ position: "relative", display: "inline-block", padding: "0 40px" }}>
+            <div style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", pointerEvents: "none" }}>
+              <div style={{ position: "relative", width: dialSize, height: dialSize }}>
+                <ScoreDial value={start ? 72 : 0} size={dialSize} />
+              </div>
+            </div>
+            <div style={{ display: "inline-grid", gridTemplateColumns: "auto auto", alignItems: "baseline", columnGap: 18, position: "relative" }}>
+              <div className="mono" style={{
+                fontSize: "clamp(160px, 24vw, 263px)",
+                lineHeight: 0.85,
+                letterSpacing: "-0.05em",
+                color: "var(--accent)",
+                fontWeight: 300,
+                fontVariantNumeric: "tabular-nums",
+              }}>{String(num).padStart(2, "0")}</div>
+              <div className="mono" style={{ fontSize: 14, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase" }}>/ 100</div>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={320}>
+          <p style={{ maxWidth: 560, margin: "56px auto 0", fontSize: 19, lineHeight: 1.55 }}>
+            Every site gets a SIMPL Score from 0 to 100. Most business owners have never seen theirs.
+          </p>
+        </Reveal>
+        <Reveal delay={440}>
+          <div style={{ marginTop: 36 }}>
+            <a href="Scan.html" style={{
+              display: "inline-flex", alignItems: "center", gap: 10,
+              color: "var(--fg)", textDecoration: "none",
+              borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15,
+            }}>
+              See yours<span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Pricing                                                             */
+/* ------------------------------------------------------------------ */
+
+const TIERS = [
+  { name: "Solo",   price: "$49",    cadence: "/mo", blurb: "One business. One domain. The four surfaces, watched continuously." },
+  { name: "Pro",    price: "$129",   cadence: "/mo", blurb: "Solo, plus auto-remediation for the top 30 finding types." },
+  { name: "Agency", price: "Custom", cadence: "",    blurb: "Ten or more sites. White-label dashboards, API, billing rollups." },
+];
+
+function Pricing() {
+  return (
+    <section id="pricing" style={{ ...pageStyles.shell, paddingTop: 159, paddingBottom: 159 }}>
+      <SectionTitle
+        eyebrow="Pricing"
+        h2="Three plans. No add-ons."
+      />
+      <div style={{
+        marginTop: 72,
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+        border: "1px solid var(--rule)",
+      }}>
+        {TIERS.map((t, i) => (
+          <Reveal key={t.name} delay={i * 100}>
+            <TierCard t={t} isLast={i === TIERS.length - 1} />
+          </Reveal>
+        ))}
+      </div>
+      <Reveal delay={360}>
+        <p style={{ marginTop: 32, color: "var(--muted)", fontSize: 15 }}>
+          Compare plans on the{" "}
+          <a href="Start.html#plans" style={{ color: "var(--fg)", textDecoration: "underline", textUnderlineOffset: 4 }}>Start page</a>
+          {" "}— or{" "}
+          <a href="Start.html#contact" style={{ color: "var(--fg)", textDecoration: "underline", textUnderlineOffset: 4 }}>contact us</a>
+          {" "}about agency pricing.
+        </p>
+      </Reveal>
+    </section>
+  );
+}
+
+function TierCard({ t, isLast }) {
+  return (
+    <div style={{
+      padding: "48px 36px 40px",
+      borderRight: isLast ? 0 : "1px solid var(--rule)",
+      display: "flex", flexDirection: "column", gap: 28, minHeight: 340,
+    }}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
+        <div className="mono" style={{ fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)" }}>{t.name}</div>
+      </div>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+        <div style={{ fontSize: 56, letterSpacing: "-0.03em", fontWeight: 400, lineHeight: 1 }}>{t.price}</div>
+        <div className="mono" style={{ color: "var(--muted)", fontSize: 14 }}>{t.cadence}</div>
+      </div>
+      <div style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.5, flex: 1 }}>{t.blurb}</div>
+      <a href="Start.html" style={{
+        alignSelf: "stretch",
+        background: "transparent",
+        color: "var(--fg)",
+        border: "1px solid var(--fg)",
+        padding: "14px 22px", fontSize: 14, letterSpacing: "0.02em",
+        cursor: "pointer", borderRadius: 2,
+        textDecoration: "none", textAlign: "center",
+        transition: "background 200ms ease, color 200ms ease",
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.background = "var(--fg)"; e.currentTarget.style.color = "var(--bg)"; }}
+      onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--fg)"; }}
+      >Start trial</a>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Closing CTA                                                         */
+/* ------------------------------------------------------------------ */
+
+function Closing() {
+  return (
+    <section style={{ ...pageStyles.shell, paddingTop: 140, paddingBottom: 140 }}>
+      <Reveal>
+        <h2 style={{
+          margin: 0,
+          fontSize: "clamp(36px, 5.2vw, 64px)",
+          lineHeight: 1.05,
+          letterSpacing: "-0.025em",
+          fontWeight: 400,
+          maxWidth: 880,
+        }}>
+          Still here? Start the scan.<br />
+          <span style={{ color: "var(--muted)" }}>Same field. Same thirty seconds. Different outcome if you close the tab.</span>
+        </h2>
+      </Reveal>
+      <Reveal delay={180}>
+        <div style={{ marginTop: 56 }}>
+          <ScanTool />
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* App                                                                 */
+/* ------------------------------------------------------------------ */
+
+function App() {
+  return (
+    <div>
+      <Header active="home" />
+      <main>
+        <Hero />
+        <Coverage />
+        <AudienceSelector />
+        <hr style={pageStyles.rule} />
+        <Proof />
+        <hr style={pageStyles.rule} />
+        <Score />
+        <hr style={pageStyles.rule} />
+        <Pricing />
+        <hr style={pageStyles.rule} />
+        <Closing />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

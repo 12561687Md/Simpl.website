@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Performance · SIMPL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="simpl.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="simpl.jsx"></script>
+<script type="text/babel" src="service-page.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const PAGE = {
+  active: "perf",
+  code:   "02 / PERFORMANCE",
+  eyebrow: "Coverage  ·  Performance",
+  headline: "Small things break.",
+  accentTail: "Then revenue stops following.",
+  sub: "A plugin update kills your contact form. A third-party script slows checkout to a crawl. The site looks fine to you because you never use it like a customer does. SIMPL does — every hour.",
+  watches: [
+    { code: "01", h: "Uptime monitoring",     p: "Sixty-second resolution from regions your customers actually browse from. Not just whether the homepage returns 200." },
+    { code: "02", h: "Core Web Vitals",       p: "LCP, INP, CLS — tracked across mobile and desktop, against Google's ranking thresholds, daily." },
+    { code: "03", h: "Form delivery",         p: "We submit your contact form, your booking flow, your newsletter. We confirm the email actually arrived. Silent fails are still fails." },
+    { code: "04", h: "Checkout integrity",    p: "Cart-to-confirmation walked through every hour. We see broken payment fields and missing inventory before your customers do." },
+    { code: "05", h: "CMS regressions",       p: "Plugin updates. Theme changes. Framework migrations. Anything that introduces a 500 on a page that worked yesterday." },
+    { code: "06", h: "Mobile rendering",      p: "How your site actually looks on the phone your customer is holding. Real device emulation, not desktop with a narrow window." },
+  ],
+  miss: [
+    "A plugin update breaks your contact form. Quote requests stop arriving. You don't notice for nine days.",
+    "Mobile speed drops below the threshold Google uses for ranking. Organic clicks fall 18% over the next month.",
+    "A third-party tracking script blocks checkout for 4% of traffic. Cart abandonment rises and you blame copy.",
+    "Your image CDN starts serving 4MB hero images instead of 200KB. Page weight triples. So does bounce.",
+    "An SSL certificate expires on Saturday morning. Browsers warn visitors away until Monday afternoon.",
+    "A redirect chain forms during a migration. Search rankings drift down two positions. Nobody connects the dots.",
+  ],
+  finding: {
+    eyebrow: "Recent finding",
+    body: "A regional dental practice's online booking form stopped sending confirmation emails after a plugin auto-update. The form still showed a success message. Patients kept booking. Nobody arrived. SIMPL flagged the silent delivery failure on the same business day.",
+    stat: "0% loss",
+    statLabel: "of bookings the day after the alert",
+  },
+  related: [
+    { id: "disc",  href: "Discoverability.html", title: "Discoverability", blurb: "Indexing, profile health, map rank, schema." },
+    { id: "rep",   href: "Reputation.html",      title: "Reputation",      blurb: "Reviews, sentiment, response cadence." },
+    { id: "spend", href: "Spend.html",           title: "Spend",           blurb: "Where your marketing dollars actually go." },
+  ],
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(<ServicePage page={PAGE} />);
+</script>
+</body>
+</html>

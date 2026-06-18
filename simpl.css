@@ -1,0 +1,176 @@
+/* SIMPL — shared design system
+   Midnight palette, posture-23 rhythm. Used by every page. */
+
+:root {
+  --bg: #0E0F10;
+  --bg-soft: #15171A;
+  --fg: #EDEBE4;
+  --muted: #8B8A85;
+  --rule: #262829;
+  --accent: #8FB4A8;
+  --accent-soft: rgba(143,180,168,0.10);
+  --accent-ink: #0E0F10;
+  --pulse: #8FB4A8;
+  --aura-opacity: 0.32;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg); color: var(--fg);
+}
+body {
+  font-family: "Inter", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv11";
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+.mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-feature-settings: "ss02", "calt", "zero";
+}
+
+/* Page-wide ambient glow auras */
+body::before, body::after {
+  content: "";
+  position: fixed; pointer-events: none; z-index: 0;
+  width: 80vw; height: 80vw; max-width: 1200px; max-height: 1200px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: var(--aura-opacity);
+}
+body::before {
+  top: -20vw; left: -20vw;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
+}
+body::after {
+  bottom: -25vw; right: -20vw;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
+  opacity: calc(var(--aura-opacity) * 0.6);
+}
+#root { position: relative; z-index: 1; }
+
+.reveal { opacity: 0; transform: translateY(10px); transition: opacity 900ms cubic-bezier(.2,.6,.2,1), transform 900ms cubic-bezier(.2,.6,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%      { transform: scale(1.15); opacity: 0.55; }
+}
+.pulse-dot { animation: pulse 2.2s ease-in-out infinite; }
+
+/* Scanning shimmer line */
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+.shimmer-line {
+  position: relative; height: 1px; width: 64px;
+  background: var(--rule); overflow: hidden;
+}
+.shimmer-line::after {
+  content: ""; position: absolute; inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: shimmer 3.6s ease-in-out infinite;
+}
+
+/* Decorative corner ticks */
+.ticks { position: relative; }
+.ticks::before, .ticks::after,
+.ticks > .tick-bl, .ticks > .tick-br {
+  content: ""; position: absolute; width: 10px; height: 10px;
+  border-color: var(--accent); opacity: 0.55;
+  pointer-events: none;
+}
+.ticks::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
+.ticks::after  { top: -1px; right: -1px; border-top: 1px solid; border-right: 1px solid; }
+.ticks > .tick-bl { bottom: -1px; left: -1px; border-bottom: 1px solid var(--accent); border-left: 1px solid var(--accent); opacity: 0.55; }
+.ticks > .tick-br { bottom: -1px; right: -1px; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); opacity: 0.55; }
+
+.grid-bg {
+  background-image:
+    linear-gradient(to right, var(--rule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center;
+  mask-image: radial-gradient(ellipse 60% 60% at center, #000 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at center, #000 20%, transparent 75%);
+}
+
+/* CTA buttons */
+.cta-primary {
+  position: relative; overflow: hidden;
+  background: var(--accent);
+  transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 8px 28px -16px var(--accent);
+}
+.cta-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 14px 40px -18px var(--accent);
+}
+.cta-primary::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 700ms ease;
+}
+.cta-primary:hover::after { transform: translateX(100%); }
+
+.cta-ghost {
+  transition: transform 220ms ease, border-color 220ms ease, color 220ms ease;
+}
+.cta-ghost:hover { transform: translateY(-1px); border-color: var(--accent); color: var(--accent); }
+
+/* Finding row hover indicator */
+.finding-row { position: relative; transition: background 240ms ease; }
+.finding-row::before {
+  content: ""; position: absolute; left: 0; top: 50%; height: 0; width: 2px;
+  background: var(--accent); transform: translateY(-50%);
+  transition: height 280ms cubic-bezier(.4,0,.2,1);
+}
+.finding-row:hover { background: var(--accent-soft); }
+.finding-row:hover::before { height: 60%; }
+
+/* Scan input glow on focus */
+.scan-form { position: relative; transition: border-color 240ms ease; }
+.scan-glow {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: scaleX(0); transform-origin: center;
+  transition: transform 600ms cubic-bezier(.2,.6,.2,1);
+  pointer-events: none;
+}
+.scan-form:focus-within .scan-glow { transform: scaleX(1); }
+
+/* Header nav link hover */
+.nav-link { color: var(--fg); text-decoration: none; font-size: 15px; font-weight: 400; position: relative; padding: 6px 0; transition: color 200ms ease; }
+.nav-link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform 280ms cubic-bezier(.2,.6,.2,1);
+}
+.nav-link:hover { color: var(--accent); }
+.nav-link:hover::after { transform: scaleX(1); }
+.nav-link.active { color: var(--accent); }
+.nav-link.active::after { transform: scaleX(1); }
+
+@keyframes fadeSwap { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+button, a, input, textarea, select { font-family: inherit; }
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .pulse-dot, .shimmer-line::after, .cta-primary::after { animation: none; }
+}

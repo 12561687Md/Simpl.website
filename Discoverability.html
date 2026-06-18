@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Discoverability · SIMPL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="simpl.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="simpl.jsx"></script>
+<script type="text/babel" src="service-page.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const PAGE = {
+  active: "disc",
+  code:   "01 / DISCOVERABILITY",
+  eyebrow: "Coverage  ·  Discoverability",
+  headline: "When Google can't find you,",
+  accentTail: "neither can your customers.",
+  sub: "SIMPL watches the surfaces that decide whether anyone shows up at all — your indexing, your map listing, your business profile, the words people type when they're looking for you.",
+  watches: [
+    { code: "01", h: "Indexing health",         p: "Every page on your site, checked against Google's index. We see drops within hours — not weeks." },
+    { code: "02", h: "Google Business Profile", p: "Suspensions, edits, fake duplicates, owner verification, photo replacement. The thing your customers actually call from." },
+    { code: "03", h: "Map pack ranking",        p: "Your position in the local 3-pack for your top queries, tracked daily, scored against the new competitor that just opened down the street." },
+    { code: "04", h: "Schema & sitemap",        p: "Structured data that breaks silently when a developer pushes. Sitemaps that stop updating. Robots files that lock pages out." },
+    { code: "05", h: "Branded SERP",            p: "What appears when someone Googles your name. Knowledge panel integrity, sitelinks, hijack attempts, autocomplete poisoning." },
+    { code: "06", h: "Local citations",         p: "NAP consistency across the dozens of directories Google still cross-references. Phone numbers that drift. Addresses that don't match." },
+  ],
+  miss: [
+    "Service pages drop out of Google's index three days after a CMS update. Nobody notices for six weeks.",
+    "Google Business Profile gets suspended for a guideline violation; calls drop 40% before anyone checks the dashboard.",
+    "A competitor's new location ranks above yours in the 3-pack. You don't see it until quarterly numbers come in.",
+    "A developer adds a robots directive during a migration. Three of your top-converting pages stop being crawled.",
+    "Your knowledge panel gets edited by someone else with the wrong hours. Calls go to voicemail at 2pm.",
+    "An automated directory updates your phone number to a tracking line that's been disconnected for years.",
+  ],
+  finding: {
+    eyebrow: "Recent finding",
+    body: "Three service pages on a regional plumbing site were blocked from Google's index by a robots.txt directive added during a March CMS migration. The homepage continued to rank. The pages that drove emergency-call bookings did not. Discovered by SIMPL within 11 hours of the change.",
+    stat: "11 hours",
+    statLabel: "from regression to alert",
+  },
+  related: [
+    { id: "perf",  href: "Performance.html", title: "Performance",  blurb: "Speed, uptime, broken forms, checkout integrity." },
+    { id: "rep",   href: "Reputation.html",  title: "Reputation",   blurb: "What's being said about you across the web." },
+    { id: "spend", href: "Spend.html",       title: "Spend",        blurb: "Where your marketing dollars actually go." },
+  ],
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(<ServicePage page={PAGE} />);
+</script>
+</body>
+</html>
