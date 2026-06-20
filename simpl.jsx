@@ -174,19 +174,22 @@ function Footer({ tag = "Quietly keeping businesses discoverable." }) {
 /* Scan tool — the SIMPL field. Used on Home + Scan + Start pages.    */
 /* ------------------------------------------------------------------ */
 
+const SIMPL_API = "https://simpl-production-7c1b.up.railway.app";
+
 const SCAN_STEPS = [
   "resolving site…",
-  "checking indexing…",
-  "reading page speed…",
-  "pulling review deltas…",
-  "scanning ad inventory…",
+  "checking SSL certificate…",
+  "analyzing page structure…",
+  "checking on-page SEO…",
+  "calculating SIMPL Score…",
 ];
 
-function ScanTool({ finding, costLabel = "Lost traffic", showFooter = true, onDone }) {
+function ScanTool({ showFooter = true, onDone }) {
   const [url, setUrl] = useStateS("");
   const [state, setState] = useStateS("idle");
   const [stepIdx, setStepIdx] = useStateS(0);
-  const timer = useRefS(null);
+  const [result, setResult] = useStateS(null);
+  const [error, setError] = useStateS(null);
   const stepTimer = useRefS(null);
 
   useEffectS(() => {
@@ -194,7 +197,7 @@ function ScanTool({ finding, costLabel = "Lost traffic", showFooter = true, onDo
     setStepIdx(0);
     stepTimer.current = setInterval(() => {
       setStepIdx((i) => Math.min(i + 1, SCAN_STEPS.length - 1));
-    }, 280);
+    }, 600);
     return () => clearInterval(stepTimer.current);
   }, [state]);
 
@@ -202,15 +205,40 @@ function ScanTool({ finding, costLabel = "Lost traffic", showFooter = true, onDo
     e && e.preventDefault();
     if (!url.trim()) return;
     setState("scanning");
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      setState("done");
-      if (onDone) onDone(url);
-    }, 1600);
-  }
-  function reset() { setState("idle"); setUrl(""); }
+    setResult(null);
+    setError(null);
 
-  const defaultFinding = "Three service pages are blocked from Google by a robots directive added March 14. Your homepage ranks. Your money pages don't.";
+    fetch(SIMPL_API + "/scan/quick", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: url.trim() }),
+    })
+      .then((r) => { if (!r.ok) throw new Error("Scan failed"); return r.json(); })
+      .then((data) => {
+        clearInterval(stepTimer.current);
+        setResult(data);
+        setState("done");
+        if (onDone) onDone(url);
+      })
+      .catch((err) => {
+        clearInterval(stepTimer.current);
+        setError("Could not scan that URL. Check the address and try again.");
+        setState("idle");
+      });
+  }
+  function reset() { setState("idle"); setUrl(""); setResult(null); setError(null); }
+
+  function gradeColor(grade) {
+    if (!grade) return "var(--accent)";
+    if (grade.startsWith("A")) return "#8FB4A8";
+    if (grade.startsWith("B")) return "#8FB4A8";
+    if (grade === "C") return "#E0A852";
+    return "#E05252";
+  }
+
+  function severityColor(s) {
+    return s === "critical" ? "#E05252" : s === "warning" ? "#E0A852" : "#8FB4A8";
+  }
 
   return (
     <div>
@@ -233,14 +261,20 @@ function ScanTool({ finding, costLabel = "Lost traffic", showFooter = true, onDo
             letterSpacing: "-0.01em",
           }}
         />
-        <button type="submit" style={{
+        <button type="submit" disabled={state === "scanning"} style={{
           border: 0, background: "var(--fg)", color: "var(--bg)",
           padding: "0 28px", fontSize: 15, letterSpacing: "0.02em",
-          cursor: "pointer", borderRadius: 0,
+          cursor: state === "scanning" ? "wait" : "pointer", borderRadius: 0,
+          opacity: state === "scanning" ? 0.7 : 1,
         }}>
           {state === "scanning" ? "Scanning…" : "Run scan"}
         </button>
       </form>
+
+      {error && (
+        <div style={{ marginTop: 16, color: "#E05252", fontSize: 14 }}>{error}</div>
+      )}
+
       <div style={{ marginTop: 32, maxWidth: 760, minHeight: 180 }}>
         {state === "scanning" && (
           <div className="mono" style={{ color: "var(--muted)", fontSize: 13, letterSpacing: "0.04em", lineHeight: 1.9 }}>
@@ -249,15 +283,50 @@ function ScanTool({ finding, costLabel = "Lost traffic", showFooter = true, onDo
             ))}
           </div>
         )}
-        {state === "done" && (
+        {state === "done" && result && (
           <div style={{ border: "1px solid var(--rule)", background: "var(--bg-soft)", padding: "28px 32px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", columnGap: 28, rowGap: 10, alignItems: "baseline" }}>
-              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase" }}>
-                Finding 01
+            {/* Score header */}
+            <div style={{ display: "flex", alignItems: "baseline", gap: 20, marginBottom: 24 }}>
+              <div style={{ fontSize: 48, fontWeight: 300, color: gradeColor(result.grade), letterSpacing: "-0.03em" }}>
+                {result.grade}
               </div>
-              <div style={{ fontSize: 17, lineHeight: 1.55 }}>{finding || defaultFinding}</div>
-              <div className="mono" style={{ fontSize: 13, color: "var(--accent)", whiteSpace: "nowrap" }}>{costLabel}</div>
+              <div>
+                <div style={{ fontSize: 20, fontWeight: 500 }}>SIMPL Score: {result.score}/100</div>
+                <div className="mono" style={{ fontSize: 12, color: "var(--muted)", marginTop: 4 }}>
+                  {result.url} · {result.response_time_ms}ms · SSL {result.ssl_valid ? "valid" : "missing"}
+                </div>
+              </div>
             </div>
+
+            {/* Findings */}
+            {result.findings && result.findings.length > 0 && (
+              <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 20 }}>
+                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--muted)", textTransform: "uppercase", marginBottom: 14 }}>
+                  {result.findings_count} {result.findings_count === 1 ? "finding" : "findings"}
+                </div>
+                {result.findings.map((f, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 10 }}>
+                    <span className="mono" style={{
+                      fontSize: 10, padding: "2px 8px", borderRadius: 3,
+                      background: severityColor(f.severity) + "22",
+                      color: severityColor(f.severity),
+                      textTransform: "uppercase", letterSpacing: "0.08em",
+                      whiteSpace: "nowrap",
+                    }}>
+                      {f.severity}
+                    </span>
+                    <span style={{ fontSize: 15, lineHeight: 1.5 }}>{f.title}</span>
+                    <span className="mono" style={{ fontSize: 12, color: "var(--muted)", marginLeft: "auto", whiteSpace: "nowrap" }}>{f.category}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {result.findings && result.findings.length === 0 && (
+              <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 20, color: "var(--accent)", fontSize: 15 }}>
+                No issues found. Your site looks great.
+              </div>
+            )}
+
             {showFooter && (
               <div style={{
                 marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--rule)",
@@ -265,7 +334,7 @@ function ScanTool({ finding, costLabel = "Lost traffic", showFooter = true, onDo
                 color: "var(--muted)", fontSize: 14,
               }}>
                 <span className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" }}>
-                  4 more findings waiting
+                  {result.critical_count > 0 ? result.critical_count + " critical" : ""}{result.critical_count > 0 && result.warning_count > 0 ? " · " : ""}{result.warning_count > 0 ? result.warning_count + " warnings" : ""}{result.critical_count === 0 && result.warning_count === 0 ? "Looking good" : ""}
                 </span>
                 <div style={{ display: "flex", gap: 12, alignItems: "center", marginLeft: "auto" }}>
                   <button onClick={reset} style={{
@@ -277,7 +346,7 @@ function ScanTool({ finding, costLabel = "Lost traffic", showFooter = true, onDo
                     color: "var(--accent-ink)",
                     textDecoration: "none", padding: "10px 18px",
                     fontSize: 13, letterSpacing: "0.02em", borderRadius: 2,
-                  }}>See the other four →</a>
+                  }}>Get the full report →</a>
                 </div>
               </div>
             )}
