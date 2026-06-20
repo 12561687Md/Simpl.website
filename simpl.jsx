@@ -286,17 +286,33 @@ function ScanTool({ showFooter = true, onDone }) {
         {state === "done" && result && (
           <div style={{ border: "1px solid var(--rule)", background: "var(--bg-soft)", padding: "28px 32px" }}>
             {/* Score header */}
-            <div style={{ display: "flex", alignItems: "baseline", gap: 20, marginBottom: 24 }}>
-              <div style={{ fontSize: 48, fontWeight: 300, color: gradeColor(result.grade), letterSpacing: "-0.03em" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 20, marginBottom: 20 }}>
+              <div style={{ fontSize: 52, fontWeight: 300, color: gradeColor(result.grade), letterSpacing: "-0.03em", lineHeight: 1 }}>
                 {result.grade}
               </div>
               <div>
-                <div style={{ fontSize: 20, fontWeight: 500 }}>SIMPL Score: {result.score}/100</div>
+                <div style={{ fontSize: 22, fontWeight: 500 }}>SIMPL Score: {result.percentage || result.score}%</div>
                 <div className="mono" style={{ fontSize: 12, color: "var(--muted)", marginTop: 4 }}>
                   {result.url} · {result.response_time_ms}ms · SSL {result.ssl_valid ? "valid" : "missing"}
                 </div>
               </div>
             </div>
+
+            {/* Category grades */}
+            {result.categories && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 8, marginBottom: 20, borderTop: "1px solid var(--rule)", paddingTop: 20 }}>
+                {Object.entries(result.categories).map(([name, data]) => (
+                  <div key={name} style={{ background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 6, padding: "12px 14px" }}>
+                    <div className="mono" style={{ fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6, lineHeight: 1.3 }}>
+                      {name}
+                    </div>
+                    <div style={{ fontSize: 20, fontWeight: 400, color: gradeColor(data.grade) }}>
+                      {data.grade}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Findings */}
             {result.findings && result.findings.length > 0 && (
@@ -315,15 +331,10 @@ function ScanTool({ showFooter = true, onDone }) {
                     }}>
                       {f.severity}
                     </span>
-                    <span style={{ fontSize: 15, lineHeight: 1.5 }}>{f.title}</span>
-                    <span className="mono" style={{ fontSize: 12, color: "var(--muted)", marginLeft: "auto", whiteSpace: "nowrap" }}>{f.category}</span>
+                    <span style={{ fontSize: 14, lineHeight: 1.5 }}>{f.title}</span>
+                    <span className="mono" style={{ fontSize: 11, color: "var(--muted)", marginLeft: "auto", whiteSpace: "nowrap" }}>{f.category}</span>
                   </div>
                 ))}
-              </div>
-            )}
-            {result.findings && result.findings.length === 0 && (
-              <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 20, color: "var(--accent)", fontSize: 15 }}>
-                No issues found. Your site looks great.
               </div>
             )}
 
