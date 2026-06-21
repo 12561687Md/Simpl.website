@@ -43,7 +43,7 @@ function ServiceHero({ page }) {
       </Reveal>
       <Reveal delay={420}>
         <div style={{ marginTop: 47, display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
-          <a href="Start.html" className="cta-primary" style={{
+          <a href="/Start" className="cta-primary" style={{
             display: "inline-flex", alignItems: "center", gap: 12,
             color: "var(--accent-ink)",
             textDecoration: "none", padding: "18px 28px",
@@ -52,7 +52,7 @@ function ServiceHero({ page }) {
             Start watching this surface
             <span aria-hidden="true" style={{ opacity: 0.7 }}>→</span>
           </a>
-          <a href="Scan.html" className="cta-ghost" style={{
+          <a href="/Scan" className="cta-ghost" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             color: "var(--fg)", textDecoration: "none",
             padding: "17px 26px", fontSize: 15, letterSpacing: "0.02em",

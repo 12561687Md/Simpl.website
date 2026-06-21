@@ -34,7 +34,7 @@
       "url": "https://simpl.pro",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://simpl.pro/Results.html?q={search_term_string}",
+        "target": "https://simpl.pro//Results?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     },
@@ -59,12 +59,12 @@
       SIMPL
     </a>
     <nav style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;">
-      <a href="Scan.html" class="nav-link">The Scan</a>
-      <a href="Discoverability.html" class="nav-link">Discoverability</a>
-      <a href="Performance.html" class="nav-link">Performance</a>
-      <a href="Reputation.html" class="nav-link">Reputation</a>
-      <a href="Spend.html" class="nav-link">Spend</a>
-      <a href="Start.html" class="cta-primary" style="color:var(--accent-ink);text-decoration:none;padding:10px 18px;font-size:14px;letter-spacing:0.02em;border-radius:2px;margin-left:8px;">Start →</a>
+      <a href="/Scan" class="nav-link">The Scan</a>
+      <a href="/Discoverability" class="nav-link">Discoverability</a>
+      <a href="/Performance" class="nav-link">Performance</a>
+      <a href="/Reputation" class="nav-link">Reputation</a>
+      <a href="/Spend" class="nav-link">Spend</a>
+      <a href="/Start" class="cta-primary" style="color:var(--accent-ink);text-decoration:none;padding:10px 18px;font-size:14px;letter-spacing:0.02em;border-radius:2px;margin-left:8px;">Start →</a>
     </nav>
   </div>
 </header>
@@ -86,13 +86,13 @@
     <div style="margin-top:56px;">
       <div style="font-family:'JetBrains Mono',ui-monospace,monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:12px;">
         <span>Try the scan — type your domain</span>
-        <a href="Scan.html" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px;font-size:11px;">How it works ↗</a>
+        <a href="/Scan" style="color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px;font-size:11px;">How it works ↗</a>
       </div>
       <!-- Scan tool mounts here via React -->
       <div id="scan-tool"></div>
       <noscript>
         <p style="color:var(--muted);font-size:15px;padding:20px 0;">
-          The scan tool requires JavaScript to run. <a href="Start.html" style="color:var(--accent);">Contact us</a> to get your free SIMPL Score.
+          The scan tool requires JavaScript to run. <a href="/Start" style="color:var(--accent);">Contact us</a> to get your free SIMPL Score.
         </p>
       </noscript>
     </div>
@@ -109,25 +109,25 @@
         SIMPL doesn't replace your site or your ads or your team. It watches the four places where things break and tells you what's wrong before the next quarterly review.
       </p>
       <div style="margin-top:72px;display:grid;gap:1px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));background:var(--rule);border:1px solid var(--rule);">
-        <a href="Discoverability.html" class="finding-row" style="background:var(--bg);padding:44px 36px 40px;min-height:280px;display:flex;flex-direction:column;gap:18px;text-decoration:none;color:var(--fg);">
+        <a href="/Discoverability" class="finding-row" style="background:var(--bg);padding:44px 36px 40px;min-height:280px;display:flex;flex-direction:column;gap:18px;text-decoration:none;color:var(--fg);">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;color:var(--accent);text-transform:uppercase;">01 / Discoverability</div>
           <div style="font-size:24px;letter-spacing:-0.01em;line-height:1.2;">Whether Google can find you at all.</div>
           <div style="color:var(--muted);font-size:14px;line-height:1.55;">Index, GBP, maps, schema</div>
           <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;">Read more →</div>
         </a>
-        <a href="Performance.html" class="finding-row" style="background:var(--bg);padding:44px 36px 40px;min-height:280px;display:flex;flex-direction:column;gap:18px;text-decoration:none;color:var(--fg);">
+        <a href="/Performance" class="finding-row" style="background:var(--bg);padding:44px 36px 40px;min-height:280px;display:flex;flex-direction:column;gap:18px;text-decoration:none;color:var(--fg);">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;color:var(--accent);text-transform:uppercase;">02 / Performance</div>
           <div style="font-size:24px;letter-spacing:-0.01em;line-height:1.2;">Whether your site actually works.</div>
           <div style="color:var(--muted);font-size:14px;line-height:1.55;">Uptime, vitals, forms, checkout</div>
           <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;">Read more →</div>
         </a>
-        <a href="Reputation.html" class="finding-row" style="background:var(--bg);padding:44px 36px 40px;min-height:280px;display:flex;flex-direction:column;gap:18px;text-decoration:none;color:var(--fg);">
+        <a href="/Reputation" class="finding-row" style="background:var(--bg);padding:44px 36px 40px;min-height:280px;display:flex;flex-direction:column;gap:18px;text-decoration:none;color:var(--fg);">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;color:var(--accent);text-transform:uppercase;">03 / Reputation</div>
           <div style="font-size:24px;letter-spacing:-0.01em;line-height:1.2;">What people say when you're not in the room.</div>
           <div style="color:var(--muted);font-size:14px;line-height:1.55;">Reviews, sentiment, mentions</div>
           <div style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.14em;color:var(--accent);text-transform:uppercase;">Read more →</div>
         </a>
-        <a href="Spend.html" class="finding-row" style="background:var(--bg);padding:44px 36px 40px;min-height:280px;display:flex;flex-direction:column;gap:18px;text-decoration:none;color:var(--fg);">
+        <a href="/Spend" class="finding-row" style="background:var(--bg);padding:44px 36px 40px;min-height:280px;display:flex;flex-direction:column;gap:18px;text-decoration:none;color:var(--fg);">
           <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;color:var(--accent);text-transform:uppercase;">04 / Spend</div>
           <div style="font-size:24px;letter-spacing:-0.01em;line-height:1.2;">Where your marketing dollars actually go.</div>
           <div style="color:var(--muted);font-size:14px;line-height:1.55;">Branded, waste, bids, audit</div>
@@ -225,7 +225,7 @@
         Every site gets a SIMPL Score from 0 to 100. Most business owners have never seen theirs.
       </p>
       <div style="margin-top:36px;">
-        <a href="Scan.html" style="display:inline-flex;align-items:center;gap:10px;color:var(--fg);text-decoration:none;border-bottom:1px solid var(--fg);padding-bottom:4px;font-size:15px;">
+        <a href="/Scan" style="display:inline-flex;align-items:center;gap:10px;color:var(--fg);text-decoration:none;border-bottom:1px solid var(--fg);padding-bottom:4px;font-size:15px;">
           See yours<span>→</span>
         </a>
       </div>
@@ -245,19 +245,19 @@
         <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);">Solo</div>
         <div style="display:flex;align-items:baseline;gap:6px;"><span style="font-size:56px;letter-spacing:-0.03em;font-weight:400;line-height:1;">$49</span><span style="font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:14px;">/mo</span></div>
         <div style="color:var(--muted);font-size:16px;line-height:1.5;flex:1;">One business. One domain. The four surfaces, watched continuously.</div>
-        <a href="Start.html" style="align-self:stretch;background:transparent;color:var(--fg);border:1px solid var(--fg);padding:14px 22px;font-size:14px;cursor:pointer;border-radius:2px;text-decoration:none;text-align:center;">Start trial</a>
+        <a href="/Start" style="align-self:stretch;background:transparent;color:var(--fg);border:1px solid var(--fg);padding:14px 22px;font-size:14px;cursor:pointer;border-radius:2px;text-decoration:none;text-align:center;">Start trial</a>
       </div>
       <div style="padding:48px 36px 40px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:28px;min-height:340px;">
         <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);">Pro</div>
         <div style="display:flex;align-items:baseline;gap:6px;"><span style="font-size:56px;letter-spacing:-0.03em;font-weight:400;line-height:1;">$129</span><span style="font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:14px;">/mo</span></div>
         <div style="color:var(--muted);font-size:16px;line-height:1.5;flex:1;">Solo, plus auto-remediation for the top 30 finding types.</div>
-        <a href="Start.html" style="align-self:stretch;background:transparent;color:var(--fg);border:1px solid var(--fg);padding:14px 22px;font-size:14px;cursor:pointer;border-radius:2px;text-decoration:none;text-align:center;">Start trial</a>
+        <a href="/Start" style="align-self:stretch;background:transparent;color:var(--fg);border:1px solid var(--fg);padding:14px 22px;font-size:14px;cursor:pointer;border-radius:2px;text-decoration:none;text-align:center;">Start trial</a>
       </div>
       <div style="padding:48px 36px 40px;display:flex;flex-direction:column;gap:28px;min-height:340px;">
         <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);">Agency</div>
         <div style="display:flex;align-items:baseline;gap:6px;"><span style="font-size:56px;letter-spacing:-0.03em;font-weight:400;line-height:1;">Custom</span></div>
         <div style="color:var(--muted);font-size:16px;line-height:1.5;flex:1;">Ten or more sites. White-label dashboards, API, billing rollups.</div>
-        <a href="Start.html" style="align-self:stretch;background:transparent;color:var(--fg);border:1px solid var(--fg);padding:14px 22px;font-size:14px;cursor:pointer;border-radius:2px;text-decoration:none;text-align:center;">Start trial</a>
+        <a href="/Start" style="align-self:stretch;background:transparent;color:var(--fg);border:1px solid var(--fg);padding:14px 22px;font-size:14px;cursor:pointer;border-radius:2px;text-decoration:none;text-align:center;">Start trial</a>
       </div>
     </div>
   </section>
@@ -284,8 +284,8 @@
       <div style="color:var(--muted);font-size:14px;font-style:italic;">Quietly keeping businesses discoverable.</div>
     </div>
     <nav style="display:flex;gap:24px;flex-wrap:wrap;">
-      <a href="Scan.html" style="color:var(--muted);text-decoration:none;font-size:14px;">The Scan</a>
-      <a href="Start.html" style="color:var(--muted);text-decoration:none;font-size:14px;">Start</a>
+      <a href="/Scan" style="color:var(--muted);text-decoration:none;font-size:14px;">The Scan</a>
+      <a href="/Start" style="color:var(--muted);text-decoration:none;font-size:14px;">Start</a>
     </nav>
   </div>
 </footer>
@@ -366,7 +366,7 @@ function ScanWidget({ containerId }) {
           ),
           React.createElement("div", { style: { display: "flex", gap: 12, alignItems: "center", marginLeft: "auto" } },
             React.createElement("button", { onClick: reset, style: { background: "transparent", border: 0, color: "var(--fg)", textDecoration: "underline", textUnderlineOffset: 4, cursor: "pointer", padding: 0, font: "inherit" } }, "Run another"),
-            React.createElement("a", { href: "Results.html", style: { background: "var(--accent)", color: "var(--accent-ink)", textDecoration: "none", padding: "10px 18px", fontSize: 13, letterSpacing: "0.02em", borderRadius: 2 } }, "Get the full report →")
+            React.createElement("a", { href: "/Results", style: { background: "var(--accent)", color: "var(--accent-ink)", textDecoration: "none", padding: "10px 18px", fontSize: 13, letterSpacing: "0.02em", borderRadius: 2 } }, "Get the full report →")
           )
         )
       )

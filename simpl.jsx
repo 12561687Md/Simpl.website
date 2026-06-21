@@ -8,12 +8,12 @@
 const { useState: useStateS, useEffect: useEffectS, useRef: useRefS } = React;
 
 const NAV_ITEMS = [
-  { href: "/", label: "Home",            id: "home"   },
-  { href: "Scan.html",           label: "The Scan",        id: "scan"   },
-  { href: "Discoverability.html",label: "Discoverability", id: "disc"   },
-  { href: "Performance.html",    label: "Performance",     id: "perf"   },
-  { href: "Reputation.html",     label: "Reputation",      id: "rep"    },
-  { href: "Spend.html",          label: "Spend",           id: "spend"  },
+  { href: "/",                label: "Home",            id: "home"   },
+  { href: "/Scan",            label: "The Scan",        id: "scan"   },
+  { href: "/Discoverability", label: "Discoverability", id: "disc"   },
+  { href: "/Performance",     label: "Performance",     id: "perf"   },
+  { href: "/Reputation",      label: "Reputation",      id: "rep"    },
+  { href: "/Spend",           label: "Spend",           id: "spend"  },
 ];
 
 const pageStyles = {
@@ -100,7 +100,7 @@ function Header({ active }) {
               {n.label}
             </a>
           ))}
-          <a href="Start.html" className="cta-primary" style={{
+          <a href="/Start" className="cta-primary" style={{
             color: "var(--accent-ink)", textDecoration: "none",
             padding: "10px 18px", fontSize: 14, letterSpacing: "0.02em",
             borderRadius: 2, marginLeft: 8,
@@ -133,18 +133,18 @@ function Footer({ tag = "Quietly keeping businesses discoverable." }) {
           <div>
             <div className="mono" style={{ ...pageStyles.eyebrow, marginBottom: 14 }}>Coverage</div>
             <div style={{ display: "grid", gap: 8 }}>
-              <a href="Discoverability.html" style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Discoverability</a>
-              <a href="Performance.html"     style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Performance</a>
-              <a href="Reputation.html"      style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Reputation</a>
-              <a href="Spend.html"           style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Spend</a>
+              <a href="/Discoverability" style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Discoverability</a>
+              <a href="/Performance"     style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Performance</a>
+              <a href="/Reputation"      style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Reputation</a>
+              <a href="/Spend"           style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Spend</a>
             </div>
           </div>
           <div>
             <div className="mono" style={{ ...pageStyles.eyebrow, marginBottom: 14 }}>The Tool</div>
             <div style={{ display: "grid", gap: 8 }}>
-              <a href="Scan.html"  style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>The Scan</a>
-              <a href="Start.html" style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Start a trial</a>
-              <a href="Start.html#contact" style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Contact</a>
+              <a href="/Scan"  style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>The Scan</a>
+              <a href="/Start" style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Start a trial</a>
+              <a href="/Start#contact" style={{ ...linkStyle, fontSize: 14, color: "var(--muted)" }}>Contact</a>
             </div>
           </div>
           <div>
@@ -354,7 +354,7 @@ function ScanTool({ showFooter = true, onDone }) {
                     textDecoration: "underline", textUnderlineOffset: 4,
                     cursor: "pointer", padding: 0, font: "inherit",
                   }}>Run another</button>
-                  <a href="Results.html" className="cta-primary" style={{
+                  <a href="/Results" className="cta-primary" style={{
                     color: "var(--accent-ink)",
                     textDecoration: "none", padding: "10px 18px",
                     fontSize: 13, letterSpacing: "0.02em", borderRadius: 2,

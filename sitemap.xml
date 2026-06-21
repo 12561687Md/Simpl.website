@@ -6,37 +6,37 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://simpl.pro/Scan.html</loc>
+    <loc>https://simpl.pro/Scan</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://simpl.pro/Discoverability.html</loc>
+    <loc>https://simpl.pro/Discoverability</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://simpl.pro/Performance.html</loc>
+    <loc>https://simpl.pro/Performance</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://simpl.pro/Reputation.html</loc>
+    <loc>https://simpl.pro/Reputation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://simpl.pro/Spend.html</loc>
+    <loc>https://simpl.pro/Spend</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://simpl.pro/Start.html</loc>
+    <loc>https://simpl.pro/Start</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://simpl.pro/Results.html</loc>
+    <loc>https://simpl.pro/Results</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
