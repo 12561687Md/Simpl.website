@@ -1,0 +1,34 @@
+{
+  "name": "simpl.website",
+  "version": "1.0.0",
+  "description": "Everything website, DNS, hosting, domain and vercel related",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/12561687Md/Simpl.website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/12561687Md/Simpl.website/issues"
+  },
+  "homepage": "https://github.com/12561687Md/Simpl.website#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
+    "next": "^16.2.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "26.0.0",
+    "@types/react": "19.2.17",
+    "typescript": "6.0.3"
+  }
+}

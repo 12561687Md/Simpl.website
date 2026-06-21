@@ -1,0 +1,423 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+
+const SIMPL_API = "https://simpl-production-7c1b.up.railway.app";
+const SCAN_STEPS = [
+  "resolving site…",
+  "checking SSL…",
+  "analyzing structure…",
+  "checking SEO…",
+  "calculating score…",
+];
+
+function gradeColor(grade: string | undefined) {
+  if (!grade) return "#8FB4A8";
+  if (grade.startsWith("A") || grade.startsWith("B")) return "#8FB4A8";
+  if (grade === "C") return "#E0A852";
+  return "#E05252";
+}
+
+function severityColor(s: string) {
+  return s === "critical" ? "#E05252" : s === "warning" ? "#E0A852" : "#8FB4A8";
+}
+
+interface Finding {
+  severity: string;
+  title: string;
+  category: string;
+}
+
+interface ScanResult {
+  url: string;
+  score: number;
+  percentage: number;
+  grade: string;
+  response_time_ms: number;
+  ssl_valid: boolean;
+  ssl_days_remaining: number;
+  categories: Record<string, { score: number; max: number; grade: string }>;
+  findings: Finding[];
+  findings_count: number;
+  critical_count: number;
+  warning_count: number;
+}
+
+export default function ScanTool({ compact = false }: { compact?: boolean }) {
+  const [url, setUrl] = useState("");
+  const [state, setState] = useState<"idle" | "scanning" | "done">("idle");
+  const [stepIdx, setStepIdx] = useState(0);
+  const [result, setResult] = useState<ScanResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const stepTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (state !== "scanning") return;
+    setStepIdx(0);
+    stepTimer.current = setInterval(
+      () => setStepIdx((i) => Math.min(i + 1, SCAN_STEPS.length - 1)),
+      600
+    );
+    return () => {
+      if (stepTimer.current) clearInterval(stepTimer.current);
+    };
+  }, [state]);
+
+  function run(e: React.FormEvent) {
+    e.preventDefault();
+    if (!url.trim()) return;
+    setState("scanning");
+    setResult(null);
+    setError(null);
+
+    fetch(SIMPL_API + "/scan/quick", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url: url.trim() }),
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error();
+        return r.json();
+      })
+      .then((data) => {
+        if (stepTimer.current) clearInterval(stepTimer.current);
+        setResult(data);
+        setState("done");
+        try {
+          localStorage.setItem("simpl_scan_result", JSON.stringify(data));
+        } catch {}
+      })
+      .catch(() => {
+        if (stepTimer.current) clearInterval(stepTimer.current);
+        setError("Could not scan that URL. Check the address and try again.");
+        setState("idle");
+      });
+  }
+
+  function reset() {
+    setState("idle");
+    setUrl("");
+    setResult(null);
+    setError(null);
+  }
+
+  return (
+    <div>
+      <form
+        onSubmit={run}
+        style={{
+          display: "flex",
+          alignItems: "stretch",
+          borderBottom: "1px solid var(--fg)",
+          maxWidth: 760,
+        }}
+      >
+        <span
+          className="mono"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            paddingRight: 14,
+            color: "var(--muted)",
+            fontSize: 14,
+          }}
+        >
+          https://
+        </span>
+        <input
+          type="text"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          placeholder="yourbusiness.com"
+          style={{
+            flex: 1,
+            border: 0,
+            outline: "none",
+            background: "transparent",
+            padding: "22px 0",
+            fontSize: 22,
+            color: "var(--fg)",
+            letterSpacing: "-0.01em",
+          }}
+        />
+        <button
+          type="submit"
+          disabled={state === "scanning"}
+          style={{
+            border: 0,
+            background: "var(--fg)",
+            color: "var(--bg)",
+            padding: "0 28px",
+            fontSize: 15,
+            cursor: state === "scanning" ? "wait" : "pointer",
+            opacity: state === "scanning" ? 0.7 : 1,
+          }}
+        >
+          {state === "scanning" ? "Scanning…" : "Run scan"}
+        </button>
+      </form>
+
+      {error && (
+        <div style={{ marginTop: 16, color: "#E05252", fontSize: 14 }}>
+          {error}
+        </div>
+      )}
+
+      <div style={{ marginTop: 32, maxWidth: 760, minHeight: compact ? 80 : 120 }}>
+        {state === "scanning" && (
+          <div
+            className="mono"
+            style={{ color: "var(--muted)", fontSize: 13, lineHeight: 1.9 }}
+          >
+            {SCAN_STEPS.slice(0, stepIdx + 1).map((s, i) => (
+              <div key={i} style={{ opacity: i === stepIdx ? 1 : 0.55 }}>
+                → {s}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {state === "done" && result && (
+          <div
+            style={{
+              border: "1px solid var(--rule)",
+              background: "var(--bg-soft)",
+              padding: "28px 32px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: 20,
+                marginBottom: 20,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 52,
+                  fontWeight: 300,
+                  color: gradeColor(result.grade),
+                  letterSpacing: "-0.03em",
+                  lineHeight: 1,
+                }}
+              >
+                {result.grade}
+              </div>
+              <div>
+                <div style={{ fontSize: 22, fontWeight: 500 }}>
+                  SIMPL Score: {result.percentage ?? result.score}%
+                </div>
+                <div
+                  className="mono"
+                  style={{ fontSize: 12, color: "var(--muted)", marginTop: 4 }}
+                >
+                  {result.url} · {result.response_time_ms}ms · SSL{" "}
+                  {result.ssl_valid ? "valid" : "missing"}
+                </div>
+              </div>
+            </div>
+
+            {result.categories && (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))",
+                  gap: 8,
+                  marginBottom: 20,
+                  borderTop: "1px solid var(--rule)",
+                  paddingTop: 20,
+                }}
+              >
+                {Object.entries(result.categories).map(([name, data]) => (
+                  <div
+                    key={name}
+                    style={{
+                      background: "var(--bg)",
+                      border: "1px solid var(--rule)",
+                      borderRadius: 6,
+                      padding: "12px 14px",
+                    }}
+                  >
+                    <div
+                      className="mono"
+                      style={{
+                        fontSize: 10,
+                        color: "var(--muted)",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06em",
+                        marginBottom: 6,
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {name}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 400,
+                        color: gradeColor(data.grade),
+                      }}
+                    >
+                      {data.grade}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {result.findings && result.findings.length > 0 && (
+              <div
+                style={{
+                  borderTop: "1px solid var(--rule)",
+                  paddingTop: 20,
+                }}
+              >
+                <div
+                  className="mono"
+                  style={{
+                    fontSize: 11,
+                    letterSpacing: "0.18em",
+                    color: "var(--muted)",
+                    textTransform: "uppercase",
+                    marginBottom: 14,
+                  }}
+                >
+                  {result.findings_count}{" "}
+                  {result.findings_count === 1 ? "finding" : "findings"}
+                </div>
+                {result.findings.slice(0, 8).map((f, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      gap: 14,
+                      marginBottom: 10,
+                    }}
+                  >
+                    <span
+                      className="mono"
+                      style={{
+                        fontSize: 10,
+                        padding: "2px 8px",
+                        borderRadius: 3,
+                        background: severityColor(f.severity) + "22",
+                        color: severityColor(f.severity),
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {f.severity}
+                    </span>
+                    <span style={{ fontSize: 14, lineHeight: 1.5 }}>
+                      {f.title}
+                    </span>
+                    <span
+                      className="mono"
+                      style={{
+                        fontSize: 11,
+                        color: "var(--muted)",
+                        marginLeft: "auto",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {f.category}
+                    </span>
+                  </div>
+                ))}
+                {result.findings_count > 8 && (
+                  <div
+                    className="mono"
+                    style={{
+                      fontSize: 12,
+                      color: "var(--muted)",
+                      marginTop: 12,
+                    }}
+                  >
+                    +{result.findings_count - 8} more findings in the full
+                    report
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div
+              style={{
+                marginTop: 24,
+                paddingTop: 20,
+                borderTop: "1px solid var(--rule)",
+                display: "flex",
+                gap: 20,
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <span
+                className="mono"
+                style={{
+                  fontSize: 11,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  color: "var(--muted)",
+                }}
+              >
+                {result.critical_count > 0
+                  ? `${result.critical_count} critical`
+                  : ""}
+                {result.critical_count > 0 && result.warning_count > 0
+                  ? " · "
+                  : ""}
+                {result.warning_count > 0
+                  ? `${result.warning_count} warnings`
+                  : ""}
+                {result.critical_count === 0 && result.warning_count === 0
+                  ? "Looking good"
+                  : ""}
+              </span>
+              <div
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  alignItems: "center",
+                  marginLeft: "auto",
+                }}
+              >
+                <button
+                  onClick={reset}
+                  style={{
+                    background: "transparent",
+                    border: 0,
+                    color: "var(--fg)",
+                    textDecoration: "underline",
+                    textUnderlineOffset: 4,
+                    cursor: "pointer",
+                    padding: 0,
+                    font: "inherit",
+                  }}
+                >
+                  Run another
+                </button>
+                <a
+                  href="/results"
+                  className="cta-primary"
+                  style={{
+                    color: "var(--accent-ink)",
+                    textDecoration: "none",
+                    padding: "10px 18px",
+                    fontSize: 13,
+                    letterSpacing: "0.02em",
+                    borderRadius: 2,
+                  }}
+                >
+                  Get the full report →
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
