@@ -8,7 +8,7 @@
 const { useState: useStateS, useEffect: useEffectS, useRef: useRefS } = React;
 
 const NAV_ITEMS = [
-  { href: "index.html", label: "Home",            id: "home"   },
+  { href: "/", label: "Home",            id: "home"   },
   { href: "Scan.html",           label: "The Scan",        id: "scan"   },
   { href: "Discoverability.html",label: "Discoverability", id: "disc"   },
   { href: "Performance.html",    label: "Performance",     id: "perf"   },
@@ -85,7 +85,7 @@ function Header({ active }) {
         display: "flex", alignItems: "center", justifyContent: "space-between",
         height: 72, gap: 24,
       }}>
-        <a href="index.html" style={{
+        <a href="/" style={{
           textDecoration: "none", color: "var(--fg)",
           fontWeight: 500, letterSpacing: "0.32em", fontSize: 15,
           display: "inline-flex", alignItems: "center", gap: 10,
@@ -218,6 +218,7 @@ function ScanTool({ showFooter = true, onDone }) {
         clearInterval(stepTimer.current);
         setResult(data);
         setState("done");
+        try { localStorage.setItem("simpl_scan_result", JSON.stringify(data)); } catch(e) {}
         if (onDone) onDone(url);
       })
       .catch((err) => {
@@ -353,7 +354,7 @@ function ScanTool({ showFooter = true, onDone }) {
                     textDecoration: "underline", textUnderlineOffset: 4,
                     cursor: "pointer", padding: 0, font: "inherit",
                   }}>Run another</button>
-                  <a href="Start.html" className="cta-primary" style={{
+                  <a href="Results.html" className="cta-primary" style={{
                     color: "var(--accent-ink)",
                     textDecoration: "none", padding: "10px 18px",
                     fontSize: 13, letterSpacing: "0.02em", borderRadius: 2,

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your SIMPL Score · SIMPL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="simpl.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="simpl.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect } = React;
+
+function gradeColor(grade) {
+  if (!grade) return "var(--accent)";
+  if (grade.startsWith("A")) return "#8FB4A8";
+  if (grade.startsWith("B")) return "#8FB4A8";
+  if (grade === "C") return "#E0A852";
+  return "#E05252";
+}
+
+function severityColor(s) {
+  return s === "critical" ? "#E05252" : s === "warning" ? "#E0A852" : "#8FB4A8";
+}
+
+function severityLabel(s) {
+  return s === "critical" ? "FIX NOW" : s === "warning" ? "SHOULD FIX" : "GOOD TO KNOW";
+}
+
+function ResultsPage() {
+  const [result, setResult] = useState(null);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("simpl_scan_result");
+      if (stored) setResult(JSON.parse(stored));
+    } catch(e) {}
+  }, []);
+
+  if (!result) {
+    return (
+      <div>
+        <Header active="scan" />
+        <section style={{ ...pageStyles.shell, paddingTop: 140, paddingBottom: 96, textAlign: "center" }}>
+          <h1 style={{ fontSize: 32, fontWeight: 400, marginBottom: 20 }}>No scan results found</h1>
+          <p style={{ color: "var(--muted)", fontSize: 17, marginBottom: 40 }}>
+            Run a scan first to see your results.
+          </p>
+          <a href="/" className="cta-primary" style={{
+            color: "var(--accent-ink)", textDecoration: "none",
+            padding: "14px 28px", fontSize: 15, borderRadius: 2,
+          }}>Run a scan →</a>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
+
+  const categories = result.categories || {};
+  const findings = result.findings || [];
+  const critical = findings.filter(f => f.severity === "critical");
+  const warnings = findings.filter(f => f.severity === "warning");
+  const info = findings.filter(f => f.severity === "info");
+
+  return (
+    <div>
+      <Header active="scan" />
+
+      <section style={{ ...pageStyles.shell, paddingTop: 120, paddingBottom: 40 }}>
+        {/* Score hero */}
+        <Reveal>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 24, marginBottom: 12 }}>
+            <div style={{
+              fontSize: "clamp(60px, 10vw, 100px)", fontWeight: 300,
+              color: gradeColor(result.grade), letterSpacing: "-0.03em", lineHeight: 1,
+            }}>
+              {result.grade}
+            </div>
+            <div>
+              <div style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 500 }}>
+                SIMPL Score: {result.percentage || result.score}%
+              </div>
+              <div className="mono" style={{ fontSize: 13, color: "var(--muted)", marginTop: 6 }}>
+                {result.url}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <div className="mono" style={{ fontSize: 12, color: "var(--muted)", marginBottom: 40 }}>
+            {result.response_time_ms}ms response · SSL {result.ssl_valid ? "valid" : "missing"}
+            {result.ssl_days_remaining ? ` (${result.ssl_days_remaining} days)` : ""}
+            {" · "}{findings.length} findings
+          </div>
+        </Reveal>
+
+        {/* Category grades */}
+        <Reveal delay={200}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gap: 12, marginBottom: 48,
+          }}>
+            {Object.entries(categories).map(([name, data]) => (
+              <div key={name} style={{
+                background: "var(--bg-soft)", border: "1px solid var(--rule)",
+                borderRadius: 8, padding: "18px 16px",
+              }}>
+                <div className="mono" style={{
+                  fontSize: 10, color: "var(--muted)", textTransform: "uppercase",
+                  letterSpacing: "0.06em", marginBottom: 8, lineHeight: 1.3,
+                }}>{name}</div>
+                <div style={{ fontSize: 28, fontWeight: 300, color: gradeColor(data.grade) }}>
+                  {data.grade}
+                </div>
+                <div className="mono" style={{ fontSize: 11, color: "var(--muted)", marginTop: 4 }}>
+                  {data.score}/{data.max}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: "0 0 40px 0" }} />
+
+        {/* Findings by severity */}
+        {critical.length > 0 && (
+          <Reveal delay={300}>
+            <div style={{ marginBottom: 36 }}>
+              <div className="mono" style={{
+                fontSize: 12, letterSpacing: "0.12em", color: "#E05252",
+                textTransform: "uppercase", marginBottom: 16,
+                display: "flex", alignItems: "center", gap: 10,
+              }}>
+                <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 99, background: "#E05252" }} />
+                Fix Now ({critical.length})
+              </div>
+              {critical.map((f, i) => (
+                <div key={i} style={{
+                  background: "var(--bg-soft)", border: "1px solid var(--rule)",
+                  borderRadius: 8, padding: "16px 20px", marginBottom: 8,
+                  borderLeft: "3px solid #E05252",
+                }}>
+                  <div style={{ fontSize: 15, fontWeight: 500, marginBottom: 4 }}>{f.title}</div>
+                  <div className="mono" style={{ fontSize: 11, color: "var(--muted)" }}>{f.category}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        )}
+
+        {warnings.length > 0 && (
+          <Reveal delay={400}>
+            <div style={{ marginBottom: 36 }}>
+              <div className="mono" style={{
+                fontSize: 12, letterSpacing: "0.12em", color: "#E0A852",
+                textTransform: "uppercase", marginBottom: 16,
+                display: "flex", alignItems: "center", gap: 10,
+              }}>
+                <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 99, background: "#E0A852" }} />
+                Should Fix ({warnings.length})
+              </div>
+              {warnings.map((f, i) => (
+                <div key={i} style={{
+                  background: "var(--bg-soft)", border: "1px solid var(--rule)",
+                  borderRadius: 8, padding: "16px 20px", marginBottom: 8,
+                  borderLeft: "3px solid #E0A852",
+                }}>
+                  <div style={{ fontSize: 15, fontWeight: 500, marginBottom: 4 }}>{f.title}</div>
+                  <div className="mono" style={{ fontSize: 11, color: "var(--muted)" }}>{f.category}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        )}
+
+        {info.length > 0 && (
+          <Reveal delay={500}>
+            <div style={{ marginBottom: 36 }}>
+              <div className="mono" style={{
+                fontSize: 12, letterSpacing: "0.12em", color: "#8FB4A8",
+                textTransform: "uppercase", marginBottom: 16,
+                display: "flex", alignItems: "center", gap: 10,
+              }}>
+                <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 99, background: "#8FB4A8" }} />
+                Good to Know ({info.length})
+              </div>
+              {info.map((f, i) => (
+                <div key={i} style={{
+                  background: "var(--bg-soft)", border: "1px solid var(--rule)",
+                  borderRadius: 8, padding: "16px 20px", marginBottom: 8,
+                  borderLeft: "3px solid #8FB4A8",
+                }}>
+                  <div style={{ fontSize: 15, fontWeight: 500, marginBottom: 4 }}>{f.title}</div>
+                  <div className="mono" style={{ fontSize: 11, color: "var(--muted)" }}>{f.category}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+        )}
+
+        {/* CTA */}
+        <Reveal delay={600}>
+          <div style={{
+            marginTop: 48, padding: 32, background: "var(--bg-soft)",
+            border: "1px solid var(--rule)", borderRadius: 8, textAlign: "center",
+          }}>
+            <div className="mono" style={{
+              fontSize: 12, color: "var(--accent)", letterSpacing: "0.12em",
+              textTransform: "uppercase", marginBottom: 12,
+            }}>
+              What happens next
+            </div>
+            <p style={{ fontSize: 18, lineHeight: 1.6, maxWidth: 600, margin: "0 auto 24px" }}>
+              Every issue above is costing you leads and revenue. SIMPL monitors your
+              digital presence 24/7 and fixes problems automatically.
+            </p>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="Start.html" className="cta-primary" style={{
+                color: "var(--accent-ink)", textDecoration: "none",
+                padding: "14px 28px", fontSize: 15, borderRadius: 2,
+              }}>Get started →</a>
+              <a href="/" style={{
+                color: "var(--fg)", textDecoration: "underline",
+                textUnderlineOffset: 4, padding: "14px 28px", fontSize: 15,
+              }}>Run another scan</a>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      <div style={{ height: 80 }} />
+      <Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<ResultsPage />);
+</script>
+</body>
+</html>
