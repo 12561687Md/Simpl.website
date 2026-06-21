@@ -4,480 +4,240 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Get Started · SIMPL</title>
-<meta name="description" content="Choose your SIMPL plan — from basic monitoring to the complete digital presence package." />
+<meta name="description" content="Choose your SIMPL plan — from basic monitoring to the complete digital presence package. 14-day free trial, no card required." />
 <link rel="canonical" href="https://simpl.pro/Start" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="simpl.css" />
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="simpl.jsx"></script>
 <style>
-  .tier-card {
-    transition: border-color 240ms ease, transform 240ms ease, background 240ms ease;
-    cursor: pointer;
-  }
+  .tier-card { transition: border-color 240ms ease, transform 240ms ease; cursor: pointer; }
   .tier-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .tier-card.selected { border-color: var(--accent); background: var(--bg-soft); }
-  .tier-card.selected .tier-radio { background: var(--accent); border-color: var(--accent); }
-  .tier-card.selected .tier-radio::after { transform: scale(1); }
-  .tier-radio {
-    width: 16px; height: 16px; border-radius: 999px;
-    border: 1.5px solid var(--rule); position: relative;
-    transition: background 200ms ease, border-color 200ms ease;
-  }
-  .tier-radio::after {
-    content: ""; position: absolute; inset: 4px; border-radius: 999px;
-    background: var(--accent-ink); transform: scale(0);
-    transition: transform 200ms ease;
-  }
-  .field {
-    width: 100%; background: transparent; color: var(--fg);
-    border: 0; border-bottom: 1px solid var(--rule);
-    padding: 16px 0; font-size: 17px; outline: none;
-    transition: border-color 240ms ease;
-    font-family: inherit;
-  }
+  .field { width: 100%; background: transparent; color: var(--fg); border: 0; border-bottom: 1px solid var(--rule); padding: 16px 0; font-size: 17px; outline: none; transition: border-color 240ms ease; font-family: inherit; }
   .field:focus { border-bottom-color: var(--accent); }
   .field::placeholder { color: var(--muted); }
   textarea.field { resize: vertical; min-height: 120px; line-height: 1.55; padding-top: 14px; }
-  .field-label {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
-    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--muted); display: block; margin-bottom: 8px;
-  }
+  .field-label { font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 8px; }
 </style>
 </head>
 <body>
-<div id="root"></div>
 
-<script type="text/babel" data-presets="react">
-const { useState, useRef } = React;
+<!-- Static header -->
+<header style="position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--rule);">
+  <div style="max-width:1120px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px;">
+    <a href="/" style="text-decoration:none;color:var(--fg);font-weight:500;letter-spacing:0.32em;font-size:15px;display:inline-flex;align-items:center;gap:10px;">
+      <span style="display:inline-block;width:6px;height:6px;background:var(--pulse);border-radius:999px;"></span>SIMPL
+    </a>
+    <nav style="display:flex;gap:28px;align-items:center;flex-wrap:wrap;">
+      <a href="/Scan" class="nav-link">The Scan</a>
+      <a href="/Discoverability" class="nav-link">Discoverability</a>
+      <a href="/Performance" class="nav-link">Performance</a>
+      <a href="/Reputation" class="nav-link">Reputation</a>
+      <a href="/Spend" class="nav-link">Spend</a>
+      <a href="/Start" class="cta-primary" style="color:var(--accent-ink);text-decoration:none;padding:10px 18px;font-size:14px;border-radius:2px;margin-left:8px;">Start →</a>
+    </nav>
+  </div>
+</header>
 
-const TIERS = [
-  {
-    id: "solo",
-    name: "Solo",
-    price: "$49",
-    cadence: "/ month",
-    desc: "One business. One domain. The four surfaces, watched continuously.",
-    bullets: [
-      "Hourly scans across all four surfaces",
-      "Email + SMS alerts for findings",
-      "Monthly health report",
-      "Cancel anytime",
-    ],
-  },
-  {
-    id: "pro",
-    name: "Pro",
-    price: "$129",
-    cadence: "/ month",
-    badge: "Most picked",
-    desc: "Solo, plus the things SIMPL fixes for you instead of telling you about.",
-    bullets: [
-      "Everything in Solo",
-      "Auto-remediation for the top 30 finding types",
-      "Priority alerts (within 15 minutes)",
-      "Quarterly review with a human",
-    ],
-  },
-  {
-    id: "agency",
-    name: "Agency",
-    price: "Custom",
-    cadence: "",
-    desc: "For people watching ten or more sites. White-label dashboards, API, billing rollups.",
-    bullets: [
-      "Up to unlimited domains",
-      "White-label client dashboards",
-      "API + webhooks for your stack",
-      "Dedicated support contact",
-    ],
-  },
-];
-
-function StartHero() {
-  return (
-    <section style={{ ...pageStyles.shell, paddingTop: 140, paddingBottom: 96 }}>
-      <Reveal>
-        <div style={{ ...pageStyles.eyebrow, marginBottom: 48, display: "flex", alignItems: "center", gap: 14 }}>
-          <PulseDot size={6} />
-          <span>Start</span>
-          <span className="shimmer-line" aria-hidden="true" style={{ marginLeft: 6 }} />
-        </div>
-      </Reveal>
-      <Reveal delay={120}>
-        <h1 style={{
-          margin: 0,
-          fontSize: "clamp(40px, 6.4vw, 81px)",
-          lineHeight: 1.04,
-          letterSpacing: "-0.025em",
-          fontWeight: 400,
-          maxWidth: 1000,
-        }}>
-          Three ways in.<br />
-          <span style={{ color: "var(--muted)" }}>None of them require a sales call.</span>
-        </h1>
-      </Reveal>
-      <Reveal delay={260}>
-        <p style={{ marginTop: 40, maxWidth: 680, fontSize: 19, lineHeight: 1.55 }}>
-          Run a free scan. Pick a plan and turn on monitoring. Or — if you're an agency or you've got something specific to ask — send a note.
-        </p>
-      </Reveal>
-    </section>
-  );
-}
-
-function ScanIntent() {
-  return (
-    <section style={{ ...pageStyles.shell, paddingTop: 80, paddingBottom: 120 }}>
-      <Reveal>
-        <div style={{
-          ...pageStyles.eyebrow, marginBottom: 32,
-          display: "flex", alignItems: "center", gap: 14,
-        }}>
-          <span className="mono" style={{ color: "var(--accent)" }}>01</span>
-          <span>Just looking — run a free scan</span>
-        </div>
-      </Reveal>
-      <Reveal delay={80}>
-        <h2 style={{
-          margin: 0,
-          fontSize: "clamp(28px, 3.6vw, 41px)",
-          lineHeight: 1.12, letterSpacing: "-0.02em",
-          fontWeight: 400, maxWidth: 720,
-        }}>
-          Type a domain. See one finding. Decide from there.
-        </h2>
-      </Reveal>
-      <Reveal delay={200}>
-        <div style={{ marginTop: 48 }}>
-          <ScanTool />
-        </div>
-      </Reveal>
-    </section>
-  );
-}
-
-function PlanIntent() {
-  const [tier, setTier] = useState("pro");
-  const [submitted, setSubmitted] = useState(false);
-  const [domain, setDomain] = useState("");
-  const [email, setEmail] = useState("");
-
-  function submit(e) {
-    e.preventDefault();
-    if (!domain.trim() || !email.trim()) return;
-    setSubmitted(true);
-  }
-
-  return (
-    <section id="plans" style={{
-      background: "var(--bg-soft)",
-      borderTop: "1px solid var(--rule)",
-      borderBottom: "1px solid var(--rule)",
-    }}>
-      <div style={{ ...pageStyles.shell, paddingTop: 140, paddingBottom: 140 }}>
-        <Reveal>
-          <div style={{
-            ...pageStyles.eyebrow, marginBottom: 32,
-            display: "flex", alignItems: "center", gap: 14,
-          }}>
-            <span className="mono" style={{ color: "var(--accent)" }}>02</span>
-            <span>Ready — pick a plan, turn on monitoring</span>
-          </div>
-        </Reveal>
-        <Reveal delay={80}>
-          <h2 style={{
-            margin: 0,
-            fontSize: "clamp(28px, 3.6vw, 41px)",
-            lineHeight: 1.12, letterSpacing: "-0.02em",
-            fontWeight: 400, maxWidth: 720,
-          }}>
-            Three tiers. One question — how much do you want SIMPL to do without asking?
-          </h2>
-        </Reveal>
-        <Reveal delay={140}>
-          <p style={{ color: "var(--muted)", maxWidth: 580, marginTop: 20 }}>
-            14-day trial on every plan. No card up front. Cancel from a single button in the dashboard.
-          </p>
-        </Reveal>
-
-        <div style={{
-          marginTop: 64,
-          display: "grid", gap: 16,
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-        }}>
-          {TIERS.map((t, i) => {
-            const selected = t.id === tier;
-            return (
-              <Reveal key={t.id} delay={i * 80}>
-                <label
-                  className={"tier-card" + (selected ? " selected" : "")}
-                  style={{
-                    display: "flex", flexDirection: "column", gap: 18,
-                    background: "var(--bg)",
-                    border: "1px solid var(--rule)",
-                    padding: "32px 28px 28px",
-                    minHeight: 360,
-                    position: "relative",
-                  }}
-                >
-                  <input
-                    type="radio" name="tier" value={t.id}
-                    checked={selected}
-                    onChange={() => setTier(t.id)}
-                    style={{ position: "absolute", opacity: 0, pointerEvents: "none" }}
-                  />
-                  {t.badge && (
-                    <div className="mono" style={{
-                      position: "absolute", top: 16, right: 16,
-                      fontSize: 10, letterSpacing: "0.18em",
-                      color: "var(--accent)", textTransform: "uppercase",
-                    }}>{t.badge}</div>
-                  )}
-                  <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                    <span className="tier-radio" aria-hidden="true" />
-                    <span style={{ fontSize: 18, letterSpacing: "0.02em", fontWeight: 500 }}>{t.name}</span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                    <span style={{ fontSize: 40, letterSpacing: "-0.02em", fontWeight: 400 }}>{t.price}</span>
-                    {t.cadence && <span style={{ color: "var(--muted)", fontSize: 14 }}>{t.cadence}</span>}
-                  </div>
-                  <div style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.55 }}>{t.desc}</div>
-                  <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10, marginTop: "auto" }}>
-                    {t.bullets.map((b) => (
-                      <li key={b} style={{ display: "grid", gridTemplateColumns: "14px 1fr", gap: 10, fontSize: 14, lineHeight: 1.5 }}>
-                        <span className="mono" style={{ color: "var(--accent)", fontSize: 11, lineHeight: 1.5 }}>+</span>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </label>
-              </Reveal>
-            );
-          })}
-        </div>
-
-        {/* Trial form */}
-        <Reveal delay={120}>
-          <form onSubmit={submit} style={{
-            marginTop: 64,
-            background: "var(--bg)",
-            border: "1px solid var(--rule)",
-            padding: "40px 36px",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr auto",
-            gap: 32, alignItems: "end",
-          }}>
-            {submitted ? (
-              <div style={{ gridColumn: "1 / -1", display: "grid", gap: 14 }}>
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase" }}>
-                  Trial started
-                </div>
-                <div style={{ fontSize: 22, letterSpacing: "-0.01em", lineHeight: 1.3 }}>
-                  We'll watch <span className="mono" style={{ color: "var(--accent)" }}>{domain}</span> on the {TIERS.find(t => t.id === tier).name} plan and send the first findings to <span className="mono" style={{ color: "var(--accent)" }}>{email}</span> within an hour.
-                </div>
-                <div style={{ color: "var(--muted)", fontSize: 14 }}>No charge for 14 days. No surprise on day 15 either — we'll email you first.</div>
-              </div>
-            ) : (
-              <>
-                <div>
-                  <label className="field-label" htmlFor="domain">Domain to watch</label>
-                  <input id="domain" className="field mono"
-                    type="text" value={domain}
-                    onChange={(e) => setDomain(e.target.value)}
-                    placeholder="yourbusiness.com"
-                  />
-                </div>
-                <div>
-                  <label className="field-label" htmlFor="email">Where to send findings</label>
-                  <input id="email" className="field"
-                    type="email" value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@yourbusiness.com"
-                  />
-                </div>
-                <button type="submit" className="cta-primary" style={{
-                  border: 0, color: "var(--accent-ink)",
-                  padding: "18px 28px", fontSize: 15, letterSpacing: "0.02em",
-                  borderRadius: 2, cursor: "pointer", whiteSpace: "nowrap",
-                }}>
-                  Start {TIERS.find(t => t.id === tier).name} trial →
-                </button>
-              </>
-            )}
-          </form>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function ContactIntent() {
-  const [sent, setSent] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [company, setCompany] = useState("");
-  const [topic, setTopic] = useState("agency");
-  const [message, setMessage] = useState("");
-
-  function submit(e) {
-    e.preventDefault();
-    if (!email.trim() || !message.trim()) return;
-    setSent(true);
-  }
-
-  return (
-    <section id="contact" style={{ ...pageStyles.shell, paddingTop: 140, paddingBottom: 140 }}>
-      <Reveal>
-        <div style={{
-          ...pageStyles.eyebrow, marginBottom: 32,
-          display: "flex", alignItems: "center", gap: 14,
-        }}>
-          <span className="mono" style={{ color: "var(--accent)" }}>03</span>
-          <span>Something specific — send a note</span>
-        </div>
-      </Reveal>
-      <Reveal delay={80}>
-        <h2 style={{
-          margin: 0,
-          fontSize: "clamp(28px, 3.6vw, 41px)",
-          lineHeight: 1.12, letterSpacing: "-0.02em",
-          fontWeight: 400, maxWidth: 720,
-        }}>
-          Agency, white-label, multi-site, integration — write a paragraph, hear back same day.
-        </h2>
-      </Reveal>
-
-      <Reveal delay={160}>
-        <div style={{
-          marginTop: 64,
-          display: "grid",
-          gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)",
-          gap: 56, alignItems: "start",
-        }}>
-          {/* Form */}
-          <form onSubmit={submit} style={{
-            display: "grid", gap: 36,
-            border: "1px solid var(--rule)",
-            padding: "40px 36px",
-            background: "var(--bg-soft)",
-          }}>
-            {sent ? (
-              <div style={{ display: "grid", gap: 14, minHeight: 360 }}>
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase" }}>
-                  Sent
-                </div>
-                <div style={{ fontSize: 22, letterSpacing: "-0.01em", lineHeight: 1.3 }}>
-                  Got it. We'll write back to <span className="mono" style={{ color: "var(--accent)" }}>{email}</span> before the day is out.
-                </div>
-                <div style={{ color: "var(--muted)", fontSize: 14 }}>If it's urgent, the reply will come from a person, not a queue.</div>
-              </div>
-            ) : (
-              <>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
-                  <div>
-                    <label className="field-label" htmlFor="c-name">Name</label>
-                    <input id="c-name" className="field" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
-                  </div>
-                  <div>
-                    <label className="field-label" htmlFor="c-email">Email</label>
-                    <input id="c-email" className="field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@company.com" />
-                  </div>
-                </div>
-                <div>
-                  <label className="field-label" htmlFor="c-company">Company</label>
-                  <input id="c-company" className="field" type="text" value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Acme Plumbing" />
-                </div>
-                <div>
-                  <label className="field-label">What's this about</label>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 4 }}>
-                    {[
-                      { id: "agency",  label: "Agency / white-label" },
-                      { id: "multi",   label: "Multi-site" },
-                      { id: "api",     label: "API / integration" },
-                      { id: "other",   label: "Something else" },
-                    ].map((t) => {
-                      const on = topic === t.id;
-                      return (
-                        <button key={t.id} type="button" onClick={() => setTopic(t.id)}
-                          style={{
-                            border: "1px solid " + (on ? "var(--accent)" : "var(--rule)"),
-                            background: on ? "var(--accent-soft)" : "transparent",
-                            color: on ? "var(--accent)" : "var(--fg)",
-                            padding: "10px 16px", fontSize: 13, letterSpacing: "0.02em",
-                            cursor: "pointer", borderRadius: 999,
-                            transition: "all 200ms ease",
-                          }}>
-                          {t.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div>
-                  <label className="field-label" htmlFor="c-message">Message</label>
-                  <textarea id="c-message" className="field" value={message} onChange={(e) => setMessage(e.target.value)}
-                    placeholder="A paragraph about what you're trying to do." />
-                </div>
-                <div>
-                  <button type="submit" className="cta-primary" style={{
-                    border: 0, color: "var(--accent-ink)",
-                    padding: "18px 28px", fontSize: 15, letterSpacing: "0.02em",
-                    borderRadius: 2, cursor: "pointer",
-                  }}>
-                    Send →
-                  </button>
-                </div>
-              </>
-            )}
-          </form>
-
-          {/* Side info */}
-          <div style={{ display: "grid", gap: 32 }}>
-            <div>
-              <div className="mono" style={{ ...pageStyles.eyebrow, marginBottom: 12 }}>Reply window</div>
-              <div style={{ fontSize: 17, lineHeight: 1.5 }}>Same business day, almost always within four hours.</div>
-            </div>
-            <div>
-              <div className="mono" style={{ ...pageStyles.eyebrow, marginBottom: 12 }}>From</div>
-              <div style={{ fontSize: 17, lineHeight: 1.5 }}>A person. Not a sequence. Not a calendar link first.</div>
-            </div>
-            <div>
-              <div className="mono" style={{ ...pageStyles.eyebrow, marginBottom: 12 }}>Direct</div>
-              <a href="mailto:hi@simpl.pro" className="mono" style={{
-                fontSize: 14, color: "var(--accent)",
-                textDecoration: "none", letterSpacing: "0.04em",
-                borderBottom: "1px solid var(--accent)", paddingBottom: 2,
-              }}>hi@simpl.pro</a>
-            </div>
-          </div>
-        </div>
-      </Reveal>
-    </section>
-  );
-}
-
-function App() {
-  return (
-    <div>
-      <Header />
-      <main>
-        <StartHero />
-        <ScanIntent />
-        <PlanIntent />
-        <ContactIntent />
-      </main>
-      <Footer tag="Three ways in. None of them require a sales call." />
+<main>
+  <!-- Hero -->
+  <section style="max-width:1120px;margin:0 auto;padding:140px 32px 96px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:48px;display:flex;align-items:center;gap:14px;">
+      <span style="display:inline-block;width:6px;height:6px;background:var(--pulse);border-radius:999px;"></span>
+      <span>Start</span>
     </div>
-  );
+    <h1 style="margin:0;font-size:clamp(40px,6.4vw,81px);line-height:1.04;letter-spacing:-0.025em;font-weight:400;max-width:1000;">
+      Three ways in.<br>
+      <span style="color:var(--muted);">None of them require a sales call.</span>
+    </h1>
+    <p style="margin-top:40px;max-width:680px;font-size:19px;line-height:1.55;">
+      Run a free scan. Pick a plan and turn on monitoring. Or — if you're an agency or you've got something specific to ask — send a note.
+    </p>
+  </section>
+
+  <!-- 01: Free scan -->
+  <section style="max-width:1120px;margin:0 auto;padding:80px 32px 120px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:32px;display:flex;align-items:center;gap:14px;">
+      <span style="color:var(--accent);font-family:'JetBrains Mono',monospace;">01</span>
+      <span>Just looking — run a free scan</span>
+    </div>
+    <h2 style="margin:0;font-size:clamp(28px,3.6vw,41px);line-height:1.12;letter-spacing:-0.02em;font-weight:400;max-width:720;">
+      Type a domain. See your SIMPL Score. Decide from there.
+    </h2>
+    <div style="margin-top:48px;">
+      <div id="scan-tool-start"></div>
+      <noscript><p style="color:var(--muted);font-size:15px;padding:20px 0;">The scan tool requires JavaScript. Email <a href="mailto:hi@simpl.pro" style="color:var(--accent);">hi@simpl.pro</a> for your free score.</p></noscript>
+    </div>
+  </section>
+
+  <!-- 02: Pick a plan -->
+  <section id="plans" style="background:var(--bg-soft);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);">
+    <div style="max-width:1120px;margin:0 auto;padding:140px 32px;">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:32px;display:flex;align-items:center;gap:14px;">
+        <span style="color:var(--accent);font-family:'JetBrains Mono',monospace;">02</span>
+        <span>Ready — pick a plan, turn on monitoring</span>
+      </div>
+      <h2 style="margin:0;font-size:clamp(28px,3.6vw,41px);line-height:1.12;letter-spacing:-0.02em;font-weight:400;max-width:720;">
+        Three tiers. One question — how much do you want SIMPL to do without asking?
+      </h2>
+      <p style="color:var(--muted);max-width:580px;margin-top:20px;">
+        14-day trial on every plan. No card up front. Cancel from a single button in the dashboard.
+      </p>
+
+      <!-- Plan cards (static) -->
+      <div style="margin-top:64px;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+        <div class="tier-card" style="display:flex;flex-direction:column;gap:18px;background:var(--bg);border:1px solid var(--rule);padding:32px 28px 28px;min-height:360px;">
+          <div style="font-size:18px;font-weight:500;">Solo</div>
+          <div style="display:flex;align-items:baseline;gap:6px;"><span style="font-size:40px;font-weight:400;">$49</span><span style="color:var(--muted);font-size:14px;">/ month</span></div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.55;">One business. One domain. The four surfaces, watched continuously.</div>
+          <ul style="margin:0;padding:0;list-style:none;display:grid;gap:10px;margin-top:auto;">
+            <li style="font-size:14px;">+ Hourly scans across all four surfaces</li>
+            <li style="font-size:14px;">+ Email + SMS alerts for findings</li>
+            <li style="font-size:14px;">+ Monthly health report</li>
+            <li style="font-size:14px;">+ Cancel anytime</li>
+          </ul>
+        </div>
+        <div class="tier-card" style="display:flex;flex-direction:column;gap:18px;background:var(--bg);border:1px solid var(--accent);padding:32px 28px 28px;min-height:360px;position:relative;">
+          <div style="position:absolute;top:16px;right:16px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.18em;color:var(--accent);text-transform:uppercase;">Most picked</div>
+          <div style="font-size:18px;font-weight:500;">Pro</div>
+          <div style="display:flex;align-items:baseline;gap:6px;"><span style="font-size:40px;font-weight:400;">$129</span><span style="color:var(--muted);font-size:14px;">/ month</span></div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.55;">Solo, plus the things SIMPL fixes for you instead of telling you about.</div>
+          <ul style="margin:0;padding:0;list-style:none;display:grid;gap:10px;margin-top:auto;">
+            <li style="font-size:14px;">+ Everything in Solo</li>
+            <li style="font-size:14px;">+ Auto-remediation for top 30 finding types</li>
+            <li style="font-size:14px;">+ Priority alerts (within 15 minutes)</li>
+            <li style="font-size:14px;">+ Quarterly review with a human</li>
+          </ul>
+        </div>
+        <div class="tier-card" style="display:flex;flex-direction:column;gap:18px;background:var(--bg);border:1px solid var(--rule);padding:32px 28px 28px;min-height:360px;">
+          <div style="font-size:18px;font-weight:500;">Agency</div>
+          <div style="display:flex;align-items:baseline;gap:6px;"><span style="font-size:40px;font-weight:400;">Custom</span></div>
+          <div style="color:var(--muted);font-size:14px;line-height:1.55;">For people watching ten or more sites. White-label dashboards, API, billing rollups.</div>
+          <ul style="margin:0;padding:0;list-style:none;display:grid;gap:10px;margin-top:auto;">
+            <li style="font-size:14px;">+ Up to unlimited domains</li>
+            <li style="font-size:14px;">+ White-label client dashboards</li>
+            <li style="font-size:14px;">+ API + webhooks for your stack</li>
+            <li style="font-size:14px;">+ Dedicated support contact</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Trial form mounts here -->
+      <div id="trial-form" style="margin-top:64px;"></div>
+    </div>
+  </section>
+
+  <!-- 03: Contact -->
+  <section id="contact" style="max-width:1120px;margin:0 auto;padding:140px 32px;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:32px;display:flex;align-items:center;gap:14px;">
+      <span style="color:var(--accent);font-family:'JetBrains Mono',monospace;">03</span>
+      <span>Something specific — send a note</span>
+    </div>
+    <h2 style="margin:0;font-size:clamp(28px,3.6vw,41px);line-height:1.12;letter-spacing:-0.02em;font-weight:400;max-width:720;">
+      Agency, white-label, multi-site, integration — write a paragraph, hear back same day.
+    </h2>
+
+    <div style="margin-top:64px;display:grid;grid-template-columns:minmax(0,2fr) minmax(220px,1fr);gap:56px;align-items:start;">
+      <!-- Contact form mounts here -->
+      <div id="contact-form"></div>
+
+      <!-- Side info (static) -->
+      <div style="display:grid;gap:32px;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Reply window</div>
+          <div style="font-size:17px;line-height:1.5;">Same business day, almost always within four hours.</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">From</div>
+          <div style="font-size:17px;line-height:1.5;">A person. Not a sequence. Not a calendar link first.</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Direct</div>
+          <a href="mailto:hi@simpl.pro" style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:2px;">hi@simpl.pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Static footer -->
+<footer style="border-top:1px solid var(--rule);">
+  <div style="max-width:1120px;margin:0 auto;padding:64px 32px 80px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:24px;">
+    <div>
+      <div style="font-weight:500;letter-spacing:0.32em;font-size:14px;margin-bottom:12px;">SIMPL</div>
+      <div style="color:var(--muted);font-size:14px;font-style:italic;">Three ways in. None of them require a sales call.</div>
+    </div>
+    <nav style="display:flex;gap:24px;flex-wrap:wrap;">
+      <a href="/Scan" style="color:var(--muted);text-decoration:none;font-size:14px;">The Scan</a>
+      <a href="/Start" style="color:var(--muted);text-decoration:none;font-size:14px;">Start</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- React for interactive forms only -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script type="text/babel" data-presets="react">
+const SIMPL_API = "https://simpl-production-7c1b.up.railway.app";
+const SCAN_STEPS = ["resolving site…","checking SSL…","analyzing structure…","checking SEO…","calculating score…"];
+
+function ScanWidget() {
+  const [url, setUrl] = React.useState("");
+  const [state, setState] = React.useState("idle");
+  const [stepIdx, setStepIdx] = React.useState(0);
+  const [result, setResult] = React.useState(null);
+  const [error, setError] = React.useState(null);
+  const stepTimer = React.useRef(null);
+  React.useEffect(() => { if (state !== "scanning") return; setStepIdx(0); stepTimer.current = setInterval(() => setStepIdx(i => Math.min(i + 1, 4)), 600); return () => clearInterval(stepTimer.current); }, [state]);
+  function run(e) { e && e.preventDefault(); if (!url.trim()) return; setState("scanning"); setResult(null); setError(null);
+    fetch(SIMPL_API + "/scan/quick", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ url: url.trim() }) })
+      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+      .then(data => { clearInterval(stepTimer.current); setResult(data); setState("done"); try { localStorage.setItem("simpl_scan_result", JSON.stringify(data)); } catch(e) {} })
+      .catch(() => { clearInterval(stepTimer.current); setError("Could not scan that URL."); setState("idle"); }); }
+  function reset() { setState("idle"); setUrl(""); setResult(null); setError(null); }
+  function gc(g) { return !g?"#8FB4A8":g.startsWith("A")||g.startsWith("B")?"#8FB4A8":g==="C"?"#E0A852":"#E05252"; }
+  return React.createElement("div", null,
+    React.createElement("form", { onSubmit: run, style: { display: "flex", alignItems: "stretch", borderBottom: "1px solid var(--fg)", maxWidth: 760 } },
+      React.createElement("span", { style: { display: "flex", alignItems: "center", paddingRight: 14, color: "var(--muted)", fontSize: 14, fontFamily: "'JetBrains Mono',monospace" } }, "https://"),
+      React.createElement("input", { type: "text", value: url, onChange: e => setUrl(e.target.value), placeholder: "yourbusiness.com", style: { flex: 1, border: 0, outline: "none", background: "transparent", padding: "22px 0", fontSize: 22, color: "var(--fg)" } }),
+      React.createElement("button", { type: "submit", disabled: state === "scanning", style: { border: 0, background: "var(--fg)", color: "var(--bg)", padding: "0 28px", fontSize: 15, cursor: state === "scanning" ? "wait" : "pointer", opacity: state === "scanning" ? 0.7 : 1 } }, state === "scanning" ? "Scanning…" : "Run scan")),
+    error && React.createElement("div", { style: { marginTop: 16, color: "#E05252", fontSize: 14 } }, error),
+    React.createElement("div", { style: { marginTop: 32, maxWidth: 760, minHeight: 80 } },
+      state === "scanning" && React.createElement("div", { style: { fontFamily: "'JetBrains Mono',monospace", color: "var(--muted)", fontSize: 13, lineHeight: 1.9 } }, SCAN_STEPS.slice(0, stepIdx + 1).map((s, i) => React.createElement("div", { key: i, style: { opacity: i === stepIdx ? 1 : 0.55 } }, "→ " + s))),
+      state === "done" && result && React.createElement("div", { style: { border: "1px solid var(--rule)", background: "var(--bg-soft)", padding: "28px 32px" } },
+        React.createElement("div", { style: { display: "flex", alignItems: "baseline", gap: 20, marginBottom: 16 } },
+          React.createElement("div", { style: { fontSize: 48, fontWeight: 300, color: gc(result.grade), lineHeight: 1 } }, result.grade),
+          React.createElement("div", null, React.createElement("div", { style: { fontSize: 20, fontWeight: 500 } }, "SIMPL Score: " + (result.percentage || result.score) + "%"))),
+        React.createElement("div", { style: { marginTop: 16, display: "flex", gap: 12, alignItems: "center" } },
+          React.createElement("button", { onClick: reset, style: { background: "transparent", border: 0, color: "var(--fg)", textDecoration: "underline", cursor: "pointer", font: "inherit" } }, "Run another"),
+          React.createElement("a", { href: "/Results", style: { background: "var(--accent)", color: "var(--accent-ink)", textDecoration: "none", padding: "10px 18px", fontSize: 13, borderRadius: 2 } }, "Full report →")))));
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+function ContactForm() {
+  const [sent, setSent] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  function submit(e) { e.preventDefault(); if (!email.trim() || !message.trim()) return; setSent(true); }
+  if (sent) return React.createElement("div", { style: { border: "1px solid var(--rule)", background: "var(--bg-soft)", padding: "40px 36px" } },
+    React.createElement("div", { style: { fontFamily: "'JetBrains Mono',monospace", fontSize: 11, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 14 } }, "Sent"),
+    React.createElement("div", { style: { fontSize: 22, lineHeight: 1.3 } }, "Got it. We'll write back before the day is out."));
+  return React.createElement("form", { onSubmit: submit, style: { display: "grid", gap: 28, border: "1px solid var(--rule)", padding: "40px 36px", background: "var(--bg-soft)" } },
+    React.createElement("div", null,
+      React.createElement("label", { className: "field-label" }, "Email"),
+      React.createElement("input", { className: "field", type: "email", value: email, onChange: e => setEmail(e.target.value), placeholder: "you@company.com" })),
+    React.createElement("div", null,
+      React.createElement("label", { className: "field-label" }, "Message"),
+      React.createElement("textarea", { className: "field", value: message, onChange: e => setMessage(e.target.value), placeholder: "What are you looking for?" })),
+    React.createElement("button", { type: "submit", style: { background: "var(--accent)", border: 0, color: "var(--accent-ink)", padding: "18px 28px", fontSize: 15, borderRadius: 2, cursor: "pointer", justifySelf: "start" } }, "Send →"));
+}
+
+const scanEl = document.getElementById("scan-tool-start");
+if (scanEl) ReactDOM.createRoot(scanEl).render(React.createElement(ScanWidget));
+const contactEl = document.getElementById("contact-form");
+if (contactEl) ReactDOM.createRoot(contactEl).render(React.createElement(ContactForm));
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
