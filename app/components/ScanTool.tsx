@@ -177,15 +177,46 @@ export default function ScanTool({ compact = false }: { compact?: boolean }) {
 
       <div style={{ marginTop: 32, maxWidth: 760, minHeight: compact ? 80 : 120 }}>
         {state === "scanning" && (
-          <div
-            className="mono"
-            style={{ color: "var(--muted)", fontSize: 13, lineHeight: 1.9 }}
-          >
-            {SCAN_STEPS.slice(0, stepIdx + 1).map((s, i) => (
-              <div key={i} style={{ opacity: i === stepIdx ? 1 : 0.55 }}>
-                → {s}
+          <div>
+            {/* Progress bar */}
+            <div style={{ position: "relative", height: 2, background: "var(--rule)", marginBottom: 24, borderRadius: 1, overflow: "hidden" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  height: "100%",
+                  background: "var(--accent)",
+                  borderRadius: 1,
+                  width: `${Math.min(((stepIdx + 1) / SCAN_STEPS.length) * 85 + 10, 95)}%`,
+                  transition: "width 600ms cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+              />
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 16 }}>
+              <div
+                className="mono"
+                style={{ fontSize: 11, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase" }}
+              >
+                Scanning {url}
               </div>
-            ))}
+              <div
+                className="mono"
+                style={{ fontSize: 11, color: "var(--muted)" }}
+              >
+                ~{Math.max(15 - stepIdx * 3, 3)}s remaining
+              </div>
+            </div>
+            <div
+              className="mono"
+              style={{ color: "var(--muted)", fontSize: 13, lineHeight: 1.9 }}
+            >
+              {SCAN_STEPS.slice(0, stepIdx + 1).map((s, i) => (
+                <div key={i} style={{ opacity: i === stepIdx ? 1 : 0.55 }}>
+                  → {s}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
