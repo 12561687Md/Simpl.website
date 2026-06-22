@@ -192,8 +192,6 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                   const short = name
                     .replace("Website Foundation", "Website")
                     .replace("Content & Pages", "Content")
-                    .replace("Trust & Conversion", "Trust")
-                    .replace("Schema & Structure", "Schema")
                     .replace("On-Page SEO", "SEO")
                     .replace("Social Presence", "Social")
                     .replace("Google Business Profile", "GBP");
