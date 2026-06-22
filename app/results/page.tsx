@@ -5,7 +5,7 @@ import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-const SIMPL_API = "https://simpl-production-7c1b.up.railway.app";
+const SIMPL_API = "https://simpl-506452749067.us-east1.run.app";
 
 function gradeColor(g: string) {
   return !g ? "#8FB4A8" : g.startsWith("A") || g.startsWith("B") ? "#8FB4A8" : g === "C" ? "#E0A852" : "#E05252";

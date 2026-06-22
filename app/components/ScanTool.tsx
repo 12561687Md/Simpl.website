@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 
-const SIMPL_API = "https://simpl-production-7c1b.up.railway.app";
+const SIMPL_API = "https://simpl-506452749067.us-east1.run.app";
 const SCAN_STEPS = [
   "resolving site…",
   "checking SSL certificate…",
