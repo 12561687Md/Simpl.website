@@ -48,16 +48,20 @@ interface ScanResult {
   percentage: number;
   grade: string;
   business: BusinessInfo;
+  summary: string;
   response_time_ms: number;
   ssl_valid: boolean;
-  ssl_days_remaining: number;
+  ssl_days_remaining?: number;
   social_profiles: string[];
   social_missing: string[];
-  categories: Record<string, { score: number; max: number; grade: string }>;
+  categories: Record<string, { grade: string; score?: number; max?: number }>;
   findings: Finding[];
   findings_count: number;
+  findings_shown: number;
+  findings_hidden: number;
   critical_count: number;
   warning_count: number;
+  is_free_tier: boolean;
 }
 
 export default function ScanTool({ compact = false }: { compact?: boolean }) {
@@ -351,80 +355,45 @@ export default function ScanTool({ compact = false }: { compact?: boolean }) {
               </div>
             )}
 
+            {/* Summary */}
+            {result.summary && (
+              <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 20, marginBottom: 16 }}>
+                <p style={{ fontSize: 15, lineHeight: 1.6, color: "var(--fg)", margin: 0 }}>
+                  {result.summary}
+                </p>
+              </div>
+            )}
+
+            {/* Top findings */}
             {result.findings && result.findings.length > 0 && (
-              <div
-                style={{
-                  borderTop: "1px solid var(--rule)",
-                  paddingTop: 20,
-                }}
-              >
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 11,
-                    letterSpacing: "0.18em",
-                    color: "var(--muted)",
-                    textTransform: "uppercase",
-                    marginBottom: 14,
-                  }}
-                >
-                  {result.findings_count}{" "}
-                  {result.findings_count === 1 ? "finding" : "findings"}
+              <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 20 }}>
+                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--muted)", textTransform: "uppercase", marginBottom: 14 }}>
+                  Top {result.findings_shown || result.findings.length} of {result.findings_count} findings
                 </div>
-                {result.findings.slice(0, 8).map((f, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      display: "flex",
-                      alignItems: "baseline",
-                      gap: 14,
-                      marginBottom: 10,
-                    }}
-                  >
-                    <span
-                      className="mono"
-                      style={{
-                        fontSize: 10,
-                        padding: "2px 8px",
-                        borderRadius: 3,
-                        background: severityColor(f.severity) + "22",
-                        color: severityColor(f.severity),
-                        textTransform: "uppercase",
-                        letterSpacing: "0.08em",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
+                {result.findings.map((f, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "baseline", gap: 14, marginBottom: 10 }}>
+                    <span className="mono" style={{ fontSize: 10, padding: "2px 8px", borderRadius: 3, background: severityColor(f.severity) + "22", color: severityColor(f.severity), textTransform: "uppercase", letterSpacing: "0.08em", whiteSpace: "nowrap" }}>
                       {f.severity}
                     </span>
-                    <span style={{ fontSize: 14, lineHeight: 1.5 }}>
-                      {f.title}
-                    </span>
-                    <span
-                      className="mono"
-                      style={{
-                        fontSize: 11,
-                        color: "var(--muted)",
-                        marginLeft: "auto",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {f.category}
-                    </span>
+                    <span style={{ fontSize: 14, lineHeight: 1.5 }}>{f.title}</span>
+                    <span className="mono" style={{ fontSize: 11, color: "var(--muted)", marginLeft: "auto", whiteSpace: "nowrap" }}>{f.category}</span>
                   </div>
                 ))}
-                {result.findings_count > 8 && (
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 12,
-                      color: "var(--muted)",
-                      marginTop: 12,
-                    }}
-                  >
-                    +{result.findings_count - 8} more findings in the full
-                    report
-                  </div>
-                )}
+              </div>
+            )}
+
+            {/* Hidden findings gate */}
+            {(result.findings_hidden ?? 0) > 0 && (
+              <div style={{ marginTop: 20, padding: "20px 24px", background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 6, textAlign: "center" }}>
+                <div className="mono" style={{ fontSize: 12, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>
+                  +{result.findings_hidden} more findings
+                </div>
+                <p style={{ fontSize: 14, color: "var(--muted)", margin: "0 0 16px", lineHeight: 1.5 }}>
+                  Enter your email to see the complete report with all {result.findings_count} findings, detailed category scores, and actionable recommendations.
+                </p>
+                <a href="/results" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "12px 24px", fontSize: 14, borderRadius: 2, display: "inline-block" }}>
+                  Get the full report →
+                </a>
               </div>
             )}
 
