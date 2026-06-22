@@ -5,10 +5,15 @@ import { useState, useEffect, useRef } from "react";
 const SIMPL_API = "https://simpl-production-7c1b.up.railway.app";
 const SCAN_STEPS = [
   "resolving site…",
-  "checking SSL…",
+  "checking SSL certificate…",
+  "fetching page content…",
   "analyzing structure…",
-  "checking SEO…",
-  "calculating score…",
+  "checking on-page SEO…",
+  "scanning for schema markup…",
+  "checking social presence…",
+  "searching Google Business Profile…",
+  "verifying business identity…",
+  "calculating SIMPL Score…",
 ];
 
 function gradeColor(grade: string | undefined) {
@@ -68,7 +73,7 @@ export default function ScanTool({ compact = false }: { compact?: boolean }) {
     setStepIdx(0);
     stepTimer.current = setInterval(
       () => setStepIdx((i) => Math.min(i + 1, SCAN_STEPS.length - 1)),
-      600
+      2000
     );
     return () => {
       if (stepTimer.current) clearInterval(stepTimer.current);
@@ -204,7 +209,7 @@ export default function ScanTool({ compact = false }: { compact?: boolean }) {
                 className="mono"
                 style={{ fontSize: 11, color: "var(--muted)" }}
               >
-                ~{Math.max(15 - stepIdx * 3, 3)}s remaining
+                ~{Math.max(20 - (stepIdx + 1) * 2, 2)}s remaining
               </div>
             </div>
             <div
