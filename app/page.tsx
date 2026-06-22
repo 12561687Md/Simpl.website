@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import HomeHero from "./components/HomeHero";
 import ScanTool from "./components/ScanTool";
 
 export const metadata: Metadata = {
@@ -56,27 +57,8 @@ export default function Home() {
     <div>
       <Header />
       <main>
-        {/* Hero */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 96px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48, display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ display: "inline-block", width: 6, height: 6, background: "var(--pulse)", borderRadius: 999 }} />
-            <span>SIMPL.PRO · Monitoring · Protection · Repair</span>
-          </div>
-          <h1 style={{ margin: 0, fontSize: "clamp(40px, 6.4vw, 81px)", lineHeight: 1.04, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 1000 }}>
-            Your business is always online.<br />
-            <span style={{ color: "var(--muted)" }}>SIMPL makes sure it&apos;s always working.</span>
-          </h1>
-          <p style={{ marginTop: 40, maxWidth: 620, fontSize: 19, lineHeight: 1.55 }}>
-            We watch your site, your listings, your reviews, and your ads. We fix what we can. We tell you when you need to decide something.
-          </p>
-          <div style={{ marginTop: 56 }}>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
-              <span>Try the scan — type your domain</span>
-              <Link href="/scan" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 1, fontSize: 11 }}>How it works ↗</Link>
-            </div>
-            <ScanTool />
-          </div>
-        </section>
+        {/* Hero + Scan Tool */}
+        <HomeHero />
 
         {/* Coverage */}
         <section id="coverage" style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
