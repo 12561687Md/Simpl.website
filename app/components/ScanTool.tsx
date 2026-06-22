@@ -28,14 +28,26 @@ interface Finding {
   category: string;
 }
 
+interface BusinessInfo {
+  name: string | null;
+  type: string | null;
+  industry: string | null;
+  location: string | null;
+  phone: string | null;
+  email: string | null;
+}
+
 interface ScanResult {
   url: string;
   score: number;
   percentage: number;
   grade: string;
+  business: BusinessInfo;
   response_time_ms: number;
   ssl_valid: boolean;
   ssl_days_remaining: number;
+  social_profiles: string[];
+  social_missing: string[];
   categories: Record<string, { score: number; max: number; grade: string }>;
   findings: Finding[];
   findings_count: number;
@@ -185,6 +197,22 @@ export default function ScanTool({ compact = false }: { compact?: boolean }) {
               padding: "28px 32px",
             }}
           >
+            {/* Business identification */}
+            {result.business && result.business.name && (
+              <div style={{ marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid var(--rule)" }}>
+                <div style={{ fontSize: 18, fontWeight: 500 }}>
+                  {result.business.name}
+                </div>
+                <div className="mono" style={{ fontSize: 12, color: "var(--muted)", marginTop: 4, display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  {result.business.industry && <span>{result.business.industry}</span>}
+                  {result.business.industry && result.business.location && <span>·</span>}
+                  {result.business.location && <span>{result.business.location}</span>}
+                  {result.business.phone && <><span>·</span><span>{result.business.phone}</span></>}
+                </div>
+              </div>
+            )}
+
+            {/* Score */}
             <div
               style={{
                 display: "flex",
@@ -263,6 +291,27 @@ export default function ScanTool({ compact = false }: { compact?: boolean }) {
                     </div>
                   </div>
                 ))}
+              </div>
+            )}
+
+            {/* Social media profiles */}
+            {(result.social_profiles?.length > 0 || result.social_missing?.length > 0) && (
+              <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 16, marginBottom: 16 }}>
+                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--muted)", textTransform: "uppercase", marginBottom: 10 }}>
+                  Social Presence
+                </div>
+                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                  {result.social_profiles?.map((p) => (
+                    <span key={p} style={{ fontSize: 12, padding: "4px 10px", borderRadius: 99, background: "#8FB4A822", color: "#8FB4A8", fontFamily: "'JetBrains Mono', monospace" }}>
+                      {p}
+                    </span>
+                  ))}
+                  {result.social_missing?.filter(p => ["Facebook", "Instagram", "LinkedIn", "YouTube"].includes(p)).map((p) => (
+                    <span key={p} style={{ fontSize: 12, padding: "4px 10px", borderRadius: 99, background: "#E0525222", color: "#E05252", fontFamily: "'JetBrains Mono', monospace", opacity: 0.7 }}>
+                      {p}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
 
