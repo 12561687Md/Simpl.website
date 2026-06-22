@@ -306,7 +306,7 @@ export default function ScanTool({ compact = false }: { compact?: boolean }) {
                       {p}
                     </span>
                   ))}
-                  {result.social_missing?.filter(p => ["Facebook", "Instagram", "LinkedIn", "YouTube"].includes(p)).map((p) => (
+                  {result.social_missing?.filter(p => ["Facebook", "Instagram", "LinkedIn", "YouTube", "TikTok"].includes(p)).map((p) => (
                     <span key={p} style={{ fontSize: 12, padding: "4px 10px", borderRadius: 99, background: "#E0525222", color: "#E05252", fontFamily: "'JetBrains Mono', monospace", opacity: 0.7 }}>
                       {p}
                     </span>
