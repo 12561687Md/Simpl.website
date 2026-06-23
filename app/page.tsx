@@ -46,7 +46,7 @@ const CATEGORIES = [
     name: "Crawlability",
     grade: "Most sites: B",
     problem: "No sitemap, broken internal links, robots.txt blocking Google. Your pages exist but search engines can't reach them.",
-    fix: "SIMPL checks your robots.txt, sitemap, canonical tags, and internal links — the technical plumbing most people never look at.",
+    fix: "SIMPL checks your robots.txt, sitemap, canonical tags, and internal links — the infrastructure most people never look at.",
   },
   {
     name: "Google Business Profile",

@@ -29,6 +29,7 @@ function sevLabel(s: string) {
 
 function isValidPhone(phone: string | null | undefined): boolean {
   if (!phone) return false;
+  if (/^\d+\.\d+$/.test(phone)) return false;
   const digits = phone.replace(/\D/g, "");
   if (digits.length >= 10 && /^1[5-7]\d{8,}$/.test(digits)) return false;
   return /[-()+\s]/.test(phone) || (digits.length >= 7 && digits.length <= 11);
