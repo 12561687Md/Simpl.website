@@ -21,8 +21,8 @@ export default function FloatingCTA() {
       onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
       style={{
         position: "fixed",
-        bottom: 28,
-        right: 28,
+        bottom: "calc(24px + env(safe-area-inset-bottom, 0px))",
+        right: "calc(24px + env(safe-area-inset-right, 0px))",
         background: "var(--accent)",
         color: "var(--accent-ink)",
         padding: "14px 24px",
