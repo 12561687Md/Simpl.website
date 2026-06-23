@@ -21,39 +21,45 @@ export const metadata: Metadata = {
 const CATEGORIES = [
   {
     name: "Website Foundation",
-    grade: "Most sites: B",
-    problem: "Slow load times, missing SSL, broken mobile layouts. Visitors leave before they even read your homepage.",
-    fix: "SIMPL checks uptime, speed, SSL, mobile-friendliness, and security headers. Flags anything that's costing you visitors.",
+    grade: "B",
+    hook: "Slow load times, missing SSL, broken mobile layouts.",
+    detail: "Visitors leave before they even read your homepage.",
+    fix: "We catch the silent killers: speed issues, expired certificates, and mobile breakage that's costing you visitors right now.",
   },
   {
     name: "On-Page SEO",
-    grade: "Most sites: C",
-    problem: "Missing titles, no meta descriptions, broken heading structure, zero schema markup. Google can't figure out what your site is about.",
-    fix: "We audit every page for the SEO signals Google actually uses to rank you, and show you exactly what's missing.",
+    grade: "C",
+    hook: "Missing titles, no meta descriptions, zero schema markup.",
+    detail: "Google can't figure out what your site is about, so it ranks someone else.",
+    fix: "We map the exact SEO signals Google uses to rank you, flagging hidden gaps before your competitors outrank you.",
   },
   {
     name: "Content & Pages",
-    grade: "Most sites: D",
-    problem: "No services page, no about page, no testimonials, no blog. Your site exists but it doesn't sell.",
-    fix: "SIMPL maps every page a business website needs and tells you which ones are missing, with priority order.",
+    grade: "D",
+    hook: "No services page, no about page, no testimonials, no blog.",
+    detail: "Your site exists but it doesn't sell. Visitors land, look around, and leave.",
+    fix: "SIMPL identifies the essential pages your site is missing and prioritizes them by how much traffic they'll recover.",
   },
   {
     name: "Social Presence",
-    grade: "Most sites: D",
-    problem: "No Facebook, no Instagram, no LinkedIn linked on the site. Customers can't find you where they spend their time.",
-    fix: "We detect every social profile linked to your site and flag the platforms you're invisible on.",
+    grade: "D",
+    hook: "No Facebook, no Instagram, no LinkedIn linked on the site.",
+    detail: "Customers search for you on social and find nothing. That's a trust problem.",
+    fix: "We flag every platform you're invisible on and show which ones actually matter for your industry.",
   },
   {
     name: "Crawlability",
-    grade: "Most sites: B",
-    problem: "No sitemap, broken internal links, robots.txt blocking Google. Your pages exist but search engines can't reach them.",
-    fix: "SIMPL checks your robots.txt, sitemap, canonical tags, and internal links: the infrastructure most people never look at.",
+    grade: "B",
+    hook: "No sitemap, broken internal links, robots.txt blocking Google.",
+    detail: "Your pages exist but search engines can't reach them.",
+    fix: "We check the technical infrastructure most people never touch: robots.txt, sitemaps, canonicals, internal link health.",
   },
   {
     name: "Google Business Profile",
-    grade: "Most sites: C",
-    problem: "Low reviews, no photos, missing hours, no owner responses. Your listing is live but it's not working for you.",
-    fix: "We find your GBP, verify it's yours, and grade every field: reviews, photos, hours, phone, website link.",
+    grade: "C",
+    hook: "Low reviews, no photos, missing hours, no owner responses.",
+    detail: "Your listing is live but it's losing you calls every day.",
+    fix: "We verify your GBP, grade every field, and show exactly what's keeping you out of the local 3-pack.",
   },
 ];
 
@@ -85,18 +91,28 @@ export default function Home() {
               Every SIMPL Score breaks down into six areas. Each one is graded independently, so you know exactly where the problems are and what to fix first.
             </p>
             <div style={{ marginTop: 40, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
-              {CATEGORIES.map((c, i) => (
-                <div key={c.name} style={{ background: "var(--bg)", padding: "28px 28px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>
-                      {String(i + 1).padStart(2, "0")} / {c.name}
+              {CATEGORIES.map((c, i) => {
+                const gradeColor = c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E05252" : c.grade.startsWith("C") ? "#E0A852" : "#8FB4A8";
+                return (
+                  <div key={c.name} style={{ background: "var(--bg)", padding: "28px 28px 24px", display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                      <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>
+                        {String(i + 1).padStart(2, "0")} / {c.name}
+                      </div>
+                      <div className="mono" style={{ fontSize: 11, color: gradeColor, letterSpacing: "0.06em", fontWeight: 600 }}>
+                        Most sites: {c.grade}
+                      </div>
                     </div>
-                    <div className="mono" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.06em" }}>{c.grade}</div>
+                    <div style={{ fontSize: 14, lineHeight: 1.55 }}>
+                      <strong>{c.hook}</strong> {c.detail}
+                    </div>
+                    <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--accent)", opacity: 0.85 }}>{c.fix}</div>
+                    <a href="#top" className="mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none", marginTop: 4, letterSpacing: "0.08em", opacity: 0.7 }}>
+                      Check yours →
+                    </a>
                   </div>
-                  <div style={{ fontSize: 14, lineHeight: 1.55 }}>{c.problem}</div>
-                  <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--accent)", opacity: 0.85 }}>{c.fix}</div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
