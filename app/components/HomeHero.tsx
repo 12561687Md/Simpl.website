@@ -35,7 +35,7 @@ export default function HomeHero() {
         {showHero && (
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 12, display: "flex", alignItems: "center", gap: 12 }}>
             <span>Try the scan. Type your domain</span>
-            <a href="#coverage" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 1, fontSize: 11 }}>What we check ↓</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); document.querySelector("[data-section='simpl-score']")?.scrollIntoView({ behavior: "smooth" }); }} style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 1, fontSize: 11 }}>How it works ↓</a>
           </div>
         )}
         <ScanTool onStateChange={setScanState} />

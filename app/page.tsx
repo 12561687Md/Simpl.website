@@ -82,7 +82,7 @@ export default function Home() {
         <FloatingCTA />
 
         {/* What We Score */}
-        <section id="coverage" style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+        <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
             <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What we score</div>
             <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
@@ -152,7 +152,7 @@ export default function Home() {
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* What SIMPL catches */}
-        <section id="findings" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What SIMPL catches</div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
             These are real problems we&apos;ve found. Most owners had no idea.
@@ -174,7 +174,7 @@ export default function Home() {
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* SIMPL Score */}
-        <section style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
+        <section data-section="simpl-score" style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
             <div>
               <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>The SIMPL Score</div>
@@ -227,7 +227,7 @@ export default function Home() {
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* What you get */}
-        <section id="pricing" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What you get</div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
             Start with a free scan. Let us know what you find.
