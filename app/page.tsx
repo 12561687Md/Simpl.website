@@ -224,23 +224,22 @@ export default function Home() {
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
-        {/* How it works */}
+        {/* What you get */}
         <section id="pricing" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>How it works</div>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What you get</div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
-            Six tiers. Start free. Scale when it makes sense.
+            Start with a free scan. Go deeper when you&apos;re ready.
           </h2>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-            From a free scan to a dedicated team running everything. Pick where you are, we&apos;ll meet you there.
+            Most people start by scanning their site. Some want the full report. Others want us to fix everything. You decide how far to go.
           </p>
-          <div style={{ marginTop: 40, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+          <div style={{ marginTop: 40, display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {[
               { name: "Scanner", tag: "Free", desc: "See what's broken" },
               { name: "Report", tag: "$", desc: "See everything" },
               { name: "Core", tag: "$$", desc: "We fix it" },
               { name: "Agent", tag: "$$$", desc: "Full optimization" },
               { name: "Pro", tag: "$$$$", desc: "Growth mode" },
-              { name: "Install", tag: "$$$$$", desc: "Your own SIMPL team" },
             ].map((t) => (
               <div key={t.name} style={{ background: "var(--bg)", padding: "32px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
                 <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>Simpl.{t.name.toLowerCase()}</div>
@@ -251,7 +250,7 @@ export default function Home() {
           </div>
           <div style={{ marginTop: 40, textAlign: "center" }}>
             <Link href="/start" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--fg)", textDecoration: "none", borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15 }}>
-              See all tiers<span>→</span>
+              See what&apos;s included<span>→</span>
             </Link>
           </div>
         </section>
