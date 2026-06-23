@@ -88,7 +88,7 @@ export default function Home() {
               Six categories. Most businesses are failing at least three.
             </h2>
             <p style={{ marginTop: 20, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-              Every SIMPL Score breaks down into six areas. Each one is graded independently, so you know exactly where the problems are and what to fix first.
+              Every SIMPL Score breaks down into six areas. Each one is graded independently. The question isn&apos;t whether you&apos;re failing. It&apos;s which ones.
             </p>
             <div style={{ marginTop: 40, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
               {CATEGORIES.map((c, i) => {
@@ -154,7 +154,7 @@ export default function Home() {
         <section id="findings" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What SIMPL catches</div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
-            The kinds of things that go wrong quietly.
+            These are real problems we&apos;ve found. Most owners had no idea.
           </h2>
           <div style={{ marginTop: 40, borderTop: "1px solid var(--rule)" }}>
             {FINDINGS.map((f) => (
@@ -181,10 +181,10 @@ export default function Home() {
                 One number that tells you<br />if your online presence is working.
               </h2>
               <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 12 }}>
-                We scan your website, your SEO, your Google Business Profile, your social presence, and your content, then grade each one.
+                We scan six areas of your digital presence and grade each one. Most sites we&apos;ve scanned score between 40 and 65.
               </p>
               <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 32 }}>
-                Most business owners have never seen theirs. The ones who have are already fixing what&apos;s broken.
+                The businesses that score higher have one thing in common: they knew where the problems were before their customers did.
               </p>
               <a href="#top" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
                 Run your free scan<span>→</span>
@@ -285,8 +285,8 @@ export default function Home() {
         {/* Closing CTA */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4.5vw, 52px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 800 }}>
-            Still here? Start the scan.<br />
-            <span style={{ color: "var(--muted)" }}>Thirty seconds. Free. No signup.</span>
+            You&apos;ve read this far, which means something&apos;s nagging you.<br />
+            <span style={{ color: "var(--muted)" }}>Find out what it is. Thirty seconds.</span>
           </h2>
           <div style={{ marginTop: 48 }}>
             <ScanTool compact />
