@@ -67,7 +67,6 @@ export default function Header() {
             display: "flex",
             gap: 28,
             alignItems: "center",
-            flexWrap: "wrap",
           }}
         >
           {NAV_ITEMS.map((item) => (

@@ -59,6 +59,7 @@ body::after {
 .reveal.in { opacity: 1; transform: none; }
 
 h1, h2, h3 { text-wrap: balance; }
+html, body { overflow-x: hidden; }
 
 .platform-logo:hover {
   opacity: 0.9 !important;
@@ -191,6 +192,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .grid-tier-row { grid-template-columns: 1fr !important; gap: 16px !important; padding: 24px 20px !important; }
   .grid-contact { grid-template-columns: 1fr !important; gap: 40px !important; }
   .grid-category-grades { grid-template-columns: repeat(3, 1fr) !important; }
+  .nav-link { display: none !important; }
   .hide-mobile { display: none !important; }
 }
 
