@@ -59,7 +59,7 @@ body::after {
 .reveal.in { opacity: 1; transform: none; }
 
 h1, h2, h3 { text-wrap: balance; }
-html { overflow-x: hidden; }
+html { overflow-x: hidden; scroll-behavior: auto; }
 body { overflow-x: hidden; position: relative; }
 
 .platform-logo:hover {
