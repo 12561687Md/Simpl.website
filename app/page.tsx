@@ -91,7 +91,7 @@ export default function Home() {
             <p style={{ marginTop: 20, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
               Every SIMPL Score breaks down into six areas. Each one is graded independently. The question isn&apos;t whether you&apos;re failing. It&apos;s which ones.
             </p>
-            <div style={{ marginTop: 40, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
+            <div className="grid-categories" style={{ marginTop: 40, background: "var(--rule)", border: "1px solid var(--rule)" }}>
               {CATEGORIES.map((c, i) => {
                 const gradeColor = c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E05252" : c.grade.startsWith("C") ? "#E0A852" : "#8FB4A8";
                 return (
@@ -159,13 +159,13 @@ export default function Home() {
           </h2>
           <div style={{ marginTop: 40, borderTop: "1px solid var(--rule)" }}>
             {FINDINGS.map((f) => (
-              <div key={f.num} className="finding-row" style={{ display: "grid", gridTemplateColumns: "48px minmax(180px, 1.1fr) minmax(0, 3fr) auto", gap: 28, alignItems: "baseline", padding: "28px 0", borderBottom: "1px solid var(--rule)" }}>
-                <div className="mono" style={{ color: "var(--muted)", fontSize: 12, letterSpacing: "0.12em" }}>{f.num}</div>
+              <div key={f.num} className="finding-row grid-findings" style={{ padding: "28px 0", borderBottom: "1px solid var(--rule)" }}>
+                <div className="mono hide-mobile" style={{ color: "var(--muted)", fontSize: 12, letterSpacing: "0.12em" }}>{f.num}</div>
                 <div>
                   <div style={{ fontSize: 16, fontWeight: 500 }}>{f.biz}</div>
                 </div>
                 <div style={{ fontSize: 17, lineHeight: 1.5 }}>{f.finding}</div>
-                <div className="mono" style={{ color: "var(--accent)", fontSize: 14, whiteSpace: "nowrap" }}>{f.cost}</div>
+                <div className="mono finding-cost" style={{ color: "var(--accent)", fontSize: 14, whiteSpace: "nowrap" }}>{f.cost}</div>
               </div>
             ))}
           </div>
@@ -175,7 +175,7 @@ export default function Home() {
 
         {/* SIMPL Score */}
         <section data-section="simpl-score" style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+          <div className="grid-score" style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px" }}>
             <div>
               <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>The SIMPL Score</div>
               <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 44px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, marginBottom: 20 }}>
@@ -242,7 +242,7 @@ export default function Home() {
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
             Most people start by scanning their site. Some want the full report. Others want us to fix everything. You decide how far to go.
           </p>
-          <div style={{ marginTop: 40, display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+          <div className="grid-tiers" style={{ marginTop: 40, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {[
               { name: "Scanner", tag: "Free", desc: "See what's broken" },
               { name: "Report", tag: "$", desc: "See everything" },

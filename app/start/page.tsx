@@ -104,7 +104,7 @@ export default function StartPage() {
 
             <div style={{ display: "grid", gap: 12 }}>
               {TIERS.map((t, i) => (
-                <div key={t.name} style={{
+                <div key={t.name} className="grid-tier-row" style={{
                   background: "var(--bg)",
                   border: `1px solid ${t.highlight ? "var(--accent)" : "var(--rule)"}`,
                   padding: "28px 32px",
@@ -194,7 +194,7 @@ export default function StartPage() {
           <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 620, marginBottom: 48 }}>
             Tell us what you need. Hear back same day.
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)", gap: 56, alignItems: "start" }}>
+          <div className="grid-contact" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)", gap: 56, alignItems: "start" }}>
             <ContactForm />
             <div style={{ display: "grid", gap: 28 }}>
               <div>

@@ -195,8 +195,9 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
 
             {/* Category Grades */}
             {result.categories && (
-              <div style={{
-                display: "flex", gap: 0, marginBottom: 20,
+              <div className="grid-category-grades" style={{
+                display: "grid", gridTemplateColumns: `repeat(${Object.keys(result.categories).length}, 1fr)`,
+                gap: 0, marginBottom: 20,
                 border: "1px solid var(--rule)", borderRadius: 4, overflow: "hidden",
               }}>
                 {Object.entries(result.categories).map(([name, data], i, arr) => {
@@ -208,7 +209,7 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                     .replace("Google Business Profile", "GBP");
                   return (
                     <div key={name} style={{
-                      flex: 1, textAlign: "center", padding: "10px 2px",
+                      textAlign: "center", padding: "10px 2px",
                       borderRight: i < arr.length - 1 ? "1px solid var(--rule)" : "none",
                       background: "var(--bg-soft)",
                     }}>

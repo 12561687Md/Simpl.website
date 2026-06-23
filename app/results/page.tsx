@@ -176,7 +176,7 @@ export default function ResultsPage() {
 
         {/* Category Breakdown */}
         <section style={{ maxWidth: 900, margin: "0 auto", padding: "0 32px 40px" }}>
-          <div style={{
+          <div className="grid-category-grades" style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
             gap: 0, border: "1px solid var(--rule)", borderRadius: 6, overflow: "hidden",
