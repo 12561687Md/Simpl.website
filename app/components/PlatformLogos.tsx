@@ -43,11 +43,11 @@ function WebflowLogo({ size = 28 }: { size?: number }) {
 }
 
 const PLATFORMS = [
-  { name: "WordPress", Logo: WPLogo, size: 24 },
-  { name: "Shopify", Logo: ShopifyLogo, size: 26 },
-  { name: "Squarespace", Logo: SquarespaceLogo, size: 22 },
-  { name: "Wix", Logo: WixLogo, size: 20 },
-  { name: "Webflow", Logo: WebflowLogo, size: 20 },
+  { name: "WordPress", Logo: WPLogo, size: 22, textSize: 16, weight: 400 },
+  { name: "Shopify", Logo: ShopifyLogo, size: 22, textSize: 17, weight: 500 },
+  { name: "Squarespace", Logo: SquarespaceLogo, size: 20, textSize: 14, weight: 400 },
+  { name: "Wix", Logo: WixLogo, size: 18, textSize: 0, weight: 700 },
+  { name: "Webflow", Logo: WebflowLogo, size: 18, textSize: 0, weight: 400 },
 ];
 
 export default function PlatformLogos() {
@@ -56,7 +56,7 @@ export default function PlatformLogos() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      gap: 48,
+      gap: 40,
       flexWrap: "wrap",
       padding: "24px 0 8px",
     }}>
@@ -73,10 +73,13 @@ export default function PlatformLogos() {
             userSelect: "none",
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            gap: 7,
           }}
         >
           <p.Logo size={p.size} />
+          {p.textSize > 0 && (
+            <span style={{ fontSize: p.textSize, fontWeight: p.weight, letterSpacing: "-0.01em" }}>{p.name}</span>
+          )}
         </div>
       ))}
     </div>
