@@ -52,6 +52,10 @@ body::after {
   bottom: -25vw; right: -20vw;
   background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
   opacity: calc(var(--aura-opacity) * 0.6);
+  display: none;
+}
+@media (min-width: 769px) {
+  body::after { display: block; }
 }
 #root { position: relative; z-index: 1; }
 
