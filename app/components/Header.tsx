@@ -101,7 +101,7 @@ export default function Header() {
         </nav>
 
         {/* Mobile: Start button + hamburger */}
-        <div className="mobile-nav" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div className="mobile-nav" style={{ alignItems: "center", gap: 12 }}>
           <Link
             href="/start"
             className="cta-primary"
@@ -145,7 +145,6 @@ export default function Header() {
           borderTop: "1px solid var(--rule)",
           background: "var(--bg)",
           padding: "16px 32px 20px",
-          display: "flex",
           flexDirection: "column",
           gap: 4,
         }}>
