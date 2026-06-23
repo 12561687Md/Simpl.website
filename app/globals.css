@@ -47,6 +47,10 @@ body::before, body::after {
 body::before {
   top: -20vw; left: -20vw;
   background: radial-gradient(circle, var(--accent) 0%, transparent 60%);
+  display: none;
+}
+@media (min-width: 769px) {
+  body::before { display: block; }
 }
 body::after {
   bottom: -25vw; right: -20vw;
