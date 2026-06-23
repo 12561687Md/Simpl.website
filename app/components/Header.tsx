@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,6 +14,7 @@ const NAV_ITEMS = [
 
 export default function Header() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header
@@ -49,6 +51,7 @@ export default function Header() {
             display: "inline-flex",
             alignItems: "center",
             gap: 10,
+            flexShrink: 0,
           }}
         >
           <span
@@ -62,7 +65,9 @@ export default function Header() {
           />
           SIMPL
         </Link>
-        <nav
+
+        {/* Desktop nav */}
+        <nav className="desktop-nav"
           style={{
             display: "flex",
             gap: 28,
@@ -94,7 +99,74 @@ export default function Header() {
             Start →
           </Link>
         </nav>
+
+        {/* Mobile: Start button + hamburger */}
+        <div className="mobile-nav" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <Link
+            href="/start"
+            className="cta-primary"
+            style={{
+              color: "var(--accent-ink)",
+              textDecoration: "none",
+              padding: "8px 14px",
+              fontSize: 13,
+              borderRadius: 2,
+            }}
+          >
+            Start →
+          </Link>
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{
+              background: "transparent",
+              border: 0,
+              color: "var(--fg)",
+              cursor: "pointer",
+              padding: 8,
+              display: "flex",
+              flexDirection: "column",
+              gap: 5,
+              minWidth: 48,
+              minHeight: 48,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "transform 0.2s", transform: menuOpen ? "rotate(45deg) translateY(3.25px)" : "none" }} />
+            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "opacity 0.2s", opacity: menuOpen ? 0 : 1 }} />
+            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "transform 0.2s", transform: menuOpen ? "rotate(-45deg) translateY(-3.25px)" : "none" }} />
+          </button>
+        </div>
       </div>
+
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div className="mobile-nav" style={{
+          borderTop: "1px solid var(--rule)",
+          background: "var(--bg)",
+          padding: "16px 32px 20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 4,
+        }}>
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                color: pathname === item.href ? "var(--accent)" : "var(--fg)",
+                textDecoration: "none",
+                fontSize: 16,
+                padding: "12px 0",
+                borderBottom: "1px solid var(--rule)",
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </header>
   );
 }
