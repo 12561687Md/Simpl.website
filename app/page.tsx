@@ -252,7 +252,7 @@ export default function Home() {
           </div>
           <div style={{ marginTop: 40, textAlign: "center" }}>
             <Link href="/start" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--fg)", textDecoration: "none", borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15 }}>
-              View the SIMPL Ladder<span>→</span>
+              See what&apos;s included<span>→</span>
             </Link>
           </div>
         </section>
