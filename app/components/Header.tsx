@@ -132,9 +132,9 @@ export default function Header() {
               justifyContent: "center",
             }}
           >
-            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "transform 0.2s", transform: menuOpen ? "rotate(45deg) translateY(3.25px)" : "none" }} />
-            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "opacity 0.2s", opacity: menuOpen ? 0 : 1 }} />
-            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "transform 0.2s", transform: menuOpen ? "rotate(-45deg) translateY(-3.25px)" : "none" }} />
+            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "transform 0.2s ease", transformOrigin: "center", transform: menuOpen ? "translateY(6.5px) rotate(45deg)" : "none" }} />
+            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "opacity 0.2s ease", opacity: menuOpen ? 0 : 1 }} />
+            <span style={{ display: "block", width: 20, height: 1.5, background: "var(--fg)", borderRadius: 1, transition: "transform 0.2s ease", transformOrigin: "center", transform: menuOpen ? "translateY(-6.5px) rotate(-45deg)" : "none" }} />
           </button>
         </div>
       </div>
