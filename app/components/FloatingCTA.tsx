@@ -18,6 +18,7 @@ export default function FloatingCTA() {
   return (
     <a
       href="#"
+      className="floating-cta"
       onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
       style={{
         position: "fixed",
