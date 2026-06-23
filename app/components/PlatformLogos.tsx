@@ -15,10 +15,10 @@ export default function PlatformLogos() {
     <div style={{
       display: "flex",
       alignItems: "center",
-      justifyContent: "center",
-      gap: 44,
+      justifyContent: "space-evenly",
+      gap: 20,
       flexWrap: "wrap",
-      padding: "28px 36px",
+      padding: "32px 24px",
       marginTop: 20,
       background: "rgba(255,255,255,0.02)",
       border: "1px solid var(--rule)",
@@ -45,10 +45,10 @@ export default function PlatformLogos() {
             alt={p.name}
             width={p.width}
             height={p.height}
-            style={{ display: "block", objectFit: "contain", height: 32, width: "auto" }}
+            style={{ display: "block", objectFit: "contain", height: 40, width: "auto" }}
           />
           {"text" in p && p.text && (
-            <span style={{ fontSize: 16, fontWeight: 500, color: "var(--fg)", letterSpacing: "-0.01em" }}>{p.text}</span>
+            <span style={{ fontSize: 18, fontWeight: 500, color: "var(--fg)", letterSpacing: "-0.01em" }}>{p.text}</span>
           )}
         </div>
       ))}
