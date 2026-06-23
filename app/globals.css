@@ -197,7 +197,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .grid-category-grades { grid-template-columns: repeat(3, 1fr) !important; }
   .desktop-nav { display: none !important; }
   .mobile-nav { display: flex !important; }
-  .floating-cta { display: none !important; }
+  .floating-cta { box-shadow: none !important; }
   .hide-mobile { display: none !important; }
 }
 
