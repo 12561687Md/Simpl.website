@@ -14,14 +14,14 @@ export default function Page() {
       code="03 / REPUTATION"
       headline="What people say about you"
       accentTail="when you're not in the room."
-      sub="SIMPL watches every review, mention, and sentiment shift across the platforms that matter — so you never get blindsided."
+      sub="SIMPL watches every review, mention, and sentiment shift across the platforms that matter, so you never get blindsided."
       watches={[
         { code: "01", title: "Review monitoring", desc: "Every new review across Google, Yelp, Facebook, and industry platforms. Flagged within minutes." },
         { code: "02", title: "Sentiment tracking", desc: "Are reviews getting more negative? SIMPL tracks the trend before your rating drops." },
-        { code: "03", title: "Response cadence", desc: "How fast you respond to negative reviews — and whether you respond at all." },
+        { code: "03", title: "Response cadence", desc: "How fast you respond to negative reviews, and whether you respond at all." },
         { code: "04", title: "Rating velocity", desc: "Are you getting fewer reviews than last quarter? Stalling means slipping." },
         { code: "05", title: "Competitor monitoring", desc: "When a competitor's rating passes yours, you need to know immediately." },
-        { code: "06", title: "Mention tracking", desc: "Blog posts, forum threads, social mentions — conversations about your business you're not part of." },
+        { code: "06", title: "Mention tracking", desc: "Blog posts, forum threads, social mentions. Conversations about your business you're not part of." },
       ]}
       miss={[
         "Three 1-star reviews land in a week. Nobody responds. Rating drops below 4.0. Calls decline 25%.",
