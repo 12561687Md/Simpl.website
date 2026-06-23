@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "SIMPL — Your Digital Presence, Handled",
+    default: "SIMPL | Your Digital Presence, Handled",
     template: "%s · SIMPL",
   },
   description:

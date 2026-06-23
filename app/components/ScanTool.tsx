@@ -266,12 +266,12 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                 <div style={{ flex: 1, minWidth: 240 }}>
                   <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 6, lineHeight: 1.3 }}>
                     {result.findings_count > 5
-                      ? `We found ${result.findings_count} issues — you're only seeing ${result.findings_shown}.`
+                      ? `We found ${result.findings_count} issues, and you're only seeing ${result.findings_shown}.`
                       : "You've seen the summary. The full report shows you exactly what to fix and how."}
                   </div>
                   <p style={{ fontSize: 13, color: "var(--muted)", margin: "0 0 16px", lineHeight: 1.5 }}>
                     {(result.critical_count ?? critical.length) > 0
-                      ? `${result.critical_count ?? critical.length} critical issue${(result.critical_count ?? critical.length) > 1 ? "s" : ""} need${(result.critical_count ?? critical.length) === 1 ? "s" : ""} attention now. Get the full breakdown — priority order, what to fix first, what can wait.`
+                      ? `${result.critical_count ?? critical.length} critical issue${(result.critical_count ?? critical.length) > 1 ? "s" : ""} need${(result.critical_count ?? critical.length) === 1 ? "s" : ""} attention now. Get the full breakdown: priority order, what to fix first, what can wait.`
                       : "Get the full breakdown with every finding, priority order, and exactly what to fix first."}
                   </p>
                   <div style={{ display: "flex", maxWidth: 400, gap: 0 }}>

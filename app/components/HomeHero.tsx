@@ -33,7 +33,7 @@ export default function HomeHero() {
       <div style={{ marginTop: showHero ? 36 : 0 }}>
         {showHero && (
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 12, display: "flex", alignItems: "center", gap: 12 }}>
-            <span>Try the scan — type your domain</span>
+            <span>Try the scan. Type your domain</span>
             <Link href="/scan" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 1, fontSize: 11 }}>How it works ↗</Link>
           </div>
         )}

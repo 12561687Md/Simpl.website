@@ -5,7 +5,7 @@ import ScanTool from "../components/ScanTool";
 
 export const metadata: Metadata = {
   title: "The Scan",
-  description: "See exactly what SIMPL checks — discoverability, performance, reputation, and spend. Type your domain, get your SIMPL Score in 30 seconds.",
+  description: "See exactly what SIMPL checks: discoverability, performance, reputation, and spend. Type your domain, get your SIMPL Score in 30 seconds.",
   alternates: { canonical: "https://simpl.pro/scan" },
 };
 
@@ -19,9 +19,9 @@ const SURFACES = [
 const STEPS = [
   { n: "01", h: "You give us a domain.", p: "No login, no credit card, no questionnaire. A field and a button." },
   { n: "02", h: "SIMPL runs all eight checks.", p: "Website, crawlability, SEO, content, trust, schema, social, and Google Business Profile. 50+ individual signals." },
-  { n: "03", h: "We rank what's wrong.", p: "Findings get sorted by severity — critical issues first, nice-to-haves last." },
+  { n: "03", h: "We rank what's wrong.", p: "Findings get sorted by severity. Critical issues first, nice-to-haves last." },
   { n: "04", h: "You see your SIMPL Score.", p: "A grade from A to F across 8 categories. Every finding explained in plain English." },
-  { n: "05", h: "We fix it — or you do.", p: "Start a plan and our agents handle everything. Or take the findings and fix them yourself." },
+  { n: "05", h: "We fix it, or you do.", p: "Start a plan and our agents handle everything. Or take the findings and fix them yourself." },
 ];
 
 export default function ScanPage() {

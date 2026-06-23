@@ -6,8 +6,8 @@ import ScanTool from "../components/ScanTool";
 import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
-  title: "Get Started — SIMPL",
-  description: "From a free scan to a full agent team running your digital presence. Six ways to work with SIMPL — pick where you are.",
+  title: "Get Started | SIMPL",
+  description: "From a free scan to a full agent team running your digital presence. Six ways to work with SIMPL. Pick where you are.",
   alternates: { canonical: "https://simpl.pro/start" },
 };
 
@@ -25,10 +25,10 @@ const TIERS = [
   },
   {
     name: "Simpl.report",
-    price: "—",
+    price: "TBD",
     cadence: "",
     tag: "See everything",
-    desc: "The complete audit — every finding, every category, priority order. Know exactly what to fix and where to start.",
+    desc: "The complete audit: every finding, every category, priority order. Know exactly what to fix and where to start.",
     bullets: ["Full audit across all 6 categories", "Every finding with severity + priority", "Social presence breakdown", "Delivered to your inbox in seconds"],
     highlight: false,
     cta: "Get your report",
@@ -36,10 +36,10 @@ const TIERS = [
   },
   {
     name: "Simpl.core",
-    price: "—",
+    price: "TBD",
     cadence: "/ month",
     tag: "We fix it",
-    desc: "Hand us the report. We fix the problems — GBP optimization, on-page SEO, schema markup, the stuff that moves the needle.",
+    desc: "Hand us the report. We fix the problems: GBP optimization, on-page SEO, schema markup, the stuff that moves the needle.",
     bullets: ["GBP optimization + monitoring", "On-page SEO fixes", "Schema markup implementation", "Monthly progress report"],
     highlight: false,
     cta: "Talk to us",
@@ -47,10 +47,10 @@ const TIERS = [
   },
   {
     name: "Simpl.agent",
-    price: "—",
+    price: "TBD",
     cadence: "/ month",
     tag: "Full optimization",
-    desc: "Everything in Core, plus we rebuild what's broken — website, content, social, local SEO. Your entire digital presence, handled.",
+    desc: "Everything in Core, plus we rebuild what's broken: website, content, social, local SEO. Your entire digital presence, handled.",
     bullets: ["Everything in Core", "Website audit + fixes", "Content strategy + creation", "Social media setup + management", "Local SEO + citation building"],
     highlight: true,
     cta: "Talk to us",
@@ -58,7 +58,7 @@ const TIERS = [
   },
   {
     name: "Simpl.pro",
-    price: "—",
+    price: "TBD",
     cadence: "/ month",
     tag: "Growth mode",
     desc: "Agent, plus paid advertising, advanced content, and direct consulting. For businesses ready to grow, not just fix.",
@@ -72,7 +72,7 @@ const TIERS = [
     price: "Custom",
     cadence: "",
     tag: "Your own agent team",
-    desc: "A fully autonomous SIMPL agent team, custom-built for your business. Runs 24/7. Monitors, optimizes, reports — without you.",
+    desc: "A fully autonomous SIMPL agent team, custom-built for your business. Runs 24/7. Monitors, optimizes, and reports without you.",
     bullets: ["Custom agent team buildout", "Autonomous monitoring + execution", "CRM integration (GHL)", "White-label dashboards + reporting", "Dedicated support"],
     highlight: false,
     cta: "Talk to us",
@@ -93,7 +93,7 @@ export default function StartPage() {
             <span style={{ color: "var(--muted)" }}>We&apos;ll meet you there.</span>
           </h1>
           <p style={{ marginTop: 28, maxWidth: 620, fontSize: 17, lineHeight: 1.55 }}>
-            Whether you just want to see your score or you want an autonomous agent team running your entire digital presence — there&apos;s a tier for that.
+            Whether you just want to see your score or you want an autonomous agent team running your entire digital presence, there&apos;s a tier for that.
           </p>
         </section>
 
@@ -176,7 +176,7 @@ export default function StartPage() {
         {/* Free scan */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px 96px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 28 }}>
-            <span style={{ color: "var(--accent)" }}>Start here</span> — run a free scan
+            <span style={{ color: "var(--accent)" }}>Start here</span> · run a free scan
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 620 }}>
             Type a domain. See your SIMPL Score. Decide from there.
@@ -189,7 +189,7 @@ export default function StartPage() {
         {/* Contact */}
         <section id="contact" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 28 }}>
-            <span style={{ color: "var(--accent)" }}>Ready?</span> — send a note
+            <span style={{ color: "var(--accent)" }}>Ready?</span> · send a note
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 620, marginBottom: 48 }}>
             Tell us what you need. Hear back same day.

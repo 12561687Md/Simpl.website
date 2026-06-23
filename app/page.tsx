@@ -6,11 +6,11 @@ import HomeHero from "./components/HomeHero";
 import ScanTool from "./components/ScanTool";
 
 export const metadata: Metadata = {
-  title: "SIMPL — Your Digital Presence, Handled",
+  title: "SIMPL | Your Digital Presence, Handled",
   description:
     "SIMPL monitors your website, Google Business Profile, SEO, and online presence 24/7. Type your URL and get your free SIMPL Score in seconds.",
   openGraph: {
-    title: "SIMPL — Your Digital Presence, Handled",
+    title: "SIMPL | Your Digital Presence, Handled",
     description:
       "Find out what's broken with your online presence. Free scan, real results, in seconds.",
   },
@@ -22,19 +22,19 @@ const CATEGORIES = [
     name: "Website Foundation",
     grade: "Most sites: B",
     problem: "Slow load times, missing SSL, broken mobile layouts. Visitors leave before they even read your homepage.",
-    fix: "SIMPL checks uptime, speed, SSL, mobile-friendliness, and security headers — flags anything that's costing you visitors.",
+    fix: "SIMPL checks uptime, speed, SSL, mobile-friendliness, and security headers. Flags anything that's costing you visitors.",
   },
   {
     name: "On-Page SEO",
     grade: "Most sites: C",
     problem: "Missing titles, no meta descriptions, broken heading structure, zero schema markup. Google can't figure out what your site is about.",
-    fix: "We audit every page for the SEO signals Google actually uses to rank you — and show you exactly what's missing.",
+    fix: "We audit every page for the SEO signals Google actually uses to rank you, and show you exactly what's missing.",
   },
   {
     name: "Content & Pages",
     grade: "Most sites: D",
     problem: "No services page, no about page, no testimonials, no blog. Your site exists but it doesn't sell.",
-    fix: "SIMPL maps every page a business website needs and tells you which ones are missing — with priority order.",
+    fix: "SIMPL maps every page a business website needs and tells you which ones are missing, with priority order.",
   },
   {
     name: "Social Presence",
@@ -46,13 +46,13 @@ const CATEGORIES = [
     name: "Crawlability",
     grade: "Most sites: B",
     problem: "No sitemap, broken internal links, robots.txt blocking Google. Your pages exist but search engines can't reach them.",
-    fix: "SIMPL checks your robots.txt, sitemap, canonical tags, and internal links — the infrastructure most people never look at.",
+    fix: "SIMPL checks your robots.txt, sitemap, canonical tags, and internal links: the infrastructure most people never look at.",
   },
   {
     name: "Google Business Profile",
     grade: "Most sites: C",
     problem: "Low reviews, no photos, missing hours, no owner responses. Your listing is live but it's not working for you.",
-    fix: "We find your GBP, verify it's yours, and grade every field — reviews, photos, hours, phone, website link.",
+    fix: "We find your GBP, verify it's yours, and grade every field: reviews, photos, hours, phone, website link.",
   },
 ];
 
@@ -80,7 +80,7 @@ export default function Home() {
               Six categories. Most businesses are failing at least three.
             </h2>
             <p style={{ marginTop: 20, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-              Every SIMPL Score breaks down into six areas. Each one is graded independently — so you know exactly where the problems are and what to fix first.
+              Every SIMPL Score breaks down into six areas. Each one is graded independently, so you know exactly where the problems are and what to fix first.
             </p>
             <div style={{ marginTop: 40, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
               {CATEGORIES.map((c, i) => (
@@ -163,7 +163,7 @@ export default function Home() {
                 One number that tells you<br />if your online presence is working.
               </h2>
               <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 12 }}>
-                We scan your website, your SEO, your Google Business Profile, your social presence, and your content — then grade each one.
+                We scan your website, your SEO, your Google Business Profile, your social presence, and your content, then grade each one.
               </p>
               <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 32 }}>
                 Most business owners have never seen theirs. The ones who have are already fixing what&apos;s broken.
@@ -213,7 +213,7 @@ export default function Home() {
             Six tiers. Start free. Scale when it makes sense.
           </h2>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-            From a free scan to a full autonomous agent team — pick where you are, we&apos;ll meet you there.
+            From a free scan to a full autonomous agent team. Pick where you are, we&apos;ll meet you there.
           </p>
           <div style={{ marginTop: 40, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {[

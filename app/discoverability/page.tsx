@@ -14,9 +14,9 @@ export default function Page() {
       code="01 / DISCOVERABILITY"
       headline="When Google can't find you,"
       accentTail="neither can your customers."
-      sub="SIMPL watches the surfaces that decide whether anyone shows up at all — your indexing, your map listing, your business profile, the words people type when they're looking for you."
+      sub="SIMPL watches the surfaces that decide whether anyone shows up at all: your indexing, your map listing, your business profile, the words people type when they're looking for you."
       watches={[
-        { code: "01", title: "Indexing health", desc: "Every page on your site, checked against Google's index. We see drops within hours — not weeks." },
+        { code: "01", title: "Indexing health", desc: "Every page on your site, checked against Google's index. We see drops within hours, not weeks." },
         { code: "02", title: "Google Business Profile", desc: "Suspensions, edits, fake duplicates, owner verification, photo replacement." },
         { code: "03", title: "Map pack ranking", desc: "Your position in the local 3-pack, tracked daily against the new competitor down the street." },
         { code: "04", title: "Schema & sitemap", desc: "Structured data that breaks silently when a developer pushes. Sitemaps that stop updating." },
