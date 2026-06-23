@@ -133,6 +133,11 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
           {state === "scanning" ? "Scanning…" : "Run scan"}
         </button>
       </form>
+      {state === "idle" && !compact && (
+        <div className="mono" style={{ fontSize: 11, color: "var(--muted)", marginTop: 10, letterSpacing: "0.06em", opacity: 0.75 }}>
+          Your data stays private. We never store credentials or contact your domain.
+        </div>
+      )}
 
       {error && <div style={{ marginTop: 16, color: "#E05252", fontSize: 14 }}>{error}</div>}
 

@@ -17,30 +17,42 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://simpl.pro" },
 };
 
-const SURFACES = [
+const CATEGORIES = [
   {
-    code: "01 / Discoverability",
-    href: "/discoverability",
-    title: "Whether Google can find you at all.",
-    tag: "Index, GBP, maps, schema",
+    name: "Website Foundation",
+    grade: "Most sites: B",
+    problem: "Slow load times, missing SSL, broken mobile layouts. Visitors leave before they even read your homepage.",
+    fix: "SIMPL checks uptime, speed, SSL, mobile-friendliness, and security headers — flags anything that's costing you visitors.",
   },
   {
-    code: "02 / Performance",
-    href: "/performance",
-    title: "Whether your site actually works.",
-    tag: "Uptime, vitals, forms, checkout",
+    name: "On-Page SEO",
+    grade: "Most sites: C",
+    problem: "Missing titles, no meta descriptions, broken heading structure, zero schema markup. Google can't figure out what your site is about.",
+    fix: "We audit every page for the SEO signals Google actually uses to rank you — and show you exactly what's missing.",
   },
   {
-    code: "03 / Reputation",
-    href: "/reputation",
-    title: "What people say when you're not in the room.",
-    tag: "Reviews, sentiment, mentions",
+    name: "Content & Pages",
+    grade: "Most sites: D",
+    problem: "No services page, no about page, no testimonials, no blog. Your site exists but it doesn't sell.",
+    fix: "SIMPL maps every page a business website needs and tells you which ones are missing — with priority order.",
   },
   {
-    code: "04 / Spend",
-    href: "/spend",
-    title: "Where your marketing dollars actually go.",
-    tag: "Branded, waste, bids, audit",
+    name: "Social Presence",
+    grade: "Most sites: D",
+    problem: "No Facebook, no Instagram, no LinkedIn linked on the site. Customers can't find you where they spend their time.",
+    fix: "We detect every social profile linked to your site and flag the platforms you're invisible on.",
+  },
+  {
+    name: "Crawlability",
+    grade: "Most sites: B",
+    problem: "No sitemap, broken internal links, robots.txt blocking Google. Your pages exist but search engines can't reach them.",
+    fix: "SIMPL checks your robots.txt, sitemap, canonical tags, and internal links — the technical plumbing most people never look at.",
+  },
+  {
+    name: "Google Business Profile",
+    grade: "Most sites: C",
+    problem: "Low reviews, no photos, missing hours, no owner responses. Your listing is live but it's not working for you.",
+    fix: "We find your GBP, verify it's yours, and grade every field — reviews, photos, hours, phone, website link.",
   },
 ];
 
@@ -60,36 +72,40 @@ export default function Home() {
         {/* Hero + Scan Tool */}
         <HomeHero />
 
-        {/* Coverage */}
+        {/* What We Score */}
         <section id="coverage" style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "159px 32px" }}>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>Coverage</div>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What we score</div>
             <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
-              Four surfaces. Watched continuously. Quietly.
+              Six categories. Most businesses are failing at least three.
             </h2>
-            <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-              SIMPL doesn&apos;t replace your site or your ads or your team. It watches the four places where things break and tells you what&apos;s wrong before the next quarterly review.
+            <p style={{ marginTop: 20, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
+              Every SIMPL Score breaks down into six areas. Each one is graded independently — so you know exactly where the problems are and what to fix first.
             </p>
-            <div style={{ marginTop: 72, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
-              {SURFACES.map((s) => (
-                <Link key={s.href} href={s.href} className="finding-row" style={{ background: "var(--bg)", padding: "44px 36px 40px", minHeight: 280, display: "flex", flexDirection: "column", gap: 18, textDecoration: "none", color: "var(--fg)" }}>
-                  <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase" }}>{s.code}</div>
-                  <div style={{ fontSize: 24, letterSpacing: "-0.01em", lineHeight: 1.2 }}>{s.title}</div>
-                  <div style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.55 }}>{s.tag}</div>
-                  <div className="mono" style={{ marginTop: "auto", fontSize: 12, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>Read more →</div>
-                </Link>
+            <div style={{ marginTop: 40, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
+              {CATEGORIES.map((c, i) => (
+                <div key={c.name} style={{ background: "var(--bg)", padding: "28px 28px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>
+                      {String(i + 1).padStart(2, "0")} / {c.name}
+                    </div>
+                    <div className="mono" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.06em" }}>{c.grade}</div>
+                  </div>
+                  <div style={{ fontSize: 14, lineHeight: 1.55 }}>{c.problem}</div>
+                  <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--accent)", opacity: 0.85 }}>{c.fix}</div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
         {/* Who is this for */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "159px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>Who is this for</div>
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>Who is this for</div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
             It depends on what you&apos;re afraid of.
           </h2>
-          <div style={{ marginTop: 56, maxWidth: 780, display: "grid", gap: 40 }}>
+          <div style={{ marginTop: 40, maxWidth: 780, display: "grid", gap: 32 }}>
             <div>
               <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Home services</h3>
               <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>When the phone stops ringing, you&apos;re the last to know why.</p>
@@ -117,12 +133,12 @@ export default function Home() {
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* What SIMPL catches */}
-        <section id="findings" style={{ maxWidth: 1120, margin: "0 auto", padding: "159px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>What SIMPL catches</div>
+        <section id="findings" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What SIMPL catches</div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
             The kinds of things that go wrong quietly.
           </h2>
-          <div style={{ marginTop: 64, borderTop: "1px solid var(--rule)" }}>
+          <div style={{ marginTop: 40, borderTop: "1px solid var(--rule)" }}>
             {FINDINGS.map((f) => (
               <div key={f.num} className="finding-row" style={{ display: "grid", gridTemplateColumns: "48px minmax(180px, 1.1fr) minmax(0, 3fr) auto", gap: 28, alignItems: "baseline", padding: "28px 0", borderBottom: "1px solid var(--rule)" }}>
                 <div className="mono" style={{ color: "var(--muted)", fontSize: 12, letterSpacing: "0.12em" }}>{f.num}</div>
@@ -139,60 +155,118 @@ export default function Home() {
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* SIMPL Score */}
-        <section style={{ position: "relative", padding: "182px 0", textAlign: "center", overflow: "hidden" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px", position: "relative" }}>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 40 }}>The SIMPL Score</div>
-            <div className="mono" style={{ fontSize: "clamp(120px, 20vw, 220px)", lineHeight: 0.85, letterSpacing: "-0.05em", color: "var(--accent)", fontWeight: 300 }}>72</div>
-            <div className="mono" style={{ fontSize: 14, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginTop: 8 }}>/ 100</div>
-            <p style={{ maxWidth: 560, margin: "56px auto 0", fontSize: 19, lineHeight: 1.55 }}>
-              Every site gets a SIMPL Score from 0 to 100. Most business owners have never seen theirs.
-            </p>
-            <div style={{ marginTop: 36 }}>
-              <Link href="/scan" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--fg)", textDecoration: "none", borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15 }}>
-                See yours<span>→</span>
-              </Link>
+        <section style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+            <div>
+              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>The SIMPL Score</div>
+              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 44px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, marginBottom: 20 }}>
+                One number that tells you<br />if your online presence is working.
+              </h2>
+              <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 12 }}>
+                We scan your website, your SEO, your Google Business Profile, your social presence, and your content — then grade each one.
+              </p>
+              <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 32 }}>
+                Most business owners have never seen theirs. The ones who have are already fixing what&apos;s broken.
+              </p>
+              <a href="#top" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
+                Run your free scan<span>→</span>
+              </a>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+              <div style={{ position: "relative", width: 200, height: 200 }}>
+                <svg width="200" height="200" viewBox="0 0 200 200" style={{ transform: "rotate(-90deg)" }}>
+                  <circle cx="100" cy="100" r="90" fill="none" stroke="var(--rule)" strokeWidth="4" />
+                  <circle cx="100" cy="100" r="90" fill="none" stroke="var(--accent)" strokeWidth="4"
+                    strokeDasharray={2 * Math.PI * 90} strokeDashoffset={2 * Math.PI * 90 * 0.28}
+                    strokeLinecap="round" />
+                </svg>
+                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ fontSize: 64, fontWeight: 200, color: "var(--accent)", lineHeight: 1, letterSpacing: "-0.04em" }}>B</span>
+                  <span className="mono" style={{ fontSize: 16, color: "var(--muted)", marginTop: 4 }}>72%</span>
+                </div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, width: "100%", maxWidth: 280 }}>
+                {[
+                  { cat: "SEO", grade: "B" },
+                  { cat: "Content", grade: "D" },
+                  { cat: "Social", grade: "B" },
+                  { cat: "Website", grade: "A" },
+                  { cat: "GBP", grade: "A-" },
+                  { cat: "Crawl", grade: "A" },
+                ].map((c) => (
+                  <div key={c.cat} style={{ textAlign: "center", padding: "8px 4px", background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 4 }}>
+                    <div className="mono" style={{ fontSize: 8, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2 }}>{c.cat}</div>
+                    <div style={{ fontSize: 16, fontWeight: 400, color: c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E0A852" : "#8FB4A8" }}>{c.grade}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
-        {/* Pricing */}
-        <section id="pricing" style={{ maxWidth: 1120, margin: "0 auto", padding: "159px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>Pricing</div>
-          <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
-            Three plans. No add-ons.
+        {/* How it works */}
+        <section id="pricing" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>How it works</div>
+          <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
+            Six tiers. Start free. Scale when it makes sense.
           </h2>
-          <div style={{ marginTop: 72, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", border: "1px solid var(--rule)" }}>
+          <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
+            From a free scan to a full autonomous agent team — pick where you are, we&apos;ll meet you there.
+          </p>
+          <div style={{ marginTop: 40, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {[
-              { name: "Solo", price: "$49", cadence: "/mo", blurb: "One business. One domain. The four surfaces, watched continuously." },
-              { name: "Pro", price: "$129", cadence: "/mo", blurb: "Solo, plus auto-remediation for the top 30 finding types." },
-              { name: "Agency", price: "Custom", cadence: "", blurb: "Ten or more sites. White-label dashboards, API, billing rollups." },
-            ].map((t, i) => (
-              <div key={t.name} style={{ padding: "48px 36px 40px", borderRight: i < 2 ? "1px solid var(--rule)" : 0, display: "flex", flexDirection: "column", gap: 28, minHeight: 340 }}>
-                <div className="mono" style={{ fontSize: 12, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)" }}>{t.name}</div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                  <span style={{ fontSize: 56, letterSpacing: "-0.03em", fontWeight: 400, lineHeight: 1 }}>{t.price}</span>
-                  {t.cadence && <span className="mono" style={{ color: "var(--muted)", fontSize: 14 }}>{t.cadence}</span>}
-                </div>
-                <div style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.5, flex: 1 }}>{t.blurb}</div>
-                <Link href="/start" style={{ alignSelf: "stretch", background: "transparent", color: "var(--fg)", border: "1px solid var(--fg)", padding: "14px 22px", fontSize: 14, textDecoration: "none", textAlign: "center", borderRadius: 2 }}>
-                  Start trial
-                </Link>
+              { name: "Scanner", tag: "Free", desc: "See what's broken" },
+              { name: "Report", tag: "$", desc: "See everything" },
+              { name: "Core", tag: "$$", desc: "We fix it" },
+              { name: "Agent", tag: "$$$", desc: "Full optimization" },
+              { name: "Pro", tag: "$$$$", desc: "Growth mode" },
+              { name: "Install", tag: "$$$$$", desc: "Your own agent team" },
+            ].map((t) => (
+              <div key={t.name} style={{ background: "var(--bg)", padding: "32px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
+                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>Simpl.{t.name.toLowerCase()}</div>
+                <div style={{ fontSize: 20, fontWeight: 400 }}>{t.tag}</div>
+                <div style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.4 }}>{t.desc}</div>
               </div>
             ))}
+          </div>
+          <div style={{ marginTop: 40, textAlign: "center" }}>
+            <Link href="/start" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--fg)", textDecoration: "none", borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15 }}>
+              See all tiers<span>→</span>
+            </Link>
           </div>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
+        {/* Trust */}
+        <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 48 }}>
+              <div>
+                <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>30s</div>
+                <div style={{ fontSize: 15, lineHeight: 1.5 }}>Average scan time. Type your URL, get your score before your coffee gets cold.</div>
+              </div>
+              <div>
+                <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>6</div>
+                <div style={{ fontSize: 15, lineHeight: 1.5 }}>Categories scored. Website, SEO, content, social, crawlability, and Google Business Profile.</div>
+              </div>
+              <div>
+                <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>0</div>
+                <div style={{ fontSize: 15, lineHeight: 1.5 }}>Data sold. Your scan results are yours. We don&apos;t spam, store credentials, or share your info.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Closing CTA */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px" }}>
-          <h2 style={{ margin: 0, fontSize: "clamp(36px, 5.2vw, 64px)", lineHeight: 1.05, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 880 }}>
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>
+          <h2 style={{ margin: 0, fontSize: "clamp(28px, 4.5vw, 52px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 800 }}>
             Still here? Start the scan.<br />
-            <span style={{ color: "var(--muted)" }}>Same field. Same thirty seconds. Different outcome if you close the tab.</span>
+            <span style={{ color: "var(--muted)" }}>Thirty seconds. Free. No signup.</span>
           </h2>
-          <div style={{ marginTop: 56 }}>
+          <div style={{ marginTop: 48 }}>
             <ScanTool compact />
           </div>
         </section>
