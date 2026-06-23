@@ -191,7 +191,7 @@ export default function Home() {
                 Run your free scan<span>→</span>
               </a>
             </div>
-            <div style={{ background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 8, padding: "32px 28px", display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+            <div style={{ background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 8, padding: "28px 24px", display: "flex", flexDirection: "column", alignItems: "center", gap: 16, boxShadow: "0 0 40px rgba(143,180,168,0.06)" }}>
               <div className="mono" style={{ fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", alignSelf: "flex-start" }}>Sample report</div>
               <div style={{ position: "relative", width: 200, height: 200 }}>
                 <svg width="200" height="200" viewBox="0 0 200 200" style={{ transform: "rotate(-90deg)" }}>
