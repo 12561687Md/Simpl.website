@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import ScanTool from "./ScanTool";
+import PlatformLogos from "./PlatformLogos";
 
 export default function HomeHero() {
   const [scanState, setScanState] = useState<"idle" | "scanning" | "done">("idle");
@@ -38,11 +39,7 @@ export default function HomeHero() {
           </div>
         )}
         <ScanTool onStateChange={setScanState} />
-        {showHero && (
-          <div className="mono" style={{ fontSize: 10, color: "var(--muted)", marginTop: 16, letterSpacing: "0.04em", opacity: 0.6 }}>
-            Works with WordPress, Shopify, Squarespace, Wix, Webflow, and custom-built sites.
-          </div>
-        )}
+        {showHero && <PlatformLogos />}
       </div>
     </section>
   );
