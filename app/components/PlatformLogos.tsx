@@ -3,11 +3,11 @@
 import Image from "next/image";
 
 const PLATFORMS = [
-  { name: "WordPress", src: "/logos/wordpress.svg", width: 28, height: 28 },
-  { name: "Shopify", src: "/logos/shopify.svg", width: 24, height: 28 },
-  { name: "Squarespace", src: "/logos/squarespace.svg", width: 28, height: 28 },
-  { name: "Google Ads", src: "/logos/googleads.svg", width: 28, height: 28 },
-  { name: "Webflow", src: "/logos/webflow.svg", width: 28, height: 28 },
+  { name: "WordPress", src: "/logos/wordpress-full.png", width: 160, height: 40 },
+  { name: "Google Ads", src: "/logos/googleads-full.png", width: 150, height: 40 },
+  { name: "HighLevel", src: "/logos/highlevel.png", width: 150, height: 40 },
+  { name: "Shopify", src: "/logos/shopify.svg", width: 28, height: 32, text: "Shopify" },
+  { name: "Squarespace", src: "/logos/squarespace.svg", width: 26, height: 26, text: "Squarespace" },
 ];
 
 export default function PlatformLogos() {
@@ -35,13 +35,21 @@ export default function PlatformLogos() {
             gap: 8,
             cursor: "default",
             userSelect: "none",
-            filter: "grayscale(100%) brightness(0.7)",
+            filter: "grayscale(100%) brightness(0.6)",
             opacity: 0.5,
             transition: "filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease",
           }}
         >
-          <Image src={p.src} alt={p.name} width={p.width} height={p.height} style={{ display: "block" }} />
-          <span style={{ fontSize: 16, fontWeight: 500, color: "var(--fg)", letterSpacing: "-0.01em" }}>{p.name}</span>
+          <Image
+            src={p.src}
+            alt={p.name}
+            width={p.width}
+            height={p.height}
+            style={{ display: "block", objectFit: "contain", height: 32, width: "auto" }}
+          />
+          {"text" in p && p.text && (
+            <span style={{ fontSize: 16, fontWeight: 500, color: "var(--fg)", letterSpacing: "-0.01em" }}>{p.text}</span>
+          )}
         </div>
       ))}
     </div>
