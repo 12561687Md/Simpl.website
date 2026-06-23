@@ -71,7 +71,8 @@ html { overflow-x: hidden; scroll-behavior: auto; }
 body { overflow-x: hidden; position: relative; }
 
 .platform-logo:hover {
-  opacity: 0.9 !important;
+  filter: grayscale(0%) !important;
+  opacity: 1 !important;
   transform: scale(1.05);
 }
 
