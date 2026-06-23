@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
+import FloatingCTA from "./components/FloatingCTA";
 import ScanTool from "./components/ScanTool";
 
 export const metadata: Metadata = {
@@ -71,6 +72,7 @@ export default function Home() {
       <main>
         {/* Hero + Scan Tool */}
         <HomeHero />
+        <FloatingCTA />
 
         {/* What We Score */}
         <section id="coverage" style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
@@ -243,7 +245,7 @@ export default function Home() {
         {/* Trust */}
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 48 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 40 }}>
               <div>
                 <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>30s</div>
                 <div style={{ fontSize: 15, lineHeight: 1.5 }}>Average scan time. Type your URL, get your score before your coffee gets cold.</div>
@@ -251,6 +253,10 @@ export default function Home() {
               <div>
                 <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>6</div>
                 <div style={{ fontSize: 15, lineHeight: 1.5 }}>Categories scored. Website, SEO, content, social, crawlability, and Google Business Profile.</div>
+              </div>
+              <div>
+                <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>25+</div>
+                <div style={{ fontSize: 15, lineHeight: 1.5 }}>Checks per scan. From SSL certificates to schema markup to Google reviews.</div>
               </div>
               <div>
                 <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>0</div>

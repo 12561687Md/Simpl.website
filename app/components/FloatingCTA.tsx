@@ -1,0 +1,42 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+export default function FloatingCTA() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setVisible(window.scrollY > 600);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <a
+      href="#top"
+      style={{
+        position: "fixed",
+        bottom: 28,
+        right: 28,
+        background: "var(--accent)",
+        color: "var(--accent-ink)",
+        padding: "12px 22px",
+        fontSize: 13,
+        fontWeight: 600,
+        borderRadius: 4,
+        textDecoration: "none",
+        zIndex: 50,
+        boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+        transition: "opacity 0.3s ease, transform 0.3s ease",
+        fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+        letterSpacing: "0.04em",
+      }}
+    >
+      Run free scan ↑
+    </a>
+  );
+}

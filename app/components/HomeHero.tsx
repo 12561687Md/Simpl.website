@@ -26,7 +26,7 @@ export default function HomeHero() {
             <span style={{ color: "var(--muted)" }}>SIMPL makes sure it&apos;s always working.</span>
           </h1>
           <p style={{ marginTop: 24, maxWidth: 580, fontSize: 17, lineHeight: 1.55 }}>
-            We watch your site, your listings, your reviews, and your ads. We fix what we can. We tell you when you need to decide something.
+            We watch your site, your listings, your reviews, and your ads. When something breaks, our agents fix what they can and flag the rest before it costs you.
           </p>
         </>
       )}
@@ -38,6 +38,11 @@ export default function HomeHero() {
           </div>
         )}
         <ScanTool onStateChange={setScanState} />
+        {showHero && (
+          <div className="mono" style={{ fontSize: 10, color: "var(--muted)", marginTop: 16, letterSpacing: "0.04em", opacity: 0.6 }}>
+            Works with WordPress, Shopify, Squarespace, Wix, Webflow, and custom-built sites.
+          </div>
+        )}
       </div>
     </section>
   );
