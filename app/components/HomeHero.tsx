@@ -26,7 +26,7 @@ export default function HomeHero() {
             <span style={{ color: "var(--muted)" }}>SIMPL makes sure it&apos;s always working.</span>
           </h1>
           <p style={{ marginTop: 24, maxWidth: 580, fontSize: 17, lineHeight: 1.55 }}>
-            We watch your site, your listings, your reviews, and your ads. When something breaks, our agents fix what they can and flag the rest before it costs you.
+            We watch your site, your listings, your reviews, and your ads. When something breaks, our team fixes what they can and flags the rest before it costs you.
           </p>
         </>
       )}

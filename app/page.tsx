@@ -231,7 +231,7 @@ export default function Home() {
             Six tiers. Start free. Scale when it makes sense.
           </h2>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-            From a free scan to a full autonomous agent team. Pick where you are, we&apos;ll meet you there.
+            From a free scan to a dedicated team running everything. Pick where you are, we&apos;ll meet you there.
           </p>
           <div style={{ marginTop: 40, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {[
@@ -240,7 +240,7 @@ export default function Home() {
               { name: "Core", tag: "$$", desc: "We fix it" },
               { name: "Agent", tag: "$$$", desc: "Full optimization" },
               { name: "Pro", tag: "$$$$", desc: "Growth mode" },
-              { name: "Install", tag: "$$$$$", desc: "Your own agent team" },
+              { name: "Install", tag: "$$$$$", desc: "Your own SIMPL team" },
             ].map((t) => (
               <div key={t.name} style={{ background: "var(--bg)", padding: "32px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
                 <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>Simpl.{t.name.toLowerCase()}</div>

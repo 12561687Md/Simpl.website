@@ -21,7 +21,7 @@ const STEPS = [
   { n: "02", h: "SIMPL runs all eight checks.", p: "Website, crawlability, SEO, content, trust, schema, social, and Google Business Profile. 50+ individual signals." },
   { n: "03", h: "We rank what's wrong.", p: "Findings get sorted by severity. Critical issues first, nice-to-haves last." },
   { n: "04", h: "You see your SIMPL Score.", p: "A grade from A to F across 8 categories. Every finding explained in plain English." },
-  { n: "05", h: "We fix it, or you do.", p: "Start a plan and our agents handle everything. Or take the findings and fix them yourself." },
+  { n: "05", h: "We fix it, or you do.", p: "Start a plan and our team handles everything. Or take the findings and fix them yourself." },
 ];
 
 export default function ScanPage() {

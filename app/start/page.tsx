@@ -7,7 +7,7 @@ import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
   title: "Get Started | SIMPL",
-  description: "From a free scan to a full agent team running your digital presence. Six ways to work with SIMPL. Pick where you are.",
+  description: "From a free scan to a full team running your digital presence. Six ways to work with SIMPL. Pick where you are.",
   alternates: { canonical: "https://simpl.pro/start" },
 };
 
@@ -61,8 +61,8 @@ const TIERS = [
     price: "TBD",
     cadence: "/ month",
     tag: "Growth mode",
-    desc: "Agent, plus paid advertising, advanced content, and direct consulting. For businesses ready to grow, not just fix.",
-    bullets: ["Everything in Agent", "Google Ads + Meta Ads management", "LSA / RSA campaign setup", "Content creation + posting", "Monthly strategy consulting"],
+    desc: "Everything in Simpl.agent, plus paid advertising, advanced content, and direct consulting. For businesses ready to grow, not just fix.",
+    bullets: ["Everything in Simpl.agent", "Google Ads + Meta Ads management", "LSA / RSA campaign setup", "Content creation + posting", "Monthly strategy consulting"],
     highlight: false,
     cta: "Talk to us",
     href: "#contact",
@@ -71,9 +71,9 @@ const TIERS = [
     name: "Simpl.install",
     price: "Custom",
     cadence: "",
-    tag: "Your own agent team",
-    desc: "A fully autonomous SIMPL agent team, custom-built for your business. Runs 24/7. Monitors, optimizes, and reports without you.",
-    bullets: ["Custom agent team buildout", "Autonomous monitoring + execution", "CRM integration (GHL)", "White-label dashboards + reporting", "Dedicated support"],
+    tag: "Your own SIMPL team",
+    desc: "A dedicated SIMPL team, custom-built for your business. Runs 24/7. Monitors, optimizes, and reports without you lifting a finger.",
+    bullets: ["Custom team buildout for your business", "24/7 monitoring + execution", "CRM integration (GHL)", "White-label dashboards + reporting", "Dedicated support"],
     highlight: false,
     cta: "Talk to us",
     href: "#contact",
@@ -93,7 +93,7 @@ export default function StartPage() {
             <span style={{ color: "var(--muted)" }}>We&apos;ll meet you there.</span>
           </h1>
           <p style={{ marginTop: 28, maxWidth: 620, fontSize: 17, lineHeight: 1.55 }}>
-            Whether you just want to see your score or you want an autonomous agent team running your entire digital presence, there&apos;s a tier for that.
+            Whether you just want to see your score or you want a dedicated team running your entire digital presence, there&apos;s a tier for that.
           </p>
         </section>
 
