@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
 import FloatingCTA from "./components/FloatingCTA";
+import ScanCounter from "./components/ScanCounter";
 import ScanTool from "./components/ScanTool";
 
 export const metadata: Metadata = {
@@ -270,8 +271,8 @@ export default function Home() {
                 <div style={{ fontSize: 15, lineHeight: 1.5 }}>Categories scored. Website, SEO, content, social, crawlability, and Google Business Profile.</div>
               </div>
               <div>
-                <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>25+</div>
-                <div style={{ fontSize: 15, lineHeight: 1.5 }}>Checks per scan. From SSL certificates to schema markup to Google reviews.</div>
+                <div style={{ marginBottom: 8 }}><ScanCounter /></div>
+                <div style={{ fontSize: 15, lineHeight: 1.5 }}>Sites scanned. Businesses just like yours finding out what&apos;s broken.</div>
               </div>
               <div>
                 <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>0</div>
