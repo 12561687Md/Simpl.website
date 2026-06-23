@@ -228,7 +228,7 @@ export default function Home() {
         <section id="pricing" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What you get</div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
-            Start with a free scan. Go deeper when you&apos;re ready.
+            Start with a free scan. Let us know what you find.
           </h2>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
             Most people start by scanning their site. Some want the full report. Others want us to fix everything. You decide how far to go.
