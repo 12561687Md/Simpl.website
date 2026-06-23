@@ -17,7 +17,7 @@ export default function FloatingCTA() {
 
   return (
     <a
-      href="#top"
+      href="/"
       style={{
         position: "fixed",
         bottom: 28,

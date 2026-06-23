@@ -107,7 +107,7 @@ export default function Home() {
                       <strong>{c.hook}</strong> {c.detail}
                     </div>
                     <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--accent)", opacity: 0.85 }}>{c.fix}</div>
-                    <a href="#top" className="mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none", marginTop: 4, letterSpacing: "0.08em", opacity: 0.7 }}>
+                    <a href="/" className="mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none", marginTop: 4, letterSpacing: "0.08em", opacity: 0.7 }}>
                       Check yours →
                     </a>
                   </div>
@@ -186,7 +186,7 @@ export default function Home() {
               <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 32 }}>
                 The businesses that score higher have one thing in common: they knew where the problems were before their customers did.
               </p>
-              <a href="#top" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
+              <a href="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
                 Run your free scan<span>→</span>
               </a>
             </div>
