@@ -132,7 +132,7 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
       {/* Input */}
       <form onSubmit={run} style={{ display: "flex", alignItems: "stretch", borderBottom: "1px solid var(--fg)", maxWidth: 760 }}>
         <span style={{ ...mono, display: "flex", alignItems: "center", paddingRight: 14, color: "var(--muted)", fontSize: 14 }}>https://</span>
-        <input ref={inputRef} type="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="yourbusiness.com"
+        <input ref={inputRef} type="text" inputMode="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="yourbusiness.com"
           autoCorrect="off" autoCapitalize="none" spellCheck={false}
           style={{ flex: 1, border: 0, outline: "none", background: "transparent", padding: "18px 0", fontSize: 20, color: "var(--fg)", letterSpacing: "-0.01em", minHeight: 48 }} />
         <button type="submit" disabled={state === "scanning"}
