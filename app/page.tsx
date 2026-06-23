@@ -191,7 +191,8 @@ export default function Home() {
                 Run your free scan<span>→</span>
               </a>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+            <div style={{ background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 8, padding: "32px 28px", display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+              <div className="mono" style={{ fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", alignSelf: "flex-start" }}>Sample report</div>
               <div style={{ position: "relative", width: 200, height: 200 }}>
                 <svg width="200" height="200" viewBox="0 0 200 200" style={{ transform: "rotate(-90deg)" }}>
                   <circle cx="100" cy="100" r="90" fill="none" stroke="var(--rule)" strokeWidth="4" />
@@ -251,7 +252,7 @@ export default function Home() {
           </div>
           <div style={{ marginTop: 40, textAlign: "center" }}>
             <Link href="/start" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--fg)", textDecoration: "none", borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15 }}>
-              See what&apos;s included<span>→</span>
+              View the SIMPL Ladder<span>→</span>
             </Link>
           </div>
         </section>
