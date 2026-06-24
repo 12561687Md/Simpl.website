@@ -16,10 +16,10 @@ export default function HomeHero() {
     <section style={{
       maxWidth: 1120,
       margin: "0 auto",
-      padding: showHero ? "100px 32px 64px" : "48px 32px 48px",
+      padding: showHero ? "100px 32px 64px" : "48px 32px 32px",
       transition: "padding 0.4s ease",
     }}>
-      {showHero && (
+      {showHero ? (
         <>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32, display: "flex", alignItems: "center", gap: 14 }}>
             <span style={{ display: "inline-block", width: 6, height: 6, background: "var(--pulse)", borderRadius: 999 }} />
@@ -33,6 +33,11 @@ export default function HomeHero() {
             We watch your site, your listings, your reviews, and your ads. When something breaks, our team fixes what they can and flags the rest before it costs you.
           </p>
         </>
+      ) : (
+        <div className="mono" style={{ fontSize: 12, letterSpacing: "0.24em", color: "var(--muted)", marginBottom: 16, display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ display: "inline-block", width: 6, height: 6, background: "var(--pulse)", borderRadius: 999 }} />
+          <span>SIMPL</span>
+        </div>
       )}
       <div style={{ marginTop: showHero ? 36 : 0 }}>
         {showHero && (
