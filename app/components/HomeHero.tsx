@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import ScanTool from "./ScanTool";
 import PlatformLogos from "./PlatformLogos";
 
 export default function HomeHero() {
   const [scanState, setScanState] = useState<"idle" | "scanning" | "done">("idle");
   const showHero = scanState === "idle";
+
+  useEffect(() => {
+    if (scanState !== "idle") window.scrollTo(0, 0);
+  }, [scanState]);
 
   return (
     <section style={{
