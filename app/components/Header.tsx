@@ -5,11 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-  { href: "/scan", label: "The Scan" },
-  { href: "/discoverability", label: "Discoverability" },
-  { href: "/performance", label: "Performance" },
-  { href: "/reputation", label: "Reputation" },
-  { href: "/spend", label: "Spend" },
+  { href: "/scan", label: "Free Scan" },
+  { href: "/how-it-works", label: "How It Works" },
+  { href: "/start", label: "Services" },
+  { href: "/results", label: "Results" },
 ];
 
 export default function Header() {
