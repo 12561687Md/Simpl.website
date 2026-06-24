@@ -34,9 +34,9 @@ export default function HomeHero() {
           </p>
         </>
       ) : (
-        <div className="mono" style={{ fontSize: 12, letterSpacing: "0.24em", color: "var(--muted)", marginBottom: 16, display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", marginBottom: 16, display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{ display: "inline-block", width: 6, height: 6, background: "var(--pulse)", borderRadius: 999 }} />
-          <span>SIMPL</span>
+          <span>Free audit. Real problems. 30 seconds.</span>
         </div>
       )}
       <div style={{ marginTop: showHero ? 36 : 0 }}>
