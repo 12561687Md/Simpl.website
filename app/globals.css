@@ -194,6 +194,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .grid-score { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .grid-tiers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; }
 .grid-findings { display: grid; grid-template-columns: 48px minmax(180px, 1.1fr) minmax(0, 3fr) auto; gap: 28px; align-items: baseline; }
+.grid-how-tiers { grid-template-columns: repeat(3, 1fr); }
 
 @media (max-width: 768px) {
   .grid-categories { grid-template-columns: 1fr !important; }
@@ -204,6 +205,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .grid-tier-row { grid-template-columns: 1fr !important; gap: 16px !important; padding: 24px 20px !important; }
   .grid-contact { grid-template-columns: 1fr !important; gap: 40px !important; }
   .grid-category-grades { grid-template-columns: repeat(3, 1fr) !important; }
+  .grid-step1-preview { grid-template-columns: 1fr !important; justify-items: center; }
+  .grid-how-tiers { grid-template-columns: 1fr !important; }
   .desktop-nav { display: none !important; }
   .mobile-nav { display: flex !important; }
   .floating-cta { box-shadow: none !important; }
