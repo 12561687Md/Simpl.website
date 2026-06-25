@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import ScanTool from "../components/ScanTool";
 
 export const metadata: Metadata = {
-  title: "About | SIMPL",
+  title: "Why SIMPL | Built for businesses tired of guessing",
   description:
-    "We built SIMPL because nobody should have to guess if their online presence is working. One scan, six categories, a score from 0 to 100.",
+    "Nobody told you your Google listing was broken. That's why we built SIMPL. One scan, six categories, zero guesswork.",
   alternates: { canonical: "https://simpl.pro/about" },
 };
 
@@ -17,11 +17,11 @@ const BELIEFS = [
   },
   {
     headline: "Results over retainers.",
-    body: "If we're not making you money, we shouldn't be charging you money.",
+    body: "If we're not making you money, we shouldn't be taking yours.",
   },
   {
     headline: "Speed over process.",
-    body: "A 30-second scan tells you more than a 3-week discovery phase.",
+    body: "A 30-second scan tells you more than a 3-week discovery phase ever will.",
   },
   {
     headline: "Your business, your data.",
@@ -58,7 +58,7 @@ export default function AboutPage() {
               maxWidth: 900,
             }}
           >
-            We built SIMPL because nobody should have to guess if their online presence is working.
+            Nobody told you your Google listing was broken. That&apos;s why we built SIMPL.
           </h1>
           <p
             style={{
@@ -98,7 +98,7 @@ export default function AboutPage() {
               maxWidth: 800,
             }}
           >
-            Digital presence is complicated. It shouldn&apos;t be.
+            Your digital presence has more moving parts than you think. Most of them are breaking quietly.
           </h2>
           <p
             style={{
@@ -109,7 +109,7 @@ export default function AboutPage() {
               color: "var(--muted)",
             }}
           >
-            Your website, your Google listing, your reviews, your social profiles, your SEO, your ads. They all affect whether the phone rings. Most business owners have no idea which ones are working and which ones are quietly costing them money. The agencies that do know charge $5,000 a month and send you a PDF you don&apos;t read.
+            Your website. Your Google listing. Your reviews. Your social profiles. Your SEO. Your ads. They all affect whether the phone rings tomorrow. Most business owners have no way to know which ones are working and which ones are silently leaking leads. The last person who could tell you was charging $3,000 a month and sending you a PDF full of graphs you didn&apos;t ask for. You&apos;re not bad at marketing. You just never had the right tool.
           </p>
           <p
             style={{
@@ -142,7 +142,7 @@ export default function AboutPage() {
                 marginBottom: 32,
               }}
             >
-              Our approach
+              How we think about it
             </div>
             <h2
               style={{
@@ -154,7 +154,7 @@ export default function AboutPage() {
                 maxWidth: 800,
               }}
             >
-              We made it simpl. Plain and simpl.
+              One scan. Six grades. Every answer.
             </h2>
             <p
               style={{
@@ -165,7 +165,7 @@ export default function AboutPage() {
                 color: "var(--muted)",
               }}
             >
-              One scan. Six categories. A score from 0 to 100. Every issue ranked by how much it&apos;s costing you. No jargon, no 47-page reports, no monthly calls where someone reads you a spreadsheet. You see what&apos;s broken. We fix it. You see the results. That&apos;s the whole thing.
+              Type your URL. In 30 seconds, SIMPL checks six areas of your digital presence and grades each one A through F. Every issue ranked by severity. You see exactly what&apos;s costing you leads and what to fix first. No jargon. No 47-page reports. No monthly calls where someone reads you a spreadsheet. You see what&apos;s broken. We fix it. You see the results. That&apos;s the whole thing. Plain and simpl.
             </p>
             <p
               style={{
@@ -215,7 +215,7 @@ export default function AboutPage() {
               color: "var(--muted)",
             }}
           >
-            SIMPL was built by someone who spent years inside the digital marketing industry watching the same problems repeat. Businesses overpaying for services they couldn&apos;t measure. Agencies selling retainers with no accountability. Website issues going unnoticed for months while leads disappeared.
+            SIMPL was built by someone who spent years inside the digital marketing industry watching the same problems on repeat. Businesses overpaying for services they couldn&apos;t measure. Agencies selling retainers with no accountability. Website problems going unnoticed for months while leads quietly disappeared. Every client conversation started the same way: &quot;I&apos;m paying for all this stuff and I have no idea if it&apos;s working.&quot;
           </p>
           <p
             style={{
@@ -226,7 +226,7 @@ export default function AboutPage() {
               color: "var(--muted)",
             }}
           >
-            The only thing on his mind through all of it was how to make the whole thing simpler for everyone. Not a little simpler. Fundamentally simpler. That obsession became SIMPL.
+            The only thing on his mind through all of it was how to make the whole thing simpler for everyone. Not a little simpler. Fundamentally simpler. That obsession became SIMPL. Plain and simpl.
           </p>
           <p
             style={{
@@ -314,7 +314,7 @@ export default function AboutPage() {
               maxWidth: 800,
             }}
           >
-            See where you stand. It takes 30 seconds.
+            Find out in 30 seconds what most agencies take 3 weeks to tell you.
           </h2>
           <div style={{ marginTop: 48 }}>
             <ScanTool compact />
