@@ -36,7 +36,7 @@ export default function QuickWins() {
             Quick Wins & Site Triage
           </h1>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 19, lineHeight: 1.5, color: "var(--muted)" }}>
-            Stop leaking leads from broken elements you don&apos;t know are failing.
+            Every second your site takes to load costs you visitors. Every broken form costs you leads. Every missing SSL warning costs you trust. Right now.
           </p>
         </section>
 
@@ -101,6 +101,9 @@ export default function QuickWins() {
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
             Run a free scan and see which quick wins are waiting.
+          </p>
+          <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
+            Is your site silently failing visitors right now? Type your domain and find out in 30 seconds.
           </p>
           <ScanTool compact />
         </section>

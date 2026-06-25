@@ -35,7 +35,7 @@ export default function Strategy() {
             Fractional CMO & Strategy
           </h1>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 19, lineHeight: 1.5, color: "var(--muted)" }}>
-            Continuous data-driven direction to scale your entire digital presence.
+            The growth you built last quarter is already decaying. Without someone watching the numbers, you won&apos;t know until revenue drops.
           </p>
         </section>
 
@@ -109,6 +109,9 @@ export default function Strategy() {
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
             Every engagement starts with understanding where you stand today.
+          </p>
+          <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
+            When was the last time someone audited your entire digital presence? It takes 30 seconds.
           </p>
           <ScanTool compact />
         </section>

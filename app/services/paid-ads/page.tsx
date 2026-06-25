@@ -36,7 +36,7 @@ export default function PaidAds() {
             Paid Performance Marketing
           </h1>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 19, lineHeight: 1.5, color: "var(--muted)" }}>
-            Scale traffic instantly with campaigns that actually convert.
+            Your competitors are bidding on your brand name right now. Every click they steal is a customer you already earned, paying someone else.
           </p>
         </section>
 
@@ -101,6 +101,9 @@ export default function PaidAds() {
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
             Run a free scan before spending a dollar on ads.
+          </p>
+          <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
+            Are competitors bidding on your brand name? Start with a scan to see what you&apos;re up against.
           </p>
           <ScanTool compact />
         </section>

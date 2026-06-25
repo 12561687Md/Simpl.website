@@ -36,7 +36,7 @@ export default function LocalSEO() {
             Local SEO & Visibility
           </h1>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 19, lineHeight: 1.5, color: "var(--muted)" }}>
-            Dominate the local 3-pack and capture high-intent searchers.
+            Three businesses show up when someone searches for what you do. If you&apos;re not one of them, those leads are going to your competitors. Every single day.
           </p>
         </section>
 
@@ -101,6 +101,9 @@ export default function LocalSEO() {
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
             Run a free scan and find out where you stand in local search.
+          </p>
+          <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
+            Can customers actually find you on Google Maps? Type your domain to check your local visibility.
           </p>
           <ScanTool compact />
         </section>

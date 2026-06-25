@@ -36,7 +36,7 @@ export default function OrganicGrowth() {
             Long-Term Organic Growth
           </h1>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 19, lineHeight: 1.5, color: "var(--muted)" }}>
-            Build compounding search authority that outlasts any ad budget.
+            Every month without a content strategy is a month your competitors are building authority you&apos;ll have to outspend to catch.
           </p>
         </section>
 
@@ -101,6 +101,9 @@ export default function OrganicGrowth() {
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
             Run a free scan to find the gaps holding back your search authority.
+          </p>
+          <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
+            How thin is your content compared to competitors? Type your domain to see your content grade.
           </p>
           <ScanTool compact />
         </section>
