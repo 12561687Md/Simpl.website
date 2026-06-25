@@ -95,7 +95,7 @@ export default function Header() {
               marginLeft: 8,
             }}
           >
-            Start →
+            Get your score →
           </Link>
         </nav>
 
@@ -112,7 +112,7 @@ export default function Header() {
               borderRadius: 2,
             }}
           >
-            Start →
+            Get your score →
           </Link>
           <button
             onClick={() => setMenuOpen(!menuOpen)}

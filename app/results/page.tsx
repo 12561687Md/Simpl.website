@@ -106,7 +106,7 @@ export default function ResultsPage() {
         <section style={{ maxWidth: 900, margin: "0 auto", padding: "160px 32px", textAlign: "center" }}>
           <h1 style={{ fontSize: 28, fontWeight: 400, marginBottom: 16 }}>No scan results found</h1>
           <p style={{ color: "var(--muted)", fontSize: 16, marginBottom: 32 }}>Run a scan first to see your full report.</p>
-          <Link href="/" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "12px 24px", fontSize: 14, borderRadius: 3 }}>Run a scan →</Link>
+          <Link href="/" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "12px 24px", fontSize: 14, borderRadius: 3 }}>Find out what's broken →</Link>
         </section>
         <Footer />
       </div>
@@ -283,10 +283,10 @@ export default function ResultsPage() {
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link href="/start" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "12px 24px", fontSize: 14, borderRadius: 3, fontWeight: 600 }}>
-                  Fix this for me →
+                  Start fixing this →
                 </Link>
                 <Link href="/" style={{ color: "var(--fg)", textDecoration: "none", padding: "12px 24px", fontSize: 14, border: "1px solid var(--rule)", borderRadius: 3 }}>
-                  Scan another site
+                  Try another site
                 </Link>
               </div>
             </div>

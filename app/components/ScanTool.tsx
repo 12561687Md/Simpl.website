@@ -137,7 +137,7 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
           style={{ flex: 1, border: 0, outline: "none", background: "transparent", padding: "14px 0", fontSize: "clamp(16px, 4vw, 20px)", color: "var(--fg)", letterSpacing: "-0.01em", minHeight: 48, minWidth: 0 }} />
         <button type="submit" disabled={state === "scanning"}
           style={{ border: 0, background: "var(--fg)", color: "var(--bg)", padding: "0 16px", fontSize: 13, cursor: state === "scanning" ? "wait" : "pointer", opacity: state === "scanning" ? 0.7 : 1, minHeight: 48, flexShrink: 0, whiteSpace: "nowrap" }}>
-          {state === "scanning" ? "Scanning…" : "Run scan"}
+          {state === "scanning" ? "Scanning…" : "Find what's broken"}
         </button>
       </form>
       {state === "idle" && !compact && (
@@ -285,7 +285,7 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                     <input type="email" placeholder="your@email.com"
                       style={{ flex: 1, border: "1px solid var(--rule)", borderRight: 0, background: "transparent", color: "var(--fg)", padding: "11px 14px", fontSize: 13, outline: "none", borderRadius: "3px 0 0 3px", ...mono }} />
                     <a href="/results" style={{ background: "var(--accent)", color: "var(--accent-ink)", padding: "11px 18px", fontSize: 12, textDecoration: "none", borderRadius: "0 3px 3px 0", whiteSpace: "nowrap", display: "flex", alignItems: "center", fontWeight: 600 }}>
-                      Send my report →
+                      Show me everything →
                     </a>
                   </div>
                   <div style={{ ...mono, fontSize: 9, color: "var(--muted)", marginTop: 8, letterSpacing: "0.06em" }}>Free. No spam. Delivered in seconds.</div>
@@ -293,10 +293,10 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                 <div style={{ width: 1, background: "var(--rule)", alignSelf: "stretch", display: "flex" }} />
                 <div style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 160, justifyContent: "center" }}>
                   <a href="/start" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "11px 20px", fontSize: 13, borderRadius: 3, textAlign: "center", fontWeight: 600 }}>
-                    Fix this for me →
+                    Start fixing this →
                   </a>
                   <button onClick={reset} style={{ background: "transparent", border: "1px solid var(--rule)", color: "var(--fg)", cursor: "pointer", padding: "10px 20px", font: "inherit", fontSize: 13, borderRadius: 3 }}>
-                    Scan another site
+                    Try another site
                   </button>
                 </div>
               </div>

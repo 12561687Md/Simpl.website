@@ -109,7 +109,7 @@ export default function Home() {
                     </div>
                     <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--accent)", opacity: 0.85 }}>{c.fix}</div>
                     <a href="/scan" className="mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none", marginTop: 4, letterSpacing: "0.08em", opacity: 0.7 }}>
-                      Check yours →
+                      See where you stand →
                     </a>
                   </div>
                 );
@@ -259,7 +259,7 @@ export default function Home() {
           </div>
           <div style={{ marginTop: 40, textAlign: "center" }}>
             <Link href="/start" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--fg)", textDecoration: "none", borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15 }}>
-              See what&apos;s included<span>→</span>
+              Find the right fit<span>→</span>
             </Link>
           </div>
         </section>

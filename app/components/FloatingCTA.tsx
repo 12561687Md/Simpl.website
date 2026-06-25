@@ -42,7 +42,7 @@ export default function FloatingCTA() {
         letterSpacing: "0.04em",
       }}
     >
-      Run free scan ↑
+      Find my score ↑
     </a>
   );
 }

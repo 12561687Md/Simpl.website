@@ -35,7 +35,7 @@ export default function ContactForm() {
           style={{ width: "100%", background: "transparent", color: "var(--fg)", border: 0, borderBottom: "1px solid var(--rule)", padding: "16px 0", fontSize: 17, outline: "none", fontFamily: "inherit", resize: "vertical", minHeight: 120 }} />
       </div>
       <button type="submit" style={{ background: "var(--accent)", border: 0, color: "var(--accent-ink)", padding: "18px 28px", fontSize: 15, borderRadius: 2, cursor: "pointer", justifySelf: "start" }}>
-        Send →
+        Get my plan →
       </button>
     </form>
   );
