@@ -108,7 +108,7 @@ export default function Home() {
                       <strong>{c.hook}</strong> {c.detail}
                     </div>
                     <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--accent)", opacity: 0.85 }}>{c.fix}</div>
-                    <a href="/scan" className="mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none", marginTop: 4, letterSpacing: "0.08em", opacity: 0.7 }}>
+                    <a href="/scan" className="mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none", marginTop: "auto", letterSpacing: "0.08em", opacity: 0.7 }}>
                       See where you stand →
                     </a>
                   </div>

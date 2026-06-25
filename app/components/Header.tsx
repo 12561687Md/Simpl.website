@@ -7,13 +7,22 @@ import { usePathname } from "next/navigation";
 const NAV_ITEMS = [
   { href: "/scan", label: "Free Scan" },
   { href: "/how-it-works", label: "How It Works" },
-  { href: "/start", label: "Services" },
-  { href: "/results", label: "Results" },
+];
+
+const SERVICE_LINKS = [
+  { href: "/services/quick-wins", label: "Quick Wins" },
+  { href: "/services/local-seo", label: "Local SEO" },
+  { href: "/services/paid-ads", label: "Paid Ads" },
+  { href: "/services/organic-growth", label: "Organic Growth" },
+  { href: "/services/strategy", label: "Strategy" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+
+  const isServicesActive = pathname.startsWith("/services");
 
   return (
     <header
@@ -82,6 +91,78 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
+
+          {/* Services dropdown */}
+          <div
+            style={{ position: "relative" }}
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}
+          >
+            <span
+              className={`nav-link${isServicesActive ? " active" : ""}`}
+              style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 5 }}
+            >
+              Services
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ marginTop: 1 }}>
+                <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+            {servicesOpen && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  paddingTop: 8,
+                  zIndex: 20,
+                }}
+              >
+                <div
+                  style={{
+                    background: "var(--bg)",
+                    border: "1px solid var(--rule)",
+                    borderRadius: 4,
+                    minWidth: 200,
+                    overflow: "hidden",
+                  }}
+                >
+                  {SERVICE_LINKS.map((s) => (
+                    <Link
+                      key={s.href}
+                      href={s.href}
+                      style={{
+                        display: "block",
+                        padding: "12px 24px",
+                        color: pathname === s.href ? "var(--accent)" : "var(--fg)",
+                        textDecoration: "none",
+                        fontSize: 14,
+                        transition: "color 200ms ease, background 200ms ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = "var(--accent)";
+                        e.currentTarget.style.background = "var(--accent-soft)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = pathname === s.href ? "var(--accent)" : "var(--fg)";
+                        e.currentTarget.style.background = "transparent";
+                      }}
+                    >
+                      {s.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <Link
+            href="/start"
+            className={`nav-link${pathname === "/start" ? " active" : ""}`}
+          >
+            Pricing
+          </Link>
+
           <Link
             href="/start"
             className="cta-primary"
@@ -163,6 +244,47 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
+          <div
+            style={{
+              fontSize: 12,
+              fontWeight: 500,
+              textTransform: "uppercase",
+              letterSpacing: "0.12em",
+              color: "var(--muted)",
+              padding: "16px 0 4px",
+            }}
+          >
+            Services
+          </div>
+          {SERVICE_LINKS.map((s) => (
+            <Link
+              key={s.href}
+              href={s.href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                color: pathname === s.href ? "var(--accent)" : "var(--fg)",
+                textDecoration: "none",
+                fontSize: 16,
+                padding: "12px 0 12px 12px",
+                borderBottom: "1px solid var(--rule)",
+              }}
+            >
+              {s.label}
+            </Link>
+          ))}
+          <Link
+            href="/start"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              color: pathname === "/start" ? "var(--accent)" : "var(--fg)",
+              textDecoration: "none",
+              fontSize: 16,
+              padding: "12px 0",
+              borderBottom: "1px solid var(--rule)",
+            }}
+          >
+            Pricing
+          </Link>
         </div>
       )}
     </header>
