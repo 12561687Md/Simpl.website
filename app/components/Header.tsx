@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { href: "/scan", label: "Free Scan" },
-  { href: "/how-it-works", label: "How It Works" },
+  { href: "/about", label: "Why SIMPL" },
 ];
 
 const SERVICE_LINKS = [
@@ -164,7 +164,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/start"
+            href="/scan"
             className="cta-primary"
             style={{
               color: "var(--accent-ink)",
@@ -176,14 +176,14 @@ export default function Header() {
               marginLeft: 8,
             }}
           >
-            Get your score →
+            What am I missing? →
           </Link>
         </nav>
 
         {/* Mobile: Start button + hamburger */}
         <div className="mobile-nav" style={{ alignItems: "center", gap: 12 }}>
           <Link
-            href="/start"
+            href="/scan"
             className="cta-primary"
             style={{
               color: "var(--accent-ink)",
@@ -193,7 +193,7 @@ export default function Header() {
               borderRadius: 2,
             }}
           >
-            Get your score →
+            What am I missing? →
           </Link>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
