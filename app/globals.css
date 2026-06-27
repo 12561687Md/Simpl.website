@@ -209,6 +209,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .grid-how-tiers { grid-template-columns: 1fr !important; }
   .desktop-nav { display: none !important; }
   .mobile-nav { display: flex !important; }
+  .grid-footer { grid-template-columns: 1fr !important; gap: 32px !important; }
   .floating-cta { box-shadow: none !important; }
   .hide-mobile { display: none !important; }
 }

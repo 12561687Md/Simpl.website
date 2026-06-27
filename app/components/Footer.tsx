@@ -1,63 +1,70 @@
 import Link from "next/link";
 
-export default function Footer({
-  tagline = "Quietly keeping businesses discoverable.",
-}: {
-  tagline?: string;
-}) {
+export default function Footer() {
   return (
-    <footer style={{ borderTop: "1px solid var(--rule)" }}>
-      <div
-        style={{
-          maxWidth: 1120,
-          margin: "0 auto",
-          padding: "64px 32px 80px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-          flexWrap: "wrap",
-          gap: 24,
-        }}
-      >
-        <div>
-          <div
-            style={{
-              fontWeight: 500,
-              letterSpacing: "0.32em",
-              fontSize: 14,
-              marginBottom: 12,
-            }}
-          >
-            SIMPL
+    <footer style={{ borderTop: "1px solid var(--rule)", background: "var(--bg-soft)" }}>
+      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "64px 32px 40px" }}>
+
+        {/* Top row: logo + columns */}
+        <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 1fr", gap: 48, marginBottom: 48 }} className="grid-footer">
+
+          {/* Brand */}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+              <span style={{ display: "inline-block", width: 6, height: 6, background: "var(--pulse)", borderRadius: 999 }} />
+              <span style={{ fontWeight: 500, letterSpacing: "0.32em", fontSize: 14 }}>SIMPL</span>
+            </div>
+            <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.6, maxWidth: 280, margin: 0 }}>
+              Your digital presence, handled. One scan to see what's broken. One team to fix it.
+            </p>
+            <a href="mailto:hi@simpl.pro" className="mono" style={{ display: "inline-block", marginTop: 16, fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>
+              hi@simpl.pro
+            </a>
           </div>
-          <div
-            style={{ color: "var(--muted)", fontSize: 14, fontStyle: "italic" }}
-          >
-            {tagline}
+
+          {/* Product */}
+          <div>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>Product</div>
+            <nav style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <Link href="/scan" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Free Scan</Link>
+              <Link href="/about" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Why SIMPL</Link>
+              <Link href="/start" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Pricing</Link>
+              <Link href="/results" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Results</Link>
+            </nav>
+          </div>
+
+          {/* Services */}
+          <div>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>Services</div>
+            <nav style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <Link href="/services/quick-wins" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Quick Wins</Link>
+              <Link href="/services/local-seo" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Local SEO</Link>
+              <Link href="/services/paid-ads" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Paid Ads</Link>
+              <Link href="/services/organic-growth" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Organic Growth</Link>
+              <Link href="/services/strategy" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Strategy</Link>
+            </nav>
+          </div>
+
+          {/* Company */}
+          <div>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>Company</div>
+            <nav style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <Link href="/about" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>About</Link>
+              <Link href="/start" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Contact</Link>
+            </nav>
           </div>
         </div>
-        <nav style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-          <Link
-            href="/scan"
-            style={{
-              color: "var(--muted)",
-              textDecoration: "none",
-              fontSize: 14,
-            }}
-          >
-            The Scan
-          </Link>
-          <Link
-            href="/start"
-            style={{
-              color: "var(--muted)",
-              textDecoration: "none",
-              fontSize: 14,
-            }}
-          >
-            Start
-          </Link>
-        </nav>
+
+        {/* Bottom bar */}
+        <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+          <div className="mono" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.04em" }}>
+            &copy; {new Date().getFullYear()} SIMPL. All rights reserved.
+          </div>
+          <div style={{ display: "flex", gap: 20 }}>
+            <Link href="/privacy" style={{ color: "var(--muted)", textDecoration: "none", fontSize: 12 }}>Privacy</Link>
+            <Link href="/terms" style={{ color: "var(--muted)", textDecoration: "none", fontSize: 12 }}>Terms</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

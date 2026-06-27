@@ -321,7 +321,7 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
-      <Footer tagline="Built for the businesses nobody else is watching." />
+      <Footer />
     </div>
   );
 }

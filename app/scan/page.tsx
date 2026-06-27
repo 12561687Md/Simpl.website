@@ -82,7 +82,7 @@ export default function ScanPage() {
           </div>
         </section>
       </main>
-      <Footer tagline="The scan that runs once for free. And every hour after that for everyone on a plan." />
+      <Footer />
     </div>
   );
 }
