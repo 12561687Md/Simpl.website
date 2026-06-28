@@ -4,8 +4,15 @@ import Footer from "../components/Footer";
 import ScanTool from "../components/ScanTool";
 
 export const metadata: Metadata = {
-  title: "The Scan",
+  title: "Free Website Scan | SIMPL",
   description: "See exactly what SIMPL checks: discoverability, performance, reputation, and spend. Type your domain, get your SIMPL Score in 30 seconds.",
+  openGraph: {
+    title: "Free Website Scan | SIMPL",
+    description: "Type your domain, get your SIMPL Score in 30 seconds. No signup, no email required.",
+    url: "https://simpl.pro/scan",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/scan" },
 };
 
@@ -29,6 +36,33 @@ export default function ScanPage() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "SIMPL Free Website Scanner",
+          "description": "Free tool that scans your website, Google Business Profile, SEO, and digital presence. Get a SIMPL Score from 0 to 100 in 30 seconds.",
+          "url": "https://simpl.pro/scan",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Any",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "provider": {
+            "@type": "Organization",
+            "name": "SIMPL",
+            "url": "https://simpl.pro"
+          }
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Free Scan", "item": "https://simpl.pro/scan" }
+          ]
+        }) }} />
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 96px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>The SIMPL Scan</div>
           <h1 style={{ margin: 0, fontSize: "clamp(40px, 6.4vw, 81px)", lineHeight: 1.04, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 1000 }}>

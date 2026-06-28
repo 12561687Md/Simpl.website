@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: "Paid Performance Marketing",
   description:
     "Scale traffic instantly with campaigns that actually convert. Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking.",
+  openGraph: {
+    title: "Paid Performance Marketing | SIMPL",
+    description: "Scale traffic instantly with campaigns that actually convert. Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking.",
+    url: "https://simpl.pro/services/paid-ads",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/services/paid-ads" },
 };
 
@@ -27,6 +34,49 @@ export default function PaidAds() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Paid Performance Marketing",
+          "description": "Scale traffic instantly with Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking that proves ROI.",
+          "provider": {
+            "@type": "Organization",
+            "name": "SIMPL",
+            "url": "https://simpl.pro"
+          },
+          "areaServed": { "@type": "Country", "name": "United States" },
+          "url": "https://simpl.pro/services/paid-ads"
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://simpl.pro/services" },
+            { "@type": "ListItem", "position": 3, "name": "Paid Performance Marketing", "item": "https://simpl.pro/services/paid-ads" }
+          ]
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How much should I budget for Google Ads?",
+              "acceptedAnswer": { "@type": "Answer", "text": "It depends on your industry and market, but most local service businesses see strong results starting at $1,500-3,000 per month in ad spend. SIMPL helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume." }
+            },
+            {
+              "@type": "Question",
+              "name": "How quickly will I see results from paid ads?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Paid ads can generate leads within the first week of launch. Unlike SEO, you do not have to wait for Google to crawl and rank your pages. Most SIMPL clients see their first qualified leads within 7-14 days of campaign launch, with optimization improving results every week after that." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can competitors really bid on my brand name?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, and many do. It is completely legal for a competitor to bid on your business name as a keyword in Google Ads. That means when someone searches for you specifically, a competitor's ad can appear above your organic listing. SIMPL includes branded search defense to protect the traffic you have already earned." }
+            }
+          ]
+        }) }} />
         {/* Hero */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px 64px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>
@@ -93,6 +143,38 @@ export default function PaidAds() {
             </Link>
           </div>
         </section>
+
+        {/* FAQ */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>
+            Common questions
+          </div>
+          <h2 style={{ margin: "0 0 40px", fontSize: "clamp(24px, 3.5vw, 40px)", lineHeight: 1.15, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 700 }}>
+            Questions we hear before every campaign.
+          </h2>
+          <div style={{ display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How much should I budget for Google Ads?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                It depends on your industry and market, but most local service businesses see strong results starting at $1,500-3,000 per month in ad spend. SIMPL helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume.
+              </p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How quickly will I see results from paid ads?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                Paid ads can generate leads within the first week of launch. Unlike SEO, you do not have to wait for Google to crawl and rank your pages. Most SIMPL clients see their first qualified leads within 7-14 days of campaign launch, with optimization improving results every week after that.
+              </p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>Can competitors really bid on my brand name?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                Yes, and many do. It is completely legal for a competitor to bid on your business name as a keyword in Google Ads. That means when someone searches for you specifically, a competitor&apos;s ad can appear above your organic listing. SIMPL includes branded search defense to protect the traffic you have already earned.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* CTA */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>

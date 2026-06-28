@@ -3,9 +3,16 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
+  title: "Privacy Policy | SIMPL",
   description:
     "How SIMPL collects, uses, and protects your information. We never sell your data.",
+  openGraph: {
+    title: "Privacy Policy | SIMPL",
+    description: "How SIMPL collects, uses, and protects your information. We never sell your data.",
+    url: "https://simpl.pro/privacy",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/privacy" },
 };
 
@@ -42,6 +49,14 @@ export default function PrivacyPage() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://simpl.pro/privacy" }
+          ]
+        }) }} />
         {/* Hero */}
         <section
           style={{

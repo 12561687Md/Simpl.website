@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   title: "Fractional CMO & Strategy",
   description:
     "Continuous data-driven direction to scale your entire digital presence. Monthly audits, competitor intelligence, and full attribution reporting.",
+  openGraph: {
+    title: "Fractional CMO & Strategy | SIMPL",
+    description: "Continuous data-driven direction to scale your entire digital presence. Monthly audits, competitor intelligence, and full attribution reporting.",
+    url: "https://simpl.pro/services/strategy",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/services/strategy" },
 };
 
@@ -26,6 +33,49 @@ export default function Strategy() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Fractional CMO & Strategy",
+          "description": "Continuous data-driven strategic direction for your entire digital presence with monthly audits, competitor intelligence, and full attribution reporting.",
+          "provider": {
+            "@type": "Organization",
+            "name": "SIMPL",
+            "url": "https://simpl.pro"
+          },
+          "areaServed": { "@type": "Country", "name": "United States" },
+          "url": "https://simpl.pro/services/strategy"
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://simpl.pro/services" },
+            { "@type": "ListItem", "position": 3, "name": "Fractional CMO & Strategy", "item": "https://simpl.pro/services/strategy" }
+          ]
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What does a fractional CMO actually do?",
+              "acceptedAnswer": { "@type": "Answer", "text": "A fractional CMO gives you senior marketing leadership without the six-figure salary. At SIMPL, that means monthly audits across your entire digital presence, quarterly strategy sessions, competitor monitoring, budget allocation guidance, and a clear roadmap that connects every marketing dollar to revenue. Think of it as having a marketing executive on your team part-time." }
+            },
+            {
+              "@type": "Question",
+              "name": "How often do we meet?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Most clients meet with their SIMPL strategist monthly for a full review and quarterly for deep strategy sessions. Between meetings, you have direct access for questions and urgent decisions. We also send proactive alerts when we spot issues or opportunities you need to act on quickly." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I see examples of past strategy work?",
+              "acceptedAnswer": { "@type": "Answer", "text": "We do not publish client case studies publicly, but we are happy to walk you through anonymized examples during an initial conversation. Every engagement starts with a free scan so you can see the depth of analysis SIMPL provides before committing to anything." }
+            }
+          ]
+        }) }} />
         {/* Hero */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px 64px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>
@@ -101,6 +151,38 @@ export default function Strategy() {
             </div>
           </div>
         </section>
+
+        {/* FAQ */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>
+            Common questions
+          </div>
+          <h2 style={{ margin: "0 0 40px", fontSize: "clamp(24px, 3.5vw, 40px)", lineHeight: 1.15, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 700 }}>
+            Questions we hear before every strategy engagement.
+          </h2>
+          <div style={{ display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>What does a fractional CMO actually do?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                A fractional CMO gives you senior marketing leadership without the six-figure salary. At SIMPL, that means monthly audits across your entire digital presence, quarterly strategy sessions, competitor monitoring, budget allocation guidance, and a clear roadmap that connects every marketing dollar to revenue. Think of it as having a marketing executive on your team part-time.
+              </p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How often do we meet?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                Most clients meet with their SIMPL strategist monthly for a full review and quarterly for deep strategy sessions. Between meetings, you have direct access for questions and urgent decisions. We also send proactive alerts when we spot issues or opportunities you need to act on quickly.
+              </p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>Can I see examples of past strategy work?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                We do not publish client case studies publicly, but we are happy to walk you through anonymized examples during an initial conversation. Every engagement starts with a free scan so you can see the depth of analysis SIMPL provides before committing to anything.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* CTA */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>

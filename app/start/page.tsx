@@ -8,6 +8,13 @@ import TierGrid from "./TierGrid";
 export const metadata: Metadata = {
   title: "Get Started | SIMPL",
   description: "From a free scan to a full team running your digital presence. Five ways to work with SIMPL. Pick where you are.",
+  openGraph: {
+    title: "Get Started | SIMPL",
+    description: "From a free scan to a full team running your digital presence. Five ways to work with SIMPL. Pick where you are.",
+    url: "https://simpl.pro/start",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/start" },
 };
 
@@ -16,6 +23,33 @@ export default function StartPage() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "SIMPL",
+          "url": "https://simpl.pro",
+          "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
+          "contactPoint": { "@type": "ContactPoint", "email": "hi@simpl.pro", "contactType": "customer service" },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "SIMPL Services",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Scanner", "description": "Free digital presence scan" }, "price": "0", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Report", "description": "Full digital presence audit report" }, "price": "49", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Monthly digital presence management" }, "price": "497", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Agent", "description": "Full digital presence optimization" }, "price": "997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Complete growth mode" }, "price": "1997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
+            ]
+          }
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Get Started", "item": "https://simpl.pro/start" }
+          ]
+        }) }} />
         {/* Hero */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "120px 32px 64px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 40 }}>Get Started</div>

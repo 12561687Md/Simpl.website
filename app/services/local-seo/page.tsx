@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: "Local SEO & Visibility",
   description:
     "Dominate the local 3-pack and capture high-intent searchers. GBP optimization, citation building, review strategy, and local keyword targeting.",
+  openGraph: {
+    title: "Local SEO & Visibility | SIMPL",
+    description: "Dominate the local 3-pack and capture high-intent searchers. GBP optimization, citation building, review strategy, and local keyword targeting.",
+    url: "https://simpl.pro/services/local-seo",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/services/local-seo" },
 };
 
@@ -27,6 +34,49 @@ export default function LocalSEO() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Local SEO & Visibility",
+          "description": "Dominate the local 3-pack with GBP optimization, citation building, review strategy, and local keyword targeting for high-intent searchers.",
+          "provider": {
+            "@type": "Organization",
+            "name": "SIMPL",
+            "url": "https://simpl.pro"
+          },
+          "areaServed": { "@type": "Country", "name": "United States" },
+          "url": "https://simpl.pro/services/local-seo"
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://simpl.pro/services" },
+            { "@type": "ListItem", "position": 3, "name": "Local SEO & Visibility", "item": "https://simpl.pro/services/local-seo" }
+          ]
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How long does it take to rank in the local 3-pack?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Most businesses start seeing movement within 4-8 weeks, depending on competition in your area and how optimized your profile is today. Some clients with a solid foundation but poor GBP hygiene see results in as little as two weeks after cleanup." }
+            },
+            {
+              "@type": "Question",
+              "name": "Do I need a Google Business Profile?",
+              "acceptedAnswer": { "@type": "Answer", "text": "If you serve customers in a specific area, yes. A Google Business Profile is the single most important factor in local search rankings. Without one, you are invisible in Google Maps and the local 3-pack, which is where most high-intent local searches end up." }
+            },
+            {
+              "@type": "Question",
+              "name": "What's a citation and why does it matter?",
+              "acceptedAnswer": { "@type": "Answer", "text": "A citation is any online mention of your business name, address, and phone number (NAP). Consistent citations across directories like Yelp, BBB, and industry-specific sites tell Google your business is real and trustworthy. Inconsistent citations confuse Google and hurt your rankings." }
+            }
+          ]
+        }) }} />
         {/* Hero */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px 64px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>
@@ -93,6 +143,38 @@ export default function LocalSEO() {
             </Link>
           </div>
         </section>
+
+        {/* FAQ */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>
+            Common questions
+          </div>
+          <h2 style={{ margin: "0 0 40px", fontSize: "clamp(24px, 3.5vw, 40px)", lineHeight: 1.15, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 700 }}>
+            Questions we hear from every local business.
+          </h2>
+          <div style={{ display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How long does it take to rank in the local 3-pack?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                Most businesses start seeing movement within 4-8 weeks, depending on competition in your area and how optimized your profile is today. Some clients with a solid foundation but poor GBP hygiene see results in as little as two weeks after cleanup.
+              </p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>Do I need a Google Business Profile?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                If you serve customers in a specific area, yes. A Google Business Profile is the single most important factor in local search rankings. Without one, you are invisible in Google Maps and the local 3-pack, which is where most high-intent local searches end up.
+              </p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>What&apos;s a citation and why does it matter?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                A citation is any online mention of your business name, address, and phone number (NAP). Consistent citations across directories like Yelp, BBB, and industry-specific sites tell Google your business is real and trustworthy. Inconsistent citations confuse Google and hurt your rankings.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* CTA */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>

@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   title: "Why SIMPL | Built for businesses tired of guessing",
   description:
     "Nobody told you your Google listing was broken. That's why we built SIMPL. One scan, six categories, zero guesswork.",
+  openGraph: {
+    title: "Why SIMPL | Built for businesses tired of guessing",
+    description: "Nobody told you your Google listing was broken. That's why we built SIMPL. One scan, six categories, zero guesswork.",
+    url: "https://simpl.pro/about",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/about" },
 };
 
@@ -34,6 +41,28 @@ export default function AboutPage() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "name": "Why SIMPL",
+          "description": "Nobody told you your Google listing was broken. That's why we built SIMPL. One scan, six categories, zero guesswork.",
+          "url": "https://simpl.pro/about",
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "SIMPL",
+            "url": "https://simpl.pro",
+            "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
+            "contactPoint": { "@type": "ContactPoint", "email": "hi@simpl.pro", "contactType": "customer service" }
+          }
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Why SIMPL", "item": "https://simpl.pro/about" }
+          ]
+        }) }} />
         {/* Hero */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "120px 32px 64px" }}>
           <div

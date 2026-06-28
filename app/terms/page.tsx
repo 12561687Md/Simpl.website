@@ -3,9 +3,16 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Terms of Service",
+  title: "Terms of Service | SIMPL",
   description:
     "Terms and conditions for using SIMPL, the digital presence scanning and agency platform.",
+  openGraph: {
+    title: "Terms of Service | SIMPL",
+    description: "Terms and conditions for using SIMPL, the digital presence scanning and agency platform.",
+    url: "https://simpl.pro/terms",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/terms" },
 };
 
@@ -42,6 +49,14 @@ export default function TermsPage() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Terms of Service", "item": "https://simpl.pro/terms" }
+          ]
+        }) }} />
         {/* Hero */}
         <section
           style={{

@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: "Long-Term Organic Growth",
   description:
     "Build compounding search authority that outlasts any ad budget. Content architecture, essential page builds, domain authority, and backlink acquisition.",
+  openGraph: {
+    title: "Long-Term Organic Growth | SIMPL",
+    description: "Build compounding search authority that outlasts any ad budget. Content architecture, essential page builds, domain authority, and backlink acquisition.",
+    url: "https://simpl.pro/services/organic-growth",
+    siteName: "SIMPL",
+    type: "website",
+  },
   alternates: { canonical: "https://simpl.pro/services/organic-growth" },
 };
 
@@ -27,6 +34,49 @@ export default function OrganicGrowth() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Long-Term Organic Growth",
+          "description": "Build compounding search authority with content architecture, essential page builds, domain authority growth, and backlink acquisition that outlasts any ad budget.",
+          "provider": {
+            "@type": "Organization",
+            "name": "SIMPL",
+            "url": "https://simpl.pro"
+          },
+          "areaServed": { "@type": "Country", "name": "United States" },
+          "url": "https://simpl.pro/services/organic-growth"
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://simpl.pro/services" },
+            { "@type": "ListItem", "position": 3, "name": "Long-Term Organic Growth", "item": "https://simpl.pro/services/organic-growth" }
+          ]
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How long does SEO take to show results?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Most businesses start seeing meaningful organic traffic growth within 3-6 months. The first improvements, like better indexing and fixing technical issues, show up within weeks. But the real compounding effect, where pages climb to page one and stay there, typically takes 4-6 months of consistent work." }
+            },
+            {
+              "@type": "Question",
+              "name": "What kind of content do you create?",
+              "acceptedAnswer": { "@type": "Answer", "text": "We build the pages that drive revenue: service pages, location pages, FAQ content, and industry-specific articles that target the exact searches your customers are making. Every piece is written to rank and convert, not just to fill a blog. We focus on the content your competitors already have that you are missing." }
+            },
+            {
+              "@type": "Question",
+              "name": "Will I own the content you produce?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, 100%. Every page, article, and asset we create belongs to you. If you ever stop working with SIMPL, all the content stays on your site. That is the whole point of organic growth: you are building assets you own, not renting attention from an ad platform." }
+            }
+          ]
+        }) }} />
         {/* Hero */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px 64px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>
@@ -93,6 +143,38 @@ export default function OrganicGrowth() {
             </Link>
           </div>
         </section>
+
+        {/* FAQ */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>
+            Common questions
+          </div>
+          <h2 style={{ margin: "0 0 40px", fontSize: "clamp(24px, 3.5vw, 40px)", lineHeight: 1.15, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 700 }}>
+            Questions we hear from every business investing in SEO.
+          </h2>
+          <div style={{ display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How long does SEO take to show results?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                Most businesses start seeing meaningful organic traffic growth within 3-6 months. The first improvements, like better indexing and fixing technical issues, show up within weeks. But the real compounding effect, where pages climb to page one and stay there, typically takes 4-6 months of consistent work.
+              </p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>What kind of content do you create?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                We build the pages that drive revenue: service pages, location pages, FAQ content, and industry-specific articles that target the exact searches your customers are making. Every piece is written to rank and convert, not just to fill a blog. We focus on the content your competitors already have that you are missing.
+              </p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
+              <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>Will I own the content you produce?</h3>
+              <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                Yes, 100%. Every page, article, and asset we create belongs to you. If you ever stop working with SIMPL, all the content stays on your site. That is the whole point of organic growth: you are building assets you own, not renting attention from an ad platform.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* CTA */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>
