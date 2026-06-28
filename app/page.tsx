@@ -6,6 +6,7 @@ import HomeHero from "./components/HomeHero";
 import FloatingCTA from "./components/FloatingCTA";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
+import ScrollReveal from "./components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "SIMPL | Your Digital Presence, Handled",
@@ -77,6 +78,15 @@ export default function Home() {
     <div>
       <Header />
       <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "SIMPL",
+          "url": "https://simpl.pro",
+          "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
+          "contactPoint": { "@type": "ContactPoint", "email": "hi@simpl.pro", "contactType": "customer service" }
+        }) }} />
+
         {/* Hero + Scan Tool */}
         <HomeHero />
         <FloatingCTA />
@@ -84,13 +94,15 @@ export default function Home() {
         {/* What We Score */}
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What we score</div>
-            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
-              Six categories. Most businesses are failing at least three.
-            </h2>
-            <p style={{ marginTop: 20, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-              Every SIMPL Score breaks down into six areas. Each one is graded independently. The question isn&apos;t whether you&apos;re failing. It&apos;s which ones.
-            </p>
+            <ScrollReveal>
+              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What we score</div>
+              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
+                Six categories. Most businesses are failing at least three.
+              </h2>
+              <p style={{ marginTop: 20, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
+                Every SIMPL Score breaks down into six areas. Each one is graded independently. The question isn&apos;t whether you&apos;re failing. It&apos;s which ones.
+              </p>
+            </ScrollReveal>
             <div className="grid-categories" style={{ marginTop: 40, background: "var(--rule)", border: "1px solid var(--rule)" }}>
               {CATEGORIES.map((c, i) => {
                 const gradeColor = c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E05252" : c.grade.startsWith("C") ? "#E0A852" : "#8FB4A8";
@@ -120,32 +132,40 @@ export default function Home() {
 
         {/* Who is this for */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>Who is this for</div>
-          <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
-            It depends on what you&apos;re afraid of.
-          </h2>
+          <ScrollReveal>
+            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>Who is this for</div>
+            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
+              It depends on what you&apos;re afraid of.
+            </h2>
+          </ScrollReveal>
           <div style={{ marginTop: 40, maxWidth: 780, display: "grid", gap: 32 }}>
-            <div>
-              <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Home services</h3>
-              <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>When the phone stops ringing, you&apos;re the last to know why.</p>
-              <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
-                When your Google Maps listing drops, SIMPL sees it the same day. You hear about it before the phone stops ringing.
+            <ScrollReveal delay={0}>
+              <div>
+                <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Home services</h3>
+                <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>When the phone stops ringing, you&apos;re the last to know why.</p>
+                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
+                  When your Google Maps listing drops, SIMPL sees it the same day. You hear about it before the phone stops ringing.
+                </div>
               </div>
-            </div>
-            <div>
-              <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Small business</h3>
-              <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>Small things break quietly. Then revenue follows.</p>
-              <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
-                When a plugin update breaks your contact form, SIMPL notices the silence. You hear about it before a week of leads disappears.
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <div>
+                <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Small business</h3>
+                <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>Small things break quietly. Then revenue follows.</p>
+                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
+                  When a plugin update breaks your contact form, SIMPL notices the silence. You hear about it before a week of leads disappears.
+                </div>
               </div>
-            </div>
-            <div>
-              <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Agencies</h3>
-              <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>Forty client sites. One person watching them. You already know how that ends.</p>
-              <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
-                When one client&apos;s site quietly de-indexes on a Friday afternoon, SIMPL catches it. You handle it before Monday&apos;s call.
+            </ScrollReveal>
+            <ScrollReveal delay={0.2}>
+              <div>
+                <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Agencies</h3>
+                <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>Forty client sites. One person watching them. You already know how that ends.</p>
+                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
+                  When one client&apos;s site quietly de-indexes on a Friday afternoon, SIMPL catches it. You handle it before Monday&apos;s call.
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </section>
 
@@ -153,10 +173,12 @@ export default function Home() {
 
         {/* What SIMPL catches */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What SIMPL catches</div>
-          <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
-            These are real problems we&apos;ve found. Most owners had no idea.
-          </h2>
+          <ScrollReveal>
+            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What SIMPL catches</div>
+            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
+              These are real problems we&apos;ve found. Most owners had no idea.
+            </h2>
+          </ScrollReveal>
           <div style={{ marginTop: 40, borderTop: "1px solid var(--rule)" }}>
             {FINDINGS.map((f) => (
               <div key={f.num} className="finding-row grid-findings" style={{ padding: "28px 0", borderBottom: "1px solid var(--rule)" }}>
@@ -175,6 +197,7 @@ export default function Home() {
 
         {/* SIMPL Score */}
         <section data-section="simpl-score" style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
+          <ScrollReveal>
           <div className="grid-score" style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px" }}>
             <div>
               <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>The SIMPL Score</div>
@@ -229,16 +252,19 @@ export default function Home() {
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* What you get */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What you get</div>
-          <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
-            Start with a free scan. Let us know what you find.
-          </h2>
+          <ScrollReveal>
+            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What you get</div>
+            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
+              Start with a free scan. Let us know what you find.
+            </h2>
+          </ScrollReveal>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
             Most people start by scanning their site. Some want the full report. Others want us to fix everything. You decide how far to go.
           </p>
@@ -269,19 +295,23 @@ export default function Home() {
         {/* Trust */}
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-            <TrustStats />
+            <ScrollReveal>
+              <TrustStats />
+            </ScrollReveal>
           </div>
         </section>
 
         {/* Closing CTA */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>
-          <h2 style={{ margin: 0, fontSize: "clamp(28px, 4.5vw, 52px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 800 }}>
-            You&apos;ve read this far, which means something&apos;s nagging you.<br />
-            <span style={{ color: "var(--muted)" }}>Find out what it is. Thirty seconds.</span>
-          </h2>
-          <div style={{ marginTop: 48 }}>
-            <ScanTool compact />
-          </div>
+          <ScrollReveal>
+            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4.5vw, 52px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 800 }}>
+              You&apos;ve read this far, which means something&apos;s nagging you.<br />
+              <span style={{ color: "var(--muted)" }}>Find out what it is. Thirty seconds.</span>
+            </h2>
+            <div style={{ marginTop: 48 }}>
+              <ScanTool compact />
+            </div>
+          </ScrollReveal>
         </section>
       </main>
       <Footer />
