@@ -54,24 +54,17 @@ export default function Header() {
             textDecoration: "none",
             color: "var(--fg)",
             fontWeight: 500,
-            letterSpacing: "0.32em",
             fontSize: 15,
             display: "inline-flex",
             alignItems: "center",
-            gap: 10,
+            gap: 0,
             flexShrink: 0,
           }}
         >
-          <span
-            style={{
-              display: "inline-block",
-              width: 6,
-              height: 6,
-              background: "var(--pulse)",
-              borderRadius: 999,
-            }}
-          />
-          SIMPL
+          <span style={{ color: "var(--muted)", fontWeight: 300, marginRight: 4 }}>[</span>
+          <span style={{ letterSpacing: "0.28em" }}>SIMPL</span>
+          <span style={{ color: "var(--accent)", fontSize: 18, fontWeight: 600, lineHeight: 1, marginLeft: 1 }}>.</span>
+          <span style={{ color: "var(--muted)", fontWeight: 300, marginLeft: 4 }}>]</span>
         </Link>
 
         {/* Desktop nav */}

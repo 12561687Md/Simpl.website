@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const SIMPL_API = "https://simpl-506452749067.us-east1.run.app";
 const SCAN_STEPS = [
@@ -169,17 +170,33 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
         )}
 
         {/* Results */}
+        <AnimatePresence>
         {state === "done" && result && (
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
 
             {/* Score + Business Identity — side by side */}
             <div style={{ display: "flex", gap: 32, alignItems: "center", marginBottom: 24, flexWrap: "wrap" }}>
-              <ScoreRing grade={result.grade} percentage={pct} size={130} />
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
+              >
+                <ScoreRing grade={result.grade} percentage={pct} size={130} />
+              </motion.div>
               <div style={{ flex: 1, minWidth: 200 }}>
                 {result.business?.name && (
-                  <div style={{ fontSize: 22, fontWeight: 500, letterSpacing: "-0.01em", marginBottom: 4 }}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.3 }}
+                    style={{ fontSize: 22, fontWeight: 500, letterSpacing: "-0.01em", marginBottom: 4 }}
+                  >
                     {result.business.name}
-                  </div>
+                  </motion.div>
                 )}
                 <div style={{ ...mono, fontSize: 11, color: "var(--muted)", display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
                   {result.business?.industry && <span>{result.business.industry}</span>}
@@ -209,14 +226,20 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                     .replace("Social Presence", "Social")
                     .replace("Google Business Profile", "GBP");
                   return (
-                    <div key={name} style={{
-                      textAlign: "center", padding: "10px 2px",
-                      borderRight: i < arr.length - 1 ? "1px solid var(--rule)" : "none",
-                      background: "var(--bg-soft)",
-                    }}>
-                      <div style={{ ...mono, fontSize: 8, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden" }}>{short}</div>
+                    <motion.div
+                      key={name}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.4 + i * 0.08 }}
+                      style={{
+                        textAlign: "center", padding: "10px 2px",
+                        borderRight: i < arr.length - 1 ? "1px solid var(--rule)" : "none",
+                        background: "var(--bg-soft)",
+                      }}
+                    >
+                      <div style={{ ...mono, fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden" }}>{short}</div>
                       <div style={{ fontSize: 18, fontWeight: 400, color: gradeColor(data.grade) }}>{data.grade}</div>
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -302,8 +325,9 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
               </div>
             </div>
 
-          </div>
+          </motion.div>
         )}
+        </AnimatePresence>
       </div>
     </div>
   );

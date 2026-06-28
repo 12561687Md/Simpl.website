@@ -194,7 +194,7 @@ export default function ResultsPage() {
                   borderRight: i < arr.length - 1 ? "1px solid var(--rule)" : "none",
                   background: "var(--bg-soft)",
                 }}>
-                  <div style={{ ...mono, fontSize: 9, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>{short}</div>
+                  <div style={{ ...mono, fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>{short}</div>
                   <div style={{ fontSize: 24, fontWeight: 300, color: gradeColor(data.grade) }}>{data.grade}</div>
                   {data.score !== undefined && data.max !== undefined && (
                     <div style={{ ...mono, fontSize: 10, color: "var(--muted)", marginTop: 2 }}>{data.score}/{data.max}</div>
