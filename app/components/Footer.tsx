@@ -17,8 +17,8 @@ export default function Footer() {
             <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.6, maxWidth: 280, margin: 0 }}>
               Your digital presence, handled. One scan to see what's broken. One team to fix it.
             </p>
-            <a href="mailto:hi@simpl.pro" className="mono" style={{ display: "inline-block", marginTop: 16, fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>
-              hi@simpl.pro
+            <a href="mailto:team@simpl.pro" className="mono" style={{ display: "inline-block", marginTop: 16, fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>
+              team@simpl.pro
             </a>
           </div>
 

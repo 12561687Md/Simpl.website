@@ -295,14 +295,14 @@ export default function TermsPage() {
             <p style={paragraph}>
               To request a refund, contact us at{" "}
               <a
-                href="mailto:hi@simpl.pro"
+                href="mailto:team@simpl.pro"
                 style={{
                   color: "var(--accent)",
                   textDecoration: "none",
                   borderBottom: "1px solid var(--accent)",
                 }}
               >
-                hi@simpl.pro
+                team@simpl.pro
               </a>{" "}
               within the eligible window.
             </p>
@@ -420,14 +420,14 @@ export default function TermsPage() {
               <div style={{ color: "var(--muted)" }}>
                 Email:{" "}
                 <a
-                  href="mailto:hi@simpl.pro"
+                  href="mailto:team@simpl.pro"
                   style={{
                     color: "var(--accent)",
                     textDecoration: "none",
                     borderBottom: "1px solid var(--accent)",
                   }}
                 >
-                  hi@simpl.pro
+                  team@simpl.pro
                 </a>
               </div>
               <div style={{ color: "var(--muted)" }}>

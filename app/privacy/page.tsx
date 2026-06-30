@@ -285,14 +285,14 @@ export default function PrivacyPage() {
             <p style={paragraph}>
               If you would like us to delete your data, contact us at{" "}
               <a
-                href="mailto:hi@simpl.pro"
+                href="mailto:team@simpl.pro"
                 style={{
                   color: "var(--accent)",
                   textDecoration: "none",
                   borderBottom: "1px solid var(--accent)",
                 }}
               >
-                hi@simpl.pro
+                team@simpl.pro
               </a>{" "}
               and we will process your request within 30 days.
             </p>
@@ -392,14 +392,14 @@ export default function PrivacyPage() {
               of personal information. We do not sell personal information. To
               exercise these rights, contact us at{" "}
               <a
-                href="mailto:hi@simpl.pro"
+                href="mailto:team@simpl.pro"
                 style={{
                   color: "var(--accent)",
                   textDecoration: "none",
                   borderBottom: "1px solid var(--accent)",
                 }}
               >
-                hi@simpl.pro
+                team@simpl.pro
               </a>
               .
             </p>
@@ -416,14 +416,14 @@ export default function PrivacyPage() {
               promptly. If you believe a child under 13 has provided us with
               personal information, please contact us at{" "}
               <a
-                href="mailto:hi@simpl.pro"
+                href="mailto:team@simpl.pro"
                 style={{
                   color: "var(--accent)",
                   textDecoration: "none",
                   borderBottom: "1px solid var(--accent)",
                 }}
               >
-                hi@simpl.pro
+                team@simpl.pro
               </a>
               .
             </p>
@@ -463,14 +463,14 @@ export default function PrivacyPage() {
               <div style={{ color: "var(--muted)" }}>
                 Email:{" "}
                 <a
-                  href="mailto:hi@simpl.pro"
+                  href="mailto:team@simpl.pro"
                   style={{
                     color: "var(--accent)",
                     textDecoration: "none",
                     borderBottom: "1px solid var(--accent)",
                   }}
                 >
-                  hi@simpl.pro
+                  team@simpl.pro
                 </a>
               </div>
               <div style={{ color: "var(--muted)" }}>

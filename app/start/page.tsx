@@ -29,7 +29,7 @@ export default function StartPage() {
           "name": "SIMPL",
           "url": "https://simpl.pro",
           "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
-          "contactPoint": { "@type": "ContactPoint", "email": "hi@simpl.pro", "contactType": "customer service" },
+          "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" },
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": "SIMPL Services",
@@ -109,7 +109,7 @@ export default function StartPage() {
               </div>
               <div>
                 <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>Direct</div>
-                <a href="mailto:hi@simpl.pro" className="mono" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>hi@simpl.pro</a>
+                <a href="mailto:team@simpl.pro" className="mono" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>team@simpl.pro</a>
               </div>
             </div>
           </div>

@@ -52,7 +52,7 @@ export default function AboutPage() {
             "name": "SIMPL",
             "url": "https://simpl.pro",
             "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
-            "contactPoint": { "@type": "ContactPoint", "email": "hi@simpl.pro", "contactType": "customer service" }
+            "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" }
           }
         }) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
