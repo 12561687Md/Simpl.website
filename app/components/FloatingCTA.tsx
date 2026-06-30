@@ -38,7 +38,7 @@ export default function FloatingCTA() {
         zIndex: 50,
         boxShadow: "0 0 0 1px rgba(143,180,168,0.5), 0 0 12px rgba(143,180,168,0.4)",
         transition: "opacity 0.3s ease, transform 0.3s ease",
-        fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+        fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace",
         letterSpacing: "0.04em",
       }}
     >

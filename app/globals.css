@@ -5,7 +5,7 @@
   --bg: #0E0F10;
   --bg-soft: #15171A;
   --fg: #EDEBE4;
-  --muted: #8B8A85;
+  --muted: #ADACA7;
   --rule: #262829;
   --accent: #8FB4A8;
   --accent-soft: rgba(143,180,168,0.10);
@@ -21,7 +21,7 @@ html, body {
   background: var(--bg); color: var(--fg);
 }
 body {
-  font-family: "Inter", system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, Helvetica, Arial, sans-serif;
   font-size: 17px;
   line-height: 1.6;
   font-weight: 400;
@@ -31,7 +31,7 @@ body {
 }
 ::selection { background: var(--accent); color: var(--accent-ink); }
 .mono {
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-feature-settings: "ss02", "calt", "zero";
 }
 

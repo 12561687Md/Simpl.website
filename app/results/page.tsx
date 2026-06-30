@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 const SIMPL_API = "https://simpl-506452749067.us-east1.run.app";
-const mono = { fontFamily: "'JetBrains Mono', ui-monospace, monospace" };
+const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 function gradeColor(g: string) {
   if (!g || g === "N/A") return "#555";

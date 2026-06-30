@@ -190,6 +190,8 @@ export default function Header() {
           </Link>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
             style={{
               background: "transparent",
               border: 0,

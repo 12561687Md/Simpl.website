@@ -51,25 +51,25 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ display: "grid", gap: 28, border: "1px solid var(--rule)", padding: "40px 36px", background: "var(--bg-soft)" }}>
       <div>
-        <label style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: 8 }}>Name</label>
+        <label style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: 8 }}>Name</label>
         <input type="text" {...register("name")} placeholder="Your name"
           style={{ width: "100%", background: "transparent", color: "var(--fg)", border: 0, borderBottom: "1px solid var(--rule)", padding: "16px 0", fontSize: 17, outline: "none", fontFamily: "inherit" }} />
         {errors.name && <div style={{ color: "#E05252", fontSize: 13, marginTop: 6 }}>{errors.name.message}</div>}
       </div>
       <div>
-        <label style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: 8 }}>Email</label>
+        <label style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: 8 }}>Email</label>
         <input type="email" {...register("email")} placeholder="you@company.com"
           style={{ width: "100%", background: "transparent", color: "var(--fg)", border: 0, borderBottom: "1px solid var(--rule)", padding: "16px 0", fontSize: 17, outline: "none", fontFamily: "inherit" }} />
         {errors.email && <div style={{ color: "#E05252", fontSize: 13, marginTop: 6 }}>{errors.email.message}</div>}
       </div>
       <div>
-        <label style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: 8 }}>Phone (optional)</label>
+        <label style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: 8 }}>Phone (optional)</label>
         <input type="tel" {...register("phone")} placeholder="(555) 555-5555"
           style={{ width: "100%", background: "transparent", color: "var(--fg)", border: 0, borderBottom: "1px solid var(--rule)", padding: "16px 0", fontSize: 17, outline: "none", fontFamily: "inherit" }} />
         {errors.phone && <div style={{ color: "#E05252", fontSize: 13, marginTop: 6 }}>{errors.phone.message}</div>}
       </div>
       <div>
-        <label style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: 8 }}>Message</label>
+        <label style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: 8 }}>Message</label>
         <textarea {...register("message")} placeholder="What are you looking for?"
           style={{ width: "100%", background: "transparent", color: "var(--fg)", border: 0, borderBottom: "1px solid var(--rule)", padding: "16px 0", fontSize: 17, outline: "none", fontFamily: "inherit", resize: "vertical", minHeight: 120 }} />
       </div>

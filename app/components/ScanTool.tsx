@@ -47,7 +47,7 @@ interface ScanResult {
   critical_count: number; warning_count: number; is_free_tier: boolean;
 }
 
-const mono = { fontFamily: "'JetBrains Mono', ui-monospace, monospace" };
+const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 function ScoreRing({ grade, percentage, size = 130 }: { grade: string; percentage: number; size?: number }) {
   const r = (size - 8) / 2;
