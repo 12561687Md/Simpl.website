@@ -88,6 +88,10 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
   const stepTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [reportEmail, setReportEmail] = useState("");
+  const [emailState, setEmailState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [emailError, setEmailError] = useState<string | null>(null);
+
   useEffect(() => {
     if (!compact && window.innerWidth > 768) inputRef.current?.focus();
   }, [compact]);
@@ -123,6 +127,35 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
   }
 
   function reset() { setState("idle"); setUrl(""); setResult(null); setError(null); }
+
+  function sendReport(e: React.FormEvent) {
+    e.preventDefault();
+    if (!reportEmail.trim() || !result) return;
+    setEmailState("sending");
+    setEmailError(null);
+    fetch("/api/capture-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: reportEmail.trim(),
+        scanUrl: result.url,
+        scanScore: result.percentage ?? result.score,
+        scanGrade: result.grade,
+        businessName: result.business?.name ?? undefined,
+        findings: result.findings,
+        categories: result.categories,
+      }),
+    })
+      .then(async (r) => {
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok || !data.success) throw new Error(data.error || "Could not send your report.");
+        setEmailState("sent");
+      })
+      .catch((err) => {
+        setEmailState("error");
+        setEmailError(err.message || "Could not send your report. Try again.");
+      });
+  }
 
   const critical = result?.findings?.filter(f => f.severity === "critical") || [];
   const warnings = result?.findings?.filter(f => f.severity === "warning") || [];
@@ -304,14 +337,36 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                       ? `${result.critical_count ?? critical.length} critical issue${(result.critical_count ?? critical.length) > 1 ? "s" : ""} need${(result.critical_count ?? critical.length) === 1 ? "s" : ""} attention now. Get the full breakdown: priority order, what to fix first, what can wait.`
                       : "Get the full breakdown with every finding, priority order, and exactly what to fix first."}
                   </p>
-                  <div style={{ display: "flex", maxWidth: 400, gap: 0 }}>
-                    <input type="email" placeholder="your@email.com"
-                      style={{ flex: 1, border: "1px solid var(--rule)", borderRight: 0, background: "transparent", color: "var(--fg)", padding: "11px 14px", fontSize: 13, outline: "none", borderRadius: "3px 0 0 3px", ...mono }} />
-                    <a href="/results" style={{ background: "var(--accent)", color: "var(--accent-ink)", padding: "11px 18px", fontSize: 12, textDecoration: "none", borderRadius: "0 3px 3px 0", whiteSpace: "nowrap", display: "flex", alignItems: "center", fontWeight: 600 }}>
-                      Show me everything →
-                    </a>
-                  </div>
-                  <div style={{ ...mono, fontSize: 9, color: "var(--muted)", marginTop: 8, letterSpacing: "0.06em" }}>Free. No spam. Delivered in seconds.</div>
+                  {emailState === "sent" ? (
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, maxWidth: 400 }}>
+                      <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 99, background: "#8FB4A8", flexShrink: 0 }} />
+                      <div style={{ fontSize: 13, color: "var(--fg)" }}>Check your inbox. Your full report is on its way.</div>
+                    </div>
+                  ) : (
+                    <form onSubmit={sendReport} style={{ display: "flex", maxWidth: 400, gap: 0 }}>
+                      <input type="email" required placeholder="your@email.com" value={reportEmail}
+                        onChange={(e) => setReportEmail(e.target.value)}
+                        disabled={emailState === "sending"}
+                        style={{ flex: 1, border: "1px solid var(--rule)", borderRight: 0, background: "transparent", color: "var(--fg)", padding: "11px 14px", fontSize: 13, outline: "none", borderRadius: "3px 0 0 3px", ...mono }} />
+                      <button type="submit" disabled={emailState === "sending"}
+                        style={{ background: "var(--accent)", color: "var(--accent-ink)", padding: "11px 18px", fontSize: 12, border: 0, borderRadius: "0 3px 3px 0", whiteSpace: "nowrap", display: "flex", alignItems: "center", fontWeight: 600, cursor: emailState === "sending" ? "wait" : "pointer", opacity: emailState === "sending" ? 0.7 : 1 }}>
+                        {emailState === "sending" ? "Sending…" : "Show me everything →"}
+                      </button>
+                    </form>
+                  )}
+                  {emailState === "error" && emailError && (
+                    <div style={{ fontSize: 12, color: "#E05252", marginTop: 8 }}>{emailError}</div>
+                  )}
+                  {emailState !== "sent" && (
+                    <div style={{ ...mono, fontSize: 9, color: "var(--muted)", marginTop: 8, letterSpacing: "0.06em" }}>Free. No spam. Delivered in seconds.</div>
+                  )}
+                  {emailState === "sent" && (
+                    <div style={{ marginTop: 12 }}>
+                      <a href="/results" style={{ ...mono, fontSize: 11, color: "var(--accent)", letterSpacing: "0.06em" }}>
+                        View full report now →
+                      </a>
+                    </div>
+                  )}
                 </div>
                 <div style={{ width: 1, background: "var(--rule)", alignSelf: "stretch", display: "flex" }} />
                 <div style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 160, justifyContent: "center" }}>
