@@ -160,6 +160,10 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
   const critical = result?.findings?.filter(f => f.severity === "critical") || [];
   const warnings = result?.findings?.filter(f => f.severity === "warning") || [];
   const pct = result?.percentage ?? result?.score ?? 0;
+  const totalIssues = result?.findings_count ?? (critical.length + warnings.length);
+  const criticalCount = result?.critical_count ?? critical.length;
+  const warningCount = result?.warning_count ?? warnings.length;
+  const hiddenCount = result?.findings_hidden ?? 0;
 
   return (
     <div>
@@ -211,22 +215,32 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
             transition={{ duration: 0.5 }}
           >
 
-            {/* Score + Business Identity — side by side */}
-            <div style={{ display: "flex", gap: 32, alignItems: "center", marginBottom: 24, flexWrap: "wrap" }}>
+            {/* Results heading — sets the "here's your diagnosis" moment */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              style={{ ...mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}
+            >
+              Scan complete
+            </motion.div>
+
+            {/* Score + Business Identity — side by side, business identity dominant */}
+            <div style={{ display: "flex", gap: 32, alignItems: "center", marginBottom: 20, flexWrap: "wrap" }}>
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.15 }}
               >
-                <ScoreRing grade={result.grade} percentage={pct} size={130} />
+                <ScoreRing grade={result.grade} percentage={pct} size={140} />
               </motion.div>
-              <div style={{ flex: 1, minWidth: 200 }}>
+              <div style={{ flex: 1, minWidth: 220 }}>
                 {result.business?.name && (
                   <motion.div
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.3 }}
-                    style={{ fontSize: 22, fontWeight: 500, letterSpacing: "-0.01em", marginBottom: 4 }}
+                    transition={{ duration: 0.4, delay: 0.25 }}
+                    style={{ fontSize: "clamp(24px, 4vw, 32px)", fontWeight: 500, letterSpacing: "-0.02em", marginBottom: 6, lineHeight: 1.1 }}
                   >
                     {result.business.name}
                   </motion.div>
@@ -240,6 +254,31 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                   <p style={{ fontSize: 14, lineHeight: 1.5, color: "var(--muted)", margin: "10px 0 0", maxWidth: 500 }}>
                     {result.summary}
                   </p>
+                )}
+                {/* Why you should care — severity breakdown, builds urgency fast */}
+                {(criticalCount > 0 || warningCount > 0) && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.35, delay: 0.4 }}
+                    style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "center", marginTop: 14 }}
+                  >
+                    {criticalCount > 0 && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: 99, background: "#E05252", boxShadow: "0 0 0 3px rgba(224,82,82,0.18)" }} />
+                        <span style={{ ...mono, fontSize: 12, color: "#E05252", fontWeight: 600 }}>{criticalCount} critical</span>
+                      </div>
+                    )}
+                    {warningCount > 0 && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: 99, background: "#E0A852" }} />
+                        <span style={{ ...mono, fontSize: 12, color: "#E0A852", fontWeight: 600 }}>{warningCount} warning{warningCount === 1 ? "" : "s"}</span>
+                      </div>
+                    )}
+                    {totalIssues > 0 && (
+                      <span style={{ ...mono, fontSize: 11, color: "var(--muted)" }}>· {totalIssues} issue{totalIssues === 1 ? "" : "s"} found</span>
+                    )}
+                  </motion.div>
                 )}
               </div>
             </div>
@@ -280,18 +319,18 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
 
             {/* Social Presence */}
             {(result.social_profiles?.length > 0 || result.social_missing?.length > 0) && (
-              <div style={{ display: "flex", gap: 14, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
-                <span style={{ ...mono, fontSize: 9, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Social</span>
+              <div style={{ display: "flex", gap: 16, marginBottom: 20, flexWrap: "wrap", alignItems: "center" }}>
+                <span style={{ ...mono, fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Social</span>
                 {result.social_profiles?.map((p) => (
-                  <div key={p} style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                    <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: 99, background: "#8FB4A8" }} />
-                    <span style={{ ...mono, fontSize: 10, color: "#8FB4A8" }}>{p}</span>
+                  <div key={p} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ ...mono, fontSize: 11, color: "#8FB4A8", fontWeight: 600 }}>✓</span>
+                    <span style={{ ...mono, fontSize: 11, color: "#8FB4A8" }}>{p}</span>
                   </div>
                 ))}
                 {result.social_missing?.filter(p => ["Facebook", "Instagram", "LinkedIn", "YouTube", "TikTok"].includes(p)).map((p) => (
-                  <div key={p} style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                    <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: 99, background: "#E05252" }} />
-                    <span style={{ ...mono, fontSize: 10, color: "var(--muted)", opacity: 0.75 }}>{p}</span>
+                  <div key={p} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ ...mono, fontSize: 11, color: "#E05252", fontWeight: 600, opacity: 0.85 }}>✕</span>
+                    <span style={{ ...mono, fontSize: 11, color: "var(--muted)", opacity: 0.8 }}>{p}</span>
                   </div>
                 ))}
               </div>
@@ -299,86 +338,135 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
 
             {/* Findings */}
             {(critical.length > 0 || warnings.length > 0) && (
-              <div style={{ marginBottom: 20 }}>
+              <div style={{ marginBottom: 24 }}>
                 {critical.length > 0 && (
-                  <div style={{ marginBottom: 12 }}>
-                    <div style={{ ...mono, fontSize: 9, letterSpacing: "0.14em", color: "#E05252", textTransform: "uppercase", marginBottom: 6 }}>Fix Now</div>
+                  <div style={{ marginBottom: 16 }}>
+                    <div style={{ ...mono, fontSize: 10, letterSpacing: "0.14em", color: "#E05252", textTransform: "uppercase", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
+                      <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: 99, background: "#E05252" }} />
+                      Fix now
+                    </div>
                     {critical.map((f, i) => (
-                      <div key={i} style={{ borderLeft: "2px solid #E05252", paddingLeft: 12, marginBottom: 5, fontSize: 13, lineHeight: 1.4, color: "var(--fg)" }}>
+                      <motion.div
+                        key={i}
+                        className="finding-row"
+                        initial={{ opacity: 0, x: -6 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: 0.5 + i * 0.05 }}
+                        style={{
+                          borderLeft: "3px solid #E05252", paddingLeft: 14, paddingTop: 8, paddingBottom: 8,
+                          marginBottom: 8, fontSize: 14, lineHeight: 1.45, color: "var(--fg)",
+                          background: "rgba(224,82,82,0.05)", borderRadius: "0 3px 3px 0",
+                        }}
+                      >
                         {f.title}
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                 )}
                 {warnings.length > 0 && (
                   <div>
-                    <div style={{ ...mono, fontSize: 9, letterSpacing: "0.14em", color: "#E0A852", textTransform: "uppercase", marginBottom: 6 }}>Should Fix</div>
+                    <div style={{ ...mono, fontSize: 10, letterSpacing: "0.14em", color: "#E0A852", textTransform: "uppercase", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
+                      <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: 99, background: "#E0A852" }} />
+                      Should fix
+                    </div>
                     {warnings.map((f, i) => (
-                      <div key={i} style={{ borderLeft: "2px solid #E0A852", paddingLeft: 12, marginBottom: 5, fontSize: 13, lineHeight: 1.4, color: "var(--fg)" }}>
+                      <motion.div
+                        key={i}
+                        className="finding-row"
+                        initial={{ opacity: 0, x: -6 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: 0.55 + i * 0.05 }}
+                        style={{
+                          borderLeft: "2px solid #E0A852", paddingLeft: 14, paddingTop: 7, paddingBottom: 7,
+                          marginBottom: 8, fontSize: 14, lineHeight: 1.45, color: "var(--fg)",
+                          borderRadius: "0 3px 3px 0",
+                        }}
+                      >
                         {f.title}
-                      </div>
+                      </motion.div>
                     ))}
+                  </div>
+                )}
+                {hiddenCount > 0 && (
+                  <div style={{ ...mono, fontSize: 11, color: "var(--muted)", marginTop: 4, paddingLeft: 14 }}>
+                    + {hiddenCount} more issue{hiddenCount === 1 ? "" : "s"} in your full report
                   </div>
                 )}
               </div>
             )}
 
-            {/* Email Gate + CTA */}
-            <div style={{ background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 4, padding: "24px 28px", marginBottom: 20 }}>
-              <div style={{ display: "flex", gap: 24, alignItems: "flex-start", flexWrap: "wrap" }}>
-                <div style={{ flex: 1, minWidth: 240 }}>
-                  <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 6, lineHeight: 1.3 }}>
-                    {result.findings_count > 5
-                      ? `We found ${result.findings_count} issues, and you're only seeing ${result.findings_shown}.`
-                      : "You've seen the summary. The full report shows you exactly what to fix and how."}
+            {/* Email Gate — single focused action: unlock the rest of the diagnosis */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.6 }}
+              style={{
+                background: "linear-gradient(180deg, var(--bg-soft), var(--bg))",
+                border: "1px solid var(--accent)",
+                boxShadow: "0 0 0 1px rgba(143,180,168,0.08), 0 16px 48px -24px var(--accent)",
+                borderRadius: 6, padding: "26px 28px", marginBottom: 14,
+              }}
+            >
+              {emailState === "sent" ? (
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, background: "#8FB4A8", flexShrink: 0 }} />
+                  <div>
+                    <div style={{ fontSize: 15, fontWeight: 500, color: "var(--fg)" }}>Check your inbox. Your full report is on its way.</div>
+                    <a href="/results" style={{ ...mono, fontSize: 11, color: "var(--accent)", letterSpacing: "0.06em", display: "inline-block", marginTop: 8 }}>
+                      View full report now →
+                    </a>
                   </div>
-                  <p style={{ fontSize: 13, color: "var(--muted)", margin: "0 0 16px", lineHeight: 1.5 }}>
-                    {(result.critical_count ?? critical.length) > 0
-                      ? `${result.critical_count ?? critical.length} critical issue${(result.critical_count ?? critical.length) > 1 ? "s" : ""} need${(result.critical_count ?? critical.length) === 1 ? "s" : ""} attention now. Get the full breakdown: priority order, what to fix first, what can wait.`
-                      : "Get the full breakdown with every finding, priority order, and exactly what to fix first."}
+                </div>
+              ) : (
+                <>
+                  <div style={{ ...mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>
+                    Unlock the full diagnosis
+                  </div>
+                  <div style={{ fontSize: 17, fontWeight: 500, marginBottom: 8, lineHeight: 1.35 }}>
+                    {totalIssues > result.findings_shown
+                      ? `You're seeing ${result.findings_shown} of ${totalIssues} issues we found.`
+                      : "Get the complete breakdown sent straight to your inbox."}
+                  </div>
+                  <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "0 0 18px", lineHeight: 1.55, maxWidth: 480 }}>
+                    Your email unlocks every finding, the priority order to fix them in, and the exact category breakdown behind your score. No sales call, no spam, just the report.
                   </p>
-                  {emailState === "sent" ? (
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, maxWidth: 400 }}>
-                      <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: 99, background: "#8FB4A8", flexShrink: 0 }} />
-                      <div style={{ fontSize: 13, color: "var(--fg)" }}>Check your inbox. Your full report is on its way.</div>
-                    </div>
-                  ) : (
-                    <form onSubmit={sendReport} style={{ display: "flex", maxWidth: 400, gap: 0 }}>
-                      <input type="email" required placeholder="your@email.com" value={reportEmail}
-                        onChange={(e) => setReportEmail(e.target.value)}
-                        disabled={emailState === "sending"}
-                        style={{ flex: 1, border: "1px solid var(--rule)", borderRight: 0, background: "transparent", color: "var(--fg)", padding: "11px 14px", fontSize: 13, outline: "none", borderRadius: "3px 0 0 3px", ...mono }} />
-                      <button type="submit" disabled={emailState === "sending"}
-                        style={{ background: "var(--accent)", color: "var(--accent-ink)", padding: "11px 18px", fontSize: 12, border: 0, borderRadius: "0 3px 3px 0", whiteSpace: "nowrap", display: "flex", alignItems: "center", fontWeight: 600, cursor: emailState === "sending" ? "wait" : "pointer", opacity: emailState === "sending" ? 0.7 : 1 }}>
-                        {emailState === "sending" ? "Sending…" : "Show me everything →"}
-                      </button>
-                    </form>
-                  )}
+                  <form onSubmit={sendReport} style={{ display: "flex", maxWidth: 420, gap: 0 }}>
+                    <input type="email" required placeholder="your@email.com" value={reportEmail}
+                      onChange={(e) => setReportEmail(e.target.value)}
+                      disabled={emailState === "sending"}
+                      style={{ flex: 1, border: "1px solid var(--rule)", borderRight: 0, background: "var(--bg)", color: "var(--fg)", padding: "13px 14px", fontSize: 14, outline: "none", borderRadius: "3px 0 0 3px", minHeight: 46, ...mono }} />
+                    <button type="submit" disabled={emailState === "sending"} className="cta-primary"
+                      style={{ color: "var(--accent-ink)", padding: "0 20px", fontSize: 13, border: 0, borderRadius: "0 3px 3px 0", whiteSpace: "nowrap", display: "flex", alignItems: "center", fontWeight: 600, cursor: emailState === "sending" ? "wait" : "pointer", opacity: emailState === "sending" ? 0.7 : 1, minHeight: 46 }}>
+                      {emailState === "sending" ? "Sending…" : "Show me everything →"}
+                    </button>
+                  </form>
                   {emailState === "error" && emailError && (
                     <div style={{ fontSize: 12, color: "#E05252", marginTop: 8 }}>{emailError}</div>
                   )}
-                  {emailState !== "sent" && (
-                    <div style={{ ...mono, fontSize: 9, color: "var(--muted)", marginTop: 8, letterSpacing: "0.06em" }}>Free. No spam. Delivered in seconds.</div>
-                  )}
-                  {emailState === "sent" && (
-                    <div style={{ marginTop: 12 }}>
-                      <a href="/results" style={{ ...mono, fontSize: 11, color: "var(--accent)", letterSpacing: "0.06em" }}>
-                        View full report now →
-                      </a>
-                    </div>
-                  )}
-                </div>
-                <div style={{ width: 1, background: "var(--rule)", alignSelf: "stretch", display: "flex" }} />
-                <div style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 160, justifyContent: "center" }}>
-                  <a href="/start" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "11px 20px", fontSize: 13, borderRadius: 3, textAlign: "center", fontWeight: 600 }}>
-                    Start fixing this →
-                  </a>
-                  <button onClick={reset} style={{ background: "transparent", border: "1px solid var(--rule)", color: "var(--fg)", cursor: "pointer", padding: "10px 20px", font: "inherit", fontSize: 13, borderRadius: 3 }}>
-                    Try another site
-                  </button>
-                </div>
-              </div>
-            </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 10 }}>
+                    <span style={{ ...mono, fontSize: 9, color: "var(--accent)" }}>●</span>
+                    <span style={{ ...mono, fontSize: 10.5, color: "var(--muted)", letterSpacing: "0.04em" }}>
+                      Your data stays private. Free. No spam. Delivered in seconds.
+                    </span>
+                  </div>
+                </>
+              )}
+            </motion.div>
+
+            {/* Secondary actions — separate from the email gate, clearly de-prioritized */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.7 }}
+              style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", justifyContent: "space-between" }}
+            >
+              <a href="/start" style={{ ...mono, fontSize: 12.5, color: "var(--fg)", letterSpacing: "0.02em", textDecoration: "none", borderBottom: "1px solid var(--rule)", paddingBottom: 2 }}>
+                Or skip ahead — start fixing this with our team →
+              </a>
+              <button onClick={reset} style={{ background: "transparent", border: 0, color: "var(--muted)", cursor: "pointer", padding: 0, font: "inherit", fontSize: 12.5, textDecoration: "underline", textUnderlineOffset: 3 }}>
+                Try another site
+              </button>
+            </motion.div>
 
           </motion.div>
         )}
