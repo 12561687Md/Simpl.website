@@ -266,14 +266,13 @@ export default function Home() {
             </h2>
           </ScrollReveal>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-            Most people start by scanning their site. Some want the full report. Others want us to fix everything. You decide how far to go.
+            Most people start by scanning their site and reading the free report. Others want us to fix everything. You decide how far to go.
           </p>
           <div className="grid-tiers" style={{ marginTop: 40, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {[
               { name: "Scanner", tag: "Free", desc: "See what's broken" },
-              { name: "Report", tag: "$49", desc: "See everything" },
               { name: "Core", tag: "$497/mo", desc: "We fix it" },
-              { name: "Agent", tag: "$997/mo", desc: "Full optimization" },
+              { name: "Team", tag: "$997/mo", desc: "Full optimization" },
               { name: "Pro", tag: "$1,997/mo", desc: "Growth mode" },
             ].map((t) => (
               <div key={t.name} style={{ background: "var(--bg)", padding: "32px 24px", display: "flex", flexDirection: "column", gap: 10 }}>

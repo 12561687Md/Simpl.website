@@ -243,17 +243,10 @@ export default function TermsPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>6. Payment Terms</h2>
             <p style={paragraph}>
-              SIMPL offers both one-time and recurring paid services:
+              SIMPL offers a free website scan and report, plus recurring paid
+              services:
             </p>
             <ul style={list}>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  One-time reports (Simpl.report, $49).
-                </strong>{" "}
-                Payment is collected before the report is generated and
-                delivered. Because reports are delivered instantly upon
-                completion, one-time report purchases are non-refundable.
-              </li>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
                   Monthly retainers (Simpl.core at $497/mo and above).

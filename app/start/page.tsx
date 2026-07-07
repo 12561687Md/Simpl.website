@@ -7,10 +7,10 @@ import TierGrid from "./TierGrid";
 
 export const metadata: Metadata = {
   title: "Get Started | SIMPL",
-  description: "From a free scan to a full team running your digital presence. Five ways to work with SIMPL. Pick where you are.",
+  description: "From a free scan to a full team running your digital presence. Four ways to work with SIMPL. Pick where you are.",
   openGraph: {
     title: "Get Started | SIMPL",
-    description: "From a free scan to a full team running your digital presence. Five ways to work with SIMPL. Pick where you are.",
+    description: "From a free scan to a full team running your digital presence. Four ways to work with SIMPL. Pick where you are.",
     url: "https://simpl.pro/start",
     siteName: "SIMPL",
     type: "website",
@@ -34,10 +34,9 @@ export default function StartPage() {
             "@type": "OfferCatalog",
             "name": "SIMPL Services",
             "itemListElement": [
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Scanner", "description": "Free digital presence scan" }, "price": "0", "priceCurrency": "USD" },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Report", "description": "Full digital presence audit report" }, "price": "49", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Scanner", "description": "Free digital presence scan with full report emailed free" }, "price": "0", "priceCurrency": "USD" },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Monthly digital presence management" }, "price": "497", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Agent", "description": "Full digital presence optimization" }, "price": "997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Team", "description": "Full digital presence optimization" }, "price": "997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Complete growth mode" }, "price": "1997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
             ]
           }
