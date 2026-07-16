@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
 import FloatingCTA from "./components/FloatingCTA";
 import CategoryShowcase from "./components/CategoryShowcase";
+import Marquee from "./components/Marquee";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
@@ -78,6 +79,27 @@ const CATEGORIES = [
   },
 ];
 
+// Real checks the scanner runs, not decoration. No client logos here on purpose:
+// nothing is signed, and inventing social proof is the one thing we never do.
+const MARQUEE_CHECKS = [
+  "Expired SSL certificate",
+  "Missing schema markup",
+  "Google listing hours wrong",
+  "No sitemap",
+  "Slow on mobile",
+  "Contact form silently failing",
+  "robots.txt blocking Google",
+  "No meta descriptions",
+  "Reviews going unanswered",
+  "Competitor bidding on your name",
+  "Broken internal links",
+  "Invisible to AI search",
+  "No services page",
+  "Duplicate Google listing",
+  "Missing image alt text",
+  "Mixed content warnings",
+];
+
 const FINDINGS = [
   { num: "01", biz: "Indexing regression", cost: "Lost traffic", finding: "Service pages drop out of Google's index after a site update." },
   { num: "02", biz: "Profile suspension", cost: "Lost calls", finding: "Google Business Profile gets suspended over a duplicate or violation." },
@@ -103,6 +125,9 @@ export default function Home() {
         {/* Hero + Scan Tool */}
         <HomeHero />
         <FloatingCTA />
+
+        {/* What we actually find. Bridges the hero into the scoring section. */}
+        <Marquee items={MARQUEE_CHECKS} speed={55} />
 
         {/* What We Score */}
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>

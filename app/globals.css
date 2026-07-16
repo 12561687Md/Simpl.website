@@ -221,6 +221,93 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .anchor-mini { display: none; }
 
+/* Infinite marquee.
+   The track holds two identical groups and slides exactly -50%, so the second
+   copy lands where the first began and the loop has no visible seam. Edges are
+   masked so items fade in/out instead of popping at the viewport boundary. */
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.marquee {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 18px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll var(--marquee-speed, 40s) linear infinite;
+  animation-direction: var(--marquee-dir, normal);
+  will-change: transform;
+}
+/* Pause on hover, on keyboard focus anywhere inside, and via the real toggle.
+   WCAG 2.2.2 (Level A) needs a mechanism that works without a pointer, which is
+   what .is-paused and the toggle button are for. Hover alone is not compliant. */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track,
+.marquee.is-paused .marquee-track { animation-play-state: paused; }
+
+.marquee-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 6px 12px;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  /* Visible at rest, not just on hover. WCAG 2.2.2 wants an available mechanism,
+     and a control that only appears on hover is invisible to the people most
+     likely to need it. Subtle by default, full strength when engaged. */
+  opacity: 0.55;
+  transition: opacity 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.marquee:hover .marquee-toggle,
+.marquee:focus-within .marquee-toggle,
+.marquee.is-paused .marquee-toggle { opacity: 1; }
+.marquee-toggle:focus-visible { opacity: 1; border-color: var(--accent); color: var(--accent); }
+.marquee-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.marquee-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 26px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.marquee-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
 /* Category showcase: cards left, active detail right */
 .grid-showcase {
   display: grid;
@@ -312,4 +399,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .cta-primary:hover,
   .cta-ghost:hover { transform: none; }
   /* Colour still changes on hover, which is the useful part. Only motion goes. */
+  /* Marquee never starts; it becomes a plain scrollable strip. The toggle is
+     pointless when nothing moves, so it goes, but the list stays readable. */
+  .marquee-track { animation: none; }
+  .marquee { overflow-x: auto; }
+  .marquee-toggle { display: none; }
 }
