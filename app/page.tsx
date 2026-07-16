@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
 import FloatingCTA from "./components/FloatingCTA";
+import CategoryShowcase from "./components/CategoryShowcase";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
@@ -27,6 +28,8 @@ const CATEGORIES = [
     hook: "Slow load times, missing SSL, broken mobile layouts.",
     detail: "Visitors leave before they even read your homepage.",
     fix: "We catch the silent killers: speed issues, expired certificates, and mobile breakage that's costing you visitors right now.",
+    href: "/performance",
+    hrefLabel: "Performance",
   },
   {
     name: "On-Page SEO",
@@ -34,6 +37,8 @@ const CATEGORIES = [
     hook: "Missing titles, no meta descriptions, zero schema markup.",
     detail: "Google can't figure out what your site is about, so it ranks someone else.",
     fix: "We map the exact SEO signals Google uses to rank you, flagging hidden gaps before your competitors outrank you.",
+    href: "/discoverability",
+    hrefLabel: "Discoverability",
   },
   {
     name: "Content & Pages",
@@ -41,6 +46,8 @@ const CATEGORIES = [
     hook: "No services page, no about page, no testimonials, no blog.",
     detail: "Your site exists but it doesn't sell. Visitors land, look around, and leave.",
     fix: "SIMPL identifies the essential pages your site is missing and prioritizes them by how much traffic they'll recover.",
+    href: "/services/organic-growth",
+    hrefLabel: "Organic growth",
   },
   {
     name: "Social Presence",
@@ -48,6 +55,8 @@ const CATEGORIES = [
     hook: "No Facebook, no Instagram, no LinkedIn linked on the site.",
     detail: "Customers search for you on social and find nothing. That's a trust problem.",
     fix: "We flag every platform you're invisible on and show which ones actually matter for your industry.",
+    href: "/reputation",
+    hrefLabel: "Reputation",
   },
   {
     name: "Crawlability",
@@ -55,6 +64,8 @@ const CATEGORIES = [
     hook: "No sitemap, broken internal links, robots.txt blocking Google.",
     detail: "Your pages exist but search engines can't reach them.",
     fix: "We check the technical infrastructure most people never touch: robots.txt, sitemaps, canonicals, internal link health.",
+    href: "/services/quick-wins",
+    hrefLabel: "Quick wins",
   },
   {
     name: "Google Business Profile",
@@ -62,6 +73,8 @@ const CATEGORIES = [
     hook: "Low reviews, no photos, missing hours, no owner responses.",
     detail: "Your listing is live but it's losing you calls every day.",
     fix: "We verify your GBP, grade every field, and show exactly what's keeping you out of the local 3-pack.",
+    href: "/services/local-seo",
+    hrefLabel: "Local SEO",
   },
 ];
 
@@ -103,29 +116,8 @@ export default function Home() {
                 Every SIMPL Score breaks down into six areas. Each one is graded independently. The question isn&apos;t whether you&apos;re failing. It&apos;s which ones.
               </p>
             </ScrollReveal>
-            <div className="grid-categories" style={{ marginTop: 40, background: "var(--rule)", border: "1px solid var(--rule)" }}>
-              {CATEGORIES.map((c, i) => {
-                const gradeColor = c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E05252" : c.grade.startsWith("C") ? "#E0A852" : "#8FB4A8";
-                return (
-                  <div key={c.name} style={{ background: "var(--bg)", padding: "28px 28px 24px", display: "flex", flexDirection: "column", gap: 8 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
-                      <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>
-                        {String(i + 1).padStart(2, "0")} / {c.name}
-                      </div>
-                      <div className="mono" style={{ fontSize: 11, color: gradeColor, letterSpacing: "0.06em", fontWeight: 600 }}>
-                        Most sites: {c.grade}
-                      </div>
-                    </div>
-                    <div style={{ fontSize: 14, lineHeight: 1.55 }}>
-                      <strong>{c.hook}</strong> {c.detail}
-                    </div>
-                    <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--accent)", opacity: 0.85 }}>{c.fix}</div>
-                    <a href="/scan" className="mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none", marginTop: "auto", letterSpacing: "0.08em", opacity: 0.7 }}>
-                      See where you stand →
-                    </a>
-                  </div>
-                );
-              })}
+            <div style={{ marginTop: 40 }}>
+              <CategoryShowcase categories={CATEGORIES} />
             </div>
           </div>
         </section>

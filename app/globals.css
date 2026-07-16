@@ -221,6 +221,29 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .anchor-mini { display: none; }
 
+/* Category showcase: cards left, active detail right */
+.grid-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.category-card {
+  transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+}
+.category-card:hover { border-color: var(--accent) !important; transform: translateX(2px); }
+.showcase-nav {
+  height: 44px; width: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+  color: var(--fg);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+.showcase-nav:hover { border-color: var(--accent); color: var(--accent); }
+
 /* Pricing CTAs: 44x44 minimum touch target */
 .tier-cta {
   display: inline-flex;
@@ -253,6 +276,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .grid-findings { grid-template-columns: 1fr !important; gap: 8px !important; }
   .grid-findings .finding-cost { display: none; }
   .grid-tier-row { grid-template-columns: 1fr !important; gap: 16px !important; padding: 24px 20px !important; }
+  .grid-showcase { grid-template-columns: 1fr !important; gap: 16px !important; }
   .grid-parts { grid-template-columns: 1fr !important; gap: 6px !important; padding: 22px 20px !important; }
   .grid-anchor { grid-template-columns: 1fr 1fr !important; gap: 4px 16px !important; padding: 20px !important; }
   .grid-anchor > .anchor-what { grid-column: 1 / -1; margin-bottom: 8px; }
