@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,7 +12,9 @@ const contactSchema = z.object({
   name: z.string().min(2, "Tell us your name (at least 2 characters)."),
   email: z.string().email("Enter a valid email address."),
   phone: z.string().regex(PHONE_REGEX, "Enter a valid phone number.").optional().or(z.literal("")),
-  website: z.string().optional(),
+  // Must match the API's limit, or an over-long value passes here and then fails
+  // server-side as a dead-end submission instead of a field error.
+  website: z.string().max(200, "That's too long for a website address.").optional(),
   message: z.string().optional(),
 });
 
@@ -50,10 +53,15 @@ export default function ContactForm({
   sourcePage?: string;
 }) {
   const reduce = useReducedMotion();
+  // Own success state rather than RHF's isSubmitSuccessful. RHF marks a submit
+  // successful whenever the handler resolves, so the only way to suppress a
+  // false success screen with that flag is to throw, which surfaces as an
+  // unhandled rejection. Tracking it here lets us fail quietly into the form.
+  const [sent, setSent] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
     setError,
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -63,19 +71,29 @@ export default function ContactForm({
   });
 
   async function onSubmit(values: ContactFormValues) {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...values, sourcePage }),
-    });
+    let res: Response;
+    try {
+      res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, sourcePage }),
+      });
+    } catch {
+      // Offline or DNS/network failure. Keep the person in the form with a real
+      // message instead of letting the rejection escape.
+      setError("root", { message: "Could not reach us. Check your connection and try again, or email team@simpl.pro." });
+      return;
+    }
+
     const data = await res.json().catch(() => ({}));
     if (!res.ok || !data.success) {
       setError("root", { message: data.error || "Could not send your message. Try again." });
-      throw new Error(data.error || "submit failed");
+      return;
     }
+    setSent(true);
   }
 
-  if (isSubmitSuccessful) {
+  if (sent) {
     return (
       <motion.div
         initial={reduce ? false : { opacity: 0, scale: 0.98 }}

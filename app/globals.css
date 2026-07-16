@@ -301,4 +301,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .pulse-dot, .shimmer-line::after, .cta-primary::after { animation: none; }
+  /* framer-motion's useReducedMotion covers the JS animations, but not CSS.
+     These have to be disabled here or reduced-motion users still get movement. */
+  .category-card,
+  .showcase-nav,
+  .tier-cta,
+  .cta-primary,
+  .cta-ghost { transition: none; }
+  .category-card:hover,
+  .cta-primary:hover,
+  .cta-ghost:hover { transform: none; }
+  /* Colour still changes on hover, which is the useful part. Only motion goes. */
 }
