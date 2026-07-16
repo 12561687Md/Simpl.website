@@ -6,17 +6,34 @@ import ContactForm from "./ContactForm";
 import TierGrid from "./TierGrid";
 
 export const metadata: Metadata = {
-  title: "Get Started | SIMPL",
-  description: "From a free scan to a full team running your digital presence. Four ways to work with SIMPL. Pick where you are.",
+  title: "Pricing | SIMPL",
+  description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working. Local SEO from $497/mo, website build free on Team. No contracts you can't leave.",
   openGraph: {
-    title: "Get Started | SIMPL",
-    description: "From a free scan to a full team running your digital presence. Four ways to work with SIMPL. Pick where you are.",
+    title: "Pricing | SIMPL",
+    description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working. Local SEO from $497/mo, website build free on Team.",
     url: "https://simpl.pro/start",
     siteName: "SIMPL",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/start" },
 };
+
+const PARTS = [
+  { name: "Strategy audit", price: "$250", cadence: "once", desc: "The whole picture: where the leads are leaking out and what to fix first. Included free with any tier." },
+  { name: "Google Business Profile", price: "from $200", cadence: "/ mo", desc: "Claimed, filled out, posted to, and watched. The listing most of your calls come from." },
+  { name: "SEO + AI search", price: "$250 to $500", cadence: "/ mo", desc: "Rank on Google, and show up when someone asks AI who to call. Price moves with how hard you want to push." },
+  { name: "Website build", price: "$1,000 to $3,000", cadence: "once", desc: "Fast, findable, built to turn visitors into calls. Free when you start on Team." },
+  { name: "Estimate bot", price: "Custom", cadence: "", desc: "Answers leads, quotes jobs, and books calls while you're on a roof or asleep." },
+];
+
+const ELSEWHERE = [
+  { what: "Local SEO for a one-location service business", them: "$2,000 to $2,500 / mo", us: "from $497 / mo" },
+  { what: "What the average agency retainer runs", them: "about $3,200 / mo", us: "from $497 / mo" },
+  { what: "A small business website rebuild", them: "$3,000 to $15,000", us: "$0 on Team" },
+  { what: "A professional SEO audit", them: "$500 to $5,000", us: "$250, free with any tier" },
+];
+
+const label = { fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "var(--muted)" };
 
 export default function StartPage() {
   return (
@@ -34,10 +51,13 @@ export default function StartPage() {
             "@type": "OfferCatalog",
             "name": "SIMPL Services",
             "itemListElement": [
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Scanner", "description": "Free digital presence scan with full report emailed free" }, "price": "0", "priceCurrency": "USD" },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Monthly digital presence management" }, "price": "497", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Team", "description": "Full digital presence optimization" }, "price": "997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Complete growth mode" }, "price": "1997", "priceCurrency": "USD", "priceSpecification": { "@type": "UnitPriceSpecification", "billingDuration": "P1M" } }
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Scan", "description": "Free digital presence scan with the full report emailed free" }, "price": "0", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Google Business Profile optimization, on-page SEO, AI search visibility, and lead tracking. Includes the strategy audit." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Team", "description": "Everything in Core, plus a free website build on a 3-month start, content, social, reviews, and rank tracking." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Everything in Team, plus landing pages, conversion optimization, monthly strategy, and multi-location coverage." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "1997", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Paid Ads Management", "description": "Google, Meta, and LSA campaign management. Quoted per account. No markup on ad spend." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "500", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategy Audit", "description": "One-time marketing strategy audit. Included free with any tier." }, "price": "250", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Build", "description": "Flat-rate website build, scope-based. Free when starting on Team with a 3-month commitment." }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "1000", "maxPrice": "3000", "priceCurrency": "USD" } }
             ]
           }
         }) }} />
@@ -46,25 +66,26 @@ export default function StartPage() {
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Get Started", "item": "https://simpl.pro/start" }
+            { "@type": "ListItem", "position": 2, "name": "Pricing", "item": "https://simpl.pro/start" }
           ]
         }) }} />
+
         {/* Hero */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "120px 32px 64px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 40 }}>Get Started</div>
+          <div className="mono" style={{ ...label, marginBottom: 40 }}>Pricing</div>
           <h1 style={{ margin: 0, fontSize: "clamp(32px, 5vw, 56px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 900 }}>
-            Pick where you are.<br />
-            <span style={{ color: "var(--muted)" }}>We&apos;ll meet you there.</span>
+            More leads.<br />
+            <span style={{ color: "var(--muted)" }}>Fewer Saturdays.</span>
           </h1>
-          <p style={{ marginTop: 28, maxWidth: 620, fontSize: 17, lineHeight: 1.55 }}>
-            Whether you just want to see your score or you want a team running your entire digital presence, there&apos;s a tier for that.
+          <p style={{ marginTop: 28, maxWidth: 640, fontSize: 17, lineHeight: 1.55 }}>
+            You didn&apos;t start your business to write meta descriptions and argue with Google. Pick what you need, add to it once it&apos;s working. Every price below is where it starts, because no two businesses need the same thing.
           </p>
         </section>
 
-        {/* Product Ladder */}
+        {/* Tiers */}
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>What&apos;s included</div>
+            <div className="mono" style={{ ...label, marginBottom: 48 }}>The stack</div>
 
             <TierGrid />
 
@@ -74,13 +95,127 @@ export default function StartPage() {
           </div>
         </section>
 
+        {/* Paid ads — separate on purpose */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ ...label, marginBottom: 28 }}>
+            <span style={{ color: "var(--accent)" }}>Separate</span> · paid ads
+          </div>
+          <div className="grid-contact" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)", gap: 56, alignItems: "start" }}>
+            <div>
+              <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 620 }}>
+                Ads are quoted on your account, not on a menu.
+              </h2>
+              <p style={{ marginTop: 24, maxWidth: 620, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                A roofer in a storm market and a dentist with two chairs do not have the same ad problem, so they should not have the same ad price. We quote it against your account, your market, and what you want to spend. It bolts onto any tier.
+              </p>
+              <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: "6px 24px" }}>
+                {[
+                  "Google, Meta, and Local Services Ads",
+                  "You own the account and the data, always",
+                  "No markup on your ad spend, ever",
+                  "One-time setup at half the monthly fee",
+                ].map((b) => (
+                  <div key={b} style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7 }}>+ {b}</div>
+                ))}
+              </div>
+            </div>
+            <div style={{ border: "1px solid var(--rule)", padding: "28px 24px", background: "var(--bg-soft)" }}>
+              <div className="mono" style={{ fontSize: 10, ...label, marginBottom: 8 }}>Management</div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                <span style={{ fontSize: 30, fontWeight: 300 }}>from $500</span>
+                <span className="mono" style={{ color: "var(--muted)", fontSize: 12 }}>/ mo</span>
+              </div>
+              <p style={{ marginTop: 14, fontSize: 13, lineHeight: 1.6, color: "var(--muted)" }}>
+                Plus a one-time setup fee at 50% of the monthly management fee. Ad spend is billed by Google or Meta directly to you.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
+
+        {/* À la carte */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ ...label, marginBottom: 28 }}>
+            <span style={{ color: "var(--accent)" }}>Only want one thing?</span> · buy the piece
+          </div>
+          <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 660 }}>
+            Start with one piece. The tiers just cost less than buying them separately.
+          </h2>
+          <p style={{ marginTop: 24, maxWidth: 620, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+            Some owners only want their Google listing fixed. That&apos;s fine, start there. Here&apos;s what each piece costs on its own.
+          </p>
+
+          <div style={{ marginTop: 44, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+            {PARTS.map((p) => (
+              <div key={p.name} className="grid-tier-row" style={{
+                background: "var(--bg)", padding: "22px 28px",
+                display: "grid", gridTemplateColumns: "minmax(150px, 190px) minmax(160px, 200px) minmax(0, 1fr)",
+                gap: "12px 32px", alignItems: "baseline",
+              }}>
+                <div style={{ fontSize: 15, fontWeight: 500 }}>{p.name}</div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 5 }}>
+                  <span style={{ fontSize: 19, fontWeight: 300 }}>{p.price}</span>
+                  {p.cadence && <span className="mono" style={{ color: "var(--muted)", fontSize: 11 }}>{p.cadence}</span>}
+                </div>
+                <div style={{ fontSize: 14, lineHeight: 1.55, color: "var(--muted)" }}>{p.desc}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* The anchor */}
+        <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+            <div className="mono" style={{ ...label, marginBottom: 28 }}>
+              <span style={{ color: "var(--accent)" }}>For comparison</span> · what this costs elsewhere
+            </div>
+            <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 660 }}>
+              The same work, at what the rest of the market charges for it.
+            </h2>
+
+            <div style={{ marginTop: 44, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+              <div className="mono grid-tier-row" style={{
+                background: "var(--bg)", padding: "14px 28px", ...label, fontSize: 10,
+                display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(140px, 1fr) minmax(140px, 1fr)", gap: "8px 32px",
+              }}>
+                <div>What you need</div>
+                <div>Everyone else</div>
+                <div style={{ color: "var(--accent)" }}>SIMPL</div>
+              </div>
+              {ELSEWHERE.map((e) => (
+                <div key={e.what} className="grid-tier-row" style={{
+                  background: "var(--bg)", padding: "20px 28px",
+                  display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(140px, 1fr) minmax(140px, 1fr)",
+                  gap: "8px 32px", alignItems: "baseline",
+                }}>
+                  <div style={{ fontSize: 15 }}>{e.what}</div>
+                  <div className="mono" style={{ fontSize: 13, color: "var(--muted)", textDecoration: "line-through", textDecorationColor: "var(--rule)" }}>{e.them}</div>
+                  <div className="mono" style={{ fontSize: 13, color: "var(--accent)", fontWeight: 500 }}>{e.us}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ marginTop: 48, maxWidth: 620 }}>
+              <div className="mono" style={{ ...label, marginBottom: 12 }}>Why we cost less</div>
+              <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6 }}>
+                You&apos;re not paying for an account manager, a sales team, or an office. You work directly with the person doing the work.
+              </p>
+            </div>
+
+            <div className="mono" style={{ fontSize: 10, color: "var(--muted)", marginTop: 32, lineHeight: 1.7, opacity: 0.7 }}>
+              Comparison figures are 2026 published agency rates for one-location local service businesses. Sources: SEOProfy, Arc4, Digital Applied, Tenet.
+            </div>
+          </div>
+        </section>
+
         {/* Free scan */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px 96px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 28 }}>
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ ...label, marginBottom: 28 }}>
             <span style={{ color: "var(--accent)" }}>Start here</span> · run a free scan
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 620 }}>
-            Type a domain. See your SIMPL Score. Decide from there.
+            Type a domain. See what it&apos;s costing you. Decide from there.
           </h2>
           <div style={{ marginTop: 40 }}><ScanTool compact /></div>
         </section>
@@ -89,7 +224,7 @@ export default function StartPage() {
 
         {/* Contact */}
         <section data-section="contact" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 28 }}>
+          <div className="mono" style={{ ...label, marginBottom: 28 }}>
             <span style={{ color: "var(--accent)" }}>Ready?</span> · send a note
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 620, marginBottom: 48 }}>
@@ -99,15 +234,15 @@ export default function StartPage() {
             <ContactForm />
             <div style={{ display: "grid", gap: 28 }}>
               <div>
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>Reply window</div>
+                <div className="mono" style={{ ...label, marginBottom: 10 }}>Reply window</div>
                 <div style={{ fontSize: 16, lineHeight: 1.5 }}>Same business day, usually within four hours.</div>
               </div>
               <div>
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>From</div>
+                <div className="mono" style={{ ...label, marginBottom: 10 }}>From</div>
                 <div style={{ fontSize: 16, lineHeight: 1.5 }}>A person. Not a sequence. Not a calendar link.</div>
               </div>
               <div>
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>Direct</div>
+                <div className="mono" style={{ ...label, marginBottom: 10 }}>Direct</div>
                 <a href="mailto:team@simpl.pro" className="mono" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>team@simpl.pro</a>
               </div>
             </div>

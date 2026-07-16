@@ -270,10 +270,10 @@ export default function Home() {
           </p>
           <div className="grid-tiers" style={{ marginTop: 40, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {[
-              { name: "Scanner", tag: "Free", desc: "See what's broken" },
-              { name: "Core", tag: "$497/mo", desc: "We fix it" },
-              { name: "Team", tag: "$997/mo", desc: "Full optimization" },
-              { name: "Pro", tag: "$1,997/mo", desc: "Growth mode" },
+              { name: "Scan", tag: "Free", desc: "See what's broken" },
+              { name: "Core", tag: "From $497/mo", desc: "Get found" },
+              { name: "Team", tag: "From $997/mo", desc: "Get booked" },
+              { name: "Pro", tag: "From $1,997/mo", desc: "Get your time back" },
             ].map((t) => (
               <div key={t.name} style={{ background: "var(--bg)", padding: "32px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
                 <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>Simpl.{t.name.toLowerCase()}</div>

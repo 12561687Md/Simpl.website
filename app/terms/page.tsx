@@ -243,17 +243,47 @@ export default function TermsPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>6. Payment Terms</h2>
             <p style={paragraph}>
-              SIMPL offers a free website scan and report, plus recurring paid
-              services:
+              SIMPL offers a free website scan and report, plus paid services.
+              All published prices are starting prices. Your final price depends
+              on the scope you and SIMPL agree to in writing before work begins:
             </p>
             <ul style={list}>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
-                  Monthly retainers (Simpl.core at $497/mo and above).
+                  Monthly retainers (Simpl.core starting at $497/mo).
                 </strong>{" "}
                 Retainer services are billed monthly at the start of each
-                billing period. You may cancel at any time, and your service
-                will continue through the end of the current billing period.
+                billing period. Except where a minimum term applies, you may
+                cancel at any time, and your service will continue through the
+                end of the current billing period.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>
+                  One-time services.
+                </strong>{" "}
+                Strategy audits and website builds are billed as a flat fee
+                quoted in advance.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>
+                  Website build included with Simpl.team.
+                </strong>{" "}
+                Where SIMPL provides a website build at no charge as part of a
+                Simpl.team engagement, that engagement carries a three-month
+                minimum term. If you cancel before the third billing period
+                ends, the remaining months of that minimum become due, or SIMPL
+                may instead invoice the build at its standard rate. You keep the
+                website either way.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>
+                  Paid advertising management (starting at $500/mo).
+                </strong>{" "}
+                Quoted per account, plus a one-time setup fee equal to 50% of
+                the monthly management fee. Advertising spend is billed to you
+                directly by the ad platform, is not collected by SIMPL, and
+                carries no SIMPL markup. You retain ownership of your ad
+                accounts and data.
               </li>
             </ul>
             <p style={paragraph}>

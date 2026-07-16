@@ -4,15 +4,15 @@ import Link from "next/link";
 
 const TIERS = [
   {
-    name: "Simpl.scanner",
+    name: "Simpl.scan",
     price: "Free",
+    from: false,
     cadence: "",
     tag: "See what's broken",
-    desc: "Run a free diagnostic on any website in 30 seconds. No signup, no email, no credit card. You get a score out of 100 and your five biggest problems, ranked by how much they cost you. Most businesses score between 40 and 65. Where do you fall?",
+    desc: "Your score out of 100, and the five things costing you the most.",
     bullets: [
-      "SIMPL Score (0 to 100) with category grades",
-      "Top 5 issues ranked by revenue impact",
-      "Business identity and industry detection",
+      "SIMPL Score with a grade in every category",
+      "Your five biggest problems, ranked by what they cost",
       "Full report with every finding, emailed free",
     ],
     highlight: false,
@@ -23,53 +23,57 @@ const TIERS = [
   {
     name: "Simpl.core",
     price: "$497",
+    from: true,
     cadence: "/ month",
-    tag: "We fix it",
-    desc: "Most of what's in your report, we can fix in the first 30 days. Hand us the findings and we handle the rest: GBP optimization, on-page SEO, schema markup, the technical work that actually moves your ranking. You stop Googling how to fix things. We start fixing them.",
+    tag: "Get found",
+    desc: "Your Google listing, your site's SEO, and tracking that shows what's working.",
     bullets: [
-      "GBP claimed, optimized, and monitored",
-      "On-page SEO fixes across your site",
-      "Schema markup so Google understands your business",
-      "Monthly progress report with before and after scores",
+      "Your Google listing claimed, filled out, and watched",
+      "Show up when people ask AI who to call",
+      "Every call and form tracked to where it came from",
+      "Your $250 strategy audit, included",
+      "Monthly report: what moved, what's next",
     ],
     highlight: false,
-    cta: "Let's fix this",
+    cta: "Get found",
     href: "#contact",
     contact: true,
   },
   {
     name: "Simpl.team",
     price: "$997",
+    from: true,
     cadence: "/ month",
-    tag: "Full optimization",
-    desc: "Stop losing leads to competitors who showed up first. Core fixes the foundation, but most businesses need more than SEO patches. We rebuild what's broken: your website, your content, your social presence, your local visibility. This is the full digital presence, handled by our team so you can run your business.",
+    tag: "Get booked",
+    desc: "Core, plus a new website and the content that feeds it.",
     bullets: [
-      "Everything in Core",
-      "Website audit, fixes, and ongoing improvements",
-      "Content strategy and creation",
-      "Social media setup and management",
-      "Local SEO and citation building",
+      "A new website, built and launched. $0 on a 3-month start",
+      "An estimate bot that answers leads at 2am so you don't",
+      "Content written and posted for you",
+      "Review requests that actually go out",
+      "See exactly where you rank on Google and Maps",
     ],
     highlight: true,
-    cta: "Let's fix this",
+    cta: "Get booked",
     href: "#contact",
     contact: true,
   },
   {
     name: "Simpl.pro",
     price: "$1,997",
+    from: true,
     cadence: "/ month",
-    tag: "Growth mode",
-    desc: "For businesses ready to grow, not just fix. Everything our team handles, plus paid advertising, advanced content, and direct consulting with our strategists. You stop wondering what to do next. We bring the plan, the execution, and the numbers to prove it's working.",
+    tag: "Get your time back",
+    desc: "Team, plus the work that turns traffic into booked jobs.",
     bullets: [
-      "Everything in Simpl.team",
-      "Google Ads and Meta Ads management",
-      "LSA and RSA campaign setup",
-      "Content creation and posting",
-      "Monthly strategy consulting",
+      "Landing pages built for the jobs you actually want",
+      "More booked jobs out of the same traffic",
+      "A strategy call every month",
+      "Multiple locations covered",
+      "Priority turnaround on everything",
     ],
     highlight: false,
-    cta: "Let's fix this",
+    cta: "Get my time back",
     href: "#contact",
     contact: true,
   },
@@ -96,7 +100,7 @@ export default function TierGrid() {
         }}>
           {t.highlight && (
             <div className="mono" style={{ position: "absolute", top: -1, right: 24, background: "var(--accent)", color: "var(--accent-ink)", fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", padding: "4px 12px", fontWeight: 600 }}>
-              Most Popular
+              Best value
             </div>
           )}
 
@@ -106,6 +110,11 @@ export default function TierGrid() {
               {String(i + 1).padStart(2, "0")}
             </div>
             <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 4 }}>{t.name}</div>
+            {t.from && (
+              <div className="mono" style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 2 }}>
+                Starting at
+              </div>
+            )}
             <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
               <span style={{ fontSize: 28, fontWeight: 300 }}>{t.price}</span>
               {t.cadence && <span className="mono" style={{ color: "var(--muted)", fontSize: 12 }}>{t.cadence}</span>}
