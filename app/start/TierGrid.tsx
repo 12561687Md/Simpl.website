@@ -135,20 +135,17 @@ export default function TierGrid() {
           {/* Right: CTA */}
           <div style={{ display: "flex", alignItems: "center" }}>
             {t.contact ? (
-              <a href="#contact" onClick={scrollToContact} style={{
-                padding: "10px 20px", fontSize: 13, borderRadius: 3, textDecoration: "none", whiteSpace: "nowrap", cursor: "pointer",
-                ...(t.highlight
-                  ? { background: "var(--accent)", color: "var(--accent-ink)", fontWeight: 600 }
-                  : { border: "1px solid var(--rule)", color: "var(--fg)" }),
-              }}>
-                {t.cta} →
+              <a
+                href="#contact"
+                onClick={scrollToContact}
+                aria-label={`${t.cta}: contact us about ${t.name}`}
+                className={`tier-cta ${t.highlight ? "tier-cta-solid" : "tier-cta-ghost"}`}
+              >
+                {t.cta} <span aria-hidden="true">→</span>
               </a>
             ) : (
-              <Link href={t.href} style={{
-                padding: "10px 20px", fontSize: 13, borderRadius: 3, textDecoration: "none", whiteSpace: "nowrap",
-                border: "1px solid var(--rule)", color: "var(--fg)",
-              }}>
-                {t.cta} →
+              <Link href={t.href} aria-label={`${t.cta}: run a free scan`} className="tier-cta tier-cta-ghost">
+                {t.cta} <span aria-hidden="true">→</span>
               </Link>
             )}
           </div>

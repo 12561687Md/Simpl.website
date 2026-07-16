@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import FloatingCTA from "../components/FloatingCTA";
 import ScanTool from "../components/ScanTool";
 import ContactForm from "./ContactForm";
 import TierGrid from "./TierGrid";
@@ -31,6 +32,37 @@ const ELSEWHERE = [
   { what: "What the average agency retainer runs", them: "about $3,200 / mo", us: "from $497 / mo" },
   { what: "A small business website rebuild", them: "$3,000 to $15,000", us: "$0 on Team" },
   { what: "A professional SEO audit", them: "$500 to $5,000", us: "$250, free with any tier" },
+];
+
+const FAQS = [
+  {
+    q: "Why are you so much cheaper than the agency that keeps calling me?",
+    a: "You're not paying for an account manager, a sales team, or an office. You work directly with the person doing the work. The typical agency quote for a one-location service business runs $2,000 to $2,500 a month, and a big share of that is overhead you never see.",
+  },
+  {
+    q: "What does \"starting at\" actually mean? Am I going to get upsold?",
+    a: "No. It means your price is built from the pieces you need, and we agree on it in writing before any work starts. A shop that only needs its Google listing handled pays closer to the $200 floor. A shop that needs a new site, content, and reviews pays more. You will never get an invoice you did not approve.",
+  },
+  {
+    q: "Is the free website really free?",
+    a: "Yes, when you start on Team and stay three months. The build normally runs $1,000 to $3,000. We cover it because a client with a fast, findable site is a client who sticks around. If you leave before month three, the remaining months of the minimum come due or we invoice the build at its normal rate. You keep the website either way.",
+  },
+  {
+    q: "How long until I actually see more calls?",
+    a: "Honest answer: the fixes are visible in 30 days, the leads are not. Month one is your score jump, your listing, the technical work, and tracking that proves what's happening. Rankings and call volume compound over three to six months. Anyone promising page one in 30 days is lying to you. If your score isn't above 80 in 90 days, that month is free.",
+  },
+  {
+    q: "Do I have to sign a long contract?",
+    a: "No. Core and Pro are month to month, cancel whenever. The only minimum is three months on Team, and that exists solely because we gave you a website for free.",
+  },
+  {
+    q: "Why aren't ads included in a tier?",
+    a: "Because a roofer in a storm market and a dentist with two chairs don't have the same ad problem, so a flat price would either overcharge you or underdeliver. Ads are quoted against your account and market, starting at $500 a month plus a one-time setup at half the monthly fee. Your ad spend goes to Google or Meta directly. We never mark it up, and you own the account.",
+  },
+  {
+    q: "What if I already have a website I like?",
+    a: "Then keep it. Core works on the site you have. We only rebuild when the site is what's holding you back, and the free scan will tell you whether that's true before you spend anything.",
+  },
 ];
 
 const label = { fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "var(--muted)" };
@@ -68,6 +100,15 @@ export default function StartPage() {
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
             { "@type": "ListItem", "position": 2, "name": "Pricing", "item": "https://simpl.pro/start" }
           ]
+        }) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": FAQS.map((f) => ({
+            "@type": "Question",
+            "name": f.q,
+            "acceptedAnswer": { "@type": "Answer", "text": f.a }
+          }))
         }) }} />
 
         {/* Hero */}
@@ -148,11 +189,7 @@ export default function StartPage() {
 
           <div style={{ marginTop: 44, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {PARTS.map((p) => (
-              <div key={p.name} className="grid-tier-row" style={{
-                background: "var(--bg)", padding: "22px 28px",
-                display: "grid", gridTemplateColumns: "minmax(150px, 190px) minmax(160px, 200px) minmax(0, 1fr)",
-                gap: "12px 32px", alignItems: "baseline",
-              }}>
+              <div key={p.name} className="grid-parts" style={{ background: "var(--bg)", padding: "22px 28px" }}>
                 <div style={{ fontSize: 15, fontWeight: 500 }}>{p.name}</div>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 5 }}>
                   <span style={{ fontSize: 19, fontWeight: 300 }}>{p.price}</span>
@@ -162,6 +199,10 @@ export default function StartPage() {
               </div>
             ))}
           </div>
+
+          <p style={{ marginTop: 28, maxWidth: 620, fontSize: 14, lineHeight: 1.6, color: "var(--muted)" }}>
+            Been with us a couple of months and want to lock it in? Annual prepay takes about 25% off. We only offer it once you&apos;ve seen the work, never on day one.
+          </p>
         </section>
 
         {/* The anchor */}
@@ -175,23 +216,22 @@ export default function StartPage() {
             </h2>
 
             <div style={{ marginTop: 44, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
-              <div className="mono grid-tier-row" style={{
-                background: "var(--bg)", padding: "14px 28px", ...label, fontSize: 10,
-                display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(140px, 1fr) minmax(140px, 1fr)", gap: "8px 32px",
-              }}>
+              <div className="mono grid-anchor anchor-head" style={{ background: "var(--bg)", padding: "14px 28px", ...label, fontSize: 10 }}>
                 <div>What you need</div>
                 <div>Everyone else</div>
                 <div style={{ color: "var(--accent)" }}>SIMPL</div>
               </div>
               {ELSEWHERE.map((e) => (
-                <div key={e.what} className="grid-tier-row" style={{
-                  background: "var(--bg)", padding: "20px 28px",
-                  display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(140px, 1fr) minmax(140px, 1fr)",
-                  gap: "8px 32px", alignItems: "baseline",
-                }}>
-                  <div style={{ fontSize: 15 }}>{e.what}</div>
-                  <div className="mono" style={{ fontSize: 13, color: "var(--muted)", textDecoration: "line-through", textDecorationColor: "var(--rule)" }}>{e.them}</div>
-                  <div className="mono" style={{ fontSize: 13, color: "var(--accent)", fontWeight: 500 }}>{e.us}</div>
+                <div key={e.what} className="grid-anchor" style={{ background: "var(--bg)", padding: "20px 28px" }}>
+                  <div className="anchor-what" style={{ fontSize: 15 }}>{e.what}</div>
+                  <div>
+                    <div className="mono anchor-mini" style={{ ...label, fontSize: 9, marginBottom: 3 }}>Everyone else</div>
+                    <div className="mono" style={{ fontSize: 13, color: "var(--muted)", textDecoration: "line-through", textDecorationColor: "var(--muted)" }}>{e.them}</div>
+                  </div>
+                  <div>
+                    <div className="mono anchor-mini" style={{ ...label, fontSize: 9, marginBottom: 3, color: "var(--accent)" }}>SIMPL</div>
+                    <div className="mono" style={{ fontSize: 13, color: "var(--accent)", fontWeight: 500 }}>{e.us}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -203,11 +243,34 @@ export default function StartPage() {
               </p>
             </div>
 
-            <div className="mono" style={{ fontSize: 10, color: "var(--muted)", marginTop: 32, lineHeight: 1.7, opacity: 0.7 }}>
+            <div className="mono" style={{ fontSize: 11, color: "var(--muted)", marginTop: 32, lineHeight: 1.7 }}>
               Comparison figures are 2026 published agency rates for one-location local service businesses. Sources: SEOProfy, Arc4, Digital Applied, Tenet.
             </div>
           </div>
         </section>
+
+        {/* FAQ — objection handling */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ ...label, marginBottom: 28 }}>
+            <span style={{ color: "var(--accent)" }}>Before you ask</span> · the awkward questions
+          </div>
+          <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 660, marginBottom: 44 }}>
+            The things you&apos;re actually wondering.
+          </h2>
+          <div style={{ display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)", maxWidth: 860 }}>
+            {FAQS.map((f) => (
+              <details key={f.q} style={{ background: "var(--bg)", padding: "22px 28px" }}>
+                <summary style={{ cursor: "pointer", listStyle: "none", display: "flex", justifyContent: "space-between", gap: 24, alignItems: "baseline", fontSize: 16, minHeight: 24 }}>
+                  {f.q}
+                  <span aria-hidden="true" style={{ color: "var(--accent)", fontSize: 20, lineHeight: 1, flexShrink: 0 }}>+</span>
+                </summary>
+                <p style={{ margin: "14px 0 0", fontSize: 15, lineHeight: 1.6, color: "var(--muted)", maxWidth: 660 }}>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* Free scan */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
@@ -249,6 +312,7 @@ export default function StartPage() {
           </div>
         </section>
       </main>
+      <FloatingCTA label="Get my price" glyph="→" target="[data-section='contact']" />
       <Footer />
     </div>
   );

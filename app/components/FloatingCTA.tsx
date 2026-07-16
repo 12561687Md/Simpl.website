@@ -2,24 +2,51 @@
 
 import { useState, useEffect } from "react";
 
-export default function FloatingCTA() {
+type Props = {
+  /** Button text. Promise-based, never "Submit"/"Go". */
+  label?: string;
+  /** Arrow glyph shown after the label. Decorative, hidden from screen readers. */
+  glyph?: string;
+  /** CSS selector to scroll to. Omit to scroll to the top of the page. */
+  target?: string;
+  /** Scroll distance in px before the button appears. */
+  after?: number;
+};
+
+export default function FloatingCTA({
+  label = "Find my score",
+  glyph = "↑",
+  target,
+  after = 600,
+}: Props) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     function onScroll() {
-      setVisible(window.scrollY > 600);
+      setVisible(window.scrollY > after);
     }
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [after]);
 
   if (!visible) return null;
 
+  function go(e: React.MouseEvent) {
+    e.preventDefault();
+    if (target) {
+      document.querySelector(target)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
   return (
     <a
-      href="#"
+      href={target || "#"}
       className="floating-cta"
-      onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+      aria-label={label}
+      onClick={go}
       style={{
         position: "fixed",
         bottom: "calc(24px + env(safe-area-inset-bottom, 0px))",
@@ -42,7 +69,7 @@ export default function FloatingCTA() {
         letterSpacing: "0.04em",
       }}
     >
-      Find my score ↑
+      {label} <span aria-hidden="true" style={{ marginLeft: 6 }}>{glyph}</span>
     </a>
   );
 }
