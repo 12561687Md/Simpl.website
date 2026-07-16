@@ -29,8 +29,10 @@ const captureEmailSchema = z.object({
 const RATE_LIMIT_MAX = 10;
 
 function gradeColor(grade: string | undefined): string {
-  if (!grade) return "#8FB4A8";
-  if (grade.startsWith("A") || grade.startsWith("B")) return "#8FB4A8";
+  // Missing or N/A is neutral grey, never the accent green: an absent grade must
+  // not read as a passing one in the emailed report.
+  if (!grade || grade === "N/A") return "#8A8D8C";
+  if (grade.startsWith("A") || grade.startsWith("B")) return "#9BFF1A";
   if (grade.startsWith("C")) return "#E0A852";
   return "#E05252";
 }
@@ -45,7 +47,7 @@ function buildEmailHtml(params: {
   categories?: Record<string, { grade?: string; score?: number; max?: number }>;
 }) {
   const { businessName, scanUrl, scanScore, scanGrade, findings = [], categories = {} } = params;
-  const accent = "#8FB4A8";
+  const accent = "#9BFF1A";
   const color = gradeColor(scanGrade);
 
   const topFindings = findings

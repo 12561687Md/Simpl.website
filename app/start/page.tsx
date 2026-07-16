@@ -91,6 +91,7 @@ export default function StartPage() {
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Google Business Profile optimization, on-page SEO, AI search visibility, and lead tracking. Includes the strategy audit." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Team", "description": "Everything in Core, plus a free website build on a 3-month start, content, social, reviews, and rank tracking." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Everything in Team, plus landing pages, conversion optimization, monthly strategy, multi-location coverage, and waived answering-bot setup." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "1997", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro Performance", "description": "Pro on a lower monthly base plus a per-qualified-lead or per-booked-appointment fee, billed on tracked calls and bookings both sides see in one dashboard. Requires SIMPL ad management and call/conversion tracking. Not a share of revenue." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Paid Ads Management", "description": "Google, Meta, and LSA campaign management. Quoted per account. No markup on ad spend." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
                 { "@type": "UnitPriceSpecification", "name": "Monthly management", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" },
                 { "@type": "UnitPriceSpecification", "name": "One-time setup, 50% of the monthly management fee", "minPrice": "248", "priceCurrency": "USD" }
@@ -179,6 +180,46 @@ export default function StartPage() {
               </div>
               <p style={{ marginTop: 14, fontSize: 13, lineHeight: 1.6, color: "var(--muted)" }}>
                 Plus a one-time setup fee at 50% of the monthly management fee. Ad spend is billed by Google or Meta directly to you.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
+
+        {/* Pay for performance */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+          <div className="mono" style={{ ...label, marginBottom: 28 }}>
+            <span style={{ color: "var(--accent)" }}>Rather pay for results?</span> · performance pricing
+          </div>
+          <div className="grid-contact" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)", gap: 56, alignItems: "start" }}>
+            <div>
+              <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 640 }}>
+                Pay less up front. Pay more only when leads come in.
+              </h2>
+              <p style={{ marginTop: 24, maxWidth: 620, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
+                On our top tier, you can trade a lower monthly base for a small fee on each qualified lead or booked appointment we send you. Not a cut of your revenue, we never see your books. A fee on the tracked calls, forms, and bookings you and we both watch in the same dashboard. You still pay the lower base each month; if no qualified leads come in, there are simply no per-lead fees on top.
+              </p>
+              <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: "6px 24px" }}>
+                {[
+                  "Lower monthly base, plus a fee per qualified lead or booking",
+                  "You see every lead and booking we count, in real time",
+                  "A qualified lead is a real call, form, or booking, defined in writing",
+                  "Spam and your existing customers never count",
+                  "Needs call and conversion tracking installed first",
+                ].map((b) => (
+                  <div key={b} style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.7 }}>+ {b}</div>
+                ))}
+              </div>
+            </div>
+            <div style={{ border: "1px solid var(--accent)", padding: "28px 24px", background: "var(--accent-soft)" }}>
+              <div className="mono" style={{ fontSize: 10, ...label, marginBottom: 8 }}>Pro Performance</div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                <span style={{ fontSize: 30, fontWeight: 300 }}>from $997</span>
+                <span className="mono" style={{ color: "var(--muted)", fontSize: 12 }}>/ mo</span>
+              </div>
+              <p style={{ marginTop: 14, fontSize: 13, lineHeight: 1.6, color: "var(--muted)" }}>
+                Lower base than flat Pro, plus a per-lead or per-booked-appointment fee quoted for your market. Only available with our ad management and tracking in place.
               </p>
             </div>
           </div>
