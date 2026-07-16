@@ -20,18 +20,18 @@ export const metadata: Metadata = {
 };
 
 const PARTS = [
-  { name: "Strategy audit", price: "$250", cadence: "once", desc: "The whole picture: where the leads are leaking out and what to fix first. Included free with any tier." },
-  { name: "Google Business Profile", price: "from $200", cadence: "/ mo", desc: "Claimed, filled out, posted to, and watched. The listing most of your calls come from." },
-  { name: "SEO + AI search", price: "$250 to $500", cadence: "/ mo", desc: "Rank on Google, and show up when someone asks AI who to call. Price moves with how hard you want to push." },
-  { name: "Website build", price: "$1,000 to $3,000", cadence: "once", desc: "Fast, findable, built to turn visitors into calls. Free when you start on Team." },
-  { name: "Estimate bot", price: "Custom", cadence: "", desc: "Answers leads, quotes jobs, and books calls while you're on a jobsite or asleep." },
+  { name: "Strategy audit", price: "$247", cadence: "once", desc: "The whole picture: where the leads are leaking out and what to fix first. Included free with any tier." },
+  { name: "Google Business Profile", price: "from $197", cadence: "/ mo", desc: "Claimed, filled out, posted to, and watched. The listing most of your calls come from." },
+  { name: "SEO + AI search", price: "$247 to $497", cadence: "/ mo", desc: "Rank on Google, and show up when someone asks AI who to call. Price moves with how hard you want to push." },
+  { name: "Website build", price: "$997 to $2,997", cadence: "once", desc: "Fast, findable, built to turn visitors into calls. Free when you start on Team." },
+  { name: "Answering bot", price: "$147 to $447", cadence: "/ mo", desc: "Answers leads, quotes jobs, and books calls while you're on a jobsite or asleep. Chat or voice. $497 to $747 to set up, waived on Pro." },
 ];
 
 const ELSEWHERE = [
   { what: "Local SEO for a one-location service business", them: "$2,000 to $2,500 / mo", us: "from $497 / mo" },
   { what: "What the average agency retainer runs", them: "about $3,200 / mo", us: "from $497 / mo" },
   { what: "A small business website rebuild", them: "$3,000 to $15,000", us: "$0 on Team" },
-  { what: "A professional SEO audit", them: "$500 to $5,000", us: "$250, free with any tier" },
+  { what: "A professional SEO audit", them: "$500 to $5,000", us: "$247, free with any tier" },
 ];
 
 const FAQS = [
@@ -41,11 +41,11 @@ const FAQS = [
   },
   {
     q: "What does \"starting at\" actually mean? Am I going to get upsold?",
-    a: "No. It means your price is built from the pieces you need, and we agree on it in writing before any work starts. A lawn care crew that only needs its Google listing handled pays closer to the $200 floor. A remodeler who needs a new site, project galleries, and reviews pays more. You will never get an invoice you did not approve.",
+    a: "No. It means your price is built from the pieces you need, and we agree on it in writing before any work starts. A lawn care crew that only needs its Google listing handled pays closer to the $197 floor. A remodeler who needs a new site, project galleries, and reviews pays more. You will never get an invoice you did not approve.",
   },
   {
     q: "Is the free website really free?",
-    a: "Yes, when you start on Team and stay three months. The build normally runs $1,000 to $3,000. We cover it because a client with a fast, findable site is a client who sticks around. If you leave before month three, the remaining months of the minimum come due or we invoice the build at its normal rate. You keep the website either way.",
+    a: "Yes, when you start on Team and stay three months. The build normally runs $997 to $2,997. We cover it because a client with a fast, findable site is a client who sticks around. If you leave before month three, the remaining months of the minimum come due or we invoice the build at its normal rate. You keep the website either way.",
   },
   {
     q: "How long until I actually see more calls?",
@@ -57,7 +57,11 @@ const FAQS = [
   },
   {
     q: "Why aren't ads included in a tier?",
-    a: "Because a lawn crew booking out spring cleanups and a remodeler chasing three kitchen jobs a year don't have the same ad problem, so a flat price would either overcharge you or underdeliver. Ads are quoted against your account and market, starting at $500 a month plus a one-time setup at half the monthly fee. Your ad spend goes to Google or Meta directly. We never mark it up, and you own the account.",
+    a: "Because a lawn crew booking out spring cleanups and a remodeler chasing three kitchen jobs a year don't have the same ad problem, so a flat price would either overcharge you or underdeliver. Ads are quoted against your account and market, starting at $497 a month plus a one-time setup at half the monthly fee. Your ad spend goes to Google or Meta directly. We never mark it up, and you own the account.",
+  },
+  {
+    q: "Can something answer my phone and my website when I'm on a job?",
+    a: "Yes, and it's the closest thing we sell to buying your evenings back. The answering bot picks up chats and calls, answers the questions you get asked forty times a week, ballparks a quote, and books the job straight onto your calendar. It runs at 2am and on Sundays. Setup is $497 to $747 depending on how much it needs to know about your pricing, then $147 to $447 a month. Setup is waived on Pro. Most owners find it pays for itself the first time it catches a job that would have gone to voicemail.",
   },
   {
     q: "What if I already have a website I like?",
@@ -86,10 +90,17 @@ export default function StartPage() {
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Scan", "description": "Free digital presence scan with the full report emailed free" }, "price": "0", "priceCurrency": "USD" },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Google Business Profile optimization, on-page SEO, AI search visibility, and lead tracking. Includes the strategy audit." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Team", "description": "Everything in Core, plus a free website build on a 3-month start, content, social, reviews, and rank tracking." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Everything in Team, plus landing pages, conversion optimization, monthly strategy, and multi-location coverage." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "1997", "priceCurrency": "USD", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Paid Ads Management", "description": "Google, Meta, and LSA campaign management. Quoted per account. No markup on ad spend." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "500", "priceCurrency": "USD", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategy Audit", "description": "One-time marketing strategy audit. Included free with any tier." }, "price": "250", "priceCurrency": "USD" },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Build", "description": "Flat-rate website build, scope-based. Free when starting on Team with a 3-month commitment." }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "1000", "maxPrice": "3000", "priceCurrency": "USD" } }
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Everything in Team, plus landing pages, conversion optimization, monthly strategy, multi-location coverage, and waived answering-bot setup." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "1997", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Paid Ads Management", "description": "Google, Meta, and LSA campaign management. Quoted per account. No markup on ad spend." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
+                { "@type": "UnitPriceSpecification", "name": "Monthly management", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" },
+                { "@type": "UnitPriceSpecification", "name": "One-time setup, 50% of the monthly management fee", "minPrice": "248", "priceCurrency": "USD" }
+              ] } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Answering Bot", "description": "Chat and voice bot that answers leads, quotes jobs, and books calls 24/7. Setup waived on SIMPL Pro." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
+                { "@type": "UnitPriceSpecification", "name": "Monthly", "minPrice": "147", "maxPrice": "447", "priceCurrency": "USD", "billingDuration": "P1M" },
+                { "@type": "UnitPriceSpecification", "name": "One-time setup, waived on SIMPL Pro", "minPrice": "497", "maxPrice": "747", "priceCurrency": "USD" }
+              ] } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategy Audit", "description": "One-time marketing strategy audit. Included free with any tier." }, "price": "247", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Build", "description": "Flat-rate website build, scope-based. Free when starting on Team with a 3-month commitment." }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "997", "maxPrice": "2997", "priceCurrency": "USD" } }
             ]
           }
         }) }} />
@@ -136,7 +147,7 @@ export default function StartPage() {
           </div>
         </section>
 
-        {/* Paid ads — separate on purpose */}
+        {/* Paid ads: separate on purpose */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ ...label, marginBottom: 28 }}>
             <span style={{ color: "var(--accent)" }}>Separate</span> · paid ads
@@ -163,7 +174,7 @@ export default function StartPage() {
             <div style={{ border: "1px solid var(--rule)", padding: "28px 24px", background: "var(--bg-soft)" }}>
               <div className="mono" style={{ fontSize: 10, ...label, marginBottom: 8 }}>Management</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                <span style={{ fontSize: 30, fontWeight: 300 }}>from $500</span>
+                <span style={{ fontSize: 30, fontWeight: 300 }}>from $497</span>
                 <span className="mono" style={{ color: "var(--muted)", fontSize: 12 }}>/ mo</span>
               </div>
               <p style={{ marginTop: 14, fontSize: 13, lineHeight: 1.6, color: "var(--muted)" }}>
@@ -249,7 +260,7 @@ export default function StartPage() {
           </div>
         </section>
 
-        {/* FAQ — objection handling */}
+        {/* FAQ: objection handling */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ ...label, marginBottom: 28 }}>
             <span style={{ color: "var(--accent)" }}>Before you ask</span> · the awkward questions
