@@ -31,7 +31,7 @@ const TIERS = [
       "Your Google listing claimed, filled out, and watched",
       "Show up when people ask AI who to call",
       "Every call and form tracked to where it came from",
-      "Your $250 strategy audit, included",
+      "Your $247 strategy audit, included",
       "Monthly report: what moved, what's next",
     ],
     highlight: false,
@@ -48,8 +48,8 @@ const TIERS = [
     desc: "Core, plus a new website and the content that feeds it.",
     bullets: [
       "A new website, built and launched. $0 on a 3-month start",
-      "An estimate bot that answers leads at 2am so you don't",
       "Content written and posted for you",
+      "Social posts written and scheduled",
       "Review requests that actually go out",
       "See exactly where you rank on Google and Maps",
     ],
@@ -68,6 +68,7 @@ const TIERS = [
     bullets: [
       "Landing pages built for the jobs you actually want",
       "More booked jobs out of the same traffic",
+      "Estimate bot setup waived, you just cover the monthly",
       "A strategy call every month",
       "Multiple locations covered",
       "Priority turnaround on everything",
