@@ -68,7 +68,7 @@ const TIERS = [
     bullets: [
       "Landing pages built for the jobs you actually want",
       "More booked jobs out of the same traffic",
-      "Estimate bot setup waived, you just cover the monthly",
+      "Answering bot setup waived, you just cover the monthly",
       "A strategy call every month",
       "Multiple locations covered",
       "Priority turnaround on everything",
