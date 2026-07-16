@@ -18,10 +18,10 @@ const SCAN_STEPS = [
 ];
 
 function gradeColor(grade: string | undefined) {
-  if (!grade) return "#8FB4A8";
+  if (!grade) return "#9BFF1A";
   if (grade === "N/A") return "#555";
-  if (grade.startsWith("A")) return "#8FB4A8";
-  if (grade.startsWith("B")) return "#8FB4A8";
+  if (grade.startsWith("A")) return "#9BFF1A";
+  if (grade.startsWith("B")) return "#9BFF1A";
   if (grade.startsWith("C")) return "#E0A852";
   return "#E05252";
 }
@@ -323,8 +323,8 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                 <span style={{ ...mono, fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Social</span>
                 {result.social_profiles?.map((p) => (
                   <div key={p} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ ...mono, fontSize: 11, color: "#8FB4A8", fontWeight: 600 }}>✓</span>
-                    <span style={{ ...mono, fontSize: 11, color: "#8FB4A8" }}>{p}</span>
+                    <span style={{ ...mono, fontSize: 11, color: "#9BFF1A", fontWeight: 600 }}>✓</span>
+                    <span style={{ ...mono, fontSize: 11, color: "#9BFF1A" }}>{p}</span>
                   </div>
                 ))}
                 {result.social_missing?.filter(p => ["Facebook", "Instagram", "LinkedIn", "YouTube", "TikTok"].includes(p)).map((p) => (
@@ -403,13 +403,13 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
               style={{
                 background: "linear-gradient(180deg, var(--bg-soft), var(--bg))",
                 border: "1px solid var(--accent)",
-                boxShadow: "0 0 0 1px rgba(143,180,168,0.08), 0 16px 48px -24px var(--accent)",
+                boxShadow: "0 0 0 1px rgba(155,255,26,0.08), 0 16px 48px -24px var(--accent)",
                 borderRadius: 6, padding: "26px 28px", marginBottom: 14,
               }}
             >
               {emailState === "sent" ? (
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, background: "#8FB4A8", flexShrink: 0 }} />
+                  <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, background: "#9BFF1A", flexShrink: 0 }} />
                   <div>
                     <div style={{ fontSize: 15, fontWeight: 500, color: "var(--fg)" }}>Check your inbox. Your full report is on its way.</div>
                     <a href="/results" style={{ ...mono, fontSize: 11, color: "var(--accent)", letterSpacing: "0.06em", display: "inline-block", marginTop: 8 }}>

@@ -10,7 +10,7 @@ const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace"
 
 function gradeColor(g: string) {
   if (!g || g === "N/A") return "#555";
-  if (g.startsWith("A") || g.startsWith("B")) return "#8FB4A8";
+  if (g.startsWith("A") || g.startsWith("B")) return "#9BFF1A";
   if (g.startsWith("C")) return "#E0A852";
   return "#E05252";
 }
@@ -18,7 +18,7 @@ function gradeColor(g: string) {
 function sevColor(s: string) {
   if (s === "critical") return "#E05252";
   if (s === "warning") return "#E0A852";
-  return "#8FB4A8";
+  return "#9BFF1A";
 }
 
 function sevLabel(s: string) {
@@ -211,7 +211,7 @@ export default function ResultsPage() {
             <div style={{ ...mono, fontSize: 10, letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase", marginBottom: 10 }}>Social Presence</div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               {result.social_profiles?.map((p: string) => (
-                <span key={p} style={{ ...mono, fontSize: 11, padding: "5px 12px", borderRadius: 99, background: "rgba(143,180,168,0.12)", color: "#8FB4A8" }}>{p}</span>
+                <span key={p} style={{ ...mono, fontSize: 11, padding: "5px 12px", borderRadius: 99, background: "rgba(155,255,26,0.12)", color: "#9BFF1A" }}>{p}</span>
               ))}
               {result.social_missing?.filter((p: string) => ["Facebook", "Instagram", "LinkedIn", "YouTube", "TikTok"].includes(p)).map((p: string) => (
                 <span key={p} style={{ ...mono, fontSize: 11, padding: "5px 12px", borderRadius: 99, background: "rgba(224,82,82,0.1)", color: "#E05252", opacity: 0.7 }}>{p}</span>
