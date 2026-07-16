@@ -24,7 +24,7 @@ const PARTS = [
   { name: "Google Business Profile", price: "from $200", cadence: "/ mo", desc: "Claimed, filled out, posted to, and watched. The listing most of your calls come from." },
   { name: "SEO + AI search", price: "$250 to $500", cadence: "/ mo", desc: "Rank on Google, and show up when someone asks AI who to call. Price moves with how hard you want to push." },
   { name: "Website build", price: "$1,000 to $3,000", cadence: "once", desc: "Fast, findable, built to turn visitors into calls. Free when you start on Team." },
-  { name: "Estimate bot", price: "Custom", cadence: "", desc: "Answers leads, quotes jobs, and books calls while you're on a roof or asleep." },
+  { name: "Estimate bot", price: "Custom", cadence: "", desc: "Answers leads, quotes jobs, and books calls while you're on a jobsite or asleep." },
 ];
 
 const ELSEWHERE = [
@@ -41,7 +41,7 @@ const FAQS = [
   },
   {
     q: "What does \"starting at\" actually mean? Am I going to get upsold?",
-    a: "No. It means your price is built from the pieces you need, and we agree on it in writing before any work starts. A shop that only needs its Google listing handled pays closer to the $200 floor. A shop that needs a new site, content, and reviews pays more. You will never get an invoice you did not approve.",
+    a: "No. It means your price is built from the pieces you need, and we agree on it in writing before any work starts. A lawn care crew that only needs its Google listing handled pays closer to the $200 floor. A remodeler who needs a new site, project galleries, and reviews pays more. You will never get an invoice you did not approve.",
   },
   {
     q: "Is the free website really free?",
@@ -57,7 +57,7 @@ const FAQS = [
   },
   {
     q: "Why aren't ads included in a tier?",
-    a: "Because a roofer in a storm market and a dentist with two chairs don't have the same ad problem, so a flat price would either overcharge you or underdeliver. Ads are quoted against your account and market, starting at $500 a month plus a one-time setup at half the monthly fee. Your ad spend goes to Google or Meta directly. We never mark it up, and you own the account.",
+    a: "Because a lawn crew booking out spring cleanups and a remodeler chasing three kitchen jobs a year don't have the same ad problem, so a flat price would either overcharge you or underdeliver. Ads are quoted against your account and market, starting at $500 a month plus a one-time setup at half the monthly fee. Your ad spend goes to Google or Meta directly. We never mark it up, and you own the account.",
   },
   {
     q: "What if I already have a website I like?",
@@ -147,7 +147,7 @@ export default function StartPage() {
                 Ads are quoted on your account, not on a menu.
               </h2>
               <p style={{ marginTop: 24, maxWidth: 620, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                A roofer in a storm market and a dentist with two chairs do not have the same ad problem, so they should not have the same ad price. We quote it against your account, your market, and what you want to spend. It bolts onto any tier.
+                A lawn crew filling next week&apos;s route and a remodeler who needs three kitchen jobs a year do not have the same ad problem, so they should not have the same ad price. We quote it against your account, your market, and what you want to spend. It bolts onto any tier.
               </p>
               <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: "6px 24px" }}>
                 {[
