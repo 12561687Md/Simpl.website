@@ -157,7 +157,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/scan"
+            href="/what-am-i-missing"
             className="cta-primary"
             style={{
               color: "var(--accent-ink)",
@@ -176,7 +176,7 @@ export default function Header() {
         {/* Mobile: Start button + hamburger */}
         <div className="mobile-nav" style={{ alignItems: "center", gap: 12 }}>
           <Link
-            href="/scan"
+            href="/what-am-i-missing"
             className="cta-primary"
             style={{
               color: "var(--accent-ink)",

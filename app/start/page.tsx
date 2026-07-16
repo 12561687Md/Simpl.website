@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FloatingCTA from "../components/FloatingCTA";
 import ScanTool from "../components/ScanTool";
-import ContactForm from "./ContactForm";
+import ContactForm from "../components/ContactForm";
 import TierGrid from "./TierGrid";
 
 export const metadata: Metadata = {
