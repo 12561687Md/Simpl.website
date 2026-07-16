@@ -195,15 +195,16 @@ export default function StartPage() {
           <div className="grid-contact" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)", gap: 56, alignItems: "start" }}>
             <div>
               <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 640 }}>
-                Pay less up front. Pay us when the phone rings.
+                Pay less up front. Pay more only when leads come in.
               </h2>
               <p style={{ marginTop: 24, maxWidth: 620, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                On our top tier, you can trade a lower monthly base for a small fee on every real lead we send you. Not a cut of your revenue, we never see your books. A fee on the tracked calls and booked appointments you and we both watch in the same dashboard. If the leads don&apos;t come, you don&apos;t pay for them.
+                On our top tier, you can trade a lower monthly base for a small fee on each qualified lead or booked appointment we send you. Not a cut of your revenue, we never see your books. A fee on the tracked calls, forms, and bookings you and we both watch in the same dashboard. You still pay the lower base each month; if no qualified leads come in, there are simply no per-lead fees on top.
               </p>
               <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: "6px 24px" }}>
                 {[
-                  "You see every lead we count, in real time",
-                  "A lead is a real call or form, defined in writing",
+                  "Lower monthly base, plus a fee per qualified lead or booking",
+                  "You see every lead and booking we count, in real time",
+                  "A qualified lead is a real call, form, or booking, defined in writing",
                   "Spam and your existing customers never count",
                   "Needs call and conversion tracking installed first",
                 ].map((b) => (

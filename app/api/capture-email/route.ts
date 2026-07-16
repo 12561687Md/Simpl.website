@@ -29,7 +29,9 @@ const captureEmailSchema = z.object({
 const RATE_LIMIT_MAX = 10;
 
 function gradeColor(grade: string | undefined): string {
-  if (!grade) return "#9BFF1A";
+  // Missing or N/A is neutral grey, never the accent green: an absent grade must
+  // not read as a passing one in the emailed report.
+  if (!grade || grade === "N/A") return "#555";
   if (grade.startsWith("A") || grade.startsWith("B")) return "#9BFF1A";
   if (grade.startsWith("C")) return "#E0A852";
   return "#E05252";

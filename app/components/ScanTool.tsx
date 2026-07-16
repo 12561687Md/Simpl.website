@@ -18,8 +18,9 @@ const SCAN_STEPS = [
 ];
 
 function gradeColor(grade: string | undefined) {
-  if (!grade) return "#9BFF1A";
-  if (grade === "N/A") return "#555";
+  // Missing or N/A is not a passing grade. Render it neutral grey, never the
+  // accent green, so an absent category can't masquerade as an A.
+  if (!grade || grade === "N/A") return "#555";
   if (grade.startsWith("A")) return "#9BFF1A";
   if (grade.startsWith("B")) return "#9BFF1A";
   if (grade.startsWith("C")) return "#E0A852";
