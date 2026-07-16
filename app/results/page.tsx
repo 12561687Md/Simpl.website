@@ -9,7 +9,7 @@ const SIMPL_API = "https://simpl-506452749067.us-east1.run.app";
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 function gradeColor(g: string) {
-  if (!g || g === "N/A") return "#555";
+  if (!g || g === "N/A") return "#8A8D8C";
   if (g.startsWith("A") || g.startsWith("B")) return "#9BFF1A";
   if (g.startsWith("C")) return "#E0A852";
   return "#E05252";
