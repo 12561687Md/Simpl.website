@@ -9,6 +9,8 @@ import Marquee from "./components/Marquee";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
+import OutcomePillars from "./components/OutcomePillars";
+import FounderSection from "./components/FounderSection";
 
 export const metadata: Metadata = {
   title: "SIMPL | Your Digital Presence, Handled",
@@ -129,6 +131,11 @@ export default function Home() {
         {/* What we actually find. Bridges the hero into the scoring section. */}
         <Marquee items={MARQUEE_CHECKS} speed={55} />
 
+        {/* Outcome pillars: what the work is actually for (calls / jobs / time). */}
+        <OutcomePillars />
+
+        <hr className="hairline" style={{ maxWidth: 1120, margin: "0 auto" }} />
+
         {/* What We Score */}
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
@@ -169,7 +176,7 @@ export default function Home() {
               <div>
                 <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Small business</h3>
                 <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>Small things break quietly. Then revenue follows.</p>
-                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
+                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--rule-strong)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
                   When a plugin update breaks your contact form, SIMPL notices the silence. You hear about it before a week of leads disappears.
                 </div>
               </div>
@@ -178,7 +185,7 @@ export default function Home() {
               <div>
                 <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Agencies</h3>
                 <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>Forty client sites. One person watching them. You already know how that ends.</p>
-                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
+                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--rule-strong)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
                   When one client&apos;s site quietly de-indexes on a Friday afternoon, SIMPL catches it. You handle it before Monday&apos;s call.
                 </div>
               </div>
@@ -308,8 +315,11 @@ export default function Home() {
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
+        {/* Founder: a real person, not a portal. */}
+        <FounderSection />
+
         {/* Trust */}
-        <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+        <section style={{ borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
             <ScrollReveal>
               <TrustStats />
