@@ -1,5 +1,3 @@
-"use client";
-
 import { StaggerReveal, StaggerItem } from "./ScrollReveal";
 import ScrollReveal from "./ScrollReveal";
 
