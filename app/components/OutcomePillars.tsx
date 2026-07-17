@@ -1,6 +1,5 @@
 import ScrollReveal, { StaggerReveal, StaggerItem, WiggleIn } from "./ScrollReveal";
 import { GlowCard } from "@/components/ui/spotlight-card";
-import { SmokeShader } from "@/components/ui/smoke-shader";
 
 type Pillar = {
   icon: React.ReactNode;
@@ -54,14 +53,8 @@ const PILLARS: Pillar[] = [
 ];
 
 export default function OutcomePillars() {
-  const smokeMask = "linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%)";
   return (
     <section style={{ position: "relative", overflow: "hidden" }}>
-      {/* Calm smoke atmosphere behind the glow cards. */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ WebkitMaskImage: smokeMask, maskImage: smokeMask }} aria-hidden="true">
-        <SmokeShader style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
-      </div>
-
       <div style={{ position: "relative", zIndex: 1, maxWidth: 1120, margin: "0 auto", padding: "104px 32px" }}>
         <ScrollReveal>
           <div className="eyebrow" style={{ marginBottom: 28 }}>Why owners hire us</div>

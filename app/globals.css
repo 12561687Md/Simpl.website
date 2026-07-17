@@ -330,11 +330,18 @@ body { overflow-x: hidden; position: relative; }
 }
 
 /* CTA buttons */
+/* Continuous jump. Uses the standalone `translate` property, NOT `transform`,
+   so it composes with the hover transform below instead of overriding it. */
+@keyframes cta-jump {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -5px; }
+}
 .cta-primary {
   position: relative; overflow: hidden;
   background: var(--accent);
   transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
   box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 8px 28px -16px var(--accent);
+  animation: cta-jump 1.5s ease-in-out infinite;
 }
 .cta-primary:hover {
   transform: translateY(-1px);
@@ -561,6 +568,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .surface-card { transition: none; }
   .surface-card:hover { transform: none; }
   .animate-rippling { animation: none; }
+  .cta-primary { animation: none; translate: none; }
   .platform-logo { transition: filter 0.3s ease, opacity 0.3s ease; }
   .platform-logo:hover { transform: none; }
   /* framer-motion's useReducedMotion covers the JS animations, but not CSS.

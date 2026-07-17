@@ -25,12 +25,19 @@ const SERVICE_LINKS = [
 
 const EXPAND_SCROLL_THRESHOLD = 80;
 
+// y/opacity MUST be in both variants: `initial` starts the nav hidden and
+// offscreen, and a variant-driven `animate` only animates the keys it declares.
+// Omitting them here left the whole header stuck at opacity 0.
 const containerVariants: Variants = {
   expanded: {
+    y: 0,
+    opacity: 1,
     width: "auto",
     transition: { type: "spring", damping: 22, stiffness: 260, staggerChildren: 0.06, delayChildren: 0.12 },
   },
   collapsed: {
+    y: 0,
+    opacity: 1,
     width: "3rem",
     transition: { type: "spring", damping: 22, stiffness: 260, when: "afterChildren", staggerChildren: 0.04, staggerDirection: -1 },
   },
@@ -75,9 +82,10 @@ export default function Header() {
   return (
     <div className="fixed left-1/2 top-5 z-50 -translate-x-1/2">
       <motion.nav
-        initial={{ y: -70, opacity: 0 }}
+        // No hidden `initial`: the header must render visible server-side. A
+        // JS-dependent entrance means no header at all until hydration.
+        initial={false}
         animate={isExpanded ? "expanded" : "collapsed"}
-        whileInView={{ opacity: 1 }}
         variants={containerVariants}
         whileHover={!isExpanded ? { scale: 1.08 } : undefined}
         whileTap={!isExpanded ? { scale: 0.95 } : undefined}
