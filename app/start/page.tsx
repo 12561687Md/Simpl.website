@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 const PARTS = [
-  { name: "Strategy audit", price: "$247", cadence: "once", desc: "The whole picture: where the leads are leaking out and what to fix first. Included free with any tier." },
+  { name: "Personalized audit & breakdown", price: "$247", cadence: "once", desc: "A full, personalized breakdown of your business online: where the leads are leaking out, how you stack up against your competitors, and the exact order to fix it in. Yours to keep. Included free with any tier." },
   { name: "Google Business Profile", price: "from $197", cadence: "/ mo", desc: "Claimed, filled out, posted to, and watched. The listing most of your calls come from." },
   { name: "SEO + AI search", price: "$247 to $497", cadence: "/ mo", desc: "Rank on Google, and show up when someone asks AI who to call. Price moves with how hard you want to push." },
   { name: "Website build", price: "$997 to $2,997", cadence: "once", desc: "Fast, findable, built to turn visitors into calls. Free when you start on Team." },
@@ -100,7 +100,7 @@ export default function StartPage() {
                 { "@type": "UnitPriceSpecification", "name": "Monthly", "minPrice": "147", "maxPrice": "447", "priceCurrency": "USD", "billingDuration": "P1M" },
                 { "@type": "UnitPriceSpecification", "name": "One-time setup, waived on SIMPL Pro", "minPrice": "497", "maxPrice": "747", "priceCurrency": "USD" }
               ] } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Strategy Audit", "description": "One-time marketing strategy audit. Included free with any tier." }, "price": "247", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Personalized Audit & Breakdown", "description": "A full personalized breakdown of a business's online presence: lead leaks, competitor comparison, and a prioritized fix list. Included free with any tier." }, "price": "247", "priceCurrency": "USD" },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Build", "description": "Flat-rate website build, scope-based. Free when starting on Team with a 3-month commitment." }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "997", "maxPrice": "2997", "priceCurrency": "USD" } }
             ]
           }

@@ -5,7 +5,8 @@ import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
 import FloatingCTA from "./components/FloatingCTA";
 import CategoryShowcase from "./components/CategoryShowcase";
-import ValueBar from "./components/ValueBar";
+import WhyOwnersHireUs from "./components/WhyOwnersHireUs";
+import Beliefs from "./components/Beliefs";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
@@ -107,13 +108,11 @@ export default function Home() {
         <HomeHero />
         <FloatingCTA />
 
-        {/* Static value band. Bridges the hero into the scoring section. */}
-        <ValueBar />
+        {/* 2nd section: reasons owners hire us, paired with the looping phone. */}
+        <WhyOwnersHireUs />
 
         {/* Outcome pillars: what the work is actually for (calls / jobs / time). */}
         <OutcomePillars />
-
-        <hr className="hairline" style={{ maxWidth: 1120, margin: "0 auto" }} />
 
         {/* What We Score */}
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
@@ -134,7 +133,8 @@ export default function Home() {
         </section>
 
         {/* Who is this for */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+        <section>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <ScrollReveal>
             <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>Who is this for</div>
             <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
@@ -170,6 +170,7 @@ export default function Home() {
               </div>
             </ScrollReveal>
           </div>
+          </div>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
@@ -195,8 +196,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-
-        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* SIMPL Score */}
         <section data-section="simpl-score" style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
@@ -285,6 +284,20 @@ export default function Home() {
               </div>
             ))}
           </div>
+          {/* Standalone offer: the personalized audit. Sits apart from the tiers
+              because it's a one-time deliverable, not a monthly plan. */}
+          <div style={{ marginTop: 28, display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap", justifyContent: "space-between", padding: "24px 28px", border: "1px solid var(--rule)", borderRadius: 10, background: "var(--bg-soft)" }}>
+            <div style={{ maxWidth: 620 }}>
+              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>Personalized audit &amp; breakdown · $247, free with any tier</div>
+              <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "var(--muted)" }}>
+                Want more than a scan? We build a full, personalized breakdown of your business online: where leads are leaking, how you stack up against your competitors, and the exact order to fix it in. Yours to keep.
+              </p>
+            </div>
+            <Link href="/start" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "12px 20px", fontSize: 13.5, fontWeight: 700, borderRadius: 6, textDecoration: "none", whiteSpace: "nowrap" }}>
+              Get your breakdown →
+            </Link>
+          </div>
+
           <div style={{ marginTop: 40, textAlign: "center" }}>
             <Link href="/start" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--fg)", textDecoration: "none", borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15 }}>
               Find the right fit<span>→</span>
@@ -294,7 +307,10 @@ export default function Home() {
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
-        {/* Founder: a real person, not a portal. */}
+        {/* Beliefs: trust block, owner.com-style, in SIMPL's own words. */}
+        <Beliefs />
+
+        {/* Founder / About: a real person, not a portal. */}
         <FounderSection />
 
         {/* Trust */}

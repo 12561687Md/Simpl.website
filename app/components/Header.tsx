@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, type Variants } from "framer-motion";
 import { MoveRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { VitalsignIcon } from "@/components/ui/simpl-mark";
+import { SimplMark, SimplWordmark } from "@/components/ui/simpl-brand";
 import { RippleLink } from "@/components/ui/ripple-link";
 
 const NAV_LINKS = [
@@ -33,12 +33,16 @@ const containerVariants: Variants = {
     y: 0,
     opacity: 1,
     width: "auto",
+    // Collapsing to a white puck means the shell colour has to animate too, or
+    // the fill would snap while the width springs.
+    backgroundColor: "rgba(14,15,16,0.78)",
     transition: { type: "spring", damping: 22, stiffness: 260, staggerChildren: 0.06, delayChildren: 0.12 },
   },
   collapsed: {
     y: 0,
     opacity: 1,
-    width: "3rem",
+    width: "3.75rem",
+    backgroundColor: "rgba(255,255,255,1)",
     transition: { type: "spring", damping: 22, stiffness: 260, when: "afterChildren", staggerChildren: 0.04, staggerDirection: -1 },
   },
 };
@@ -91,23 +95,26 @@ export default function Header() {
         whileTap={!isExpanded ? { scale: 0.95 } : undefined}
         onClick={expandIfCollapsed}
         className={cn(
-          "relative flex h-12 items-center rounded-full border shadow-lg backdrop-blur-md",
+          "relative flex h-[60px] items-center rounded-full border shadow-lg backdrop-blur-md",
           !isExpanded && "cursor-pointer justify-center overflow-hidden"
         )}
-        style={{ background: "color-mix(in srgb, var(--bg) 78%, transparent)", borderColor: "var(--rule)" }}
+        // backgroundColor is animated by the variants; only the border is set
+        // here, and it goes transparent on white so the puck reads as one solid
+        // shape rather than a ringed button.
+        style={{ borderColor: isExpanded ? "var(--rule)" : "transparent" }}
       >
         {/* Brand mark (left when expanded) */}
-        <motion.div variants={itemVariants} className="flex flex-shrink-0 items-center pl-3 pr-1">
+        <motion.div variants={itemVariants} className="flex flex-shrink-0 items-center pl-4 pr-1.5">
           <Link href="/" onClick={(e) => e.stopPropagation()} aria-label="SIMPL home" className="flex items-center">
-            <VitalsignIcon size={24} />
+            <SimplWordmark size={26} />
           </Link>
         </motion.div>
 
-        <div className={cn("flex items-center gap-1 pr-2 sm:gap-2", !isExpanded && "pointer-events-none")}>
+        <div className={cn("flex items-center gap-1.5 pr-2.5 sm:gap-3", !isExpanded && "pointer-events-none")}>
           {NAV_LINKS.slice(0, 1).map((item) => (
             <motion.div key={item.href} variants={itemVariants}>
               <Link href={item.href} onClick={(e) => e.stopPropagation()}
-                className="whitespace-nowrap px-2 py-1 text-sm font-medium transition-colors hover:text-[var(--fg)]"
+                className="whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)]"
                 style={{ color: linkColor(pathname === item.href) }}>
                 {item.name}
               </Link>
@@ -123,7 +130,7 @@ export default function Header() {
           >
             <span
               onClick={(e) => e.stopPropagation()}
-              className="flex cursor-pointer items-center gap-1 whitespace-nowrap px-2 py-1 text-sm font-medium transition-colors hover:text-[var(--fg)]"
+              className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)]"
               style={{ color: pathname.startsWith("/services") ? "var(--accent)" : "var(--muted)" }}
             >
               Services
@@ -149,7 +156,7 @@ export default function Header() {
           {NAV_LINKS.slice(1).map((item) => (
             <motion.div key={item.href} variants={itemVariants}>
               <Link href={item.href} onClick={(e) => e.stopPropagation()}
-                className="whitespace-nowrap px-2 py-1 text-sm font-medium transition-colors hover:text-[var(--fg)]"
+                className="whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)]"
                 style={{ color: linkColor(pathname === item.href) }}>
                 {item.name}
               </Link>
@@ -158,7 +165,7 @@ export default function Header() {
 
           <motion.div variants={itemVariants} className="pl-1">
             <RippleLink href="/what-am-i-missing" className="cta-primary hidden whitespace-nowrap sm:inline-flex"
-              style={{ color: "var(--accent-ink)", padding: "8px 14px", fontSize: 13, fontWeight: 600, borderRadius: 999 }}>
+              style={{ color: "var(--accent-ink)", padding: "10px 18px", fontSize: 14, fontWeight: 600, borderRadius: 999 }}>
               What am I missing?
             </RippleLink>
           </motion.div>
@@ -167,7 +174,11 @@ export default function Header() {
         {/* Collapsed centered mark */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <motion.div variants={collapsedIconVariants} animate={isExpanded ? "expanded" : "collapsed"}>
-            <VitalsignIcon size={24} />
+            {/* Inverted: the puck is white once collapsed, and the off-white
+                pulse would vanish into it. Sized to fill the puck — the mark is
+                portrait (roughly 63x145), so `size` is its height and 32 left it
+                only ~14px wide, swimming in a 60px circle. */}
+            <SimplMark size={42} inverted />
           </motion.div>
         </div>
       </motion.nav>

@@ -85,6 +85,22 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 ::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* Green browser scrollbar. Firefox uses scrollbar-color; WebKit needs the
+   pseudo-elements. Both point at the brand accent. */
+html {
+  scrollbar-color: var(--accent) var(--bg-soft);
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-soft); }
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 999px;
+  border: 2px solid var(--bg-soft);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+::-webkit-scrollbar-corner { background: var(--bg-soft); }
 .mono {
   font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
   font-feature-settings: "ss02", "calt", "zero";
@@ -258,31 +274,27 @@ h1, h2, h3 { text-wrap: balance; }
 html { overflow-x: hidden; scroll-behavior: auto; }
 body { overflow-x: hidden; position: relative; }
 
+/* Logos float free: no chip, no box, no border. Hover brings them to full
+   colour and lifts them; the strip never stops. */
 .platform-logo {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 10px 22px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.015);
-  border: 1px solid transparent;
+  background: transparent;
   filter: grayscale(18%) brightness(1);
   opacity: 0.92;
   cursor: default;
   user-select: none;
   white-space: nowrap;
-  transition: filter 0.3s ease, opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease,
+  transition: filter 0.3s ease, opacity 0.3s ease,
     transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .platform-logo:hover {
   filter: grayscale(0%) brightness(1.12) drop-shadow(0 8px 18px rgba(0,0,0,0.45));
   opacity: 1;
   transform: translateY(-4px) scale(1.14);
-  background: var(--accent-soft);
-  border-color: var(--accent-line);
 }
-/* Pause the logo trust strip on hover so a logo can be inspected. */
-.logos-strip:hover .marquee-track { animation-play-state: paused; }
 
 @keyframes pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
@@ -586,4 +598,226 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
      pointless when nothing moves, so it goes, but the list stays readable. */
   .marquee-track { animation: none; }
   .marquee { overflow-x: auto; }
+}
+
+/* Visually hidden but announced. Used for aria-live regions where the visual
+   equivalent is already on screen (the typeahead result list). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Typeahead activity indicator. Deliberately left running under
+   prefers-reduced-motion: a frozen spinner reads as a hung request, and this is
+   a status indicator rather than decoration. */
+.ts-spinner {
+  display: block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(155, 255, 26, 0.22);
+  border-top-color: var(--accent);
+  animation: ts-spin 0.7s linear infinite;
+}
+
+@keyframes ts-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Scan theatre ---- */
+
+.scan-theater-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .scan-theater-grid { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* The sweep. Only `transform` animates, so this stays on the compositor and
+   never triggers layout: it runs over a decoded photo for ~20s straight and a
+   top/height animation here would jank the whole page. */
+.scanline-track {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 22%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(155, 255, 26, 0.05) 40%,
+    rgba(155, 255, 26, 0.16) 78%,
+    rgba(155, 255, 26, 0.9) 100%
+  );
+  box-shadow: 0 2px 14px 1px rgba(155, 255, 26, 0.35);
+  will-change: transform;
+  animation: scan-sweep 2.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+/* Sweeps down, then back up, so the instrument reads as passing over the
+   subject repeatedly rather than snapping back to the top. */
+@keyframes scan-sweep {
+  0%   { transform: translateY(-100%); }
+  50%  { transform: translateY(455%); }
+  100% { transform: translateY(-100%); }
+}
+
+/* Corner brackets. One element, four gradients, no extra DOM. */
+.scan-corners {
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 14px 1.5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 1.5px 14px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 0 / 14px 1.5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 0 / 1.5px 14px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 0 100% / 14px 1.5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 0 100% / 1.5px 14px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 100% / 14px 1.5px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 100% / 1.5px 14px no-repeat;
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The component already withholds the scanline element under reduced motion;
+     this is the belt-and-braces for anyone rendering it directly. */
+  .scanline { animation: none; opacity: 0; }
+}
+
+/* ---- Phone showcase ---- */
+
+.phone-showcase-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 64px;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .phone-showcase-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+
+.phone-frame {
+  width: 268px;
+  padding: 9px;
+  border-radius: 38px;
+  background: linear-gradient(160deg, #2a2d2f, #141617 60%);
+  border: 1px solid var(--rule);
+  /* The glow is what stops the frame reading as a flat grey rectangle. */
+  box-shadow:
+    0 40px 90px -30px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 22px 70px -34px var(--accent);
+}
+
+.phone-screen {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  background: var(--bg);
+  min-height: 452px;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 82px;
+  height: 17px;
+  border-radius: 999px;
+  background: #08090a;
+}
+
+.phone-note {
+  border: 1px solid var(--rule);
+  border-radius: 11px;
+  padding: 11px 12px;
+  margin-bottom: 8px;
+  background: var(--bg-soft);
+  /* Matches the frosted look of a real notification without a backdrop-filter,
+     which would blur the page behind the phone rather than the screen. */
+  box-shadow: 0 6px 20px -12px rgba(0, 0, 0, 0.8);
+}
+
+/* ---- Phone: dynamic island (PhoneLoop) ---- */
+.phone-island {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78px;
+  height: 20px;
+  border-radius: 999px;
+  background: #050607;
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* Two-column section that pairs copy with a phone. Shared by the 2nd section
+   and the beliefs/about blocks. */
+.split-phone-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: 56px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .split-phone-grid { grid-template-columns: 1fr; gap: 44px; }
+  .split-phone-grid .split-phone-visual { order: -1; }
+}
+
+/* ---- Beliefs section ---- */
+.beliefs-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 56px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .beliefs-grid { grid-template-columns: 1fr; gap: 36px; }
+  .belief-row { grid-template-columns: 1fr !important; gap: 12px !important; }
+}
+
+/* ---- Blog ---- */
+.blog-index-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .blog-index-grid { grid-template-columns: 1fr; } }
+
+.blog-card {
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 26px 24px;
+  background: var(--bg-soft);
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+.blog-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .blog-card { transition: border-color 180ms ease; }
+  .blog-card:hover { transform: none; }
 }

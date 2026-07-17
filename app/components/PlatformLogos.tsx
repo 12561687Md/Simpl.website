@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { LampGlow } from "@/components/ui/lamp";
 
 function GoogleMapsMark() {
   return (
@@ -72,8 +71,6 @@ export default function PlatformLogos() {
         overflow: "hidden",
       }}
     >
-      <LampGlow />
-
       <div
         className="logos-strip"
         style={{
