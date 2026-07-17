@@ -61,10 +61,8 @@ export default function Header() {
             flexShrink: 0,
           }}
         >
-          <span style={{ color: "var(--muted)", fontWeight: 300, marginRight: 4 }}>[</span>
           <span style={{ letterSpacing: "0.28em" }}>SIMPL</span>
-          <span style={{ color: "var(--accent)", fontSize: 18, fontWeight: 600, lineHeight: 1, marginLeft: 1 }}>.</span>
-          <span style={{ color: "var(--muted)", fontWeight: 300, marginLeft: 4 }}>]</span>
+          <span className="pulse-dot" style={{ color: "var(--accent)", fontSize: 18, fontWeight: 600, lineHeight: 1, marginLeft: 2 }}>.</span>
         </Link>
 
         {/* Desktop nav */}
