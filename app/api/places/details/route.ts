@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { isRateLimited, getClientIp } from "../../../../lib/rate-limit";
+import { verifyScanToken } from "../../../../lib/scan-token";
 
 /**
  * Resolve a place_id into the identity payload the scan page paints immediately:
@@ -13,7 +14,10 @@ import { isRateLimited, getClientIp } from "../../../../lib/rate-limit";
 
 const querySchema = z.object({
   placeId: z.string().trim().min(4).max(255),
+  // Places session token (billing). Unrelated to `scan`, which is the spend gate.
   token: z.string().trim().min(8).max(64).optional(),
+  // Signed permission from /api/scan/start. Required: this call costs ~$17/1000.
+  scan: z.string().trim().min(16).max(256),
 });
 
 const RATE_LIMIT_MAX = 30;
@@ -51,9 +55,17 @@ export async function GET(req: Request) {
     const parsed = querySchema.safeParse({
       placeId: searchParams.get("placeId") ?? "",
       token: searchParams.get("token") ?? undefined,
+      scan: searchParams.get("scan") ?? "",
     });
     if (!parsed.success) {
       return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+    }
+
+    // The gate, enforced. A UI form protects nothing: this repo is public, so
+    // anyone can read this route and call it directly. Bound to placeId, so a
+    // token minted for one business cannot resolve another.
+    if (!verifyScanToken(parsed.data.scan, parsed.data.placeId)) {
+      return NextResponse.json({ error: "This scan link has expired." }, { status: 403 });
     }
 
     const key = process.env.GOOGLE_PLACES_API_KEY;
@@ -94,7 +106,14 @@ export async function GET(req: Request) {
       .map((p: GooglePhoto) => p.photo_reference)
       .filter(Boolean)
       // Routed through our own photo proxy so the key never ships to the client.
-      .map((ref: string) => `/api/places/photo?ref=${encodeURIComponent(ref)}`);
+      // The scan token rides along: the photo route is metered too, and it has no
+      // way to re-derive which placeId this reference belongs to.
+      .map(
+        (ref: string) =>
+          `/api/places/photo?ref=${encodeURIComponent(ref)}` +
+          `&placeId=${encodeURIComponent(parsed.data.placeId)}` +
+          `&scan=${encodeURIComponent(parsed.data.scan)}`
+      );
 
     return NextResponse.json({
       placeId: r.place_id ?? parsed.data.placeId,

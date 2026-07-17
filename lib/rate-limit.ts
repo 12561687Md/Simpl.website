@@ -18,9 +18,23 @@ export function isRateLimited(key: string, maxRequests: number): boolean {
 }
 
 export function getClientIp(req: Request): string {
-  const forwardedFor = req.headers.get("x-forwarded-for");
-  if (forwardedFor) return forwardedFor.split(",")[0].trim();
+  // Order matters. `x-forwarded-for` is a client-supplied header that proxies
+  // append to, so its leftmost entry is whatever the caller claimed — trusting
+  // it first let anyone rotate their own rate-limit bucket by sending a random
+  // value. Vercel sets x-vercel-forwarded-for and x-real-ip itself, so prefer
+  // those and treat x-forwarded-for as the last resort.
+  const vercelIp = req.headers.get("x-vercel-forwarded-for");
+  if (vercelIp) return vercelIp.split(",")[0].trim();
+
   const realIp = req.headers.get("x-real-ip");
   if (realIp) return realIp.trim();
+
+  const forwardedFor = req.headers.get("x-forwarded-for");
+  // Rightmost entry is the one appended closest to us and hardest to spoof.
+  if (forwardedFor) {
+    const parts = forwardedFor.split(",");
+    return parts[parts.length - 1].trim();
+  }
+
   return "unknown";
 }

@@ -14,7 +14,12 @@ export default function HomeHero() {
   const router = useRouter();
 
   function startAudit(p: Prediction) {
-    router.push(`/audit?place=${encodeURIComponent(p.placeId)}`);
+    // Name and address ride along from the prediction, which we already have for
+    // free. That lets the gate greet them by name without spending a Places
+    // Details call on someone who might not fill it in. Display-only: the server
+    // trusts nothing here but placeId.
+    const q = new URLSearchParams({ place: p.placeId, name: p.name, address: p.address });
+    router.push(`/audit?${q}`);
   }
 
   return (

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { isRateLimited, getClientIp } from "../../../../lib/rate-limit";
+import { verifyScanToken } from "../../../../lib/scan-token";
 
 /**
  * Streams a Google Places photo through our origin.
@@ -15,6 +16,11 @@ import { isRateLimited, getClientIp } from "../../../../lib/rate-limit";
 const querySchema = z.object({
   ref: z.string().trim().min(10).max(1000),
   w: z.coerce.number().int().min(80).max(1600).optional(),
+  // Signed permission from /api/scan/start (~$7/1000 per photo).
+  scan: z.string().trim().min(16).max(256),
+  // The placeId the token was minted for. Photos are not self-describing, so the
+  // binding has to be carried explicitly.
+  placeId: z.string().trim().min(4).max(255),
 });
 
 const RATE_LIMIT_MAX = 120;
@@ -30,9 +36,15 @@ export async function GET(req: Request) {
     const parsed = querySchema.safeParse({
       ref: searchParams.get("ref") ?? "",
       w: searchParams.get("w") ?? undefined,
+      scan: searchParams.get("scan") ?? "",
+      placeId: searchParams.get("placeId") ?? "",
     });
     if (!parsed.success) {
       return new NextResponse(null, { status: 400 });
+    }
+
+    if (!verifyScanToken(parsed.data.scan, parsed.data.placeId)) {
+      return new NextResponse(null, { status: 403 });
     }
 
     const key = process.env.GOOGLE_PLACES_API_KEY;
