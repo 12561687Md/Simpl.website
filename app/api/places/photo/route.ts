@@ -4,23 +4,25 @@ import { isRateLimited, getClientIp } from "../../../../lib/rate-limit";
 import { verifyScanToken } from "../../../../lib/scan-token";
 
 /**
- * Streams a Google Places photo through our origin.
+ * Streams a Places photo through our origin.
  *
- * Places photo URLs require the API key as a query param, so linking them
- * directly from an <img src> would publish the key to every visitor. We fetch
- * server-side and pipe the bytes back instead.
+ * Photo URLs require the API key, so linking them straight from an <img src>
+ * would publish the key to every visitor. We fetch server-side and pipe the
+ * bytes back instead.
  *
  * These are the photos of the visitor's own business that paint during the scan.
+ * Metered, hence the gate.
  */
 
+// A photo name looks like: places/<placeId>/photos/<ref>
+// Anchored, with no slashes inside the segments, so nothing can traverse out of
+// the media path or smuggle a second resource into the URL we build.
+const PHOTO_NAME = /^places\/([A-Za-z0-9_-]{4,255})\/photos\/([A-Za-z0-9_-]{10,900})$/;
+
 const querySchema = z.object({
-  ref: z.string().trim().min(10).max(1000),
+  name: z.string().trim().regex(PHOTO_NAME, "bad photo name"),
   w: z.coerce.number().int().min(80).max(1600).optional(),
-  // Signed permission from /api/scan/start (~$7/1000 per photo).
   scan: z.string().trim().min(16).max(256),
-  // The placeId the token was minted for. Photos are not self-describing, so the
-  // binding has to be carried explicitly.
-  placeId: z.string().trim().min(4).max(255),
 });
 
 const RATE_LIMIT_MAX = 120;
@@ -34,16 +36,17 @@ export async function GET(req: Request) {
 
     const { searchParams } = new URL(req.url);
     const parsed = querySchema.safeParse({
-      ref: searchParams.get("ref") ?? "",
+      name: searchParams.get("name") ?? "",
       w: searchParams.get("w") ?? undefined,
       scan: searchParams.get("scan") ?? "",
-      placeId: searchParams.get("placeId") ?? "",
     });
-    if (!parsed.success) {
-      return new NextResponse(null, { status: 400 });
-    }
+    if (!parsed.success) return new NextResponse(null, { status: 400 });
 
-    if (!verifyScanToken(parsed.data.scan, parsed.data.placeId)) {
+    // The placeId is inside the photo name, so the binding is re-derived here
+    // rather than taken on trust from a separate parameter. A token for one
+    // business cannot fetch another's photos.
+    const placeId = parsed.data.name.match(PHOTO_NAME)![1];
+    if (!verifyScanToken(parsed.data.scan, placeId)) {
       return new NextResponse(null, { status: 403 });
     }
 
@@ -53,18 +56,23 @@ export async function GET(req: Request) {
       return new NextResponse(null, { status: 503 });
     }
 
-    const params = new URLSearchParams({
-      photo_reference: parsed.data.ref,
-      maxwidth: String(parsed.data.w ?? 800),
-      key,
-    });
+    const url = new URL(`https://places.googleapis.com/v1/${parsed.data.name}/media`);
+    // 640, not 800. There is a compression cliff right between them: Google
+    // re-encodes at or below 640 (~89KB) and serves near-original above it
+    // (~600KB at 800px) — 6.7x the bytes for 1.25x the width. Measured, not
+    // guessed. Across 4 photos that is 2.3MB vs 0.35MB per scan, and these render
+    // at 62% opacity behind a scrim with a scanline over them, so the detail was
+    // never going to be visible. The first frame has 2.6s to paint before the
+    // theatre moves on.
+    url.searchParams.set("maxWidthPx", String(parsed.data.w ?? 640));
 
-    // Google answers with a 302 to a signed googleusercontent URL; following it
-    // here means the browser never sees a URL carrying our key.
-    const resp = await fetch(
-      `https://maps.googleapis.com/maps/api/place/photo?${params}`,
-      { redirect: "follow", signal: AbortSignal.timeout(8000) }
-    );
+    // Google answers with a redirect to a signed googleusercontent URL; following
+    // it here means the browser never sees a URL carrying our key.
+    const resp = await fetch(url, {
+      headers: { "X-Goog-Api-Key": key },
+      redirect: "follow",
+      signal: AbortSignal.timeout(8000),
+    });
 
     if (!resp.ok || !resp.body) {
       console.error("places/photo: upstream HTTP", resp.status);
@@ -72,8 +80,8 @@ export async function GET(req: Request) {
     }
 
     const contentType = resp.headers.get("content-type") ?? "";
-    // A non-image body means Google returned an error page, not a photo. Never
-    // pass that through to an <img>.
+    // A non-image body means an error payload, not a photo. Never pass that
+    // through to an <img>.
     if (!contentType.startsWith("image/")) {
       console.error("places/photo: unexpected content-type", contentType);
       return new NextResponse(null, { status: 502 });
@@ -83,8 +91,8 @@ export async function GET(req: Request) {
       status: 200,
       headers: {
         "Content-Type": contentType,
-        // A photo_reference resolves to the same image every time, so this is
-        // safe to cache hard. It also keeps repeat scans off the Places bill.
+        // A photo name resolves to the same image every time, so this is safe to
+        // cache hard. It also keeps repeat scans off the Places bill.
         "Cache-Control": "public, max-age=86400, s-maxage=604800, immutable",
       },
     });

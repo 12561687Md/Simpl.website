@@ -13,9 +13,6 @@ export interface PlaceDetails {
    *  number: an invented rating is a fabricated trust signal. */
   rating: number | null;
   reviewCount: number | null;
-  summary: string | null;
-  mapsUrl: string | null;
-  types: string[];
   photos: string[];
   /** Proxied dark-styled Static Map of this business. */
   mapUrl: string | null;

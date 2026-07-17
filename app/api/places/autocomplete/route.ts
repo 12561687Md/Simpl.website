@@ -3,17 +3,17 @@ import { z } from "zod";
 import { isRateLimited, getClientIp } from "../../../../lib/rate-limit";
 
 /**
- * Server-side proxy for Google Places Autocomplete.
+ * Server-side proxy for Places Autocomplete (New).
  *
- * The Places key must never reach the browser: an unrestricted key in client
- * JS is billable by anyone who views source. Every keystroke goes through here
+ * The Places key must never reach the browser: an unrestricted key in client JS
+ * is billable by anyone who views source. Every keystroke goes through here
  * instead, and the key stays in the server environment.
  *
- * Billing note: Autocomplete is priced per *request* unless requests are grouped
- * into a session. The client generates one `token` per typeahead session and
- * passes the same token to Place Details on selection, which collapses the whole
- * session into a single Details charge. Dropping the token multiplies the bill by
- * roughly the number of characters typed.
+ * Billing: Autocomplete is priced per *session*, not per request. The client
+ * generates one `token` per typeahead session and passes the same token to Place
+ * Details on selection, which collapses the whole session into a single billable
+ * event. Dropping the token multiplies the bill by roughly the number of
+ * characters typed.
  */
 
 const querySchema = z.object({
@@ -25,12 +25,14 @@ const querySchema = z.object({
 // routes and is a runaway-cost guard, not a spam guard.
 const RATE_LIMIT_MAX = 120;
 
-interface GooglePrediction {
-  place_id?: string;
-  description?: string;
-  structured_formatting?: {
-    main_text?: string;
-    secondary_text?: string;
+interface Suggestion {
+  placePrediction?: {
+    placeId?: string;
+    text?: { text?: string };
+    structuredFormat?: {
+      mainText?: { text?: string };
+      secondaryText?: { text?: string };
+    };
   };
 }
 
@@ -59,42 +61,46 @@ export async function GET(req: Request) {
       return NextResponse.json({ predictions: [] }, { status: 503 });
     }
 
-    const params = new URLSearchParams({
+    const body: Record<string, unknown> = {
       input: parsed.data.q,
-      // Businesses only. Without this, typing a business name surfaces street
-      // addresses and cities, which are not scannable.
-      types: "establishment",
-      components: "country:us",
-      key,
+      // Businesses only. Verified: without this, typing "123 main st" returns
+      // street addresses, which are not scannable.
+      includedPrimaryTypes: ["establishment"],
+      includedRegionCodes: ["us"],
+    };
+    if (parsed.data.token) body.sessionToken = parsed.data.token;
+
+    const resp = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": key,
+      },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(4000),
+      cache: "no-store",
     });
-    if (parsed.data.token) params.set("sessiontoken", parsed.data.token);
 
-    const resp = await fetch(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?${params}`,
-      { signal: AbortSignal.timeout(4000), cache: "no-store" }
-    );
-
+    // Unlike the legacy API there is no in-body `status`: errors are real HTTP
+    // codes, and no results is simply an empty `suggestions` with a 200.
     if (!resp.ok) {
-      console.error("places/autocomplete: upstream HTTP", resp.status);
+      const detail = await resp.text().catch(() => "");
+      console.error("places/autocomplete: upstream", resp.status, detail.slice(0, 300));
       return NextResponse.json({ predictions: [] }, { status: 502 });
     }
 
     const data = await resp.json();
 
-    // ZERO_RESULTS is a valid answer. Anything else non-OK is our problem to log,
-    // never the visitor's to read: upstream messages leak quota and key state.
-    if (data.status !== "OK" && data.status !== "ZERO_RESULTS") {
-      console.error("places/autocomplete: upstream status", data.status, data.error_message);
-      return NextResponse.json({ predictions: [] }, { status: 502 });
-    }
-
-    const predictions = (data.predictions ?? [])
+    const predictions = (data.suggestions ?? [])
       .slice(0, 5)
-      .map((p: GooglePrediction) => ({
-        placeId: p.place_id ?? "",
-        name: p.structured_formatting?.main_text ?? p.description ?? "",
-        address: p.structured_formatting?.secondary_text ?? "",
-      }))
+      .map((s: Suggestion) => {
+        const p = s.placePrediction;
+        return {
+          placeId: p?.placeId ?? "",
+          name: p?.structuredFormat?.mainText?.text ?? p?.text?.text ?? "",
+          address: p?.structuredFormat?.secondaryText?.text ?? "",
+        };
+      })
       .filter((p: { placeId: string; name: string }) => p.placeId && p.name);
 
     return NextResponse.json({ predictions });
