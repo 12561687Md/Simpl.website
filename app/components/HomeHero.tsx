@@ -43,7 +43,9 @@ export default function HomeHero() {
           zIndex: 1,
           maxWidth: 1120,
           margin: "0 auto",
-          padding: "104px 32px 64px",
+          // Tightened so the next section peeks above the fold: the hero is an
+          // entrance, not a full screen to fill.
+          padding: "76px 32px 40px",
           textAlign: "center",
         }}
       >
@@ -135,10 +137,19 @@ export default function HomeHero() {
                 color: "var(--muted)",
                 marginTop: 12,
                 letterSpacing: "0.06em",
-                opacity: 0.75,
+                display: "flex",
+                gap: 14,
+                flexWrap: "wrap",
+                alignItems: "center",
               }}
             >
-              Your data stays private. We never store credentials and we never sell your details.
+              <span style={{ opacity: 0.75 }}>Your data stays private. We never store credentials or sell your details.</span>
+              {/* Escape hatch for businesses without a strong Google listing
+                  (no address, brand-new, or ecommerce like home health). They
+                  scan by website URL instead of picking a listing. */}
+              <a href="/scan" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 1 }}>
+                Can&apos;t find your business? Scan by URL →
+              </a>
             </div>
           </div>
 
