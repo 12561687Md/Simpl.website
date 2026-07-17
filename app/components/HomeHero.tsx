@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ScanTool from "./ScanTool";
 import PlatformLogos from "./PlatformLogos";
+import { HeroBackgroundPaths } from "@/components/ui/background-paths";
 
 export default function HomeHero() {
   const [scanState, setScanState] = useState<"idle" | "scanning" | "done">("idle");
@@ -14,11 +15,14 @@ export default function HomeHero() {
 
   return (
     <section style={{
+      position: "relative",
       maxWidth: 1120,
       margin: "0 auto",
       padding: showHero ? "100px 32px 64px" : "48px 32px 32px",
       transition: "padding 0.4s ease",
     }}>
+      {showHero && <HeroBackgroundPaths />}
+      <div style={{ position: "relative", zIndex: 1 }}>
       {showHero ? (
         <>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32, display: "flex", alignItems: "center", gap: 14 }}>
@@ -48,6 +52,7 @@ export default function HomeHero() {
         )}
         <ScanTool onStateChange={setScanState} />
         {showHero && <PlatformLogos />}
+      </div>
       </div>
     </section>
   );
