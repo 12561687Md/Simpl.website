@@ -175,8 +175,10 @@ export default function Header() {
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <motion.div variants={collapsedIconVariants} animate={isExpanded ? "expanded" : "collapsed"}>
             {/* Inverted: the puck is white once collapsed, and the off-white
-                pulse would vanish into it. */}
-            <SimplMark size={32} inverted />
+                pulse would vanish into it. Sized to fill the puck — the mark is
+                portrait (roughly 63x145), so `size` is its height and 32 left it
+                only ~14px wide, swimming in a 60px circle. */}
+            <SimplMark size={42} inverted />
           </motion.div>
         </div>
       </motion.nav>

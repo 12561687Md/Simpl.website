@@ -5,7 +5,7 @@ import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
 import FloatingCTA from "./components/FloatingCTA";
 import CategoryShowcase from "./components/CategoryShowcase";
-import ValueBar from "./components/ValueBar";
+import PhoneShowcase from "./components/PhoneShowcase";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
@@ -108,7 +108,7 @@ export default function Home() {
         <FloatingCTA />
 
         {/* Static value band. Bridges the hero into the scoring section. */}
-        <ValueBar />
+        <PhoneShowcase />
 
         {/* Outcome pillars: what the work is actually for (calls / jobs / time). */}
         <OutcomePillars />

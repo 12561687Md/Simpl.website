@@ -1,12 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="30 33 133 133" fill="none" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-labelledby="t d">
   <title id="t">SIMPL</title>
-  <desc id="d">Dark rounded-square tile with the SIMPL vitalsign pulse and the green identity dot beneath it.</desc>
-  <!-- The brand-kit container is an outline only. A tile is filled in behind it
-       because a favicon renders on whatever chrome the browser has: unfilled,
-       the off-white pulse disappears against a light tab strip. -->
-  <rect x="38.5" y="38.5" width="121" height="123" rx="27" fill="#0E0F10"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M37.1899 65.5498C37.2195 63.0692 37.4557 60.6084 37.8888 58.1574C40.6942 46.808 48.0177 40.7445 59.1801 38.1163C85.0878 37.8308 110.996 37.7619 136.913 37.8997C147.643 39.0416 156.059 45.1248 159.75 55.3816C160.153 57.616 160.567 59.8603 160.99 62.0948C160.99 87.6974 160.99 113.29 161 138.893C160.547 141.127 160.124 143.362 159.72 145.596C156.541 154.111 150.586 159.574 141.845 161.985C139.866 162.271 137.898 162.566 135.939 162.881C111.32 162.97 86.712 162.97 62.0937 162.901C49.6418 161.916 40.1823 154.268 37.8002 141.846C37.6526 138.223 37.4656 134.621 37.249 131.008C37.5049 117.562 37.5935 104.116 37.5148 90.6504C37.3179 82.3032 37.2195 73.9363 37.1899 65.5498ZM39.0897 140.359C40.1823 150.341 48.4114 158.845 58.1957 160.814C85.0977 160.972 111.99 160.991 138.882 160.883C149.631 159.968 159.878 148.854 159.159 137.899C159.209 111.971 159.169 86.0535 159.041 60.1359C157.663 48.6782 147.564 39.6125 135.929 39.8192C110.336 39.7798 84.7335 39.8487 59.1407 40.016C49.6418 40.7445 40.9206 49.9776 39.2571 59.2106C39.2669 86.2603 39.2078 113.31 39.0897 140.359Z" fill="#393838"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M99.7999 111.24C99.7199 114.22 99.7999 117.19 100.03 120.17C99.8399 121.12 99.9399 122.03 100.31 122.88C100.31 122.88 102.44 109.2 102.5 108.5C103.07 108.87 104.5 111 104.5 111C104.98 114.25 101.93 133.22 101.42 136.82C101.03 138.69 98.9299 138.57 98.6999 136.56C97.3499 117.43 95.1899 96.83 95.5099 77.75C95.3899 77.08 95.0199 76.6 94.3999 76.3C94.0402 80.8139 91.8023 102.099 91.1676 108.114C91.0716 109.024 90.3053 109.7 89.3899 109.7C86.2899 109.66 80.8099 110.1 77.9999 109.37C76.9999 108.29 77.1599 107.49 78.4999 106.97C81.4899 106.78 84.4799 106.7 87.4699 106.74C87.9699 106.8 88.3799 106.63 88.6899 106.24C90.4999 88.67 92.2299 71.08 93.8999 53.48C93.8199 51.16 96.8799 50.92 96.9799 53.51C97.6699 72.76 98.6099 92.01 99.7999 111.24Z" fill="#EDEBE4"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M102.83 122.08C102.24 121.75 101.66 121.4 101.09 121.03C101.08 120.78 101.06 120.52 101.04 120.27C101.6 116.91 101.96 113.54 102.15 110.14C102.14 108.46 102.94 107.44 104.53 107.07C108.18 107.03 111.83 107.04 115.47 107.09C116.75 107.27 117.15 107.96 116.67 109.17C115.19 111 106.56 108.75 105.02 110.55C103.79 114.16 104.52 118.76 102.83 122.08Z" fill="#EDEBE4"/>
-  <path fill-rule="evenodd" clip-rule="evenodd" d="M96.0056 144.874C96.4256 140.224 102.786 139.404 104.086 144.374C105.336 150.604 95.7356 151.674 96.0056 144.874Z" fill="#9BFF1A"/>
+  <desc id="d">Dark rounded tile with the SIMPL vitalsign pulse and the green identity dot beneath it.</desc>
+  <!--
+    A purpose-built simplification of the brand mark, not the kit artwork.
+
+    Why it deviates: the kit's vitalsign is a filled shape with a hairline pulse.
+    Rasterised to 16px it renders as a grey dagger with a speck — the pulse falls
+    below one pixel and the dot disappears. It cannot be fattened either, because
+    it's a filled outline rather than a stroke, so there is no width to turn up.
+
+    So this redraws the same gesture — flat baseline, sharp peak, deep trough,
+    flat baseline, dot beneath — as a stroked path at a weight that survives a
+    browser tab (6/64 = 1.5px at 16px). Same shape language, legible at every size.
+
+    The green dot is oversized relative to the kit on purpose: per the brand kit
+    the dot IS the identity, and at 16px it is the only element that reliably
+    reads. Keep it pure #9BFF1A here — the tile behind it is dark, so the light-
+    background variant (#7BD100) would only mute it.
+  -->
+  <rect width="64" height="64" rx="14" fill="#0E0F10"/>
+  <path
+    d="M6 28 H25 L30 9 L36 46 L41 28 H58"
+    stroke="#EDEBE4"
+    stroke-width="6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"/>
+  <circle cx="36" cy="56" r="5.5" fill="#9BFF1A"/>
 </svg>

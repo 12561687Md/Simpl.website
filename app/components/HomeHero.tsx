@@ -78,11 +78,10 @@ export default function HomeHero() {
           SIMPL makes sure it&apos;s always <span style={{ color: "var(--accent)" }}>winning.</span>
         </h1>
 
-        <p style={{ margin: "24px auto 0", maxWidth: 660, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-          The platform businesses use to repeatedly win online. We grow your website and reputation, we dominate
-          Google&apos;s rankings and paid ads, and we connect with everything else the internet is saying about your
-          business.
-        </p>
+        {/* The pitch paragraph lived here and was cut on purpose: it was the only
+            thing competing with the scan input for attention. It is not retired —
+            it's the root description of SIMPL (see .agents/product-marketing.md)
+            and needs a permanent home further down the page. */}
 
         <div style={{ marginTop: 40 }}>
           <div
@@ -122,6 +121,23 @@ export default function HomeHero() {
                 they know it; asking for their business name assumes nothing, and
                 the listing hands us the domain anyway. */}
             <BusinessSearch onSelect={startAudit} autoFocus />
+
+            {/* Reassurance sits directly under the input, where the hesitation is.
+                Worded to stay true after the email gate: we do store an address
+                now, so the promise is about credentials and selling, not storage
+                in general. */}
+            <div
+              className="mono"
+              style={{
+                fontSize: 11,
+                color: "var(--muted)",
+                marginTop: 12,
+                letterSpacing: "0.06em",
+                opacity: 0.75,
+              }}
+            >
+              Your data stays private. We never store credentials and we never sell your details.
+            </div>
           </div>
 
           <PlatformLogos />

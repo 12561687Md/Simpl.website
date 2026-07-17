@@ -702,3 +702,59 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
      this is the belt-and-braces for anyone rendering it directly. */
   .scanline { animation: none; opacity: 0; }
 }
+
+/* ---- Phone showcase ---- */
+
+.phone-showcase-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 64px;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .phone-showcase-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+
+.phone-frame {
+  width: 268px;
+  padding: 9px;
+  border-radius: 38px;
+  background: linear-gradient(160deg, #2a2d2f, #141617 60%);
+  border: 1px solid var(--rule);
+  /* The glow is what stops the frame reading as a flat grey rectangle. */
+  box-shadow:
+    0 40px 90px -30px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 22px 70px -34px var(--accent);
+}
+
+.phone-screen {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  background: var(--bg);
+  min-height: 452px;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 82px;
+  height: 17px;
+  border-radius: 999px;
+  background: #08090a;
+}
+
+.phone-note {
+  border: 1px solid var(--rule);
+  border-radius: 11px;
+  padding: 11px 12px;
+  margin-bottom: 8px;
+  background: var(--bg-soft);
+  /* Matches the frosted look of a real notification without a backdrop-filter,
+     which would blur the page behind the phone rather than the screen. */
+  box-shadow: 0 6px 20px -12px rgba(0, 0, 0, 0.8);
+}
