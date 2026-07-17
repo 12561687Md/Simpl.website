@@ -205,9 +205,9 @@ html { overflow-x: hidden; scroll-behavior: auto; }
 body { overflow-x: hidden; position: relative; }
 
 .platform-logo:hover {
-  filter: grayscale(0%) !important;
+  filter: grayscale(0%) brightness(1.05) drop-shadow(0 8px 16px rgba(0,0,0,0.42)) !important;
   opacity: 1 !important;
-  transform: scale(1.05);
+  transform: translateY(-4px) scale(1.12);
 }
 
 @keyframes pulse {
@@ -487,6 +487,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .surface-card { transition: none; }
   .surface-card:hover { transform: none; }
   .animate-rippling { animation: none; }
+  .platform-logo { transition: filter 0.3s ease, opacity 0.3s ease; }
+  .platform-logo:hover { transform: none; }
   /* framer-motion's useReducedMotion covers the JS animations, but not CSS.
      These have to be disabled here or reduced-motion users still get movement. */
   .category-card,

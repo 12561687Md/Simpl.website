@@ -11,7 +11,7 @@ const FRAG = `precision highp float;
 uniform vec2 iResolution;
 uniform float iTime;
 
-const float overallSpeed = 0.2;
+const float overallSpeed = 0.11;
 const float gridSmoothWidth = 0.015;
 const float axisWidth = 0.05;
 const float majorLineWidth = 0.025;
@@ -20,7 +20,7 @@ const float majorLineFrequency = 5.0;
 const float minorLineFrequency = 1.0;
 const vec4 gridColor = vec4(0.5);
 const float scale = 5.0;
-const vec4 lineColor = vec4(0.30, 0.62, 0.10, 1.0);
+const vec4 lineColor = vec4(0.16, 0.30, 0.07, 1.0);
 const float minLineWidth = 0.01;
 const float maxLineWidth = 0.2;
 const float lineSpeed = 1.0 * overallSpeed;
