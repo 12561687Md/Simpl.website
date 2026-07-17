@@ -521,6 +521,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   body::before, body::after { animation: none; }
   .surface-card { transition: none; }
   .surface-card:hover { transform: none; }
+  .animate-rippling { animation: none; }
   /* framer-motion's useReducedMotion covers the JS animations, but not CSS.
      These have to be disabled here or reduced-motion users still get movement. */
   .category-card,

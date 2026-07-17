@@ -67,10 +67,16 @@ const config: Config = {
       keyframes: {
         "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },
         "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: "0" } },
+        rippling: {
+          "0%": { opacity: "1" },
+          "100%": { transform: "scale(2)", opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        // 600ms matches the ripple cleanup timeout so it never cuts off mid-play.
+        rippling: "rippling 600ms ease-out",
       },
     },
   },
