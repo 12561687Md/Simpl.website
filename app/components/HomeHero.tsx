@@ -27,7 +27,7 @@ export default function HomeHero() {
               inset: 0,
               zIndex: 0,
               background:
-                "linear-gradient(95deg, rgba(11,13,15,0.82) 0%, rgba(11,13,15,0.55) 44%, rgba(11,13,15,0.22) 100%)",
+                "linear-gradient(95deg, rgba(11,13,15,0.55) 0%, rgba(11,13,15,0.3) 48%, rgba(11,13,15,0.12) 100%)",
             }}
           />
         </>

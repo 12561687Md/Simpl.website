@@ -248,13 +248,16 @@ void main() {
   gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
 }`;
 
-// u_colors[8], first 4 used (low -> high): #101010, #F5F5F5, #B0B0B0, #3A3A3A.
+// u_colors[8], first 4 used (low -> high). Rethemed off the original grayscale
+// (which flashed a near-white #F5F5F5) to SIMPL's dark cool-slate palette, so the
+// smoke reads as subtle moving atmosphere that matches the site instead of bright
+// plumes. Deepest ~= page bg; the lightest is a muted slate, never white.
 const COLORS = new Float32Array(24);
 [
-  [0.063, 0.063, 0.063],
-  [0.961, 0.961, 0.961],
-  [0.69, 0.69, 0.69],
-  [0.227, 0.227, 0.227],
+  [0.039, 0.047, 0.059], // #0A0C0F  near page bg
+  [0.078, 0.094, 0.118], // #14181E
+  [0.122, 0.145, 0.188], // #1F2530
+  [0.212, 0.243, 0.29], //  #363E4A  muted slate highlight
 ].forEach((c, i) => {
   COLORS[i * 3] = c[0];
   COLORS[i * 3 + 1] = c[1];
