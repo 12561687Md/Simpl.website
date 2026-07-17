@@ -1,5 +1,6 @@
 import { StaggerReveal, StaggerItem } from "./ScrollReveal";
 import ScrollReveal from "./ScrollReveal";
+import { FlowingPathsBackground } from "@/components/ui/background-paths";
 
 type Pillar = {
   icon: React.ReactNode;
@@ -54,8 +55,9 @@ const PILLARS: Pillar[] = [
 
 export default function OutcomePillars() {
   return (
-    <section style={{ position: "relative" }}>
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "104px 32px" }}>
+    <section style={{ position: "relative", overflow: "hidden" }}>
+      <FlowingPathsBackground />
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1120, margin: "0 auto", padding: "104px 32px" }}>
         <ScrollReveal>
           <div className="eyebrow" style={{ marginBottom: 28 }}>Why owners hire us</div>
           <h2

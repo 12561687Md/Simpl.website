@@ -19,7 +19,7 @@ function FloatingPaths({ position, animate }: { position: number; animate: boole
     <svg
       className="absolute inset-0 w-full h-full"
       style={{ color: "var(--fg)" }}
-      viewBox="0 0 696 316"
+      viewBox="-240 -20 1040 380"
       fill="none"
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
@@ -49,19 +49,19 @@ function FloatingPaths({ position, animate }: { position: number; animate: boole
 }
 
 /**
- * Background-only flowing paths, for layering behind hero content. Absolute,
- * pointer-events-none, masked to fade at the edges so it blends into the page.
+ * Background-only flowing paths for layering behind a section. Absolute,
+ * pointer-events-none. The diagonal mask makes the lines read as if they enter
+ * from the middle-left and fade out toward the bottom-right corner.
  */
-export function HeroBackgroundPaths() {
+export function FlowingPathsBackground() {
   const reduce = useReducedMotion();
+  const mask =
+    "linear-gradient(108deg, #000 0%, #000 30%, rgba(0,0,0,0.45) 58%, transparent 86%)";
   return (
     <div
       className="pointer-events-none absolute inset-0 overflow-hidden"
       aria-hidden="true"
-      style={{
-        WebkitMaskImage: "radial-gradient(120% 90% at 50% 30%, #000 40%, transparent 78%)",
-        maskImage: "radial-gradient(120% 90% at 50% 30%, #000 40%, transparent 78%)",
-      }}
+      style={{ WebkitMaskImage: mask, maskImage: mask }}
     >
       <FloatingPaths position={1} animate={!reduce} />
       <FloatingPaths position={-1} animate={!reduce} />
