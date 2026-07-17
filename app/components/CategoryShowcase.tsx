@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useState } from "react";
+import { RippleLink } from "@/components/ui/ripple-link";
 
 export type Category = {
   name: string;
@@ -124,9 +125,9 @@ export default function CategoryShowcase({ categories }: { categories: Category[
             <Link href={current.href} className="tier-cta tier-cta-ghost">
               {current.hrefLabel} <Arrow />
             </Link>
-            <Link href="/what-am-i-missing" className="tier-cta tier-cta-solid">
+            <RippleLink href="/what-am-i-missing" className="tier-cta tier-cta-solid">
               What am I missing? <Arrow />
-            </Link>
+            </RippleLink>
           </div>
           <div style={{ display: "flex", gap: 8 }}>
             <button onClick={prev} aria-label="Previous category" className="showcase-nav"><Arrow dir="left" /></button>

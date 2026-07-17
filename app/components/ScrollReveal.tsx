@@ -80,6 +80,37 @@ export function StaggerReveal({
   );
 }
 
+/**
+ * Attention wiggle: rocks back and forth once when scrolled into view. Used on
+ * the outcome-pillar icons so the eye lands on them. Reduced-motion renders flat.
+ */
+export function WiggleIn({
+  children,
+  delay = 0,
+  className,
+  style,
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className} style={style}>{children}</div>;
+  return (
+    <motion.div
+      className={className}
+      style={{ transformOrigin: "50% 85%", ...style }}
+      initial={{ rotate: 0 }}
+      whileInView={{ rotate: [0, -12, 10, -8, 6, -3, 0] }}
+      viewport={{ once: true, margin: "-70px" }}
+      transition={{ duration: 1.2, delay, ease: "easeInOut", times: [0, 0.14, 0.3, 0.46, 0.62, 0.8, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function StaggerItem({
   children,
   className,

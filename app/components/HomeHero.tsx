@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ScanTool from "./ScanTool";
 import PlatformLogos from "./PlatformLogos";
+import { ShaderBackground } from "@/components/ui/shader-background";
 
 export default function HomeHero() {
   const [scanState, setScanState] = useState<"idle" | "scanning" | "done">("idle");
@@ -13,12 +14,32 @@ export default function HomeHero() {
   }, [scanState]);
 
   return (
-    <section style={{
-      maxWidth: 1120,
-      margin: "0 auto",
-      padding: showHero ? "100px 32px 64px" : "48px 32px 32px",
-      transition: "padding 0.4s ease",
-    }}>
+    <div style={{ position: "relative" }}>
+      {showHero && (
+        <>
+          <ShaderBackground fade={false} />
+          {/* Legibility scrim: darker on the left where the copy sits, opening up
+              to the right so the smoke stays visible. */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 0,
+              background:
+                "linear-gradient(95deg, rgba(11,13,15,0.55) 0%, rgba(11,13,15,0.3) 48%, rgba(11,13,15,0.12) 100%)",
+            }}
+          />
+        </>
+      )}
+      <section style={{
+        position: "relative",
+        zIndex: 1,
+        maxWidth: 1120,
+        margin: "0 auto",
+        padding: showHero ? "100px 32px 64px" : "48px 32px 32px",
+        transition: "padding 0.4s ease",
+      }}>
       {showHero ? (
         <>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32, display: "flex", alignItems: "center", gap: 14 }}>
@@ -49,6 +70,7 @@ export default function HomeHero() {
         <ScanTool onStateChange={setScanState} />
         {showHero && <PlatformLogos />}
       </div>
-    </section>
+      </section>
+    </div>
   );
 }
