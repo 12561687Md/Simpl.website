@@ -1,4 +1,4 @@
-import ScrollReveal, { StaggerReveal, StaggerItem } from "./ScrollReveal";
+import ScrollReveal, { StaggerReveal, StaggerItem, WiggleIn } from "./ScrollReveal";
 import { GlowCard } from "@/components/ui/spotlight-card";
 import { SmokeShader } from "@/components/ui/smoke-shader";
 
@@ -59,7 +59,7 @@ export default function OutcomePillars() {
     <section style={{ position: "relative", overflow: "hidden" }}>
       {/* Calm smoke atmosphere behind the glow cards. */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" style={{ WebkitMaskImage: smokeMask, maskImage: smokeMask }} aria-hidden="true">
-        <SmokeShader interactive={false} style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
+        <SmokeShader style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
       </div>
 
       <div style={{ position: "relative", zIndex: 1, maxWidth: 1120, margin: "0 auto", padding: "104px 32px" }}>
@@ -76,11 +76,12 @@ export default function OutcomePillars() {
           each={0.1}
           style={{ marginTop: 52, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20 }}
         >
-          {PILLARS.map((p) => (
+          {PILLARS.map((p, i) => (
             <StaggerItem key={p.label} className="h-full">
               <GlowCard glowColor="green" className="h-full">
                 <div style={{ padding: "30px 26px 28px", display: "flex", flexDirection: "column", height: "100%" }}>
-                  <div
+                  <WiggleIn
+                    delay={0.25 + i * 0.14}
                     style={{
                       width: 46,
                       height: 46,
@@ -94,7 +95,7 @@ export default function OutcomePillars() {
                     }}
                   >
                     {p.icon}
-                  </div>
+                  </WiggleIn>
                   <div className="mono" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 12 }}>
                     {p.label}
                   </div>

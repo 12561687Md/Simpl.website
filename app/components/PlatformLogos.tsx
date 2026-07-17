@@ -5,7 +5,7 @@ import { LampGlow } from "@/components/ui/lamp";
 
 function GoogleMapsMark() {
   return (
-    <svg viewBox="0 0 92 132" width="26" height="38" style={{ display: "block" }} role="img" aria-label="Google Maps">
+    <svg viewBox="0 0 92 132" width="32" height="46" style={{ display: "block" }} role="img" aria-label="Google Maps">
       <defs>
         <clipPath id="gm-pin">
           <path d="M46 2C21 2 2 21 2 46c0 20 24 50 40 75 2 3 6 3 8 0 16-25 40-55 40-75 0-25-19-44-44-44z" />
@@ -41,10 +41,10 @@ function LogoChip({ p }: { p: Platform }) {
       {"node" in p ? (
         p.node
       ) : (
-        <Image src={p.src} alt={p.name} width={150} height={38} style={{ display: "block", objectFit: "contain", height: 38, width: "auto" }} />
+        <Image src={p.src} alt={p.name} width={190} height={46} style={{ display: "block", objectFit: "contain", height: 46, width: "auto" }} />
       )}
       {"text" in p && p.text && (
-        <span style={{ fontSize: 17, fontWeight: 500, color: "var(--fg)", letterSpacing: "-0.01em" }}>{p.text}</span>
+        <span style={{ fontSize: 20, fontWeight: 500, color: "var(--fg)", letterSpacing: "-0.01em" }}>{p.text}</span>
       )}
     </div>
   );
@@ -73,10 +73,6 @@ export default function PlatformLogos() {
       }}
     >
       <LampGlow />
-
-      <div className="mono" style={{ textAlign: "center", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--fg-dim)", marginBottom: 22 }}>
-        We work in the tools you already use
-      </div>
 
       <div
         className="logos-strip"
