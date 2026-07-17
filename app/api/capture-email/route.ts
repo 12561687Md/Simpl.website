@@ -22,6 +22,13 @@ const captureEmailSchema = z.object({
   scanScore: z.number().optional(),
   scanGrade: z.string().optional(),
   businessName: z.string().optional(),
+  placeId: z.string().max(255).optional(),
+  // The lead-quality signal. `owner` is a prospect; `works_with` is very often a
+  // competing agency pulling a free audit on someone else's listing. Both get
+  // their report, only one is worth outreach. Enumerated so an arbitrary string
+  // can never reach the routing logic.
+  relationship: z.enum(["owner", "works_with", "other"]).optional(),
+  optIn: z.boolean().optional(),
   findings: z.array(findingSchema).optional(),
   categories: z.record(z.string(), categorySchema).optional(),
 });
@@ -141,14 +148,27 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: message }, { status: 400 });
     }
 
-    const { email, scanUrl, scanScore, scanGrade, businessName, findings, categories } = parsed.data;
+    const { email, scanUrl, scanScore, scanGrade, businessName, placeId, relationship, optIn, findings, categories } =
+      parsed.data;
 
     try {
       const pool = getPool();
       await pool.query(
-        `INSERT INTO leads (email, source, source_page, scan_url, scan_score, scan_grade)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [email, "scan_report", "/scan", scanUrl, scanScore ?? null, scanGrade ?? null]
+        `INSERT INTO leads
+           (email, source, source_page, scan_url, scan_score, scan_grade, place_id, relationship, opt_in, website)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+        [
+          email,
+          "scan_report",
+          placeId ? "/audit" : "/scan",
+          scanUrl,
+          scanScore ?? null,
+          scanGrade ?? null,
+          placeId ?? null,
+          relationship ?? null,
+          optIn ?? null,
+          scanUrl,
+        ]
       );
     } catch (dbError) {
       console.error("capture-email: failed to insert lead", dbError);
