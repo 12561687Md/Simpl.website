@@ -254,10 +254,10 @@ void main() {
 // plumes. Deepest ~= page bg; the lightest is a muted slate, never white.
 const COLORS = new Float32Array(24);
 [
-  [0.039, 0.047, 0.059], // #0A0C0F  near page bg
-  [0.078, 0.094, 0.118], // #14181E
-  [0.122, 0.145, 0.188], // #1F2530
-  [0.212, 0.243, 0.29], //  #363E4A  muted slate highlight
+  [0.039, 0.047, 0.059], // near page bg, neutral
+  [0.075, 0.094, 0.1], //   barely-there
+  [0.14, 0.18, 0.155], //   subtle green-gray
+  [0.235, 0.31, 0.25], //   faint green highlight (G > R,B) — the wisps carry the tint
 ].forEach((c, i) => {
   COLORS[i * 3] = c[0];
   COLORS[i * 3 + 1] = c[1];
@@ -267,9 +267,12 @@ const COLORS = new Float32Array(24);
 export function SmokeShader({
   className,
   style,
+  interactive = true,
 }: {
   className?: string;
   style?: React.CSSProperties;
+  /** Smoke swirls and mixes around the pointer. */
+  interactive?: boolean;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -322,8 +325,6 @@ export function SmokeShader({
     gl.uniform4f(uSurface, 2.4, 1.19, 0.0, 1.0);
     gl.uniform4f(uFinish, 0.0, 0.0, 0.0, 0.0);
     gl.uniform4f(uTransform, 8835.0, 0.0, 0.0, 0.0);
-    gl.uniform4f(uSpace, 0.0, 0.0, 0.0, 0.0); // cursor off -> pointer 0
-    gl.uniform4f(uCursor, 0.0, 2.0, 0.65, 0.46); // cursor off -> presence 0
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -348,7 +349,31 @@ export function SmokeShader({
     let elapsed = 0;
     let prev = performance.now();
 
+    // Pointer state (swirl mode 2). Targets update on move; smoothed each frame
+    // so the swirl trails the cursor instead of snapping to it. Coords are
+    // normalized to -1..1 in GL space (y flipped, since gl_FragCoord is bottom-up).
+    let mx = 0, my = 0, tmx = 0, tmy = 0, presence = 0, tPresence = 0;
+    const onMove = (e: PointerEvent) => {
+      const r = canvas.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return;
+      tmx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      tmy = 1 - ((e.clientY - r.top) / r.height) * 2;
+      tPresence = 1;
+    };
+    const onLeave = () => { tPresence = 0; };
+    if (interactive && !reduce) {
+      window.addEventListener("pointermove", onMove, { passive: true });
+      window.addEventListener("pointerdown", onMove, { passive: true });
+      window.addEventListener("blur", onLeave);
+      document.addEventListener("pointerleave", onLeave);
+    }
+
     const draw = () => {
+      mx += (tmx - mx) * 0.12;
+      my += (tmy - my) * 0.12;
+      presence += (tPresence - presence) * 0.06;
+      gl.uniform4f(uSpace, 0.0, 0.0, mx, my);
+      gl.uniform4f(uCursor, interactive ? presence : 0.0, 2.0, 0.65, 0.46);
       gl.uniform4f(uScene, canvas.width, canvas.height, elapsed * 0.63, 4.0);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
@@ -386,6 +411,10 @@ export function SmokeShader({
       cancelAnimationFrame(raf);
       ro.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerdown", onMove);
+      window.removeEventListener("blur", onLeave);
+      document.removeEventListener("pointerleave", onLeave);
       gl.deleteBuffer(buf);
       gl.deleteProgram(prog);
     };
