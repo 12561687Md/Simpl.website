@@ -11,7 +11,6 @@ import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
 import OutcomePillars from "./components/OutcomePillars";
 import FounderSection from "./components/FounderSection";
-import { BackgroundPaths } from "@/components/ui/background-paths";
 
 export const metadata: Metadata = {
   title: "SIMPL | Your Digital Presence, Handled",
@@ -131,9 +130,6 @@ export default function Home() {
 
         {/* What we actually find. Bridges the hero into the scoring section. */}
         <Marquee items={MARQUEE_CHECKS} speed={55} />
-
-        {/* Animated flowing-paths band (21st BackgroundPaths, rethemed). */}
-        <BackgroundPaths title="Always on. Always working." ctaText="Find what's broken" ctaHref="/scan" />
 
         {/* Outcome pillars: what the work is actually for (calls / jobs / time). */}
         <OutcomePillars />
