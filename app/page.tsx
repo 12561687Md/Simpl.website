@@ -6,7 +6,6 @@ import HomeHero from "./components/HomeHero";
 import FloatingCTA from "./components/FloatingCTA";
 import CategoryShowcase from "./components/CategoryShowcase";
 import WhyOwnersHireUs from "./components/WhyOwnersHireUs";
-import Beliefs from "./components/Beliefs";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
@@ -82,14 +81,6 @@ const CATEGORIES = [
   },
 ];
 
-const FINDINGS = [
-  { num: "01", biz: "Indexing regression", cost: "Lost traffic", finding: "Service pages drop out of Google's index after a site update." },
-  { num: "02", biz: "Profile suspension", cost: "Lost calls", finding: "Google Business Profile gets suspended over a duplicate or violation." },
-  { num: "03", biz: "Silent breakage", cost: "Lost revenue", finding: "Contact forms or order flows stop working after a plugin or platform update." },
-  { num: "04", biz: "Reputation drift", cost: "Reputation", finding: "Negative reviews accumulate without responses while conversion declines." },
-  { num: "05", biz: "Branded search leak", cost: "Paid leak", finding: "Competitors bid on your brand name and intercept traffic you already earned." },
-];
-
 export default function Home() {
   return (
     <div>
@@ -129,71 +120,6 @@ export default function Home() {
             <div style={{ marginTop: 40 }}>
               <CategoryShowcase categories={CATEGORIES} />
             </div>
-          </div>
-        </section>
-
-        {/* Who is this for */}
-        <section>
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <ScrollReveal>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>Who is this for</div>
-            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
-              It depends on what you&apos;re afraid of.
-            </h2>
-          </ScrollReveal>
-          <div style={{ marginTop: 40, maxWidth: 780, display: "grid", gap: 32 }}>
-            <ScrollReveal delay={0}>
-              <div>
-                <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Home services</h3>
-                <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>When the phone stops ringing, you&apos;re the last to know why.</p>
-                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--accent)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
-                  When your Google Maps listing drops, SIMPL sees it the same day. You hear about it before the phone stops ringing.
-                </div>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={0.1}>
-              <div>
-                <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Small business</h3>
-                <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>Small things break quietly. Then revenue follows.</p>
-                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--rule-strong)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
-                  When a plugin update breaks your contact form, SIMPL notices the silence. You hear about it before a week of leads disappears.
-                </div>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={0.2}>
-              <div>
-                <h3 style={{ fontSize: 22, fontWeight: 500, margin: "0 0 12px" }}>Agencies</h3>
-                <p style={{ fontSize: "clamp(18px, 2vw, 22px)", lineHeight: 1.3, margin: "0 0 16px" }}>Forty client sites. One person watching them. You already know how that ends.</p>
-                <div style={{ paddingLeft: 24, borderLeft: "2px solid var(--rule-strong)", color: "var(--muted)", fontSize: 17, lineHeight: 1.6 }}>
-                  When one client&apos;s site quietly de-indexes on a Friday afternoon, SIMPL catches it. You handle it before Monday&apos;s call.
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-          </div>
-        </section>
-
-        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
-
-        {/* What SIMPL catches */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <ScrollReveal>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What SIMPL catches</div>
-            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
-              These are real problems we&apos;ve found. Most owners had no idea.
-            </h2>
-          </ScrollReveal>
-          <div style={{ marginTop: 40, borderTop: "1px solid var(--rule)" }}>
-            {FINDINGS.map((f) => (
-              <div key={f.num} className="finding-row grid-findings" style={{ padding: "28px 0", borderBottom: "1px solid var(--rule)" }}>
-                <div className="mono hide-mobile" style={{ color: "var(--muted)", fontSize: 12, letterSpacing: "0.12em" }}>{f.num}</div>
-                <div>
-                  <div style={{ fontSize: 16, fontWeight: 500 }}>{f.biz}</div>
-                </div>
-                <div style={{ fontSize: 17, lineHeight: 1.5 }}>{f.finding}</div>
-                <div className="mono finding-cost" style={{ color: "var(--accent)", fontSize: 14, whiteSpace: "nowrap" }}>{f.cost}</div>
-              </div>
-            ))}
           </div>
         </section>
 
@@ -307,10 +233,11 @@ export default function Home() {
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
-        {/* Beliefs: trust block, owner.com-style, in SIMPL's own words. */}
-        <Beliefs />
+        {/* Section 4 reserved for testimonials + reviews (goes live once we have
+            real ones; never fabricated). See docs/standards/TRUST_SIGNALS.md. */}
 
-        {/* Founder / About: a real person, not a portal. */}
+        {/* What we stand for + a real person: the beliefs block is now merged
+            into the founder section (one combined section, not two). */}
         <FounderSection />
 
         {/* Trust */}

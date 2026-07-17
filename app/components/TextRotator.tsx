@@ -1,19 +1,19 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 /**
  * Rotates a single word in place: winning -> ranking -> running -> learning.
  *
- * The word is absolutely positioned inside a span sized to the *widest* option,
- * so the surrounding line never reflows as the word changes. The reserved width
- * is measured from a hidden copy of every word rather than guessed, so it stays
- * correct if the font or the word list changes.
+ * Layout: an inline-grid where every word (the hidden sizers and the visible
+ * animated one) occupies the SAME single cell. That makes the element exactly
+ * one line tall and as wide as the widest word, so it sits on the heading's own
+ * line instead of adding height below it. The earlier version stacked the sizer
+ * words in a flex column, which made the box four lines tall and pushed the rest
+ * of the headline down.
  *
- * Under reduced motion it holds the first word and never cycles — a word
- * swapping itself every two seconds is exactly the kind of motion that setting
- * exists to stop.
+ * Under reduced motion it holds the first word and never cycles.
  */
 export default function TextRotator({
   words,
@@ -26,12 +26,6 @@ export default function TextRotator({
 }) {
   const [i, setI] = useState(0);
   const reduce = useReducedMotion();
-  const sizerRef = useRef<HTMLSpanElement>(null);
-  const [minWidth, setMinWidth] = useState<number | undefined>(undefined);
-
-  useEffect(() => {
-    if (sizerRef.current) setMinWidth(sizerRef.current.getBoundingClientRect().width);
-  }, [words]);
 
   useEffect(() => {
     if (reduce || words.length < 2) return;
@@ -40,44 +34,31 @@ export default function TextRotator({
   }, [reduce, words.length, intervalMs]);
 
   return (
-    <span
-      style={{
-        position: "relative",
-        display: "inline-block",
-        minWidth,
-        // Bottom-aligned so descenders (g in winning/ranking/running) share a
-        // baseline with the static text around them.
-        verticalAlign: "bottom",
-        color,
-      }}
-    >
-      {/* Invisible sizer: one copy of every word stacked, establishing the widest
-          box. aria-hidden so it is never read or selectable. */}
-      <span
-        ref={sizerRef}
-        aria-hidden="true"
-        style={{ visibility: "hidden", display: "inline-flex", flexDirection: "column" }}
-      >
-        {words.map((w) => (
-          <span key={w}>{w}</span>
-        ))}
-      </span>
+    <span style={{ display: "inline-grid", verticalAlign: "baseline", color, textAlign: "left" }}>
+      {/* Hidden sizers: one per word, all in cell 1/1. They overlap, so the grid
+          sizes to the widest word and to a single line of height. */}
+      {words.map((w) => (
+        <span key={w} aria-hidden="true" style={{ gridArea: "1 / 1", visibility: "hidden", whiteSpace: "nowrap" }}>
+          {w}
+        </span>
+      ))}
 
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={words[i]}
-          initial={reduce ? { opacity: 0 } : { opacity: 0, y: "0.5em" }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduce ? { opacity: 0 } : { opacity: 0, y: "-0.5em" }}
-          transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
-          style={{ position: "absolute", left: 0, bottom: 0, whiteSpace: "nowrap" }}
-          // Announce each word as it changes, so a screen reader hears the
-          // rotation rather than only the first word.
-          aria-live="polite"
-        >
-          {words[i]}
-        </motion.span>
-      </AnimatePresence>
+      {/* Visible, animated word, in the same cell. */}
+      <span style={{ gridArea: "1 / 1", position: "relative", overflow: "hidden" }}>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={words[i]}
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: "0.55em" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: "-0.55em" }}
+            transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
+            style={{ display: "inline-block", whiteSpace: "nowrap" }}
+            aria-live="polite"
+          >
+            {words[i]}
+          </motion.span>
+        </AnimatePresence>
+      </span>
     </span>
   );
 }

@@ -56,7 +56,7 @@ export default function WhyOwnersHireUs() {
               Why owners hire us
             </div>
             <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 46px)", lineHeight: 1.1, letterSpacing: "-0.025em", fontWeight: 600, maxWidth: 520 }}>
-              You run the business. We run the internet part.
+              You run the business. We run the internet.
             </h2>
           </motion.div>
 

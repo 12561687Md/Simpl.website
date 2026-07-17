@@ -1,13 +1,19 @@
 import ScrollReveal from "./ScrollReveal";
 import { StaggerReveal, StaggerItem } from "./ScrollReveal";
 
+// The combined "what we stand for" set (this section absorbed the standalone
+// beliefs block, so this is now the single place SIMPL states its principles).
 const BELIEFS = [
   {
     title: "You should never be the last to know.",
     body: "When your listing drops or your form breaks, you find out from us, not from a slow month. That is the entire point of watching it.",
   },
   {
-    title: "You're not paying for overhead.",
+    title: "Winning beats being busy.",
+    body: "Other agencies report activity: posts published, hours logged. We report one thing, whether you are winning more customers than last month. Everything starts there.",
+  },
+  {
+    title: "You're paying for results, not overhead.",
     body: "No account manager, no sales floor, no office lease baked into your invoice. That is why the price looks the way it does, and it is the only reason.",
   },
   {
@@ -86,15 +92,18 @@ export default function FounderSection() {
         <div>
           <ScrollReveal>
             <div className="eyebrow" style={{ marginBottom: 26 }}>A real person, not a portal</div>
-            <h2 style={{ margin: 0, fontSize: "clamp(26px, 3.4vw, 42px)", lineHeight: 1.12, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 560 }}>
+            <h2 style={{ margin: 0, fontSize: "clamp(26px, 3.4vw, 42px)", lineHeight: 1.12, letterSpacing: "-0.02em", fontWeight: 500, maxWidth: 560 }}>
               You&apos;ll deal with the person doing the work.
             </h2>
             <p style={{ marginTop: 20, maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)" }}>
-              SIMPL isn&apos;t a call center with a logo. It&apos;s built and run by one person who answers your emails and owns the outcome. Here&apos;s what that means for you.
+              SIMPL isn&apos;t a call center with a logo. It&apos;s built and run by one person who answers your emails and owns the outcome. Here&apos;s what we stand for, and what that means for you.
             </p>
           </ScrollReveal>
 
-          <StaggerReveal each={0.1} style={{ marginTop: 36, display: "grid", gap: 4 }}>
+          <div className="mono" style={{ marginTop: 34, marginBottom: 4, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)" }}>
+            What we stand for
+          </div>
+          <StaggerReveal each={0.1} style={{ marginTop: 8, display: "grid", gap: 4 }}>
             {BELIEFS.map((b) => (
               <StaggerItem key={b.title}>
                 <div style={{ padding: "20px 0", borderTop: "1px solid var(--rule)" }}>
