@@ -50,8 +50,8 @@ export default function HomeHero() {
             Your business is always online.<br />
             <span style={{ color: "var(--muted)" }}>SIMPL makes sure it&apos;s always working.</span>
           </h1>
-          <p style={{ marginTop: 24, maxWidth: 580, fontSize: 17, lineHeight: 1.55 }}>
-            We watch your site, your listings, your reviews, and your ads. When something breaks, our team fixes what they can and flags the rest before it costs you.
+          <p style={{ marginTop: 24, maxWidth: 620, fontSize: 17, lineHeight: 1.55 }}>
+            The platform businesses use to repeatedly win online. We grow your website and reputation, we dominate Google&apos;s rankings and paid ads, and we connect with everything else the internet is saying about your business.
           </p>
         </>
       ) : (

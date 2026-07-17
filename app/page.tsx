@@ -113,8 +113,6 @@ export default function Home() {
         {/* Outcome pillars: what the work is actually for (calls / jobs / time). */}
         <OutcomePillars />
 
-        <hr className="hairline" style={{ maxWidth: 1120, margin: "0 auto" }} />
-
         {/* What We Score */}
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
@@ -134,7 +132,8 @@ export default function Home() {
         </section>
 
         {/* Who is this for */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+        <section>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <ScrollReveal>
             <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>Who is this for</div>
             <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>
@@ -170,6 +169,7 @@ export default function Home() {
               </div>
             </ScrollReveal>
           </div>
+          </div>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
@@ -195,8 +195,6 @@ export default function Home() {
             ))}
           </div>
         </section>
-
-        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* SIMPL Score */}
         <section data-section="simpl-score" style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>

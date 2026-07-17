@@ -1,5 +1,6 @@
 import ScrollReveal, { StaggerReveal, StaggerItem, WiggleIn } from "./ScrollReveal";
 import { GlowCard } from "@/components/ui/spotlight-card";
+import { FlowingLinesUp } from "@/components/ui/flowing-lines";
 
 type Pillar = {
   icon: React.ReactNode;
@@ -55,6 +56,7 @@ const PILLARS: Pillar[] = [
 export default function OutcomePillars() {
   return (
     <section style={{ position: "relative", overflow: "hidden" }}>
+      <FlowingLinesUp />
       <div style={{ position: "relative", zIndex: 1, maxWidth: 1120, margin: "0 auto", padding: "104px 32px" }}>
         <ScrollReveal>
           <div className="eyebrow" style={{ marginBottom: 28 }}>Why owners hire us</div>
@@ -63,6 +65,9 @@ export default function OutcomePillars() {
             <br />
             <span style={{ color: "var(--muted)" }}>You want what it&apos;s supposed to do.</span>
           </h2>
+          <p style={{ marginTop: 20, maxWidth: 620, fontSize: 17, lineHeight: 1.6, color: "var(--muted)" }}>
+            We constantly watch your top competitors for you, and we make scaling your business as simpl as it sounds.
+          </p>
         </ScrollReveal>
 
         <StaggerReveal

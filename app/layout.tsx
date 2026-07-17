@@ -4,7 +4,6 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
-import SmoothScroll from "./components/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -50,9 +49,7 @@ export default function RootLayout({
       </head>
       <body>
         <ScrollToTop />
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>
