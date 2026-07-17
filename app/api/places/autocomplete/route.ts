@@ -28,6 +28,7 @@ const RATE_LIMIT_MAX = 120;
 interface Suggestion {
   placePrediction?: {
     placeId?: string;
+    types?: string[];
     text?: { text?: string };
     structuredFormat?: {
       mainText?: { text?: string };
@@ -35,6 +36,48 @@ interface Suggestion {
     };
   };
 }
+
+/**
+ * Things that are not businesses we can help.
+ *
+ * Why a denylist and not `includedPrimaryTypes`, which is the obvious lever:
+ *
+ *  - Google caps includedPrimaryTypes at 5. Service businesses don't fit in 5.
+ *    (Owner.com gets away with a whitelist because restaurants happen to fit:
+ *    restaurant, cafe, bakery, meal_delivery, meal_takeaway. Exactly five.)
+ *  - There is no `landscaping` or `landscaper` type at all — verified, both are
+ *    rejected — and landscaping is our primary ICP. Google files Stone Creek
+ *    under `general_contractor`. A whitelist would have excluded our best
+ *    prospects to keep out playgrounds.
+ *
+ * Autocomplete returns `types` on every prediction at no extra cost, so we filter
+ * after the fact instead. Unlimited entries, and unknown business types pass by
+ * default — which is the right bias: a missed playground costs nothing, a missed
+ * landscaper costs a lead.
+ *
+ * Verified before this existed: "raleigh high school", "pullen park" and "wake
+ * county courthouse" all returned results a visitor could scan, burning a
+ * Details call on each.
+ */
+const NOT_A_BUSINESS = new Set([
+  // Recreation / civic space
+  "playground", "park", "national_park", "state_park", "dog_park", "hiking_area",
+  "beach", "campground", "camping_cabin", "garden", "plaza", "monument",
+  // Education
+  "school", "primary_school", "secondary_school", "preschool", "university",
+  // Government
+  "local_government_office", "city_hall", "courthouse", "embassy", "police",
+  "fire_station", "post_office",
+  // Worship
+  "church", "place_of_worship", "hindu_temple", "mosque", "synagogue",
+  // Transit
+  "airport", "international_airport", "bus_station", "bus_stop", "train_station",
+  "subway_station", "light_rail_station", "transit_station", "transit_depot",
+  "parking", "park_and_ride", "rest_stop", "ferry_terminal",
+  // Landmarks / attractions
+  "tourist_attraction", "museum", "library", "stadium", "arena",
+  "historical_landmark", "historical_place", "natural_feature",
+]);
 
 export async function GET(req: Request) {
   try {
@@ -92,6 +135,9 @@ export async function GET(req: Request) {
     const data = await resp.json();
 
     const predictions = (data.suggestions ?? [])
+      // Filter before slicing, or one playground pushes a real business off the
+      // list of five.
+      .filter((s: Suggestion) => !(s.placePrediction?.types ?? []).some((t) => NOT_A_BUSINESS.has(t)))
       .slice(0, 5)
       .map((s: Suggestion) => {
         const p = s.placePrediction;

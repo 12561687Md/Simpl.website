@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import BusinessSearch, { type Prediction } from "./BusinessSearch";
 import PlatformLogos from "./PlatformLogos";
+import TextRotator from "./TextRotator";
 import { ShaderBackground } from "@/components/ui/shader-background";
 
 /**
@@ -75,7 +76,8 @@ export default function HomeHero() {
         >
           Your business is always online.
           <br />
-          SIMPL makes sure it&apos;s always <span style={{ color: "var(--accent)" }}>winning.</span>
+          SIMPL makes sure it&apos;s always{" "}
+          <TextRotator words={["winning", "ranking", "running", "learning"]} />.
         </h1>
 
         {/* The pitch paragraph lived here and was cut on purpose: it was the only
