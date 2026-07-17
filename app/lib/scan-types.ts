@@ -16,6 +16,17 @@ export interface PlaceDetails {
   photos: string[];
   /** Proxied dark-styled Static Map of this business. */
   mapUrl: string | null;
+  /** Google's one-line description ("...since 1975"). Real or null. */
+  summary: string | null;
+  /** Up to two real Google reviews, for the "how did they know" theatre. */
+  reviews: ScanReview[];
+}
+
+export interface ScanReview {
+  rating: number | null;
+  text: string;
+  author: string | null;
+  when: string | null;
 }
 
 export interface Finding {

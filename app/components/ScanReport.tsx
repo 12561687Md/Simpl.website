@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import PhoneLoop from "./PhoneLoop";
 import type { PlaceDetails, ScanResult } from "../lib/scan-types";
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
@@ -182,39 +183,51 @@ export default function ScanReport({ place, result }: { place: PlaceDetails; res
         ))}
       </div>
 
+      {/* The aspirational close: their real problems above, and beside the phone
+          the state those problems turn into once we fix them. The phone is the
+          `optimized` PhoneLoop — an A score, all green, live signals. */}
       <motion.div
-        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.5 }}
-        style={{
-          display: "flex",
-          gap: 14,
-          alignItems: "center",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          paddingTop: 18,
-          borderTop: "1px solid var(--rule)",
-        }}
+        transition={{ duration: 0.5, delay: 0.45 }}
+        className="split-phone-grid"
+        style={{ marginTop: 8, paddingTop: 40, borderTop: "1px solid var(--rule)" }}
       >
-        <span style={{ ...mono, fontSize: 12, color: "var(--muted)", maxWidth: 520, lineHeight: 1.5 }}>
-          That&apos;s every issue we found. A copy is on its way to your inbox.
-        </span>
-        <a
-          href="/start"
-          className="cta-primary"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            color: "var(--accent-ink)",
-            padding: "13px 22px",
-            fontSize: 13.5,
-            fontWeight: 600,
-            borderRadius: 4,
-            textDecoration: "none",
-          }}
-        >
-          Start fixing this →
-        </a>
+        <div>
+          <div style={{ ...mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>
+            Where you could be
+          </div>
+          <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.4vw, 36px)", fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+            This is what winning looks like.
+          </h2>
+          <p style={{ margin: "18px 0 0", maxWidth: 460, fontSize: 15.5, lineHeight: 1.6, color: "var(--muted)" }}>
+            Every issue above, fixed. Your score climbing, your competitors behind you, and the leads landing in your
+            pocket instead of theirs. That&apos;s the job. We&apos;d start this week.
+          </p>
+          <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", marginTop: 28 }}>
+            <a
+              href="/start"
+              className="cta-primary"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                color: "var(--accent-ink)",
+                padding: "14px 24px",
+                fontSize: 14,
+                fontWeight: 700,
+                borderRadius: 6,
+                textDecoration: "none",
+              }}
+            >
+              Start fixing this →
+            </a>
+            <span style={{ ...mono, fontSize: 11.5, color: "var(--muted)" }}>A copy is in your inbox.</span>
+          </div>
+        </div>
+
+        <div className="split-phone-visual" style={{ display: "flex", justifyContent: "center" }}>
+          <PhoneLoop optimized />
+        </div>
       </motion.div>
     </div>
   );

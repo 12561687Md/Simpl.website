@@ -103,6 +103,34 @@ export default function ScanTheater({
 
   const progress = Math.min(((phaseIdx + (scanArrived ? 1 : 0)) / PHASES.length) * 100, 98);
 
+  // Real signals pulled from the listing, in the order they should surface.
+  // Built only from data Google actually returned — a missing field produces no
+  // card rather than a placeholder. This is the "how did they know?" moment, and
+  // it only lands because every line is true.
+  const signals: { key: string; label: string; body?: string; foot?: string }[] = [];
+  if (place.rating !== null && place.reviewCount !== null) {
+    signals.push({
+      key: "rating",
+      label: "Found on Google",
+      body: `${place.rating.toFixed(1)} ★ · ${place.reviewCount.toLocaleString()} review${place.reviewCount === 1 ? "" : "s"}`,
+    });
+  }
+  if (place.summary) {
+    signals.push({ key: "summary", label: "Google describes you as", body: place.summary });
+  }
+  (place.reviews ?? []).forEach((rv, i) => {
+    signals.push({
+      key: `review-${i}`,
+      label: `Recent review${rv.rating ? ` · ${rv.rating}★` : ""}`,
+      body: `“${rv.text}”`,
+      foot: [rv.author, rv.when].filter(Boolean).join(" · ") || undefined,
+    });
+  });
+  if (frames.length > (place.mapUrl ? 1 : 0)) {
+    const n = frames.length - (place.mapUrl ? 1 : 0);
+    signals.push({ key: "photos", label: "Pulled from your profile", body: `${n} photo${n === 1 ? "" : "s"} of your business` });
+  }
+
   return (
     <div style={{ maxWidth: 940, margin: "0 auto" }}>
       {/* Identity. Painted before a single check runs, because we already know
@@ -261,6 +289,33 @@ export default function ScanTheater({
               );
             })}
           </ol>
+
+          {/* "How did they know all that?" — real signals pulled from the
+              listing, popping in as the scan runs. Every one is Google's own data
+              about their business; nothing here is invented, and anything Google
+              doesn't have simply doesn't appear. */}
+          <div style={{ marginTop: 22, display: "grid", gap: 8 }}>
+            {signals.map((s, i) => (
+              <motion.div
+                key={s.key}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.45, delay: reduce ? 0 : 1.2 + i * 0.9, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  border: "1px solid var(--rule)",
+                  borderRadius: 8,
+                  padding: "10px 12px",
+                  background: "var(--bg-soft)",
+                }}
+              >
+                <div style={{ ...mono, fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: s.body ? 4 : 0 }}>
+                  {s.label}
+                </div>
+                {s.body && <div style={{ fontSize: 12.5, lineHeight: 1.45, color: "var(--fg)" }}>{s.body}</div>}
+                {s.foot && <div style={{ ...mono, fontSize: 10, color: "var(--muted)", marginTop: 4 }}>{s.foot}</div>}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

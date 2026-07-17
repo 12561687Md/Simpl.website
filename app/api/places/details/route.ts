@@ -24,9 +24,12 @@ const RATE_LIMIT_MAX = 30;
 /**
  * The field mask sets the SKU tier, so this list is a price, not a preference.
  *
- * Deliberately absent: editorialSummary, googleMapsUri, types. Nothing renders
- * them, and editorialSummary alone pushes the request into the top tier — we
- * were paying for it on every legacy scan and never showing it.
+ * `reviews` and `editorialSummary` push this into the top (Enterprise + Atmosphere)
+ * tier. That's a deliberate spend: they are the "how did they know all that?"
+ * payload the scan theatre pops in — a real review in the owner's own customers'
+ * words, and Google's one-line description of the business (often carrying the
+ * "since 19xx" the owner is proud of). Everything here is real; nothing is
+ * invented. Still absent: googleMapsUri, types — nothing renders them.
  */
 const FIELD_MASK = [
   "id",
@@ -39,10 +42,21 @@ const FIELD_MASK = [
   "photos",
   // Powers the static map. Static Maps cannot geocode a place_id.
   "location",
+  // Enrichment for the theatre. Real, or absent — never fabricated.
+  "editorialSummary",
+  "reviews",
 ].join(",");
 
 interface NewPhoto {
   name?: string;
+}
+
+interface NewReview {
+  rating?: number;
+  text?: { text?: string };
+  originalText?: { text?: string };
+  relativePublishTimeDescription?: string;
+  authorAttribution?: { displayName?: string };
 }
 
 export async function GET(req: Request) {
@@ -133,6 +147,22 @@ export async function GET(req: Request) {
         `&scan=${encodeURIComponent(mapToken)}`;
     }
 
+    // Two real reviews, trimmed for the theatre. The author name is public
+    // review attribution from Google; the text is the customer's own words. Empty
+    // when Google has none — which is itself a finding, not a blank to fill.
+    const reviews = (r.reviews ?? [])
+      .map((rv: NewReview) => {
+        const text = rv.text?.text ?? rv.originalText?.text ?? "";
+        return {
+          rating: typeof rv.rating === "number" ? rv.rating : null,
+          text: text.length > 160 ? text.slice(0, 157).trimEnd() + "…" : text,
+          author: rv.authorAttribution?.displayName ?? null,
+          when: rv.relativePublishTimeDescription ?? null,
+        };
+      })
+      .filter((rv: { text: string }) => rv.text)
+      .slice(0, 2);
+
     return NextResponse.json({
       placeId: r.id ?? parsed.data.placeId,
       mapUrl,
@@ -145,6 +175,10 @@ export async function GET(req: Request) {
       // this stays null and the UI shows nothing.
       rating: typeof r.rating === "number" ? r.rating : null,
       reviewCount: typeof r.userRatingCount === "number" ? r.userRatingCount : null,
+      // Google's own one-line description, e.g. "Counter-service pizzeria known
+      // for classic New York slices since 1975." Real or null.
+      summary: r.editorialSummary?.text ?? null,
+      reviews,
       photos,
     });
   } catch (error) {

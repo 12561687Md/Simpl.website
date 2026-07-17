@@ -758,3 +758,66 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
      which would blur the page behind the phone rather than the screen. */
   box-shadow: 0 6px 20px -12px rgba(0, 0, 0, 0.8);
 }
+
+/* ---- Phone: dynamic island (PhoneLoop) ---- */
+.phone-island {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78px;
+  height: 20px;
+  border-radius: 999px;
+  background: #050607;
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* Two-column section that pairs copy with a phone. Shared by the 2nd section
+   and the beliefs/about blocks. */
+.split-phone-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: 56px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .split-phone-grid { grid-template-columns: 1fr; gap: 44px; }
+  .split-phone-grid .split-phone-visual { order: -1; }
+}
+
+/* ---- Beliefs section ---- */
+.beliefs-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 56px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .beliefs-grid { grid-template-columns: 1fr; gap: 36px; }
+  .belief-row { grid-template-columns: 1fr !important; gap: 12px !important; }
+}
+
+/* ---- Blog ---- */
+.blog-index-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 900px) { .blog-index-grid { grid-template-columns: 1fr; } }
+
+.blog-card {
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 26px 24px;
+  background: var(--bg-soft);
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+.blog-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .blog-card { transition: border-color 180ms ease; }
+  .blog-card:hover { transform: none; }
+}
