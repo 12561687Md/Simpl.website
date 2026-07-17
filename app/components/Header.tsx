@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { RippleLink } from "@/components/ui/ripple-link";
 
 const NAV_ITEMS = [
   { href: "/scan", label: "Free Scan" },
@@ -154,7 +155,7 @@ export default function Header() {
             Pricing
           </Link>
 
-          <Link
+          <RippleLink
             href="/what-am-i-missing"
             className="cta-primary"
             style={{
@@ -168,12 +169,12 @@ export default function Header() {
             }}
           >
             What am I missing? →
-          </Link>
+          </RippleLink>
         </nav>
 
         {/* Mobile: Start button + hamburger */}
         <div className="mobile-nav" style={{ alignItems: "center", gap: 12 }}>
-          <Link
+          <RippleLink
             href="/what-am-i-missing"
             className="cta-primary"
             style={{
@@ -185,7 +186,7 @@ export default function Header() {
             }}
           >
             What am I missing? →
-          </Link>
+          </RippleLink>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
