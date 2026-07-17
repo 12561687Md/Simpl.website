@@ -31,6 +31,23 @@ const startSchema = z.object({
 // from one IP is someone farming reports.
 const RATE_LIMIT_MAX = 8;
 
+/**
+ * Hard global ceiling on scans per day.
+ *
+ * This is the Google quota cap we cannot set. Free-trial billing accounts can't
+ * edit API quotas, so the ceiling has to live here instead — and it can't live in
+ * the in-memory rate limiter either, because every Vercel instance keeps its own
+ * counter and cold starts wipe them. Postgres is the only thing all instances
+ * agree on.
+ *
+ * At ~$0.055 a scan (Details + 4 photos + map), 100/day caps worst-case spend
+ * around $5.50/day no matter how many instances are running or who is attacking.
+ *
+ * Raise it when real traffic justifies it. Hitting this pre-launch would be a
+ * good problem and a one-line change.
+ */
+const DAILY_SCAN_CAP = Number(process.env.DAILY_SCAN_CAP ?? 100);
+
 export async function POST(req: Request) {
   try {
     const ip = getClientIp(req);
@@ -52,11 +69,26 @@ export async function POST(req: Request) {
 
     const { placeId, email, relationship, optIn, businessName } = parsed.data;
 
-    // Save the lead first. If this fails we have not spent anything yet, so
-    // refusing is cheap and honest — the whole point of the gate is that we do
-    // not pay Google for visitors we failed to capture.
     try {
       const pool = getPool();
+
+      // The global ceiling, checked before anything is spent. One COUNT on the
+      // gate (not per keystroke), so it costs nothing that matters.
+      const { rows } = await pool.query(
+        `SELECT count(*)::int AS n FROM leads
+          WHERE source = 'scan_gate' AND created_at >= CURRENT_DATE`
+      );
+      if (rows[0]?.n >= DAILY_SCAN_CAP) {
+        console.error(`scan/start: daily cap of ${DAILY_SCAN_CAP} reached`);
+        return NextResponse.json(
+          { error: "We've hit today's scan limit. Try again tomorrow." },
+          { status: 429 }
+        );
+      }
+
+      // Save the lead. If this fails we have not spent anything yet, so refusing
+      // is cheap and honest — the whole point of the gate is that we never pay
+      // Google for a visitor we failed to capture.
       // No scan_url here on purpose: at gate time we have the name (free, from
       // the autocomplete prediction) but not the website, which only arrives from
       // Places Details after this token is issued.

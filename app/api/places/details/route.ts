@@ -102,8 +102,12 @@ export async function GET(req: Request) {
 
     const r = data.result;
 
+    // Four, not six. Photos are the single biggest line item in a scan (~$7/1000
+    // each, more than the Details call itself), and the theatre only shows about
+    // five frames: map + 4 photos at 2.6s each fills the ~14s scan exactly. Six
+    // meant paying for frames that either repeated or never rendered.
     const photos = (r.photos ?? [])
-      .slice(0, 6)
+      .slice(0, 4)
       .map((p: GooglePhoto) => p.photo_reference)
       .filter(Boolean)
       // Routed through our own photo proxy so the key never ships to the client.
