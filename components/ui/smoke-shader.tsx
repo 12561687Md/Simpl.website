@@ -369,11 +369,16 @@ export function SmokeShader({
     }
 
     const draw = () => {
-      mx += (tmx - mx) * 0.12;
-      my += (tmy - my) * 0.12;
-      presence += (tPresence - presence) * 0.06;
+      mx += (tmx - mx) * 0.1;
+      my += (tmy - my) * 0.1;
+      // The target decays every frame, so the influence fades on its own the
+      // moment the pointer stops; movement refreshes it. Gives a gentle push
+      // that recedes instead of a persistent force locked to the cursor.
+      tPresence *= 0.982;
+      presence += (tPresence - presence) * 0.045;
       gl.uniform4f(uSpace, 0.0, 0.0, mx, my);
-      gl.uniform4f(uCursor, interactive ? presence : 0.0, 2.0, 0.65, 0.46);
+      // Effect 1.0 = soft local push-away (not swirl); low strength, wide radius.
+      gl.uniform4f(uCursor, interactive ? presence : 0.0, 1.0, 0.5, 0.6);
       gl.uniform4f(uScene, canvas.width, canvas.height, elapsed * 0.63, 4.0);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
