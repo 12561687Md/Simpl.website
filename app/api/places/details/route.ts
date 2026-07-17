@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { isRateLimited, getClientIp } from "../../../../lib/rate-limit";
-import { verifyScanToken } from "../../../../lib/scan-token";
+import { verifyScanToken, issueScanToken } from "../../../../lib/scan-token";
 
 /**
  * Resolve a place_id into the identity payload the scan page paints immediately:
@@ -27,6 +27,7 @@ const RATE_LIMIT_MAX = 30;
 const FIELDS = [
   "place_id",
   "name",
+  "geometry",
   "formatted_address",
   "formatted_phone_number",
   "website",
@@ -115,8 +116,25 @@ export async function GET(req: Request) {
           `&scan=${encodeURIComponent(parsed.data.scan)}`
       );
 
+    // Static Maps cannot geocode a place_id — it returns a picture of an error
+    // message instead — so the map needs real coordinates. They travel through
+    // the client, so they are signed: the token is scoped to this exact centre
+    // and cannot be replayed with another.
+    const loc = r.geometry?.location;
+    let mapUrl: string | null = null;
+    if (typeof loc?.lat === "number" && typeof loc?.lng === "number") {
+      const lat = String(loc.lat);
+      const lng = String(loc.lng);
+      const mapToken = issueScanToken(`map:${parsed.data.placeId}:${lat},${lng}`);
+      mapUrl =
+        `/api/places/staticmap?placeId=${encodeURIComponent(parsed.data.placeId)}` +
+        `&lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}` +
+        `&scan=${encodeURIComponent(mapToken)}`;
+    }
+
     return NextResponse.json({
       placeId: r.place_id ?? parsed.data.placeId,
+      mapUrl,
       name: r.name ?? null,
       address: r.formatted_address ?? null,
       phone: r.formatted_phone_number ?? null,

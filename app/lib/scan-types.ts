@@ -17,6 +17,8 @@ export interface PlaceDetails {
   mapsUrl: string | null;
   types: string[];
   photos: string[];
+  /** Proxied dark-styled Static Map of this business. */
+  mapUrl: string | null;
 }
 
 export interface Finding {

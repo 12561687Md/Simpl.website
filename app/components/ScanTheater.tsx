@@ -59,7 +59,9 @@ export default function ScanTheater({
   const reduce = useReducedMotion();
   const doneRef = useRef(false);
 
-  const photos = place.photos ?? [];
+  // The map leads. It lands on "Found your Google listing", which is exactly
+  // what it shows: you, on a map, pinned. Their own photos follow.
+  const frames = [...(place.mapUrl ? [place.mapUrl] : []), ...(place.photos ?? [])];
 
   // Advance the scripted phases on their own clock.
   useEffect(() => {
@@ -94,10 +96,10 @@ export default function ScanTheater({
 
   // Cycle the business photos underneath the scanline.
   useEffect(() => {
-    if (photos.length < 2) return;
-    const t = setInterval(() => setPhotoIdx((i) => (i + 1) % photos.length), 2600);
+    if (frames.length < 2) return;
+    const t = setInterval(() => setPhotoIdx((i) => (i + 1) % frames.length), 2600);
     return () => clearInterval(t);
-  }, [photos.length]);
+  }, [frames.length]);
 
   const progress = Math.min(((phaseIdx + (scanArrived ? 1 : 0)) / PHASES.length) * 100, 98);
 
@@ -144,13 +146,13 @@ export default function ScanTheater({
           }}
         >
           <AnimatePresence mode="sync">
-            {photos.length > 0 ? (
+            {frames.length > 0 ? (
               <motion.img
                 key={photoIdx}
-                src={photos[photoIdx]}
+                src={frames[photoIdx]}
                 alt=""
                 initial={{ opacity: 0, scale: 1.06 }}
-                animate={{ opacity: 0.62, scale: 1 }}
+                animate={{ opacity: frames[photoIdx] === place.mapUrl ? 0.95 : 0.62, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.9, ease: "easeOut" }}
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
@@ -178,13 +180,20 @@ export default function ScanTheater({
             )}
           </AnimatePresence>
 
-          {/* Tint keeps the overlay type legible over arbitrary photography. */}
+          {/* Tint keeps the overlay type legible over arbitrary photography. The
+              map needs far less of it: it is already styled to these surfaces and
+              its labels are ours to control, so the photo-strength scrim would
+              just turn it to mud. */}
           <div
             aria-hidden="true"
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(180deg, rgba(11,13,15,0.5), rgba(11,13,15,0.78))",
+              transition: "background 700ms ease",
+              background:
+                frames[photoIdx] === place.mapUrl
+                  ? "linear-gradient(180deg, rgba(11,13,15,0.05), rgba(11,13,15,0.45))"
+                  : "linear-gradient(180deg, rgba(11,13,15,0.5), rgba(11,13,15,0.78))",
             }}
           />
 
