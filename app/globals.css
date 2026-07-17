@@ -200,15 +200,89 @@ main, footer, header { position: relative; z-index: 1; }
 @keyframes fade-in   { from { opacity: 0; } to { opacity: 1; } }
 @keyframes float-y   { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
+/* ── Spotlight glow cards ──
+   Cursor-tracking border glow. Injected once here rather than per-instance.
+   The card reads --x/--y (set from the pointer) and paints a radial spotlight
+   on the border via ::before/::after masked to the border box. */
+[data-glow]::before,
+[data-glow]::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: calc(var(--border-size) * -1);
+  border: var(--border-size) solid transparent;
+  border-radius: calc(var(--radius) * 1px);
+  background-attachment: fixed;
+  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+}
+[data-glow]::before {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
+    calc(var(--x, 0) * 1px)
+    calc(var(--y, 0) * 1px),
+    hsl(var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)), transparent 100%
+  );
+  filter: brightness(2);
+}
+[data-glow]::after {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
+    calc(var(--x, 0) * 1px)
+    calc(var(--y, 0) * 1px),
+    hsl(0 100% 100% / var(--border-light-opacity, 1)), transparent 100%
+  );
+}
+[data-glow] [data-glow] {
+  position: absolute;
+  inset: 0;
+  will-change: filter;
+  opacity: var(--outer, 1);
+  border-radius: calc(var(--radius) * 1px);
+  border-width: calc(var(--border-size) * 20);
+  filter: blur(calc(var(--border-size) * 10));
+  background: none;
+  pointer-events: none;
+  border: none;
+}
+[data-glow] > [data-glow]::before {
+  inset: -10px;
+  border-width: 10px;
+}
+
 h1, h2, h3 { text-wrap: balance; }
 html { overflow-x: hidden; scroll-behavior: auto; }
 body { overflow-x: hidden; position: relative; }
 
-.platform-logo:hover {
-  filter: grayscale(0%) brightness(1.05) drop-shadow(0 8px 16px rgba(0,0,0,0.42)) !important;
-  opacity: 1 !important;
-  transform: translateY(-4px) scale(1.12);
+.platform-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.015);
+  border: 1px solid transparent;
+  filter: grayscale(45%) brightness(0.92);
+  opacity: 0.75;
+  cursor: default;
+  user-select: none;
+  white-space: nowrap;
+  transition: filter 0.3s ease, opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+.platform-logo:hover {
+  filter: grayscale(0%) brightness(1.05) drop-shadow(0 8px 16px rgba(0,0,0,0.42));
+  opacity: 1;
+  transform: translateY(-4px) scale(1.08);
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+/* Pause the logo trust strip on hover so a logo can be inspected. */
+.logos-strip:hover .marquee-track { animation-play-state: paused; }
 
 @keyframes pulse {
   0%, 100% { transform: scale(1); opacity: 1; }

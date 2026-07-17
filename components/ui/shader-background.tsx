@@ -109,9 +109,12 @@ void main() {
 export function ShaderBackground({
   className,
   style,
+  fade = true,
 }: {
   className?: string;
   style?: React.CSSProperties;
+  /** Fade the top/bottom edges (section use). Off = full-bleed (hero). */
+  fade?: boolean;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -218,7 +221,9 @@ export function ShaderBackground({
     };
   }, []);
 
-  const mask = "linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%)";
+  const mask = fade
+    ? "linear-gradient(180deg, transparent 0%, #000 16%, #000 84%, transparent 100%)"
+    : undefined;
   return (
     <div
       className={`pointer-events-none absolute inset-0 overflow-hidden ${className ?? ""}`}

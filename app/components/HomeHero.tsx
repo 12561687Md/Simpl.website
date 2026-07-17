@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import ScanTool from "./ScanTool";
 import PlatformLogos from "./PlatformLogos";
-import { SmokeShader } from "@/components/ui/smoke-shader";
+import { ShaderBackground } from "@/components/ui/shader-background";
 
 export default function HomeHero() {
   const [scanState, setScanState] = useState<"idle" | "scanning" | "done">("idle");
@@ -17,7 +17,7 @@ export default function HomeHero() {
     <div style={{ position: "relative" }}>
       {showHero && (
         <>
-          <SmokeShader style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0 }} />
+          <ShaderBackground fade={false} />
           {/* Legibility scrim: darker on the left where the copy sits, opening up
               to the right so the smoke stays visible. */}
           <div
