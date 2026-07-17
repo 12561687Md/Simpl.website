@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, type Variants } from "framer-motion";
 import { MoveRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { VitalsignIcon } from "@/components/ui/simpl-mark";
+import { SimplMark, SimplWordmark } from "@/components/ui/simpl-brand";
 import { RippleLink } from "@/components/ui/ripple-link";
 
 const NAV_LINKS = [
@@ -106,7 +106,7 @@ export default function Header() {
         {/* Brand mark (left when expanded) */}
         <motion.div variants={itemVariants} className="flex flex-shrink-0 items-center pl-4 pr-1.5">
           <Link href="/" onClick={(e) => e.stopPropagation()} aria-label="SIMPL home" className="flex items-center">
-            <VitalsignIcon size={30} />
+            <SimplWordmark size={26} />
           </Link>
         </motion.div>
 
@@ -176,7 +176,7 @@ export default function Header() {
           <motion.div variants={collapsedIconVariants} animate={isExpanded ? "expanded" : "collapsed"}>
             {/* Inverted: the puck is white once collapsed, and the off-white
                 pulse would vanish into it. */}
-            <VitalsignIcon size={30} inverted />
+            <SimplMark size={32} inverted />
           </motion.div>
         </div>
       </motion.nav>
