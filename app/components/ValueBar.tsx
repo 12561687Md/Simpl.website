@@ -3,11 +3,11 @@
  * calm band stating what SIMPL actually does for the owner. Wraps on mobile.
  */
 const VALUES = [
-  "Found on Google",
-  "Trusted at a glance",
-  "More jobs booked",
-  "Watched around the clock",
-  "Fixed before it costs you",
+  "Win the search",
+  "Win the click",
+  "Win the trust",
+  "Win the job",
+  "Win while you work",
 ];
 
 export default function ValueBar() {
