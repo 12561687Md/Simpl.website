@@ -150,11 +150,29 @@ export default function Header() {
     if (!isExpanded) setExpanded(true);
   };
 
+  // Touch has no mouseleave, so a dropdown opened by the onClick toggle above
+  // (mobile) would otherwise stay open until the next unrelated tap. A
+  // document-level listener closes it on any tap outside the nav — this is
+  // also what was leaving mobile visitors stuck unable to scroll: an open
+  // dropdown with no close path just sat there capturing taps.
+  const navRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (!servicesOpen && !resourcesOpen) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setServicesOpen(false);
+        setResourcesOpen(false);
+      }
+    };
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
+  }, [servicesOpen, resourcesOpen]);
+
   const linkColor = (active: boolean) => (active ? "var(--accent)" : "var(--muted)");
   const linkClass = "no-underline whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)]";
 
   return (
-    <div className="fixed left-1/2 top-5 z-50 -translate-x-1/2">
+    <div ref={navRef} className="fixed left-1/2 top-5 z-50 -translate-x-1/2">
       <motion.nav
         // No hidden `initial`: the header must render visible server-side. A
         // JS-dependent entrance means no header at all until hydration.
@@ -180,7 +198,7 @@ export default function Header() {
           </Link>
         </motion.div>
 
-        <div className={cn("flex items-center gap-1.5 pr-2.5 sm:gap-3", !isExpanded && "pointer-events-none")}>
+        <div className={cn("nav-items-row flex items-center gap-1.5 pr-2.5 sm:gap-3", !isExpanded && "pointer-events-none")}>
           {/* Services mega-menu */}
           <motion.div
             variants={itemVariants}
@@ -189,7 +207,11 @@ export default function Header() {
             onMouseLeave={() => setServicesOpen(false)}
           >
             <span
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                setResourcesOpen(false);
+                setServicesOpen((v) => !v);
+              }}
               className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)]"
               style={{ color: pathname.startsWith("/services") ? "var(--accent)" : "var(--muted)" }}
             >
@@ -197,12 +219,12 @@ export default function Header() {
               <svg width="9" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </span>
             {servicesOpen && isExpanded && (
-              <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3" onClick={(e) => e.stopPropagation()}>
+              <div className="nav-dropdown-anchor absolute left-1/2 top-full -translate-x-1/2 pt-3" onClick={(e) => e.stopPropagation()}>
                 <div
-                  className="flex overflow-hidden rounded-xl border shadow-2xl"
+                  className="nav-dropdown-panel flex overflow-hidden rounded-xl border shadow-2xl"
                   style={{ background: "var(--bg-elev)", borderColor: "var(--rule)" }}
                 >
-                  <div style={{ display: "flex", gap: 36, padding: "20px 24px" }}>
+                  <div className="nav-dropdown-groups" style={{ display: "flex", gap: 36, padding: "20px 24px" }}>
                     {SERVICE_GROUPS.map((group) => (
                       <div key={group.label} style={{ minWidth: 220 }}>
                         <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
@@ -248,8 +270,8 @@ export default function Header() {
                       </div>
                     </div>
                   </div>
-                  <div style={{ borderLeft: "1px solid var(--rule)", padding: 16, display: "flex", alignItems: "center" }}>
-                    <FeaturedCard eyebrow="Not sure where to start?" title="Run your free scan and see what's actually broken." href="/" />
+                  <div className="hide-mobile" style={{ borderLeft: "1px solid var(--rule)", padding: 16, display: "flex", alignItems: "center" }}>
+                    <FeaturedCard eyebrow="Not sure where to start?" title="Start now, free audit, see what's actually broken." href="/" />
                   </div>
                 </div>
               </div>
@@ -280,7 +302,11 @@ export default function Header() {
             onMouseLeave={() => setResourcesOpen(false)}
           >
             <span
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                setServicesOpen(false);
+                setResourcesOpen((v) => !v);
+              }}
               className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)]"
               style={{ color: RESOURCE_LINKS.some((r) => r.href === pathname) ? "var(--accent)" : "var(--muted)" }}
             >
@@ -288,9 +314,9 @@ export default function Header() {
               <svg width="9" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </span>
             {resourcesOpen && isExpanded && (
-              <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3" onClick={(e) => e.stopPropagation()}>
+              <div className="nav-dropdown-anchor absolute left-1/2 top-full -translate-x-1/2 pt-3" onClick={(e) => e.stopPropagation()}>
                 <div
-                  className="flex overflow-hidden rounded-xl border shadow-2xl"
+                  className="nav-dropdown-panel flex overflow-hidden rounded-xl border shadow-2xl"
                   style={{ background: "var(--bg-elev)", borderColor: "var(--rule)" }}
                 >
                   <div style={{ minWidth: 190, padding: "20px 12px" }}>
@@ -305,7 +331,7 @@ export default function Header() {
                       </Link>
                     ))}
                   </div>
-                  <div style={{ borderLeft: "1px solid var(--rule)", padding: 16, display: "flex", alignItems: "center" }}>
+                  <div className="hide-mobile" style={{ borderLeft: "1px solid var(--rule)", padding: 16, display: "flex", alignItems: "center" }}>
                     <FeaturedCard
                       eyebrow="From the blog"
                       title="How to rank higher on Google Maps, the local 3-pack explained."

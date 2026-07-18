@@ -24,8 +24,8 @@ function gradeColor(grade: string | undefined) {
   // conflating "this passed" with "this is on brand" was the old system's
   // mistake, and the new brand accent is blue, not green.
   if (!grade || grade === "N/A") return "#8A8D8C";
-  if (grade.startsWith("A")) return "#1E8F5A";
-  if (grade.startsWith("B")) return "#1E8F5A";
+  if (grade.startsWith("A")) return "var(--ok)";
+  if (grade.startsWith("B")) return "var(--ok)";
   if (grade.startsWith("C")) return "#E0A852";
   return "#E05252";
 }
@@ -350,8 +350,8 @@ export default function ScanTool({
                 <span style={{ ...mono, fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Social</span>
                 {result.social_profiles?.map((p) => (
                   <div key={p} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ ...mono, fontSize: 11, color: "#1E8F5A", fontWeight: 600 }}>✓</span>
-                    <span style={{ ...mono, fontSize: 11, color: "#1E8F5A" }}>{p}</span>
+                    <span style={{ ...mono, fontSize: 11, color: "var(--ok)", fontWeight: 600 }}>✓</span>
+                    <span style={{ ...mono, fontSize: 11, color: "var(--ok)" }}>{p}</span>
                   </div>
                 ))}
                 {result.social_missing?.filter(p => ["Facebook", "Instagram", "LinkedIn", "YouTube", "TikTok"].includes(p)).map((p) => (
@@ -436,7 +436,7 @@ export default function ScanTool({
             >
               {emailState === "sent" ? (
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, background: "#1E8F5A", flexShrink: 0 }} />
+                  <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, background: "var(--ok)", flexShrink: 0 }} />
                   <div>
                     <div style={{ fontSize: 15, fontWeight: 500, color: "var(--fg)" }}>Check your inbox. Your full report is on its way.</div>
                     <a href="/results" style={{ ...mono, fontSize: 11, color: "var(--accent)", letterSpacing: "0.06em", display: "inline-block", marginTop: 8 }}>

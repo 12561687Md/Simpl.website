@@ -182,7 +182,7 @@ export default function QuickWins() {
             Find out what&apos;s leaking.
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
-            Run a free scan and see which quick wins are waiting.
+            Start now and see which quick wins are waiting.
           </p>
           <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
             Is your site silently failing visitors right now? Type your domain and find out in 30 seconds.

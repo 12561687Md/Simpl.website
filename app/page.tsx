@@ -10,7 +10,7 @@ import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
 import OutcomePillars from "./components/OutcomePillars";
-import FounderSection from "./components/FounderSection";
+import TeamSection from "./components/TeamSection";
 
 export const metadata: Metadata = {
   title: "SIMPL | Your Digital Presence, Handled",
@@ -139,41 +139,59 @@ export default function Home() {
                 The businesses that score higher have one thing in common: they knew where the problems were before their customers did.
               </p>
               <a href="/scan" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
-                Run your free scan<span>→</span>
+                Start now, free audit<span>→</span>
               </a>
             </div>
             <div style={{ background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 8, overflow: "hidden", boxShadow: "0 0 40px rgba(137,207,240,0.06)" }}>
               <div style={{ background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ width: 8, height: 8, borderRadius: 99, background: "#E05252", opacity: 0.6 }} />
                 <span style={{ width: 8, height: 8, borderRadius: 99, background: "#E0A852", opacity: 0.6 }} />
-                <span style={{ width: 8, height: 8, borderRadius: 99, background: "#1E8F5A", opacity: 0.6 }} />
+                <span style={{ width: 8, height: 8, borderRadius: 99, background: "var(--ok)", opacity: 0.6 }} />
                 <span className="mono" style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginLeft: 8 }}>simpl.report</span>
               </div>
               <div style={{ padding: "24px 24px 28px", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
               <div style={{ position: "relative", width: 200, height: 200 }}>
                 <svg width="200" height="200" viewBox="0 0 200 200" style={{ transform: "rotate(-90deg)" }}>
                   <circle cx="100" cy="100" r="90" fill="none" stroke="var(--rule)" strokeWidth="4" />
-                  <circle cx="100" cy="100" r="90" fill="none" stroke="#1E8F5A" strokeWidth="4"
+                  <circle cx="100" cy="100" r="90" fill="none" stroke="var(--accent)" strokeWidth="4"
                     strokeDasharray={2 * Math.PI * 90} strokeDashoffset={2 * Math.PI * 90 * 0.28}
                     strokeLinecap="round" />
                 </svg>
                 <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontSize: 64, fontWeight: 200, color: "#1E8F5A", lineHeight: 1, letterSpacing: "-0.04em" }}>B</span>
+                  <span style={{ fontSize: 64, fontWeight: 200, color: "var(--accent)", lineHeight: 1, letterSpacing: "-0.04em" }}>B</span>
                   <span className="mono" style={{ fontSize: 16, color: "var(--muted)", marginTop: 4 }}>72%</span>
                 </div>
               </div>
+              {/* Real links, not decoration: each badge goes to that category's
+                  actual deep-dive page, so this "mock" report is also doing real
+                  internal-linking work instead of being a dead-end graphic. */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, width: "100%", maxWidth: 280 }}>
                 {[
-                  { cat: "SEO", grade: "B" },
-                  { cat: "Content", grade: "D" },
-                  { cat: "Social", grade: "B" },
-                  { cat: "Website", grade: "A" },
-                  { cat: "GBP", grade: "A-" },
-                  { cat: "Crawl", grade: "A" },
+                  { cat: "SEO", grade: "B", href: "/discoverability" },
+                  { cat: "Content", grade: "D", href: "/services/organic-growth" },
+                  { cat: "Social", grade: "B", href: "/spend" },
+                  { cat: "Website", grade: "A", href: "/performance" },
+                  { cat: "GBP", grade: "A-", href: "/services/local-seo" },
+                  { cat: "Crawl", grade: "A", href: "/discoverability" },
                 ].map((c) => (
-                  <div key={c.cat} style={{ textAlign: "center", padding: "8px 4px", background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 4 }}>
+                  <Link key={c.cat} href={c.href} className="no-underline" style={{ textAlign: "center", padding: "8px 4px", background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 4, transition: "border-color 150ms ease" }}>
                     <div className="mono" style={{ fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2 }}>{c.cat}</div>
-                    <div style={{ fontSize: 16, fontWeight: 400, color: c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E0A852" : "#1E8F5A" }}>{c.grade}</div>
+                    <div style={{ fontSize: 16, fontWeight: 400, color: c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E0A852" : "var(--ok)" }}>{c.grade}</div>
+                  </Link>
+                ))}
+              </div>
+              {/* Top findings: the report's actual job isn't the grade, it's what
+                  the grade is hiding. Two real-shaped findings, same severity-
+                  color + fix language as the live ScanReport, so this mock isn't
+                  just a score badge, it previews the report itself. */}
+              <div style={{ width: "100%", maxWidth: 280, display: "grid", gap: 8, marginTop: 4 }}>
+                {[
+                  { severity: "#E0A852", title: "No blog or FAQ content", fix: "Add 3-5 pages targeting what customers actually search for." },
+                  { severity: "#E05252", title: "Missing schema markup", fix: "Google can't confirm your business type, hours, or service area." },
+                ].map((f) => (
+                  <div key={f.title} style={{ borderLeft: `3px solid ${f.severity}`, background: "var(--bg-soft)", padding: "8px 10px", borderRadius: "0 4px 4px 0" }}>
+                    <div style={{ fontSize: 12.5, fontWeight: 500, lineHeight: 1.35 }}>{f.title}</div>
+                    <div style={{ fontSize: 11, color: "var(--muted)", lineHeight: 1.4, marginTop: 2 }}>{f.fix}</div>
                   </div>
                 ))}
               </div>
@@ -239,9 +257,9 @@ export default function Home() {
         {/* Section 4 reserved for testimonials + reviews (goes live once we have
             real ones; never fabricated). See docs/standards/TRUST_SIGNALS.md. */}
 
-        {/* What we stand for + a real person: the beliefs block is now merged
-            into the founder section (one combined section, not two). */}
-        <FounderSection />
+        {/* What we stand for + a real team: the beliefs block is now merged
+            into the team section (one combined section, not two). */}
+        <TeamSection />
 
         {/* Trust */}
         <section style={{ borderBottom: "1px solid var(--rule)" }}>

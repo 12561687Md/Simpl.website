@@ -37,7 +37,7 @@ const ELSEWHERE = [
 const FAQS = [
   {
     q: "Why are you so much cheaper than the agency that keeps calling me?",
-    a: "You're not paying for an account manager, a sales team, or an office. You work directly with the person doing the work. The typical agency quote for a one-location service business runs $2,000 to $2,500 a month, and a big share of that is overhead you never see.",
+    a: "You're not paying for an account manager, a sales team, or an office. You work directly with the team doing the work. The typical agency quote for a one-location service business runs $2,000 to $2,500 a month, and a big share of that is overhead you never see.",
   },
   {
     q: "What does \"starting at\" actually mean? Am I going to get upsold?",
@@ -291,7 +291,7 @@ export default function StartPage() {
             <div style={{ marginTop: 48, maxWidth: 620 }}>
               <div className="mono" style={{ ...label, marginBottom: 12 }}>Why we cost less</div>
               <p style={{ margin: 0, fontSize: 17, lineHeight: 1.6 }}>
-                You&apos;re not paying for an account manager, a sales team, or an office. You work directly with the person doing the work.
+                You&apos;re not paying for an account manager, a sales team, or an office. You work directly with the team doing the work.
               </p>
             </div>
 
@@ -327,7 +327,7 @@ export default function StartPage() {
         {/* Free scan */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ ...label, marginBottom: 28 }}>
-            <span style={{ color: "var(--accent)" }}>Start here</span> · run a free scan
+            <span style={{ color: "var(--accent)" }}>Start here</span> · free audit
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 620 }}>
             Type a domain. See what it&apos;s costing you. Decide from there.
@@ -354,11 +354,12 @@ export default function StartPage() {
               </div>
               <div>
                 <div className="mono" style={{ ...label, marginBottom: 10 }}>From</div>
-                <div style={{ fontSize: 16, lineHeight: 1.5 }}>A person. Not a sequence. Not a calendar link.</div>
+                <div style={{ fontSize: 16, lineHeight: 1.5 }}>Real people. Not a sequence. Not a calendar link.</div>
               </div>
               <div>
                 <div className="mono" style={{ ...label, marginBottom: 10 }}>Direct</div>
-                <a href="mailto:team@simpl.pro" className="mono" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>team@simpl.pro</a>
+                <a href="mailto:team@simpl.pro" className="mono" style={{ display: "block", fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2, width: "fit-content" }}>team@simpl.pro</a>
+                <a href="tel:+19194289452" className="mono" style={{ display: "block", marginTop: 10, fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2, width: "fit-content" }}>Call now: (919) 428-9452</a>
               </div>
             </div>
           </div>

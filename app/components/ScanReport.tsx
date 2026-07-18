@@ -29,7 +29,7 @@ function gradeColor(grade: string | undefined) {
   // brand accent is blue now, and conflating "passed" with "on brand" was
   // the old system's mistake.
   if (!grade || grade === "N/A") return "#8A8D8C";
-  if (grade.startsWith("A") || grade.startsWith("B")) return "#1E8F5A";
+  if (grade.startsWith("A") || grade.startsWith("B")) return "var(--ok)";
   if (grade.startsWith("C")) return "#E0A852";
   return "#E05252";
 }

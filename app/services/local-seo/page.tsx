@@ -183,7 +183,7 @@ export default function LocalSEO() {
             See how visible you really are.
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
-            Run a free scan and find out where you stand in local search.
+            Start now and find out where you stand in local search.
           </p>
           <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
             Can customers actually find you on Google Maps? Type your domain to check your local visibility.

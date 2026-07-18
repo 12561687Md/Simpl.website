@@ -6,7 +6,7 @@ import BusinessSearch, { type Prediction } from "../components/BusinessSearch";
 /**
  * The same name-first scanner as the homepage (not the URL-only ScanTool),
  * dropped in beside the diagnosis form. Two doors into the same funnel: scan
- * it yourself, or tell us the symptom and skip straight to a person.
+ * it yourself, or tell us the symptom and skip straight to the team.
  */
 export default function WhatAmIMissingScanner() {
   const router = useRouter();

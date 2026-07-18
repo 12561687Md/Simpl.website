@@ -146,26 +146,6 @@ body::after {
   to   { transform: translate3d(-5vw, -3vw, 0) scale(1.1); }
 }
 
-/* Hero aura (components/ui/hero-aura.tsx) — glacial drift, barely
-   perceptible frame to frame on purpose. Paused entirely under
-   prefers-reduced-motion below. */
-@keyframes hero-aura-a {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(4vw, 3vw, 0) scale(1.08); }
-}
-@keyframes hero-aura-b {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(-3vw, 2vw, 0) scale(1.06); }
-}
-@keyframes hero-aura-c {
-  from { transform: translate3d(-50%, 0, 0) scale(1); }
-  to   { transform: translate3d(-50%, -2vw, 0) scale(1.1); }
-}
-@media (prefers-reduced-motion: reduce) {
-  [style*="hero-aura-a"], [style*="hero-aura-b"], [style*="hero-aura-c"] {
-    animation: none !important;
-  }
-}
 #root { position: relative; z-index: 1; }
 main, footer, header { position: relative; z-index: 1; }
 
@@ -589,11 +569,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .grid-category-grades { grid-template-columns: repeat(3, 1fr) !important; }
   .grid-step1-preview { grid-template-columns: 1fr !important; justify-items: center; }
   .grid-how-tiers { grid-template-columns: 1fr !important; }
-  .desktop-nav { display: none !important; }
-  .mobile-nav { display: flex !important; }
   .grid-footer { grid-template-columns: 1fr !important; gap: 32px !important; }
   .floating-cta { box-shadow: none !important; }
   .hide-mobile { display: none !important; }
+
+  /* Header nav: the pill never had a real mobile layout, it just relied on
+     desktop spacing at every width. Tighten item padding/type so Services,
+     Why SIMPL, Pricing, and Resources fit one row on a phone without the
+     pill overflowing the viewport. */
+  .nav-items-row { gap: 0 !important; }
+  .nav-items-row a, .nav-items-row span { padding-left: 8px !important; padding-right: 8px !important; font-size: 13px !important; }
+  /* Mega-menu dropdowns: stack to one column and cap to the viewport width
+     instead of the desktop's fixed multi-column flex row, which was wider
+     than most phone screens on its own even before the featured card. */
+  .nav-dropdown-anchor { left: 0 !important; right: 0 !important; transform: none !important; padding-left: 12px; padding-right: 12px; }
+  .nav-dropdown-panel { flex-direction: column !important; max-width: calc(100vw - 24px); }
+  .nav-dropdown-groups { flex-direction: column !important; gap: 20px !important; padding: 16px !important; }
 }
 
 @media (max-width: 480px) {

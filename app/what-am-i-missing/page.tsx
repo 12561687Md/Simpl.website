@@ -7,10 +7,10 @@ import WhatAmIMissingScanner from "./Scanner";
 
 export const metadata: Metadata = {
   title: "What am I missing? | SIMPL",
-  description: "Tell us what's going on and we'll tell you what's costing you calls. A person reads every message and replies the same business day, usually within four hours.",
+  description: "Tell us what's going on and we'll tell you what's costing you calls. Real people read every message and reply the same business day, usually within four hours.",
   openGraph: {
     title: "What am I missing? | SIMPL",
-    description: "Tell us what's going on and we'll tell you what's costing you calls. A person replies the same business day.",
+    description: "Tell us what's going on and we'll tell you what's costing you calls. We reply the same business day.",
     url: "https://simpl.pro/what-am-i-missing",
     siteName: "SIMPL",
     type: "website",
@@ -22,7 +22,7 @@ const label = { fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase
 
 const PROMISES = [
   { k: "Reply window", v: "Same business day, usually within four hours." },
-  { k: "Who answers", v: "A person. Not a sequence. Not a calendar link." },
+  { k: "Who answers", v: "Real people. Not a sequence. Not a calendar link." },
   { k: "What it costs", v: "Nothing. There's no pitch attached to a first reply." },
   { k: "What happens next", v: "We look at your site and your listing, then tell you what we'd fix first." },
 ];
@@ -37,7 +37,7 @@ export default function WhatAmIMissingPage() {
           "@type": "ContactPage",
           "name": "What am I missing?",
           "url": "https://simpl.pro/what-am-i-missing",
-          "description": "Tell SIMPL what's going on and we'll tell you what's costing you calls. A person replies the same business day.",
+          "description": "Tell SIMPL what's going on and we'll tell you what's costing you calls. We reply the same business day.",
           "mainEntity": {
             "@type": "Organization",
             "name": "SIMPL",
@@ -72,7 +72,7 @@ export default function WhatAmIMissingPage() {
         </section>
 
         {/* Two doors into the same funnel, side by side on purpose: scan it
-            yourself, or skip straight to a person. Neither is buried under
+            yourself, or skip straight to the team. Neither is buried under
             the other. */}
         <section data-section="contact" style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>
@@ -99,7 +99,8 @@ export default function WhatAmIMissingPage() {
               ))}
               <div>
                 <div className="mono" style={{ ...label, marginBottom: 10 }}>Direct</div>
-                <a href="mailto:team@simpl.pro" className="mono" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>team@simpl.pro</a>
+                <a href="mailto:team@simpl.pro" className="mono" style={{ display: "block", fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2, width: "fit-content" }}>team@simpl.pro</a>
+                <a href="tel:+19194289452" className="mono" style={{ display: "block", marginTop: 10, fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2, width: "fit-content" }}>Call now: (919) 428-9452</a>
               </div>
             </div>
           </div>

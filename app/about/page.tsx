@@ -244,7 +244,7 @@ export default function AboutPage() {
               color: "var(--muted)",
             }}
           >
-            SIMPL was built by someone who spent years inside the digital marketing industry watching the same problems on repeat. Businesses overpaying for services they couldn&apos;t measure. Agencies selling retainers with no accountability. Website problems going unnoticed for months while leads quietly disappeared. Every client conversation started the same way: &quot;I&apos;m paying for all this stuff and I have no idea if it&apos;s working.&quot;
+            SIMPL was built by a team that spent years inside the digital marketing industry watching the same problems on repeat. Businesses overpaying for services they couldn&apos;t measure. Agencies selling retainers with no accountability. Website problems going unnoticed for months while leads quietly disappeared. Every client conversation started the same way: &quot;I&apos;m paying for all this stuff and I have no idea if it&apos;s working.&quot;
           </p>
           <p
             style={{
@@ -255,7 +255,7 @@ export default function AboutPage() {
               color: "var(--muted)",
             }}
           >
-            The only thing on his mind through all of it was how to make the whole thing simpler for everyone. Not a little simpler. Fundamentally simpler. That obsession became SIMPL. Plain and simpl.
+            The only thing on our minds through all of it was how to make the whole thing simpler for everyone. Not a little simpler. Fundamentally simpler. That obsession became SIMPL. Plain and simpl.
           </p>
           <p
             style={{

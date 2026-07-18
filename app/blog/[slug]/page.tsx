@@ -152,7 +152,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               Want to know how your business actually scores?
             </h2>
             <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.6, color: "var(--muted)", maxWidth: 520 }}>
-              Run a free scan and see exactly where you stand on everything above, in about thirty seconds.
+              Start now, free audit, see exactly where you stand on everything above, in about thirty seconds.
             </p>
             <Link
               href="/what-am-i-missing"

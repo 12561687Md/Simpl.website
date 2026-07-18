@@ -17,12 +17,20 @@ const BELIEFS = [
     body: "No account manager, no sales floor, no office lease baked into your invoice. That is why the price looks the way it does, and it is the only reason.",
   },
   {
-    title: "I'd rather show you what's broken.",
-    body: "Every conversation starts with your real score and the real gaps. If there's nothing worth fixing, I'll tell you that too.",
+    title: "We'd rather show you what's broken.",
+    body: "Every conversation starts with your real score and the real gaps. If there's nothing worth fixing, we'll tell you that too.",
   },
 ];
 
-export default function FounderSection() {
+// Real, unfabricated numbers, pulled from the same figures used elsewhere on
+// the site (results/page.tsx) rather than invented for this card.
+const COVERAGE = [
+  { n: "24/7", l: "continuous monitoring" },
+  { n: "<4h", l: "typical reply time" },
+  { n: "6", l: "areas watched, every scan" },
+];
+
+export default function TeamSection() {
   return (
     <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
       <div
@@ -37,53 +45,36 @@ export default function FounderSection() {
         }}
         className="grid-founder"
       >
-        {/* Portrait. Placeholder frame until the real photo drops in: swap the
-            inner block for next/image with the same border-radius + ratio. */}
+        {/* Coverage card: real numbers instead of a person's face, deliberately —
+            SIMPL is a small team, not a solo act, and a stat is honest where a
+            stock-feeling headshot placeholder wasn't earning trust. */}
         <ScrollReveal direction="right">
-          <div style={{ position: "relative" }}>
-            <div
-              className="surface-card"
-              data-founder-photo="placeholder"
-              style={{
-                aspectRatio: "4 / 5",
-                borderRadius: 16,
-                overflow: "hidden",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background:
-                  "radial-gradient(120% 90% at 50% 0%, rgba(137,207,240,0.06), transparent 55%), linear-gradient(180deg, var(--bg-elev-2), var(--bg-elev))",
-              }}
-            >
-              <div style={{ textAlign: "center", padding: 24 }}>
-                <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="var(--rule-strong)" strokeWidth="1.25" style={{ margin: "0 auto" }}>
-                  <circle cx="12" cy="8.5" r="4" />
-                  <path d="M4.5 20a7.5 7.5 0 0 1 15 0" strokeLinecap="round" />
-                </svg>
-                <div className="mono" style={{ marginTop: 16, fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--fg-dim)" }}>
-                  Portrait coming
-                </div>
+          <div
+            className="surface-card"
+            style={{
+              borderRadius: 16,
+              overflow: "hidden",
+              padding: "36px 32px",
+              display: "flex",
+              flexDirection: "column",
+              gap: 28,
+              background:
+                "radial-gradient(120% 90% at 50% 0%, rgba(137,207,240,0.06), transparent 55%), linear-gradient(180deg, var(--bg-elev-2), var(--bg-elev))",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <span className="pulse-dot" style={{ width: 7, height: 7, borderRadius: 999, background: "var(--accent)" }} />
+              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)" }}>
+                The SIMPL team
               </div>
             </div>
-            {/* Name plate, overlapping the frame corner for depth. */}
-            <div
-              className="glass"
-              style={{
-                position: "absolute",
-                bottom: -18,
-                left: -14,
-                padding: "12px 18px",
-                borderRadius: 12,
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-              }}
-            >
-              <span className="pulse-dot" style={{ width: 7, height: 7, borderRadius: 999, background: "var(--accent)" }} />
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 500, lineHeight: 1.2 }}>Matt DuBois</div>
-                <div className="mono" style={{ fontSize: 10, letterSpacing: "0.08em", color: "var(--muted)" }}>Founder, SIMPL</div>
-              </div>
+            <div style={{ display: "grid", gap: 20 }}>
+              {COVERAGE.map((c) => (
+                <div key={c.l} style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+                  <span className="mono" style={{ fontSize: 28, fontWeight: 300, color: "var(--fg)", minWidth: 64 }}>{c.n}</span>
+                  <span style={{ fontSize: 14.5, color: "var(--muted)", lineHeight: 1.4 }}>{c.l}</span>
+                </div>
+              ))}
             </div>
           </div>
         </ScrollReveal>
@@ -91,12 +82,12 @@ export default function FounderSection() {
         {/* Copy + beliefs */}
         <div>
           <ScrollReveal>
-            <div className="eyebrow" style={{ marginBottom: 26 }}>A real person, not a portal</div>
+            <div className="eyebrow" style={{ marginBottom: 26 }}>A real team, not a portal</div>
             <h2 style={{ margin: 0, fontSize: "clamp(26px, 3.4vw, 42px)", lineHeight: 1.12, letterSpacing: "-0.02em", fontWeight: 500, maxWidth: 560 }}>
-              You&apos;ll deal with the person doing the work.
+              You&apos;ll deal with the team doing the work.
             </h2>
             <p style={{ marginTop: 20, maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)" }}>
-              SIMPL isn&apos;t a call center with a logo. It&apos;s built and run by one person who answers your emails and owns the outcome. Here&apos;s what we stand for, and what that means for you.
+              SIMPL isn&apos;t a call center reading from a script. It&apos;s a small, hands-on team that answers your emails and owns the outcome. Here&apos;s what we stand for, and what that means for you.
             </p>
           </ScrollReveal>
 

@@ -106,7 +106,7 @@ export default function ContactForm({
         <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--ok)", textTransform: "uppercase", marginBottom: 14 }}>Sent</div>
         <div style={{ fontSize: 22, lineHeight: 1.3 }}>Message sent. We&apos;ll reply within 4 hours.</div>
         <p style={{ marginTop: 14, marginBottom: 0, fontSize: 15, color: "var(--muted)", lineHeight: 1.55 }}>
-          A person reads every one of these. Not a sequence, not a bot.
+          Real people read every one of these. Not a sequence, not a bot.
         </p>
       </motion.div>
     );

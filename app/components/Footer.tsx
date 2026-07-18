@@ -20,6 +20,9 @@ export default function Footer() {
             <a href="mailto:team@simpl.pro" className="mono" style={{ display: "inline-block", marginTop: 16, fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>
               team@simpl.pro
             </a>
+            <a href="tel:+19194289452" className="mono" style={{ display: "block", marginTop: 10, fontSize: 12, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2, width: "fit-content" }}>
+              Call now: (919) 428-9452
+            </a>
           </div>
 
           {/* Product */}

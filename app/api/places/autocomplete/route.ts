@@ -201,7 +201,12 @@ export async function GET(req: Request) {
           // a business in Apex is common), narrow enough to still separate
           // "nearby" from "a different state." A bias, not a restriction —
           // a real match further out still surfaces, just ranked lower.
-          radius: 80000,
+          // 50,000 is a hard ceiling: the Places API rejects anything above
+          // it with INVALID_ARGUMENT, which was silently 502-ing every
+          // production autocomplete request (dev has no x-vercel-ip-* headers,
+          // so locationBias never activated there, and the bug never
+          // reproduced locally). Verified against the live API error text.
+          radius: 50000,
         },
       };
     }

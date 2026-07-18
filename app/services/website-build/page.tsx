@@ -131,7 +131,7 @@ export default function WebsiteBuild() {
             See what your current site is costing you.
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
-            Run a free scan first. If a rebuild isn&apos;t what's holding you back, we&apos;ll tell you that too.
+            Start with a free audit. If a rebuild isn&apos;t what's holding you back, we&apos;ll tell you that too.
           </p>
           <ScanTool compact />
         </section>

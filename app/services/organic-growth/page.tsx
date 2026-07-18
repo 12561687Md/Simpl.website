@@ -182,7 +182,7 @@ export default function OrganicGrowth() {
             See where your organic presence stands today.
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
-            Run a free scan to find the gaps holding back your search authority.
+            Get your free audit and find the gaps holding back your search authority.
           </p>
           <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
             How thin is your content compared to competitors? Type your domain to see your content grade.

@@ -7,7 +7,7 @@ import BusinessSearch, { type Prediction } from "./BusinessSearch";
 import PlatformLogos from "./PlatformLogos";
 import UrlFallbackScanner from "./UrlFallbackScanner";
 import TextRotator from "./TextRotator";
-import { HeroAura } from "@/components/ui/hero-aura";
+import { DottedSurface } from "@/components/ui/dotted-surface";
 
 /**
  * The hero is now purely an entrance. Scanning used to happen in place, which
@@ -35,7 +35,7 @@ export default function HomeHero() {
 
   return (
     <div style={{ position: "relative" }}>
-      <HeroAura />
+      <DottedSurface />
       {/* Legibility scrim, centre-weighted to sit behind the centred copy. Much
           lighter than the old shader needed — the aura is a soft glow, not a
           busy plasma grid, so it doesn't need to be half-erased to stay readable. */}

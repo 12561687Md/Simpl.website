@@ -77,7 +77,7 @@ export default function OutcomePillars() {
         >
           {PILLARS.map((p, i) => (
             <StaggerItem key={p.label} className="h-full">
-              <GlowCard glowColor="green" className="h-full">
+              <GlowCard glowColor="pink" className="h-full">
                 <div style={{ padding: "30px 26px 28px", display: "flex", flexDirection: "column", height: "100%" }}>
                   <WiggleIn
                     delay={0.25 + i * 0.14}

@@ -6,13 +6,17 @@ import { cn } from "@/lib/utils";
 interface GlowCardProps {
   children: ReactNode;
   className?: string;
-  glowColor?: "green" | "blue" | "purple" | "red" | "orange";
+  glowColor?: "pink" | "blue" | "purple" | "red" | "orange";
 }
 
-// Hue map. Green tuned to the brand accent (~86°, yellow-green) with a small
-// spread so it stays in the green family as the cursor moves.
+// Hue map. "pink" is the default card glow: a bright magenta/rose (~330°)
+// picked specifically to complement the baby-blue brand accent (~200°) —
+// close to a split-complementary pair, and far enough from green/amber/red
+// that it never reads as success/warning/error. Small spread keeps it in
+// family as the cursor moves, same reasoning the old yellow-green ("green",
+// retired with the neon-green brand) used.
 const glowColorMap: Record<string, { base: number; spread: number }> = {
-  green: { base: 86, spread: 46 },
+  pink: { base: 330, spread: 40 },
   blue: { base: 220, spread: 200 },
   purple: { base: 280, spread: 300 },
   red: { base: 0, spread: 200 },
@@ -24,7 +28,7 @@ const glowColorMap: Record<string, { base: number; spread: number }> = {
  * ::before/::after spotlight CSS is defined once in globals.css (keyed off
  * [data-glow]); this component just feeds --x/--y and the theme vars.
  */
-export const GlowCard: React.FC<GlowCardProps> = ({ children, className, glowColor = "green" }) => {
+export const GlowCard: React.FC<GlowCardProps> = ({ children, className, glowColor = "pink" }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,7 +45,7 @@ export const GlowCard: React.FC<GlowCardProps> = ({ children, className, glowCol
     return () => document.removeEventListener("pointermove", syncPointer);
   }, []);
 
-  const { base, spread } = glowColorMap[glowColor] ?? glowColorMap.green;
+  const { base, spread } = glowColorMap[glowColor] ?? glowColorMap.pink;
 
   const styleVars = {
     "--base": base,
@@ -71,7 +75,11 @@ export const GlowCard: React.FC<GlowCardProps> = ({ children, className, glowCol
     backgroundAttachment: "fixed",
     border: "var(--border-size) solid var(--backup-border)",
     position: "relative",
-    touchAction: "none",
+    // NOT touchAction: "none" — that was blocking scroll entirely on mobile
+    // the moment a finger landed on one of these cards (the pointermove
+    // listener below is document-level and needs no touch-gesture capture of
+    // its own, so there was never a reason to disable default touch
+    // behavior here).
   } as React.CSSProperties;
 
   return (

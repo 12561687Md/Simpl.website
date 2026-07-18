@@ -182,7 +182,7 @@ export default function PaidAds() {
             Find out if your site is ready for paid traffic.
           </h2>
           <p style={{ maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 40 }}>
-            Run a free scan before spending a dollar on ads.
+            Start now, before spending a dollar on ads.
           </p>
           <p style={{ fontSize: 17, color: "var(--muted)", maxWidth: 620, lineHeight: 1.55, marginBottom: 24 }}>
             Are competitors bidding on your brand name? Start with a scan to see what you&apos;re up against.

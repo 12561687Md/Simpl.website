@@ -145,7 +145,7 @@ export default function TierGrid() {
                 {t.cta} <span aria-hidden="true">→</span>
               </a>
             ) : (
-              <Link href={t.href} aria-label={`${t.cta}: run a free scan`} className="tier-cta tier-cta-ghost">
+              <Link href={t.href} aria-label={`${t.cta}: start now, free audit`} className="tier-cta tier-cta-ghost">
                 {t.cta} <span aria-hidden="true">→</span>
               </Link>
             )}
