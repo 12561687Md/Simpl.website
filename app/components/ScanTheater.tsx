@@ -59,8 +59,8 @@ const PHASES: Phase[] = [
   { label: "Reading your pages", ms: 1600 },
   { label: "Looking for schema markup", ms: 1100 },
   { label: "Checking your social presence", ms: 1300 },
-  { label: "Auditing your business listing", ms: 1500 },
-  { label: "Calculating your SIMPL Score", ms: 1200 },
+  { label: "Auditing your business listing", ms: 1700 },
+  { label: "Calculating your SIMPL Score", ms: 1500 },
 ];
 
 // The last phase is the one that waits on real data, so the script only covers
@@ -200,7 +200,7 @@ export default function ScanTheater({
           background: "radial-gradient(80% 60% at 50% 30%, rgba(137,207,240,0.07), transparent 65%)",
         }}
       />
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1320, margin: "0 auto", width: "100%" }}>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1600, margin: "0 auto", width: "100%" }}>
         <AnimatePresence mode="wait">
           {stage === "map-intro" ? (
             <motion.div
@@ -258,8 +258,9 @@ export default function ScanTheater({
                 className="theater-reveal-row"
               >
                 {/* Left: the map, settled small, with the checklist ticking
-                    beneath it. */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 22, width: 280, flexShrink: 0 }}>
+                    beneath it. Narrow on purpose — the right side is the
+                    main event and should read as ~75%+ of the panel. */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 22, width: 240, flexShrink: 0 }}>
                   {place.mapUrl && (
                     <motion.div
                       layout
@@ -312,40 +313,45 @@ export default function ScanTheater({
                   </div>
                 </div>
 
-                {/* Right: photos fanning out, then reviews popping in as
-                    profile cards beneath them. No source named anywhere
-                    here — the rating stat and the reviews just appear. */}
-                <div style={{ flex: 1, minWidth: 320 }}>
-                  <PhotoFanReveal photos={photos} delay={REVEAL_START} stagger={REVEAL_STAGGER} />
+                {/* Right: the main event, ~75%+ of the panel. Reviews and
+                    the rating pop in first, then photos scatter in big
+                    beneath them. No source named anywhere here — the
+                    rating stat, the reviews, and the photos just appear. */}
+                <div style={{ flex: 1, minWidth: 420 }}>
+                  {place.rating !== null && place.reviewCount !== null && (
+                    <motion.div
+                      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ type: "spring", stiffness: 140, damping: 16, delay: reduce ? 0 : REVEAL_START }}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 10,
+                        border: "1px solid var(--rule)",
+                        borderRadius: 8,
+                        padding: "12px 16px",
+                        background: "var(--bg-soft)",
+                        marginBottom: 18,
+                      }}
+                    >
+                      <span style={{ color: "var(--accent)", fontSize: 17 }} aria-hidden="true">★</span>
+                      <span style={{ fontSize: 16, fontWeight: 600 }}>{place.rating.toFixed(1)}</span>
+                      <span style={{ ...mono, fontSize: 12.5, color: "var(--muted)" }}>
+                        {place.reviewCount.toLocaleString()} review{place.reviewCount === 1 ? "" : "s"}
+                      </span>
+                    </motion.div>
+                  )}
 
-                  <div style={{ marginTop: 18 }}>
-                    {place.rating !== null && place.reviewCount !== null && (
-                      <motion.div
-                        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ type: "spring", stiffness: 140, damping: 16, delay: reduce ? 0 : REVEAL_START + photos.length * REVEAL_STAGGER }}
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: 10,
-                          border: "1px solid var(--rule)",
-                          borderRadius: 8,
-                          padding: "12px 16px",
-                          background: "var(--bg-soft)",
-                          marginBottom: 16,
-                        }}
-                      >
-                        <span style={{ color: "var(--accent)", fontSize: 17 }} aria-hidden="true">★</span>
-                        <span style={{ fontSize: 16, fontWeight: 600 }}>{place.rating.toFixed(1)}</span>
-                        <span style={{ ...mono, fontSize: 12.5, color: "var(--muted)" }}>
-                          {place.reviewCount.toLocaleString()} review{place.reviewCount === 1 ? "" : "s"}
-                        </span>
-                      </motion.div>
-                    )}
+                  <ReviewProfileCards
+                    reviews={reviewCards}
+                    delay={REVEAL_START + (place.rating !== null ? 1 : 0) * REVEAL_STAGGER}
+                    stagger={REVEAL_STAGGER}
+                  />
 
-                    <ReviewProfileCards
-                      reviews={reviewCards}
-                      delay={REVEAL_START + (photos.length + (place.rating !== null ? 1 : 0)) * REVEAL_STAGGER}
+                  <div style={{ marginTop: 26 }}>
+                    <PhotoFanReveal
+                      photos={photos}
+                      delay={REVEAL_START + ((place.rating !== null ? 1 : 0) + reviewCards.length) * REVEAL_STAGGER}
                       stagger={REVEAL_STAGGER}
                     />
                   </div>

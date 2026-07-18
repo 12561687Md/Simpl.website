@@ -920,6 +920,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (max-width: 720px) {
   .theater-reveal-row { flex-direction: column; }
   .theater-reveal-row > div:first-child { width: 100% !important; }
+  /* The right column's minWidth:420 (desktop, so the big photo grid has
+     room to breathe) would force horizontal overflow the moment the row
+     stacks on a narrow phone — reset it so the column can shrink to fit. */
+  .theater-reveal-row > div:last-child { min-width: 0 !important; }
 }
 
 /* Audit report (ScanReport): the gauge, KPI strip, bar chart, and

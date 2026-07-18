@@ -55,9 +55,9 @@ export default function ReviewProfileCards({ reviews, delay = 0, stagger = 2.5 }
             transition={{ type: "spring", stiffness: 130, damping: 15, delay: reduce ? 0 : delay + i * stagger }}
             style={{
               position: "relative",
-              flex: "1 1 220px",
-              minWidth: 220,
-              maxWidth: 280,
+              flex: "1 1 260px",
+              minWidth: 260,
+              maxWidth: 340,
               border: `1px solid ${color}55`,
               borderRadius: corner,
               padding: "18px 20px",
