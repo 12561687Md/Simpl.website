@@ -27,8 +27,8 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     if (!container) return;
 
     const SEPARATION = 150;
-    const AMOUNTX = 40;
-    const AMOUNTY = 40;
+    const AMOUNTX = 55;
+    const AMOUNTY = 55;
 
     const scene = new THREE.Scene();
 
@@ -64,10 +64,10 @@ export function DottedSurface({ className, ...props }: DottedSurfaceProps) {
     geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 6,
+      size: 8,
       vertexColors: true,
       transparent: true,
-      opacity: 0.16,
+      opacity: 0.32,
       sizeAttenuation: true,
     });
 

@@ -36,9 +36,9 @@ export default function HomeHero() {
   return (
     <div style={{ position: "relative" }}>
       <DottedSurface />
-      {/* Legibility scrim, centre-weighted to sit behind the centred copy. Much
-          lighter than the old shader needed — the aura is a soft glow, not a
-          busy plasma grid, so it doesn't need to be half-erased to stay readable. */}
+      {/* Legibility scrim, centre-weighted to sit behind the centred copy. Kept
+          light on purpose — the dotted surface should read, not get half-erased
+          to stay readable. */}
       <div
         aria-hidden="true"
         style={{
@@ -46,7 +46,7 @@ export default function HomeHero() {
           inset: 0,
           zIndex: 0,
           background:
-            "radial-gradient(95% 85% at 50% 42%, rgba(11,12,13,0.38) 0%, rgba(11,12,13,0.2) 55%, rgba(11,12,13,0.05) 100%)",
+            "radial-gradient(95% 85% at 50% 42%, rgba(11,12,13,0.26) 0%, rgba(11,12,13,0.13) 55%, rgba(11,12,13,0.03) 100%)",
         }}
       />
       <section
