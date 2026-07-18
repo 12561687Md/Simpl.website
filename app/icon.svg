@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-labelledby="t d">
   <title id="t">SIMPL</title>
-  <desc id="d">Dark rounded tile with the SIMPL vitalsign pulse and the green identity dot beneath it.</desc>
+  <desc id="d">Dark rounded tile with the SIMPL vitalsign pulse and the baby blue identity dot beneath it.</desc>
   <!--
     A purpose-built simplification of the brand mark, not the kit artwork.
 
@@ -13,10 +13,11 @@
     flat baseline, dot beneath — as a stroked path at a weight that survives a
     browser tab (6/64 = 1.5px at 16px). Same shape language, legible at every size.
 
-    The green dot is oversized relative to the kit on purpose: per the brand kit
+    The dot is oversized relative to the kit on purpose: per the brand kit
     the dot IS the identity, and at 16px it is the only element that reliably
-    reads. Keep it pure #9BFF1A here — the tile behind it is dark, so the light-
-    background variant (#7BD100) would only mute it.
+    reads. Baby blue (#89CFF0) as of the 2026-07-18d rebrand — not the traced
+    yellow-green from the original kit artwork, not the earlier saturated
+    blue either — see simpl-brand.tsx for why.
   -->
   <rect width="64" height="64" rx="14" fill="#0E0F10"/>
   <path
@@ -26,5 +27,5 @@
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"/>
-  <circle cx="36" cy="56" r="5.5" fill="#9BFF1A"/>
+  <circle cx="36" cy="56" r="5.5" fill="#89CFF0"/>
 </svg>

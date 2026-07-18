@@ -95,7 +95,7 @@ export default function OutcomePillars() {
                   >
                     {p.icon}
                   </WiggleIn>
-                  <div className="mono" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 12 }}>
+                  <div className="mono" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 12 }}>
                     {p.label}
                   </div>
                   <h3 style={{ margin: "0 0 12px", fontSize: 21, fontWeight: 500, lineHeight: 1.25, letterSpacing: "-0.01em" }}>{p.headline}</h3>

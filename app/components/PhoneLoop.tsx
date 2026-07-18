@@ -7,94 +7,85 @@ import { SimplMark } from "@/components/ui/simpl-brand";
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 /**
- * A realistic phone that loops through three perspectives on what SIMPL does:
+ * The SIMPL app, four tabs on a loop: score/overview, rankings + positive
+ * notifications, competitors, and issues fixed. Real app structure (a status
+ * bar, a pinned header, tab content), not a slideshow of unrelated screens.
  *
- *   1. Score climbing + live lead signals arriving
- *   2. A stream of problems caught and fixed
- *   3. A competitor breakdown with a "Fix it now" action
+ * Every line is plain English: an owner reads "your site loads twice as
+ * fast" instantly and "reduced LCP" not at all. No SEO vocabulary anywhere on
+ * this screen.
  *
- * Everything on screen is illustrative and written in the second person — no
- * client names, no invented ratings, no fabricated review counts. A mockup is
- * not a licence to manufacture proof we don't have (docs/standards/TRUST_SIGNALS).
+ * Names in the competitor tab ("Oakwood Landscaping") are illustrative
+ * placeholders for the demo, not real businesses, same rule as the rest of
+ * the mockup: nothing here is a fabricated claim about a real company or a
+ * real SIMPL customer (docs/standards/TRUST_SIGNALS.md).
  *
- * `optimized` freezes it on the score screen in an already-won state (A, all
- * green). That's the version shown beside the unlocked report: "here's where
- * you'd be."
+ * `optimized` freezes on the overview tab at its winning value, for the
+ * "here's where you'd be" panel beside an unlocked report.
  */
 
-const SCREENS = ["score", "fixes", "competitors"] as const;
-type Screen = (typeof SCREENS)[number];
+const TABS = ["overview", "rankings", "competitors", "fixed"] as const;
+type Tab = (typeof TABS)[number];
+const TAB_LABEL: Record<Tab, string> = {
+  overview: "Your score",
+  rankings: "This week",
+  competitors: "Local rankings",
+  fixed: "Fixed for you",
+};
 
-export default function PhoneLoop({ optimized = false }: { optimized?: boolean }) {
-  const [idx, setIdx] = useState(0);
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (reduce || optimized) return;
-    const t = setInterval(() => setIdx((i) => (i + 1) % SCREENS.length), 4200);
-    return () => clearInterval(t);
-  }, [reduce, optimized]);
-
-  const screen: Screen = optimized ? "score" : SCREENS[idx];
-
+function StatusBar() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
-      <div className="phone-frame">
-        <div className="phone-screen">
-          {/* Dynamic-island pill, like a real device. */}
-          <div className="phone-island" aria-hidden="true" />
-
-          <div style={{ padding: "40px 12px 16px", minHeight: 452 }}>
-            {/* Status header */}
-            <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 6px 14px" }}>
-              <SimplMark size={18} />
-              <span style={{ ...mono, fontSize: 9.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }}>
-                {screen === "score" ? "Your score" : screen === "fixes" ? "This week" : "Local rankings"}
-              </span>
-              <span style={{ ...mono, fontSize: 9.5, color: "var(--accent)", marginLeft: "auto" }}>live</span>
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={screen + (optimized ? "-opt" : "")}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={reduce ? { opacity: 0 } : { opacity: 0, x: -24 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {screen === "score" && <ScoreScreen optimized={optimized} reduce={!!reduce} />}
-                {screen === "fixes" && <FixesScreen reduce={!!reduce} />}
-                {screen === "competitors" && <CompetitorScreen reduce={!!reduce} />}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
+    <div className="phone-status-bar">
+      <span style={{ ...mono, fontSize: 13, fontWeight: 600, letterSpacing: "0.01em" }}>9:41</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 5 }} aria-hidden="true">
+        {/* Signal */}
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
+          <rect x="0" y="7" width="3" height="4" rx="0.6" fill="currentColor" />
+          <rect x="4.5" y="5" width="3" height="6" rx="0.6" fill="currentColor" />
+          <rect x="9" y="3" width="3" height="8" rx="0.6" fill="currentColor" />
+          <rect x="13" y="0" width="3" height="11" rx="0.6" fill="currentColor" />
+        </svg>
+        {/* Wifi */}
+        <svg width="15" height="11" viewBox="0 0 15 11" fill="none">
+          <path d="M7.5 9.6a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Z" fill="currentColor" />
+          <path d="M4.6 6.3a4.1 4.1 0 0 1 5.8 0" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+          <path d="M2 3.6a7.8 7.8 0 0 1 11 0" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+        </svg>
+        {/* Battery */}
+        <svg width="24" height="12" viewBox="0 0 24 12" fill="none">
+          <rect x="0.75" y="0.75" width="19.5" height="10.5" rx="2.5" stroke="currentColor" strokeWidth="1.1" opacity="0.4" />
+          <rect x="2.2" y="2.2" width="15" height="7.6" rx="1.3" fill="currentColor" />
+          <path d="M21.5 4v4a1.6 1.6 0 0 0 1-1.5V5.5A1.6 1.6 0 0 0 21.5 4Z" fill="currentColor" opacity="0.4" />
+        </svg>
       </div>
-
-      {/* Progress dots (hidden in the frozen optimized view). */}
-      {!optimized && (
-        <div style={{ display: "flex", gap: 7 }} aria-hidden="true">
-          {SCREENS.map((s, i) => (
-            <span
-              key={s}
-              style={{
-                width: i === idx ? 20 : 6,
-                height: 6,
-                borderRadius: 99,
-                background: i === idx ? "var(--accent)" : "var(--rule-strong)",
-                transition: "width 300ms ease, background 300ms ease",
-              }}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }
 
-/* ---- Screen 1: score climbing + lead signals ---- */
+function AppHeader({ tab, optimized }: { tab: Tab; optimized: boolean }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 16px 12px" }}>
+      <SimplMark size={18} inverted />
+      <span style={{ ...mono, fontSize: 9.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }}>
+        {TAB_LABEL[tab]}
+      </span>
+      {/* "live" is true on the homepage demo (a real, if illustrative,
+          running-app mockup), but false here specifically means something
+          on the unlocked report: this instance sits beside a visitor's real
+          scan data as the "where you could be" preview, and a pulsing
+          "live" badge on an admittedly hypothetical future score would read
+          as a claim about real data it doesn't have. */}
+      <span style={{ ...mono, fontSize: 9.5, color: "var(--accent)", marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 5 }}>
+        {!optimized && <span className="pulse-dot" style={{ width: 5, height: 5, borderRadius: 99, background: "var(--accent)" }} />}
+        {optimized ? "example" : "live"}
+      </span>
+    </div>
+  );
+}
 
-function ScoreScreen({ optimized, reduce }: { optimized: boolean; reduce: boolean }) {
+/* ---- Tab 1: score + overview ---- */
+
+function OverviewTab({ optimized, reduce }: { optimized: boolean; reduce: boolean }) {
   const target = optimized ? 94 : 78;
   const grade = optimized ? "A" : "A−";
   const [pct, setPct] = useState(reduce ? target : 41);
@@ -115,46 +106,60 @@ function ScoreScreen({ optimized, reduce }: { optimized: boolean; reduce: boolea
     return () => cancelAnimationFrame(raf);
   }, [target, reduce]);
 
-  const r = 34;
+  const r = 40;
   const c = 2 * Math.PI * r;
-
-  const signals = [
-    { t: "New lead from Google", w: "now" },
-    { t: "You moved up to #2 locally", w: "2m" },
-    { t: "5-star review came in", w: "1h" },
-  ];
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "center", padding: "6px 0 16px" }}>
-        <div style={{ position: "relative", width: 92, height: 92 }}>
-          <svg width="92" height="92" viewBox="0 0 92 92" style={{ transform: "rotate(-90deg)" }}>
-            <circle cx="46" cy="46" r={r} fill="none" stroke="var(--rule)" strokeWidth="5" />
+      <div style={{ display: "flex", justifyContent: "center", padding: "10px 0 18px" }}>
+        <div style={{ position: "relative", width: 108, height: 108 }}>
+          <svg width="108" height="108" viewBox="0 0 108 108" style={{ transform: "rotate(-90deg)" }}>
+            <circle cx="54" cy="54" r={r} fill="none" stroke="var(--rule)" strokeWidth="6" />
             <circle
-              cx="46" cy="46" r={r} fill="none" stroke="var(--accent)" strokeWidth="5" strokeLinecap="round"
+              cx="54" cy="54" r={r} fill="none" stroke="var(--accent)" strokeWidth="6" strokeLinecap="round"
               strokeDasharray={c} strokeDashoffset={c * (1 - pct / 100)}
               style={{ transition: "stroke-dashoffset 120ms linear" }}
             />
           </svg>
           <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontSize: 26, fontWeight: 300, color: "var(--accent)", lineHeight: 1 }}>{grade}</span>
-            <span style={{ ...mono, fontSize: 10, color: "var(--muted)" }}>{pct}%</span>
+            <span style={{ fontSize: 30, fontWeight: 300, color: "var(--accent)", lineHeight: 1 }}>{grade}</span>
+            <span style={{ ...mono, fontSize: 10.5, color: "var(--muted)" }}>{pct}%</span>
           </div>
         </div>
       </div>
+      <div style={{ textAlign: "center", marginBottom: 4 }}>
+        <div style={{ fontSize: 14.5, fontWeight: 600 }}>{optimized ? "You're already winning." : "Climbing every week."}</div>
+        <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 3 }}>
+          {optimized ? "Every issue fixed. Score locked in." : "3 issues fixed this week."}
+        </div>
+      </div>
+    </div>
+  );
+}
 
+/* ---- Tab 2: rankings + positive notifications ---- */
+
+function RankingsTab({ reduce }: { reduce: boolean }) {
+  const signals = [
+    { t: "New lead from Google", w: "now" },
+    { t: "You moved up to #2 for “near me” searches", w: "12m" },
+    { t: "5-star review came in", w: "2h" },
+    { t: "You're now showing in the map pack", w: "1d" },
+  ];
+  return (
+    <div>
       {signals.map((s, i) => (
         <motion.div
           key={s.t}
-          initial={reduce ? { opacity: 0 } : { opacity: 0, y: -12, scale: 0.96 }}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.4, delay: reduce ? 0 : 0.5 + i * 0.4, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.4, delay: reduce ? 0 : 0.15 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="phone-note"
         >
           <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
             <span style={{ width: 5, height: 5, borderRadius: 99, background: "var(--accent)", flexShrink: 0 }} aria-hidden="true" />
-            <span style={{ fontSize: 12, fontWeight: 600 }}>{s.t}</span>
-            <span style={{ ...mono, fontSize: 9, color: "var(--muted)", marginLeft: "auto" }}>{s.w}</span>
+            <span style={{ fontSize: 12.5, fontWeight: 600, lineHeight: 1.35 }}>{s.t}</span>
+            <span style={{ ...mono, fontSize: 9, color: "var(--muted)", marginLeft: "auto", flexShrink: 0 }}>{s.w}</span>
           </div>
         </motion.div>
       ))}
@@ -162,50 +167,19 @@ function ScoreScreen({ optimized, reduce }: { optimized: boolean; reduce: boolea
   );
 }
 
-/* ---- Screen 2: problems caught + fixed ---- */
+/* ---- Tab 3: competitor breakdown + Fix it now ---- */
 
-function FixesScreen({ reduce }: { reduce: boolean }) {
-  const items = [
-    { k: "Fixed", t: "Missing meta descriptions", b: "Rewritten across 8 pages.", tone: "accent" },
-    { k: "Fixed", t: "Site was loading slowly", b: "Cut load time to under 2s.", tone: "accent" },
-    { k: "Caught", t: "Contact form stopped sending", b: "Flagged and repaired same day.", tone: "warn" },
-    { k: "Fixed", t: "9 images had no alt text", b: "All tagged for search + access.", tone: "accent" },
-  ];
-  return (
-    <div>
-      {items.map((n, i) => (
-        <motion.div
-          key={n.t}
-          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: reduce ? 0 : i * 0.22 }}
-          className="phone-note"
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 3 }}>
-            <span aria-hidden="true" style={{ width: 5, height: 5, borderRadius: 99, background: n.tone === "warn" ? "#E0A852" : "var(--accent)", flexShrink: 0 }} />
-            <span style={{ ...mono, fontSize: 8.5, letterSpacing: "0.12em", textTransform: "uppercase", color: n.tone === "warn" ? "#E0A852" : "var(--accent)" }}>{n.k}</span>
-          </div>
-          <div style={{ fontSize: 12, fontWeight: 600, lineHeight: 1.3 }}>{n.t}</div>
-          <div style={{ fontSize: 10.5, lineHeight: 1.4, color: "var(--muted)" }}>{n.b}</div>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
-
-/* ---- Screen 3: competitor breakdown + Fix it now ---- */
-
-function CompetitorScreen({ reduce }: { reduce: boolean }) {
+function CompetitorsTab({ reduce }: { reduce: boolean }) {
   const rows = [
-    { name: "Top competitor", score: 91, you: false },
-    { name: "Another competitor", score: 84, you: false },
+    { name: "Riverside Roofing Co.", score: 91, you: false },
+    { name: "Oakwood Landscaping", score: 84, you: false },
     { name: "You", score: 65, you: true },
-    { name: "Down the street", score: 58, you: false },
+    { name: "BlueStone Exteriors", score: 58, you: false },
   ];
   return (
     <div>
       <div style={{ ...mono, fontSize: 9.5, color: "var(--muted)", padding: "2px 4px 10px" }}>
-        “deck builder near me”
+        “landscaper near me”
       </div>
       {rows.map((r, i) => (
         <motion.div
@@ -221,7 +195,7 @@ function CompetitorScreen({ reduce }: { reduce: boolean }) {
             marginBottom: 6,
             borderRadius: 9,
             border: r.you ? "1px solid var(--accent)" : "1px solid var(--rule)",
-            background: r.you ? "rgba(155,255,26,0.08)" : "var(--bg-soft)",
+            background: r.you ? "rgba(137,207,240,0.08)" : "var(--bg-soft)",
           }}
         >
           <span style={{ ...mono, fontSize: 10, color: "var(--muted)", width: 14 }}>{i + 1}</span>
@@ -253,6 +227,96 @@ function CompetitorScreen({ reduce }: { reduce: boolean }) {
       >
         Fix it now →
       </motion.button>
+    </div>
+  );
+}
+
+/* ---- Tab 4: issues fixed ---- */
+
+function FixedTab({ reduce }: { reduce: boolean }) {
+  const items = [
+    { k: "Fixed", t: "Your site now loads in under 2 seconds", tone: "accent" },
+    { k: "Fixed", t: "Every page is now showing up in Google", tone: "accent" },
+    { k: "Caught", t: "Your contact form had stopped sending, fixed same day", tone: "warn" },
+    { k: "Fixed", t: "Your photos are finally showing up in search", tone: "accent" },
+  ];
+  return (
+    <div>
+      {items.map((n, i) => (
+        <motion.div
+          key={n.t}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: reduce ? 0 : i * 0.22 }}
+          className="phone-note"
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 3 }}>
+            <span aria-hidden="true" style={{ width: 5, height: 5, borderRadius: 99, background: n.tone === "warn" ? "#E0A852" : "var(--accent)", flexShrink: 0 }} />
+            <span style={{ ...mono, fontSize: 8.5, letterSpacing: "0.12em", textTransform: "uppercase", color: n.tone === "warn" ? "#E0A852" : "var(--accent)" }}>{n.k}</span>
+          </div>
+          <div style={{ fontSize: 12.5, fontWeight: 600, lineHeight: 1.35 }}>{n.t}</div>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+export default function PhoneLoop({ optimized = false }: { optimized?: boolean }) {
+  const [idx, setIdx] = useState(0);
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (reduce || optimized) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % TABS.length), 4500);
+    return () => clearInterval(t);
+  }, [reduce, optimized]);
+
+  const tab: Tab = optimized ? "overview" : TABS[idx];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
+      <div className="phone-frame">
+        <div className="phone-screen">
+          <div className="phone-island" aria-hidden="true" />
+          <StatusBar />
+          <AppHeader tab={tab} optimized={optimized} />
+
+          <div style={{ padding: "4px 12px 16px", minHeight: 372 }}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={tab + (optimized ? "-opt" : "")}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={reduce ? { opacity: 0 } : { opacity: 0, x: -24 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {tab === "overview" && <OverviewTab optimized={optimized} reduce={!!reduce} />}
+                {tab === "rankings" && <RankingsTab reduce={!!reduce} />}
+                {tab === "competitors" && <CompetitorsTab reduce={!!reduce} />}
+                {tab === "fixed" && <FixedTab reduce={!!reduce} />}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+
+      {/* Progress dots (hidden in the frozen optimized view). */}
+      {!optimized && (
+        <div style={{ display: "flex", gap: 7 }} aria-hidden="true">
+          {TABS.map((t, i) => (
+            <span
+              key={t}
+              style={{
+                width: i === idx ? 20 : 6,
+                height: 6,
+                borderRadius: 99,
+                background: i === idx ? "var(--accent)" : "var(--rule-strong)",
+                transition: "width 300ms ease, background 300ms ease",
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

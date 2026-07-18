@@ -24,11 +24,15 @@ import { useId } from "react";
  * originals turn up as real vectors, swap the path data and keep this API.
  */
 
-const ACCENT = "#9BFF1A";
+// Rebrand 2026-07-18d: baby blue, not the traced #9BFF1A-family
+// yellow-greens noted above and not the earlier saturated royal blue either
+// — a soft pastel blue (#89CFF0).
+const ACCENT = "#89CFF0";
 const FG = "#EDEBE4";
-/** Pure brand green goes thin on white; this is the same hue with enough weight
- *  to survive against it. The dot is the identity and never changes hue. */
-const ACCENT_ON_LIGHT = "#7BD100";
+/** A deeper blue for on-light use, same reasoning as before: the lighter
+ *  accent has less margin against a light surface, so on-light gets a
+ *  slightly denser variant of the same hue. */
+const ACCENT_ON_LIGHT = "#3E9BC4";
 const INK = "#0E0F10";
 
 interface MarkProps {

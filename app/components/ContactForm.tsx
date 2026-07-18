@@ -101,9 +101,9 @@ export default function ContactForm({
         transition={{ duration: 0.3, ease: "easeOut" }}
         role="status"
         aria-live="polite"
-        style={{ border: "1px solid var(--accent)", background: "var(--bg-soft)", padding: "40px 36px" }}
+        style={{ border: "1px solid var(--ok)", background: "var(--bg-soft)", padding: "40px 36px" }}
       >
-        <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 14 }}>Sent</div>
+        <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--ok)", textTransform: "uppercase", marginBottom: 14 }}>Sent</div>
         <div style={{ fontSize: 22, lineHeight: 1.3 }}>Message sent. We&apos;ll reply within 4 hours.</div>
         <p style={{ marginTop: 14, marginBottom: 0, fontSize: 15, color: "var(--muted)", lineHeight: 1.55 }}>
           A person reads every one of these. Not a sequence, not a bot.

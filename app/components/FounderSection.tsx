@@ -52,7 +52,7 @@ export default function FounderSection() {
                 alignItems: "center",
                 justifyContent: "center",
                 background:
-                  "radial-gradient(120% 90% at 50% 0%, rgba(155,255,26,0.06), transparent 55%), linear-gradient(180deg, var(--bg-elev-2), var(--bg-elev))",
+                  "radial-gradient(120% 90% at 50% 0%, rgba(137,207,240,0.06), transparent 55%), linear-gradient(180deg, var(--bg-elev-2), var(--bg-elev))",
               }}
             >
               <div style={{ textAlign: "center", padding: 24 }}>

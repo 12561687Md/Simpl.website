@@ -45,13 +45,14 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Company */}
+          {/* Resources */}
           <div>
-            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>Company</div>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>Resources</div>
             <nav style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <Link href="/about" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>About</Link>
+              <Link href="/how-it-works" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>How It Works</Link>
               <Link href="/blog" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Blog</Link>
-              <Link href="/start" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Contact</Link>
+              <Link href="/faq" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>FAQ</Link>
+              <Link href="/success-stories" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Success Stories</Link>
             </nav>
           </div>
         </div>

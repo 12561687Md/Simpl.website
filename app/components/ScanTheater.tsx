@@ -3,6 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { PlaceDetails } from "../lib/scan-types";
+import PhotoFanReveal from "./PhotoFanReveal";
+import ReviewProfileCards from "./ReviewProfileCards";
+
+// Photos and reviews both reveal on this exact cadence — slow and
+// deliberate on purpose, not a UI detail: a fast reveal reads as a data
+// dump, a 2.5s-apart reveal reads as something actually looking.
+const REVEAL_STAGGER = 2.5;
 
 /**
  * The scan choreography.
@@ -14,9 +21,15 @@ import type { PlaceDetails } from "../lib/scan-types";
  * only the unhurried reveal, which exists because a diagnosis delivered in 400ms
  * reads as a lookup, not an examination.
  *
- * The photos are the visitor's own, pulled from their Google listing. That's the
- * "we know exactly who you are" beat, and it costs one Details call we already
- * made.
+ * Sequence (2026-07-18 rebuild): the map opens alone, large, centered — the
+ * only thing on screen. It sweeps exactly twice, then shrinks to the left
+ * and everything else arrives around it: a checklist ticking below the map,
+ * business photos fanning out with spring physics, reviews and the rating
+ * popping in beside them. Nothing here names where it came from (no "found
+ * on Google," no "pulled from your profile") — the effect this is going for
+ * is "how did they know that," and naming the source is the one thing that
+ * would break it. The photos are still the visitor's own, pulled from their
+ * listing, that data is real either way.
  */
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
@@ -29,20 +42,62 @@ interface Phase {
 }
 
 const PHASES: Phase[] = [
-  { label: "Found your Google listing", ms: 1400 },
-  { label: "Pulling your photos and profile", ms: 1600 },
+  { label: "Locating your business", ms: 1400 },
+  { label: "Pulling your profile and photos", ms: 1600 },
   { label: "Reaching your website", ms: 1800 },
   { label: "Checking your SSL certificate", ms: 1400 },
   { label: "Reading your pages", ms: 2000 },
   { label: "Looking for schema markup", ms: 1600 },
   { label: "Checking your social presence", ms: 1500 },
-  { label: "Auditing your Business Profile", ms: 1800 },
+  { label: "Auditing your business listing", ms: 1800 },
   { label: "Calculating your SIMPL Score", ms: 1200 },
 ];
 
 // The last phase is the one that waits on real data, so the script only covers
 // the phases before it.
 const SCRIPTED = PHASES.length - 1;
+
+// Matches the .scanline CSS animation's own cycle (globals.css), so "two
+// sweeps" is exact, not approximate.
+const SWEEP_MS = 2900;
+const MAP_INTRO_MS = SWEEP_MS * 2;
+
+function MapBox({ mapUrl, active }: { mapUrl: string | null; active: boolean }) {
+  const reduce = useReducedMotion();
+  if (!mapUrl) return null;
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        borderRadius: active ? 14 : 10,
+        overflow: "hidden",
+        border: `1px solid ${active ? "var(--accent)" : "var(--rule)"}`,
+        background: "var(--bg-soft)",
+        transition: "border-color 500ms ease",
+      }}
+    >
+      <img src={mapUrl} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: active
+            ? "linear-gradient(180deg, rgba(11,13,15,0.05), rgba(11,13,15,0.4))"
+            : "linear-gradient(180deg, rgba(11,13,15,0.15), rgba(11,13,15,0.35))",
+        }}
+      />
+      {active && !reduce && (
+        <div aria-hidden="true" className="scanline-track">
+          <div className="scanline" />
+        </div>
+      )}
+      <div aria-hidden="true" className="scan-corners" style={{ inset: active ? 14 : 8 }} />
+    </div>
+  );
+}
 
 export default function ScanTheater({
   place,
@@ -53,22 +108,34 @@ export default function ScanTheater({
   scanPromise: Promise<unknown>;
   onDone: () => void;
 }) {
+  // No map to open on: skip straight to the reveal layout, nothing to show
+  // large and centered.
+  const [stage, setStage] = useState<"map-intro" | "revealing">(place.mapUrl ? "map-intro" : "revealing");
   const [phaseIdx, setPhaseIdx] = useState(0);
-  const [photoIdx, setPhotoIdx] = useState(0);
   const [scanArrived, setScanArrived] = useState(false);
   const reduce = useReducedMotion();
   const doneRef = useRef(false);
 
-  // The map leads. It lands on "Found your Google listing", which is exactly
-  // what it shows: you, on a map, pinned. Their own photos follow.
-  const frames = [...(place.mapUrl ? [place.mapUrl] : []), ...(place.photos ?? [])];
+  const photos = place.photos ?? [];
 
-  // Advance the scripted phases on their own clock.
+  // Map intro: exactly two sweeps, then hand off to the reveal layout.
   useEffect(() => {
-    if (phaseIdx >= SCRIPTED) return;
+    if (stage !== "map-intro") return;
+    if (reduce) {
+      setStage("revealing");
+      return;
+    }
+    const t = setTimeout(() => setStage("revealing"), MAP_INTRO_MS);
+    return () => clearTimeout(t);
+  }, [stage, reduce]);
+
+  // The checklist only starts once the map has settled into place — it
+  // shouldn't be ticking away behind the big intro map.
+  useEffect(() => {
+    if (stage !== "revealing" || phaseIdx >= SCRIPTED) return;
     const t = setTimeout(() => setPhaseIdx((i) => i + 1), PHASES[phaseIdx].ms);
     return () => clearTimeout(t);
-  }, [phaseIdx]);
+  }, [stage, phaseIdx]);
 
   // Track the real scan independently of the script.
   useEffect(() => {
@@ -87,236 +154,193 @@ export default function ScanTheater({
   // finishing on a timer would show a fabricated one.
   useEffect(() => {
     if (doneRef.current) return;
-    if (phaseIdx >= SCRIPTED && scanArrived) {
+    if (stage === "revealing" && phaseIdx >= SCRIPTED && scanArrived) {
       doneRef.current = true;
       const t = setTimeout(onDone, PHASES[SCRIPTED].ms);
       return () => clearTimeout(t);
     }
-  }, [phaseIdx, scanArrived, onDone]);
+  }, [stage, phaseIdx, scanArrived, onDone]);
 
-  // Cycle the business photos underneath the scanline.
-  useEffect(() => {
-    if (frames.length < 2) return;
-    const t = setInterval(() => setPhotoIdx((i) => (i + 1) % frames.length), 2600);
-    return () => clearInterval(t);
-  }, [frames.length]);
+  const progress = stage === "revealing" ? Math.min(((phaseIdx + (scanArrived ? 1 : 0)) / PHASES.length) * 100, 98) : 0;
 
-  const progress = Math.min(((phaseIdx + (scanArrived ? 1 : 0)) / PHASES.length) * 100, 98);
-
-  // Real signals pulled from the listing, in the order they should surface.
-  // Built only from data Google actually returned — a missing field produces no
-  // card rather than a placeholder. This is the "how did they know?" moment, and
-  // it only lands because every line is true.
-  const signals: { key: string; label: string; body?: string; foot?: string }[] = [];
-  if (place.rating !== null && place.reviewCount !== null) {
-    signals.push({
-      key: "rating",
-      label: "Found on Google",
-      body: `${place.rating.toFixed(1)} ★ · ${place.reviewCount.toLocaleString()} review${place.reviewCount === 1 ? "" : "s"}`,
-    });
-  }
-  if (place.summary) {
-    signals.push({ key: "summary", label: "Google describes you as", body: place.summary });
-  }
-  (place.reviews ?? []).forEach((rv, i) => {
-    signals.push({
-      key: `review-${i}`,
-      label: `Recent review${rv.rating ? ` · ${rv.rating}★` : ""}`,
-      body: `“${rv.text}”`,
-      foot: [rv.author, rv.when].filter(Boolean).join(" · ") || undefined,
-    });
-  });
-  if (frames.length > (place.mapUrl ? 1 : 0)) {
-    const n = frames.length - (place.mapUrl ? 1 : 0);
-    signals.push({ key: "photos", label: "Pulled from your profile", body: `${n} photo${n === 1 ? "" : "s"} of your business` });
-  }
+  // Real signals, no source named. A star row and a quote read as evidence
+  // on their own; captioning them "found on Google" hands the trick away.
+  const reviewCards = (place.reviews ?? []).slice(0, 2);
 
   return (
-    <div style={{ maxWidth: 940, margin: "0 auto" }}>
-      {/* Identity. Painted before a single check runs, because we already know
-          who they are the moment they picked themselves out of the list. */}
-      <motion.div
-        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 26, flexWrap: "wrap" }}
-      >
-        <span
-          aria-hidden="true"
-          style={{ width: 7, height: 7, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 4px rgba(155,255,26,0.15)" }}
-        />
-        <div style={{ minWidth: 0 }}>
-          <div style={{ fontSize: "clamp(20px, 3.4vw, 28px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
-            {place.name}
-          </div>
-          <div style={{ ...mono, fontSize: 11.5, color: "var(--muted)", marginTop: 5, display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {place.address && <span>{place.address}</span>}
-            {place.phone && (
-              <>
-                <span style={{ opacity: 0.3 }}>·</span>
-                <span>{place.phone}</span>
-              </>
-            )}
-          </div>
-        </div>
-      </motion.div>
-
-      <div className="scan-theater-grid">
-        {/* Viewport: their own photos with a scanline passing over them. */}
-        <div
-          style={{
-            position: "relative",
-            aspectRatio: "4 / 3",
-            borderRadius: 10,
-            overflow: "hidden",
-            border: "1px solid var(--rule)",
-            background: "var(--bg-soft)",
-          }}
-        >
-          <AnimatePresence mode="sync">
-            {frames.length > 0 ? (
-              <motion.img
-                key={photoIdx}
-                src={frames[photoIdx]}
-                alt=""
-                initial={{ opacity: 0, scale: 1.06 }}
-                animate={{ opacity: frames[photoIdx] === place.mapUrl ? 0.95 : 0.62, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.9, ease: "easeOut" }}
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            ) : (
-              // No photos on the listing is itself a finding, not a blank box.
-              <div
-                key="nophoto"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 24,
-                  textAlign: "center",
-                }}
-              >
-                <span style={{ ...mono, fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>
-                  No photos found on your
-                  <br />
-                  Google Business Profile
-                </span>
-              </div>
-            )}
-          </AnimatePresence>
-
-          {/* Tint keeps the overlay type legible over arbitrary photography. The
-              map needs far less of it: it is already styled to these surfaces and
-              its labels are ours to control, so the photo-strength scrim would
-              just turn it to mud. */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              inset: 0,
-              transition: "background 700ms ease",
-              background:
-                frames[photoIdx] === place.mapUrl
-                  ? "linear-gradient(180deg, rgba(11,13,15,0.05), rgba(11,13,15,0.45))"
-                  : "linear-gradient(180deg, rgba(11,13,15,0.5), rgba(11,13,15,0.78))",
-            }}
-          />
-
-          {/* The scanline. Pure transform, so it stays on the compositor. */}
-          {!reduce && (
-            <div aria-hidden="true" className="scanline-track">
-              <div className="scanline" />
-            </div>
-          )}
-
-          {/* Corner brackets: instrument framing, cheap and effective. */}
-          <div aria-hidden="true" className="scan-corners" />
-
-          <div style={{ position: "absolute", left: 14, bottom: 12, right: 14 }}>
-            <div style={{ ...mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)" }}>
-              Live scan
-            </div>
-          </div>
-        </div>
-
-        {/* Progress column */}
-        <div>
-          <div style={{ position: "relative", height: 2, background: "var(--rule)", borderRadius: 1, overflow: "hidden", marginBottom: 18 }}>
+    <div
+      style={{
+        position: "relative",
+        minHeight: "100dvh",
+        display: "flex",
+        alignItems: "center",
+        padding: "48px 32px",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          background: "radial-gradient(80% 60% at 50% 30%, rgba(137,207,240,0.07), transparent 65%)",
+        }}
+      />
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1320, margin: "0 auto", width: "100%" }}>
+        <AnimatePresence mode="wait">
+          {stage === "map-intro" ? (
             <motion.div
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-              style={{ position: "absolute", inset: 0, right: "auto", background: "var(--accent)", borderRadius: 1 }}
-            />
-          </div>
-
-          {/* One live region for the whole list. Announcing all nine phases
-              individually would flood a screen reader. */}
-          <ol role="status" aria-live="polite" style={{ listStyle: "none", margin: 0, padding: 0 }}>
-            {PHASES.map((p, i) => {
-              const state = i < phaseIdx ? "done" : i === phaseIdx ? "active" : "pending";
-              if (state === "pending") return null;
-              return (
-                <motion.li
-                  key={p.label}
-                  initial={reduce ? { opacity: 0 } : { opacity: 0, x: -6 }}
-                  animate={{ opacity: state === "active" ? 1 : 0.45, x: 0 }}
-                  transition={{ duration: 0.3 }}
-                  style={{
-                    ...mono,
-                    fontSize: 12.5,
-                    lineHeight: 2.05,
-                    color: state === "active" ? "var(--fg)" : "var(--muted)",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <span
-                    aria-hidden="true"
-                    style={{
-                      width: 13,
-                      flexShrink: 0,
-                      color: state === "done" ? "var(--accent)" : "var(--muted)",
-                    }}
-                  >
-                    {state === "done" ? "✓" : "→"}
-                  </span>
-                  {p.label}
-                </motion.li>
-              );
-            })}
-          </ol>
-
-          {/* "How did they know all that?" — real signals pulled from the
-              listing, popping in as the scan runs. Every one is Google's own data
-              about their business; nothing here is invented, and anything Google
-              doesn't have simply doesn't appear. */}
-          <div style={{ marginTop: 22, display: "grid", gap: 8 }}>
-            {signals.map((s, i) => (
+              key="map-intro"
+              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh" }}
+            >
+              <div style={{ ...mono, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 20 }}>
+                Locating {place.name}
+              </div>
+              <div style={{ width: "min(560px, 78vw)", aspectRatio: "4 / 3" }}>
+                <MapBox mapUrl={place.mapUrl} active />
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="revealing"
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {/* Identity. Arrives with everything else, not before — the map
+                  alone was the opening beat. */}
               <motion.div
-                key={s.key}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.45, delay: reduce ? 0 : 1.2 + i * 0.9, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  border: "1px solid var(--rule)",
-                  borderRadius: 8,
-                  padding: "10px 12px",
-                  background: "var(--bg-soft)",
-                }}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, flexWrap: "wrap" }}
               >
-                <div style={{ ...mono, fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: s.body ? 4 : 0 }}>
-                  {s.label}
+                <span
+                  aria-hidden="true"
+                  style={{ width: 9, height: 9, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 5px rgba(137,207,240,0.15)" }}
+                />
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: "clamp(24px, 4vw, 34px)", fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
+                    {place.name}
+                  </div>
+                  <div style={{ ...mono, fontSize: 12.5, color: "var(--muted)", marginTop: 6, display: "flex", gap: 9, flexWrap: "wrap" }}>
+                    {place.address && <span>{place.address}</span>}
+                    {place.phone && (
+                      <>
+                        <span style={{ opacity: 0.3 }}>·</span>
+                        <span>{place.phone}</span>
+                      </>
+                    )}
+                  </div>
                 </div>
-                {s.body && <div style={{ fontSize: 12.5, lineHeight: 1.45, color: "var(--fg)" }}>{s.body}</div>}
-                {s.foot && <div style={{ ...mono, fontSize: 10, color: "var(--muted)", marginTop: 4 }}>{s.foot}</div>}
               </motion.div>
-            ))}
-          </div>
-        </div>
+
+              <div
+                style={{ display: "flex", gap: 56, alignItems: "flex-start", flexWrap: "wrap" }}
+                className="theater-reveal-row"
+              >
+                {/* Left: the map, settled small, with the checklist ticking
+                    beneath it. */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 22, width: 280, flexShrink: 0 }}>
+                  {place.mapUrl && (
+                    <motion.div
+                      layout
+                      transition={{ type: "spring", stiffness: 140, damping: 18 }}
+                      style={{ width: "100%", aspectRatio: "4 / 3" }}
+                    >
+                      <MapBox mapUrl={place.mapUrl} active={false} />
+                    </motion.div>
+                  )}
+
+                  <div>
+                    <div style={{ position: "relative", height: 2, background: "var(--rule)", borderRadius: 1, overflow: "hidden", marginBottom: 16 }}>
+                      <motion.div
+                        animate={{ width: `${progress}%` }}
+                        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                        style={{ position: "absolute", inset: 0, right: "auto", background: "var(--accent)", borderRadius: 1 }}
+                      />
+                    </div>
+                    <ol role="status" aria-live="polite" style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                      {PHASES.map((p, i) => {
+                        const state = i < phaseIdx ? "done" : i === phaseIdx ? "active" : "pending";
+                        if (state === "pending") return null;
+                        return (
+                          <motion.li
+                            key={p.label}
+                            initial={reduce ? { opacity: 0 } : { opacity: 0, x: -6 }}
+                            animate={{ opacity: state === "active" ? 1 : 0.45, x: 0 }}
+                            transition={{ duration: 0.3 }}
+                            style={{
+                              ...mono,
+                              fontSize: 12,
+                              lineHeight: 1.95,
+                              color: state === "active" ? "var(--fg)" : "var(--muted)",
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: 9,
+                            }}
+                          >
+                            <span
+                              aria-hidden="true"
+                              style={{ width: 13, flexShrink: 0, color: state === "done" ? "var(--ok)" : "var(--muted)" }}
+                            >
+                              {state === "done" ? "✓" : "→"}
+                            </span>
+                            {p.label}
+                          </motion.li>
+                        );
+                      })}
+                    </ol>
+                  </div>
+                </div>
+
+                {/* Right: photos fanning out, then reviews popping in as
+                    profile cards beneath them. No source named anywhere
+                    here — the rating stat and the reviews just appear. */}
+                <div style={{ flex: 1, minWidth: 320 }}>
+                  <PhotoFanReveal photos={photos} delay={0.3} stagger={REVEAL_STAGGER} />
+
+                  <div style={{ marginTop: 18 }}>
+                    {place.rating !== null && place.reviewCount !== null && (
+                      <motion.div
+                        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ type: "spring", stiffness: 140, damping: 16, delay: reduce ? 0 : 0.3 + photos.length * REVEAL_STAGGER }}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 10,
+                          border: "1px solid var(--rule)",
+                          borderRadius: 8,
+                          padding: "12px 16px",
+                          background: "var(--bg-soft)",
+                          marginBottom: 16,
+                        }}
+                      >
+                        <span style={{ color: "var(--accent)", fontSize: 17 }} aria-hidden="true">★</span>
+                        <span style={{ fontSize: 16, fontWeight: 600 }}>{place.rating.toFixed(1)}</span>
+                        <span style={{ ...mono, fontSize: 12.5, color: "var(--muted)" }}>
+                          {place.reviewCount.toLocaleString()} review{place.reviewCount === 1 ? "" : "s"}
+                        </span>
+                      </motion.div>
+                    )}
+
+                    <ReviewProfileCards
+                      reviews={reviewCards}
+                      delay={0.3 + (photos.length + (place.rating !== null ? 1 : 0)) * REVEAL_STAGGER}
+                      stagger={REVEAL_STAGGER}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

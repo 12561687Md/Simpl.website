@@ -139,7 +139,7 @@ export default function QuickWins() {
               A working site that nobody discovers is just an expensive business card. The next layer puts you in front of the people already searching for what you sell.
             </p>
             <Link href="/services/local-seo" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
-              Local SEO & Visibility<span>→</span>
+              Local SEO & AI Search Visibility<span>→</span>
             </Link>
           </div>
         </section>

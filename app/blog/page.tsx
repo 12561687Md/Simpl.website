@@ -60,7 +60,7 @@ export default function BlogIndex() {
                 className="blog-card"
                 style={{ display: "block", textDecoration: "none", color: "inherit" }}
               >
-                <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>
+                <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 14 }}>
                   {p.category} · {p.readMinutes} min
                 </div>
                 <h2 style={{ margin: "0 0 10px", fontSize: 21, fontWeight: 600, lineHeight: 1.25, letterSpacing: "-0.015em" }}>

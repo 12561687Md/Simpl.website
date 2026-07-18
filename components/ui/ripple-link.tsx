@@ -10,7 +10,9 @@ interface RippleLinkProps {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
-  /** Ripple fill. Defaults to ink so it reads on the bright-green CTA. */
+  /** Ripple fill. Defaults to dark ink so it reads on the green CTA
+   *  (--accent-ink is dark, since white text/ripple fails contrast on
+   *  this bright a green). */
   rippleColor?: string;
   duration?: number;
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
@@ -26,7 +28,7 @@ export function RippleLink({
   children,
   className,
   style,
-  rippleColor = "#0B0D0F",
+  rippleColor = "#0A140D",
   duration = 600,
   onClick,
 }: RippleLinkProps) {

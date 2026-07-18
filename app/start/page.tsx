@@ -20,18 +20,18 @@ export const metadata: Metadata = {
 };
 
 const PARTS = [
-  { name: "Personalized audit & breakdown", price: "$247", cadence: "once", desc: "A full, personalized breakdown of your business online: where the leads are leaking out, how you stack up against your competitors, and the exact order to fix it in. Yours to keep. Included free with any tier." },
+  { name: "Free strategy call", price: "Free", cadence: "", desc: "The report is already free the moment you unlock it. This is the next step: a real conversation about what to fix first and what it costs, no pitch attached." },
   { name: "Google Business Profile", price: "from $197", cadence: "/ mo", desc: "Claimed, filled out, posted to, and watched. The listing most of your calls come from." },
-  { name: "SEO + AI search", price: "$247 to $497", cadence: "/ mo", desc: "Rank on Google, and show up when someone asks AI who to call. Price moves with how hard you want to push." },
+  { name: "Local SEO & AI Search Visibility", price: "$247 to $497", cadence: "/ mo", desc: "Rank on Google, and show up when someone asks AI who to call. Price moves with how hard you want to push." },
   { name: "Website build", price: "$997 to $2,997", cadence: "once", desc: "Fast, findable, built to turn visitors into calls. Free when you start on Team." },
-  { name: "Answering bot", price: "$147 to $447", cadence: "/ mo", desc: "Answers leads, quotes jobs, and books calls while you're on a jobsite or asleep. Chat or voice. $497 to $747 to set up, waived on Pro." },
+  { name: "AI Response/Quoting Agent", price: "$147 to $447", cadence: "/ mo", desc: "Answers leads, quotes jobs, and books calls while you're on a jobsite or asleep. Chat or voice. $497 to $747 to set up, waived on Pro." },
 ];
 
 const ELSEWHERE = [
   { what: "Local SEO for a one-location service business", them: "$2,000 to $2,500 / mo", us: "from $497 / mo" },
   { what: "What the average agency retainer runs", them: "about $3,200 / mo", us: "from $497 / mo" },
   { what: "A small business website rebuild", them: "$3,000 to $15,000", us: "$0 on Team" },
-  { what: "A professional SEO audit", them: "$500 to $5,000", us: "$247, free with any tier" },
+  { what: "A professional SEO audit", them: "$500 to $5,000", us: "Free, unlocked with your scan" },
 ];
 
 const FAQS = [
@@ -61,7 +61,7 @@ const FAQS = [
   },
   {
     q: "Can something answer my phone and my website when I'm on a job?",
-    a: "Yes, and it's the closest thing we sell to buying your evenings back. The answering bot picks up chats and calls, answers the questions you get asked forty times a week, ballparks a quote, and books the job straight onto your calendar. It runs at 2am and on Sundays. Setup is $497 to $747 depending on how much it needs to know about your pricing, then $147 to $447 a month. Setup is waived on Pro. Most owners find it pays for itself the first time it catches a job that would have gone to voicemail.",
+    a: "Yes, and it's the closest thing we sell to buying your evenings back. The AI Response/Quoting Agent picks up chats and calls, answers the questions you get asked forty times a week, ballparks a quote, and books the job straight onto your calendar. It runs at 2am and on Sundays. Setup is $497 to $747 depending on how much it needs to know about your pricing, then $147 to $447 a month. Setup is waived on Pro. Most owners find it pays for itself the first time it catches a job that would have gone to voicemail.",
   },
   {
     q: "What if I already have a website I like?",
@@ -88,19 +88,19 @@ export default function StartPage() {
             "name": "SIMPL Services",
             "itemListElement": [
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Scan", "description": "Free digital presence scan with the full report emailed free" }, "price": "0", "priceCurrency": "USD" },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Google Business Profile optimization, on-page SEO, AI search visibility, and lead tracking. Includes the strategy audit." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Google Business Profile optimization, Local SEO & AI Search Visibility, and lead tracking. Includes a free strategy call." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Team", "description": "Everything in Core, plus a free website build on a 3-month start, content, social, reviews, and rank tracking." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Everything in Team, plus landing pages, conversion optimization, monthly strategy, multi-location coverage, and waived answering-bot setup." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "1997", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Everything in Team, plus landing pages, conversion optimization, monthly strategy, multi-location coverage, and waived AI Response/Quoting Agent setup." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "1997", "priceCurrency": "USD", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro Performance", "description": "Pro on a lower monthly base plus a per-qualified-lead or per-booked-appointment fee, billed on tracked calls and bookings both sides see in one dashboard. Requires SIMPL ad management and call/conversion tracking. Not a share of revenue." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Paid Ads Management", "description": "Google, Meta, and LSA campaign management. Quoted per account. No markup on ad spend." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
                 { "@type": "UnitPriceSpecification", "name": "Monthly management", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" },
                 { "@type": "UnitPriceSpecification", "name": "One-time setup, 50% of the monthly management fee", "minPrice": "248", "priceCurrency": "USD" }
               ] } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Answering Bot", "description": "Chat and voice bot that answers leads, quotes jobs, and books calls 24/7. Setup waived on SIMPL Pro." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Response/Quoting Agent", "description": "Chat and voice agent that answers leads, quotes jobs, and books calls 24/7. Setup waived on SIMPL Pro." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
                 { "@type": "UnitPriceSpecification", "name": "Monthly", "minPrice": "147", "maxPrice": "447", "priceCurrency": "USD", "billingDuration": "P1M" },
                 { "@type": "UnitPriceSpecification", "name": "One-time setup, waived on SIMPL Pro", "minPrice": "497", "maxPrice": "747", "priceCurrency": "USD" }
               ] } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Personalized Audit & Breakdown", "description": "A full personalized breakdown of a business's online presence: lead leaks, competitor comparison, and a prioritized fix list. Included free with any tier." }, "price": "247", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Free Strategy Call", "description": "A real conversation about what's broken in a business's online presence and what to fix first, once they've unlocked their free scan report." }, "price": "0", "priceCurrency": "USD" },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Build", "description": "Flat-rate website build, scope-based. Free when starting on Team with a 3-month commitment." }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "997", "maxPrice": "2997", "priceCurrency": "USD" } }
             ]
           }
@@ -151,7 +151,7 @@ export default function StartPage() {
         {/* Paid ads: separate on purpose */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ ...label, marginBottom: 28 }}>
-            <span style={{ color: "var(--accent)" }}>Separate</span> · paid ads
+            <span style={{ color: "var(--fg)" }}>Separate</span> · paid ads
           </div>
           <div className="grid-contact" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)", gap: 56, alignItems: "start" }}>
             <div>
@@ -190,7 +190,7 @@ export default function StartPage() {
         {/* Pay for performance */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ ...label, marginBottom: 28 }}>
-            <span style={{ color: "var(--accent)" }}>Rather pay for results?</span> · performance pricing
+            <span style={{ color: "var(--fg)" }}>Rather pay for results?</span> · performance pricing
           </div>
           <div className="grid-contact" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)", gap: 56, alignItems: "start" }}>
             <div>
@@ -228,9 +228,9 @@ export default function StartPage() {
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* À la carte */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
+        <section id="a-la-carte" data-section="a-la-carte" style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ ...label, marginBottom: 28 }}>
-            <span style={{ color: "var(--accent)" }}>Only want one thing?</span> · buy the piece
+            <span style={{ color: "var(--fg)" }}>Only want one thing?</span> · buy the piece
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 660 }}>
             Start with one piece. The tiers just cost less than buying them separately.
@@ -261,7 +261,7 @@ export default function StartPage() {
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
             <div className="mono" style={{ ...label, marginBottom: 28 }}>
-              <span style={{ color: "var(--accent)" }}>For comparison</span> · what this costs elsewhere
+              <span style={{ color: "var(--fg)" }}>For comparison</span> · what this costs elsewhere
             </div>
             <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 660 }}>
               The same work, at what the rest of the market charges for it.
@@ -304,7 +304,7 @@ export default function StartPage() {
         {/* FAQ: objection handling */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <div className="mono" style={{ ...label, marginBottom: 28 }}>
-            <span style={{ color: "var(--accent)" }}>Before you ask</span> · the awkward questions
+            <span style={{ color: "var(--fg)" }}>Before you ask</span> · the awkward questions
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 660, marginBottom: 44 }}>
             The things you&apos;re actually wondering.

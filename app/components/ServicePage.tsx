@@ -22,7 +22,7 @@ export default function ServicePage(p: ServicePageProps) {
       <main>
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 120px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>{p.eyebrow}</div>
-          <div className="mono" style={{ fontSize: 12, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 24 }}>{p.code}</div>
+          <div className="mono" style={{ fontSize: 12, letterSpacing: "0.18em", color: "var(--fg)", textTransform: "uppercase", marginBottom: 24 }}>{p.code}</div>
           <h1 style={{ margin: 0, fontSize: "clamp(40px, 6.4vw, 81px)", lineHeight: 1.04, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 1000 }}>
             {p.headline}<br /><span style={{ color: "var(--muted)" }}>{p.accentTail}</span>
           </h1>
@@ -41,7 +41,7 @@ export default function ServicePage(p: ServicePageProps) {
             <div style={{ marginTop: 72, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
               {p.watches.map((w) => (
                 <div key={w.code} style={{ background: "var(--bg)", padding: "40px 36px", minHeight: 240, display: "flex", flexDirection: "column", gap: 16 }}>
-                  <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase" }}>{w.code}</div>
+                  <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--fg)", textTransform: "uppercase" }}>{w.code}</div>
                   <h3 style={{ fontSize: 22, fontWeight: 400, margin: 0 }}>{w.title}</h3>
                   <div style={{ color: "var(--muted)", fontSize: 15, lineHeight: 1.55 }}>{w.desc}</div>
                 </div>

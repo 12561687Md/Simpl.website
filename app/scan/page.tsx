@@ -80,7 +80,7 @@ export default function ScanPage() {
           <div style={{ marginTop: 72, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {STEPS.map((s) => (
               <div key={s.n} style={{ background: "var(--bg)", padding: "32px 36px", display: "grid", gridTemplateColumns: "60px minmax(220px, 1fr) minmax(0, 2fr)", gap: 28, alignItems: "baseline" }}>
-                <div className="mono" style={{ color: "var(--accent)", fontSize: 13 }}>{s.n}</div>
+                <div className="mono" style={{ color: "var(--fg)", fontSize: 13 }}>{s.n}</div>
                 <h3 style={{ fontSize: 22, fontWeight: 400, margin: 0 }}>{s.h}</h3>
                 <div style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.55 }}>{s.p}</div>
               </div>
@@ -96,7 +96,7 @@ export default function ScanPage() {
             <div style={{ marginTop: 72, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
               {SURFACES.map((s) => (
                 <div key={s.code} style={{ background: "var(--bg)", padding: "44px 36px 40px", minHeight: 360, display: "flex", flexDirection: "column", gap: 24 }}>
-                  <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase" }}>{s.code}</div>
+                  <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--fg)", textTransform: "uppercase" }}>{s.code}</div>
                   <h3 style={{ fontSize: 24, fontWeight: 400, margin: 0 }}>{s.title}</h3>
                   <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 12, color: "var(--muted)", fontSize: 15 }}>
                     {s.items.map((it) => <li key={it}>{it}</li>)}

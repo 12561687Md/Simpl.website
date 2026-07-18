@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import ScanGate from "../components/ScanGate";
@@ -11,16 +11,21 @@ import type { PlaceDetails, ScanResult, Relationship } from "../lib/scan-types";
 const SIMPL_API = "https://simpl-506452749067.us-east1.run.app";
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
-type Stage = "gate" | "scanning" | "report" | "error";
+type Stage = "bootstrapping" | "scanning" | "gated" | "unlocked" | "error";
 
 /**
- * Order matters here, and it is the whole point:
+ * Scanner V2. Order matters here, and it flipped from V1:
  *
- *   gate (free)  ->  token  ->  Details + photos + scan (metered)  ->  report
+ *   authorize (no email)  ->  token  ->  Details + scan (metered)  ->
+ *   theatre  ->  blurred report + gate overlay  ->  unlock (instant, no
+ *   inbox round-trip)
  *
- * Everything before the token is paid for with data we already had from the
- * autocomplete prediction. Nothing that costs money runs until someone has told
- * us who they are, so Places spend and pipeline growth are the same line item.
+ * V1 gated the email BEFORE any scan work, so the visitor paid an email for
+ * a promise. Scanner V2 runs the real scan first — see
+ * docs/standards/SCANNER_V2_SPEC.md §4.7 — so the gate appears over a report
+ * that already exists, and unlocking it is instant because the data is
+ * already in this component's state. The email is capture, not a toll: if
+ * it's fake, we lost nothing, they already saw the report.
  *
  * `name`/`address` arrive as URL params from the prediction. They are display-only
  * and untrusted — React escapes them, and the server never reads them. The only
@@ -32,81 +37,124 @@ export default function AuditFlow() {
   const predictedName = params.get("name") ?? "your business";
   const predictedAddress = params.get("address") ?? "";
 
-  const [stage, setStage] = useState<Stage>("gate");
+  const [stage, setStage] = useState<Stage>("bootstrapping");
   const [place, setPlace] = useState<PlaceDetails | null>(null);
   const [result, setResult] = useState<ScanResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const scanPromise = useRef<Promise<unknown> | null>(null);
+  const started = useRef(false);
 
-  const startScan = useCallback(
-    async (email: string, relationship: Relationship, optIn: boolean) => {
-      if (!placeId) throw new Error("No business selected.");
+  // Fires once on mount, no user action required — this is the whole point of
+  // Scanner V2. No dependency on predictedName in the effect itself so a
+  // fast-changing prop can't retrigger it; `started` is the real guard.
+  useEffect(() => {
+    if (!placeId || started.current) return;
+    started.current = true;
 
-      // 1. The gate. Lead first, permission second. Throws on failure so the
-      //    gate can surface it and we never reach the metered calls.
-      const startRes = await fetch("/api/scan/start", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ placeId, email, relationship, optIn, businessName: predictedName }),
-      });
-      const startData = await startRes.json().catch(() => ({}));
-      if (!startRes.ok || !startData.token) {
-        throw new Error(startData.error || "Could not start your scan. Try again.");
-      }
-      const token: string = startData.token;
+    (async () => {
+      try {
+        // 1. Authorize. Spend guard only, no email — see
+        //    app/api/scan/authorize/route.ts for the daily cap reasoning.
+        const authRes = await fetch("/api/scan/authorize", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ placeId, businessName: predictedName }),
+        });
+        const authData = await authRes.json().catch(() => ({}));
+        if (!authRes.ok || !authData.token) {
+          throw new Error(authData.error || "Could not start your scan. Try again.");
+        }
+        const token: string = authData.token;
 
-      // 2. Metered from here on.
-      const details: PlaceDetails = await fetch(
-        `/api/places/details?placeId=${encodeURIComponent(placeId)}&scan=${encodeURIComponent(token)}`
-      ).then((r) => {
-        if (!r.ok) throw new Error("We couldn't look up that business. Try again.");
-        return r.json();
-      });
-
-      setPlace(details);
-
-      // No website on the listing is not an error, it's the diagnosis. Say it
-      // plainly rather than staging a nine-step examination of nothing.
-      if (!details.website) {
-        setError(
-          "Google has no website listed for this business. That's the single biggest thing costing you customers right now, and it's the first thing we'd fix."
-        );
-        setStage("error");
-        return;
-      }
-
-      // The email is already captured, so this goes straight to the full report.
-      // There is nothing left to gate.
-      const p = fetch(`${SIMPL_API}/scan/full`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: details.website, email }),
-      })
-        .then((r) => {
-          if (!r.ok) throw new Error("scan failed");
-          return r.json() as Promise<ScanResult>;
-        })
-        .then((data) => {
-          setResult(data);
-          return data;
+        // 2. Metered from here on.
+        const details: PlaceDetails = await fetch(
+          `/api/places/details?placeId=${encodeURIComponent(placeId)}&scan=${encodeURIComponent(token)}`
+        ).then((r) => {
+          if (!r.ok) throw new Error("We couldn't look up that business. Try again.");
+          return r.json();
         });
 
-      p.catch(() => setError("We couldn't finish scanning that site. Try again in a moment."));
+        setPlace(details);
 
-      scanPromise.current = p;
-      setStage("scanning");
-    },
-    [placeId, predictedName]
-  );
+        // No website on the listing is not an error, it's the diagnosis. Say it
+        // plainly rather than staging a nine-step examination of nothing.
+        if (!details.website) {
+          setError(
+            "Google has no website listed for this business. That's the single biggest thing costing you customers right now, and it's the first thing we'd fix."
+          );
+          setStage("error");
+          return;
+        }
 
-  const handleDone = useCallback(() => {
+        // No email yet — the backend accepts that (FullReportRequest.email is
+        // Optional, and _capture_lead no-ops on empty), so the scan runs
+        // before anyone has told us who they are. Lead capture happens later,
+        // in the unlock step, via /api/capture-email.
+        const p = fetch(`${SIMPL_API}/scan/full`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: details.website }),
+        })
+          .then((r) => {
+            if (!r.ok) throw new Error("scan failed");
+            return r.json() as Promise<ScanResult>;
+          })
+          .then((data) => {
+            setResult(data);
+            return data;
+          });
+
+        p.catch(() => setError("We couldn't finish scanning that site. Try again in a moment."));
+
+        scanPromise.current = p;
+        setStage("scanning");
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Could not start your scan. Try again.");
+        setStage("error");
+      }
+    })();
+  }, [placeId, predictedName]);
+
+  const handleTheaterDone = useCallback(() => {
     setResult((r) => {
       // The theatre only hands off once the promise settled. Settled as a
       // rejection means there is no report to show.
-      setStage(r ? "report" : "error");
+      setStage(r ? "gated" : "error");
       return r;
     });
   }, []);
+
+  // The gate overlay's submit. Everything it needs is already in state — no
+  // Details or backend scan call happens here, only the lead capture + email.
+  const unlock = useCallback(
+    async (email: string, relationship: Relationship, optIn: boolean) => {
+      if (!place || !result) throw new Error("Nothing to unlock yet.");
+
+      const res = await fetch("/api/capture-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          scanUrl: place.website,
+          scanScore: result.percentage ?? result.score,
+          scanGrade: result.grade,
+          businessName: place.name ?? predictedName,
+          placeId,
+          relationship,
+          optIn,
+          findings: result.findings,
+          categories: result.categories,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Could not unlock your report. Try again.");
+      }
+
+      setStage("unlocked");
+    },
+    [place, result, placeId, predictedName]
+  );
 
   if (stage === "error") {
     return (
@@ -145,15 +193,51 @@ export default function AuditFlow() {
     );
   }
 
+  // The theater breaks out of the normal padded container on purpose, full
+  // viewport height, not boxed to the site's usual max-width. Every other
+  // stage keeps the normal contained layout.
+  if (stage === "scanning" && place && scanPromise.current) {
+    return <ScanTheater place={place} scanPromise={scanPromise.current} onDone={handleTheaterDone} />;
+  }
+
   return (
     <div style={{ padding: "64px 32px 96px" }}>
-      {stage === "gate" && (
-        <ScanGate businessName={predictedName} address={predictedAddress} onStart={startScan} />
+      {stage === "bootstrapping" && (
+        <div style={{ maxWidth: 640, margin: "0 auto", padding: "80px 32px", textAlign: "center" }}>
+          <div style={{ fontSize: 22, fontWeight: 600, letterSpacing: "-0.02em", marginBottom: 10 }}>{predictedName}</div>
+          <p style={{ ...mono, fontSize: 13, color: "var(--muted)" }} role="status">
+            Finding your business…
+          </p>
+        </div>
       )}
-      {stage === "scanning" && place && scanPromise.current && (
-        <ScanTheater place={place} scanPromise={scanPromise.current} onDone={handleDone} />
+
+      {stage === "gated" && result && place && (
+        <div style={{ position: "relative" }}>
+          <ScanReport place={place} result={result} teaser />
+
+          {/* Unlock overlay. Fixed to the viewport rather than positioned
+              against the report's height, so it lands centered on screen no
+              matter how tall the blurred content underneath is. */}
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 50,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "24px 20px",
+              overflowY: "auto",
+              background: "rgba(11,13,15,0.55)",
+              backdropFilter: "blur(3px)",
+            }}
+          >
+            <ScanGate businessName={place.name ?? predictedName} address={place.address ?? predictedAddress} onUnlock={unlock} />
+          </div>
+        </div>
       )}
-      {stage === "report" && result && place && (
+
+      {stage === "unlocked" && result && place && (
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <ScanReport place={place} result={result} />
         </motion.div>

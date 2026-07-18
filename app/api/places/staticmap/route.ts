@@ -32,21 +32,21 @@ const querySchema = z.object({
 
 const RATE_LIMIT_MAX = 60;
 
-// Tuned to the brand surfaces, not Google's night mode. Every rule carries a
-// `feature:` prefix — see note 3 above.
+// Tuned to the brand surfaces, not Google's default light map — every rule
+// still carries a `feature:` prefix, see note 3 above.
 const STYLE = [
-  "feature:all|element:geometry|color:0x1a1c1e",
+  "feature:all|element:geometry|color:0x131517",
   "feature:all|element:labels.icon|visibility:off",
-  "feature:all|element:labels.text.fill|color:0x8a8d8c",
-  "feature:all|element:labels.text.stroke|color:0x0e0f10",
-  "feature:administrative|element:geometry|color:0x2c2f31",
-  "feature:poi|element:geometry|color:0x1f2224",
+  "feature:all|element:labels.text.fill|color:0x8a8d90",
+  "feature:all|element:labels.text.stroke|color:0x0b0c0d",
+  "feature:administrative|element:geometry|color:0x262829",
+  "feature:poi|element:geometry|color:0x1b1e21",
   "feature:poi|element:labels.text|visibility:off",
-  "feature:road|element:geometry|color:0x2c2f31",
-  "feature:road|element:labels.text.fill|color:0x6f7375",
-  "feature:road.highway|element:geometry|color:0x3a3e40",
-  "feature:transit|element:geometry|color:0x232628",
-  "feature:water|element:geometry|color:0x101315",
+  "feature:road|element:geometry|color:0x24282c",
+  "feature:road|element:labels.text.fill|color:0x9ca0a3",
+  "feature:road.highway|element:geometry|color:0x2f3438",
+  "feature:transit|element:geometry|color:0x1b1e21",
+  "feature:water|element:geometry|color:0x0e1a2b",
 ];
 
 export async function GET(req: Request) {
@@ -88,7 +88,7 @@ export async function GET(req: Request) {
       // the same billable request.
       scale: "2",
       maptype: "roadmap",
-      markers: `color:0x9BFF1A|${center}`,
+      markers: `color:0x89CFF0|${center}`,
       key,
     });
     for (const s of STYLE) params.append("style", s);

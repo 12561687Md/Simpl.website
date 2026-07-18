@@ -68,7 +68,7 @@ const TIERS = [
     bullets: [
       "Landing pages built for the jobs you actually want",
       "More booked jobs out of the same traffic",
-      "Answering bot setup waived, you just cover the monthly",
+      "AI Response/Quoting Agent setup waived, you just cover the monthly",
       "A strategy call every month",
       "Multiple locations covered",
       "Priority turnaround on everything",
@@ -107,7 +107,7 @@ export default function TierGrid() {
 
           {/* Left: name + price */}
           <div>
-            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 6, opacity: 0.7 }}>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 6, opacity: 0.7 }}>
               {String(i + 1).padStart(2, "0")}
             </div>
             <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 4 }}>{t.name}</div>

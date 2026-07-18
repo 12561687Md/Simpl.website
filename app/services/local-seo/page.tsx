@@ -5,12 +5,12 @@ import Footer from "../../components/Footer";
 import ScanTool from "../../components/ScanTool";
 
 export const metadata: Metadata = {
-  title: "Local SEO & Visibility",
+  title: "Local SEO & AI Search Visibility",
   description:
-    "Dominate the local 3-pack and capture high-intent searchers. GBP optimization, citation building, review strategy, and local keyword targeting.",
+    "Dominate the local 3-pack and show up when someone asks AI who to call. GBP optimization, citation building, review strategy, local keyword targeting, and AI-search visibility.",
   openGraph: {
-    title: "Local SEO & Visibility | SIMPL",
-    description: "Dominate the local 3-pack and capture high-intent searchers. GBP optimization, citation building, review strategy, and local keyword targeting.",
+    title: "Local SEO & AI Search Visibility | SIMPL",
+    description: "Dominate the local 3-pack and show up when someone asks AI who to call. GBP optimization, citation building, review strategy, and AI-search visibility.",
     url: "https://simpl.pro/services/local-seo",
     siteName: "SIMPL",
     type: "website",
@@ -27,6 +27,7 @@ const INCLUDES = [
   "Local keyword targeting and mapping",
   "Service area page creation",
   "Local pack ranking monitoring",
+  "AI-search visibility (showing up when someone asks ChatGPT or Gemini who to call)",
 ];
 
 export default function LocalSEO() {
@@ -37,7 +38,7 @@ export default function LocalSEO() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Service",
-          "name": "Local SEO & Visibility",
+          "name": "Local SEO & AI Search Visibility",
           "description": "Dominate the local 3-pack with GBP optimization, citation building, review strategy, and local keyword targeting for high-intent searchers.",
           "provider": {
             "@type": "Organization",
@@ -53,7 +54,7 @@ export default function LocalSEO() {
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
             { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://simpl.pro/services" },
-            { "@type": "ListItem", "position": 3, "name": "Local SEO & Visibility", "item": "https://simpl.pro/services/local-seo" }
+            { "@type": "ListItem", "position": 3, "name": "Local SEO & AI Search Visibility", "item": "https://simpl.pro/services/local-seo" }
           ]
         }) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -80,10 +81,10 @@ export default function LocalSEO() {
         {/* Hero */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px 64px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>
-            02 / Local SEO & Visibility
+            02 / Local SEO & AI Search Visibility
           </div>
           <h1 style={{ margin: 0, fontSize: "clamp(32px, 5vw, 52px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 800 }}>
-            Local SEO & Visibility
+            Local SEO & AI Search Visibility
           </h1>
           <p style={{ marginTop: 24, maxWidth: 640, fontSize: 19, lineHeight: 1.5, color: "var(--muted)" }}>
             Three businesses show up when someone searches for what you do. If you&apos;re not one of them, those leads are going to your competitors. Every single day.
