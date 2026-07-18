@@ -155,7 +155,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               Start now, free audit, see exactly where you stand on everything above, in about thirty seconds.
             </p>
             <Link
-              href="/what-am-i-missing"
+              href="/start-now"
               className="cta-primary"
               style={{
                 display: "inline-flex",

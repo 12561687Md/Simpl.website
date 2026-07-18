@@ -386,7 +386,7 @@ export default function ScanReport({
           </p>
           <div style={{ marginTop: 24 }}>
             <a
-              href="/what-am-i-missing"
+              href="/start-now"
               className="cta-primary"
               style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "14px 24px", fontSize: 14, fontWeight: 700, borderRadius: 6, textDecoration: "none" }}
             >

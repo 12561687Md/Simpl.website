@@ -11,11 +11,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "What am I missing? | SIMPL",
     description: "Tell us what's going on and we'll tell you what's costing you calls. We reply the same business day.",
-    url: "https://simpl.pro/what-am-i-missing",
+    url: "https://simpl.pro/start-now",
     siteName: "SIMPL",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/what-am-i-missing" },
+  alternates: { canonical: "https://simpl.pro/start-now" },
 };
 
 const label = { fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" as const, color: "var(--muted)" };
@@ -36,7 +36,7 @@ export default function WhatAmIMissingPage() {
           "@context": "https://schema.org",
           "@type": "ContactPage",
           "name": "What am I missing?",
-          "url": "https://simpl.pro/what-am-i-missing",
+          "url": "https://simpl.pro/start-now",
           "description": "Tell SIMPL what's going on and we'll tell you what's costing you calls. We reply the same business day.",
           "mainEntity": {
             "@type": "Organization",
@@ -55,7 +55,7 @@ export default function WhatAmIMissingPage() {
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "What am I missing?", "item": "https://simpl.pro/what-am-i-missing" }
+            { "@type": "ListItem", "position": 2, "name": "What am I missing?", "item": "https://simpl.pro/start-now" }
           ]
         }) }} />
 
@@ -86,7 +86,7 @@ export default function WhatAmIMissingPage() {
               </div>
               <div>
                 <div className="mono" style={{ ...label, marginBottom: 16 }}>Skip straight to a person</div>
-                <ContactForm ctaLabel="Tell me what's broken" sourcePage="/what-am-i-missing" />
+                <ContactForm ctaLabel="Tell me what's broken" sourcePage="/start-now" />
               </div>
             </div>
 

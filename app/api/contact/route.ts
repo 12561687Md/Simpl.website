@@ -22,7 +22,7 @@ const contactSchema = z.object({
   sourcePage: z.string().max(120).optional(),
 });
 
-const ALLOWED_SOURCE_PAGES = new Set(["/start", "/what-am-i-missing"]);
+const ALLOWED_SOURCE_PAGES = new Set(["/start", "/start-now"]);
 
 const RATE_LIMIT_MAX = 5;
 const TEAM_INBOX = "team@simpl.pro";

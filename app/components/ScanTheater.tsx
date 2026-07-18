@@ -8,8 +8,10 @@ import ReviewProfileCards from "./ReviewProfileCards";
 
 // Photos and reviews both reveal on this exact cadence — slow and
 // deliberate on purpose, not a UI detail: a fast reveal reads as a data
-// dump, a 2.5s-apart reveal reads as something actually looking.
-const REVEAL_STAGGER = 2.5;
+// dump, a slower reveal reads as something actually looking. Widened
+// 2026-07-19: the map intro shrank, and that time now goes here instead —
+// photos and reviews are the part worth lingering on, not the map.
+const REVEAL_STAGGER = 3.1;
 
 /**
  * The scan choreography.
@@ -21,13 +23,17 @@ const REVEAL_STAGGER = 2.5;
  * only the unhurried reveal, which exists because a diagnosis delivered in 400ms
  * reads as a lookup, not an examination.
  *
- * Sequence (2026-07-18 rebuild): the map opens alone, large, centered — the
- * only thing on screen. It sweeps exactly twice, then shrinks to the left
- * and everything else arrives around it: a checklist ticking below the map,
- * business photos fanning out with spring physics, reviews and the rating
- * popping in beside them. Nothing here names where it came from (no "found
- * on Google," no "pulled from your profile") — the effect this is going for
- * is "how did they know that," and naming the source is the one thing that
+ * Sequence (2026-07-19): the map opens alone, large, centered — the only
+ * thing on screen. It sweeps once, then shrinks to the left and everything
+ * else arrives around it: a checklist ticking below the map, business
+ * photos scattering in with spring physics, reviews and the rating popping
+ * in beside them. The map intro is deliberately brief now — it's the
+ * establishing shot, not where the time should go. Photos and reviews are
+ * the part worth lingering on, so REVEAL_STAGGER is wide and several PHASES
+ * entries (profile/photos, social presence) run long enough to cover the
+ * slower reveal. Nothing here names where it came from (no "found on
+ * Google," no "pulled from your profile") — the effect this is going for is
+ * "how did they know that," and naming the source is the one thing that
  * would break it. The photos are still the visitor's own, pulled from their
  * listing, that data is real either way.
  */
@@ -43,24 +49,25 @@ interface Phase {
 
 const PHASES: Phase[] = [
   { label: "Locating your business", ms: 1400 },
-  { label: "Pulling your profile and photos", ms: 1600 },
+  { label: "Pulling your profile and photos", ms: 3000 },
   { label: "Reaching your website", ms: 1800 },
   { label: "Checking your SSL certificate", ms: 1400 },
   { label: "Reading your pages", ms: 2000 },
   { label: "Looking for schema markup", ms: 1600 },
-  { label: "Checking your social presence", ms: 1500 },
+  { label: "Checking your social presence", ms: 2800 },
   { label: "Auditing your business listing", ms: 1800 },
-  { label: "Calculating your SIMPL Score", ms: 1200 },
+  { label: "Calculating your SIMPL Score", ms: 1600 },
 ];
 
 // The last phase is the one that waits on real data, so the script only covers
 // the phases before it.
 const SCRIPTED = PHASES.length - 1;
 
-// Matches the .scanline CSS animation's own cycle (globals.css), so "two
-// sweeps" is exact, not approximate.
+// Matches the .scanline CSS animation's own cycle (globals.css). One sweep,
+// not two (was SWEEP_MS * 2) — the map is the establishing shot, not the
+// main event; that time now goes to REVEAL_STAGGER instead.
 const SWEEP_MS = 2900;
-const MAP_INTRO_MS = SWEEP_MS * 2;
+const MAP_INTRO_MS = SWEEP_MS;
 
 function MapBox({ mapUrl, active }: { mapUrl: string | null; active: boolean }) {
   const reduce = useReducedMotion();

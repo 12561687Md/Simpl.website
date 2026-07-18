@@ -240,7 +240,7 @@ export default function Home() {
                 Already unlocked your report? Get on a call and we&apos;ll walk through where leads are leaking, how you stack up against your competitors, and the exact order to fix it in.
               </p>
             </div>
-            <Link href="/what-am-i-missing" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "12px 20px", fontSize: 13.5, fontWeight: 700, borderRadius: 6, textDecoration: "none", whiteSpace: "nowrap" }}>
+            <Link href="/start-now" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "12px 20px", fontSize: 13.5, fontWeight: 700, borderRadius: 6, textDecoration: "none", whiteSpace: "nowrap" }}>
               Book your call →
             </Link>
           </div>

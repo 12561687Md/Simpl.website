@@ -202,7 +202,7 @@ export default function Header() {
           {/* Services mega-menu */}
           <motion.div
             variants={itemVariants}
-            className="relative"
+            className="relative nav-trigger-wrap"
             onMouseEnter={() => isExpanded && setServicesOpen(true)}
             onMouseLeave={() => setServicesOpen(false)}
           >
@@ -279,7 +279,7 @@ export default function Header() {
           </motion.div>
 
           {NAV_LINKS.slice(0, 1).map((item) => (
-            <motion.div key={item.href} variants={itemVariants}>
+            <motion.div key={item.href} variants={itemVariants} className="hide-mobile">
               <Link href={item.href} onClick={(e) => e.stopPropagation()} className={linkClass} style={{ color: linkColor(pathname === item.href) }}>
                 {item.name}
               </Link>
@@ -297,7 +297,7 @@ export default function Header() {
           {/* Resources mega-menu */}
           <motion.div
             variants={itemVariants}
-            className="relative"
+            className="relative nav-trigger-wrap"
             onMouseEnter={() => isExpanded && setResourcesOpen(true)}
             onMouseLeave={() => setResourcesOpen(false)}
           >
@@ -348,7 +348,7 @@ export default function Header() {
                 form to book a custom plan/call), NOT the pricing tab, on
                 purpose. Pricing is one click away from there for anyone who
                 already knows what they want, but it's not the default push. */}
-            <RippleLink href="/what-am-i-missing" className="cta-primary hidden whitespace-nowrap sm:inline-flex"
+            <RippleLink href="/start-now" className="cta-primary hidden whitespace-nowrap sm:inline-flex"
               style={{ color: "var(--accent-ink)", padding: "10px 18px", fontSize: 14, fontWeight: 600, borderRadius: 999 }}>
               Start Now
             </RippleLink>

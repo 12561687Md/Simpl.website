@@ -574,16 +574,21 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .hide-mobile { display: none !important; }
 
   /* Header nav: the pill never had a real mobile layout, it just relied on
-     desktop spacing at every width. Tighten item padding/type so Services,
-     Why SIMPL, Pricing, and Resources fit one row on a phone without the
-     pill overflowing the viewport. */
+     desktop spacing at every width. "Why SIMPL" drops (still reachable from
+     the footer); Services, Pricing, and Resources are the ones that need to
+     survive on a phone, tightened down so they actually fit one row. */
   .nav-items-row { gap: 0 !important; }
-  .nav-items-row a, .nav-items-row span { padding-left: 8px !important; padding-right: 8px !important; font-size: 13px !important; }
-  /* Mega-menu dropdowns: stack to one column and cap to the viewport width
-     instead of the desktop's fixed multi-column flex row, which was wider
-     than most phone screens on its own even before the featured card. */
-  .nav-dropdown-anchor { left: 0 !important; right: 0 !important; transform: none !important; padding-left: 12px; padding-right: 12px; }
-  .nav-dropdown-panel { flex-direction: column !important; max-width: calc(100vw - 24px); }
+  .nav-items-row a, .nav-items-row span { padding-left: 6px !important; padding-right: 6px !important; font-size: 12.5px !important; }
+
+  /* Mega-menu dropdowns were anchored `position:absolute` inside the
+     trigger's own narrow wrapper (just the "Services"/"Resources" label),
+     so left:0/right:0 only ever spanned that label's ~70px width — a
+     visible "stick," not a menu. Neutralizing the wrapper's positioning
+     context here lets the anchor fall through to <nav> itself (already
+     `position:relative`, full pill width) instead. */
+  .nav-trigger-wrap { position: static !important; }
+  .nav-dropdown-anchor { left: 12px !important; right: 12px !important; transform: none !important; padding-left: 0; padding-right: 0; }
+  .nav-dropdown-panel { flex-direction: column !important; max-width: none; }
   .nav-dropdown-groups { flex-direction: column !important; gap: 20px !important; padding: 16px !important; }
 }
 

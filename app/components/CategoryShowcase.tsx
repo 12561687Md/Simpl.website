@@ -125,7 +125,7 @@ export default function CategoryShowcase({ categories }: { categories: Category[
             <Link href={current.href} className="tier-cta tier-cta-ghost">
               {current.hrefLabel} <Arrow />
             </Link>
-            <RippleLink href="/what-am-i-missing" className="tier-cta tier-cta-solid">
+            <RippleLink href="/start-now" className="tier-cta tier-cta-solid">
               What am I missing? <Arrow />
             </RippleLink>
           </div>
