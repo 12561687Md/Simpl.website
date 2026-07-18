@@ -147,9 +147,12 @@ export async function GET(req: Request) {
         `&scan=${encodeURIComponent(mapToken)}`;
     }
 
-    // Two real reviews, trimmed for the theatre. The author name is public
-    // review attribution from Google; the text is the customer's own words. Empty
-    // when Google has none — which is itself a finding, not a blank to fill.
+    // Three real reviews, trimmed for the theatre — the theater needs at
+    // least 3 visible before it wraps up, so this pulls one more than it
+    // shows to survive the empty-text filter below. The author name is
+    // public review attribution from Google; the text is the customer's own
+    // words. Empty when Google has none — which is itself a finding, not a
+    // blank to fill.
     const reviews = (r.reviews ?? [])
       .map((rv: NewReview) => {
         const text = rv.text?.text ?? rv.originalText?.text ?? "";
@@ -161,7 +164,7 @@ export async function GET(req: Request) {
         };
       })
       .filter((rv: { text: string }) => rv.text)
-      .slice(0, 2);
+      .slice(0, 4);
 
     return NextResponse.json({
       placeId: r.id ?? parsed.data.placeId,

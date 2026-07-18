@@ -18,7 +18,8 @@ export interface PlaceDetails {
   mapUrl: string | null;
   /** Google's one-line description ("...since 1975"). Real or null. */
   summary: string | null;
-  /** Up to two real Google reviews, for the "how did they know" theatre. */
+  /** Up to four real Google reviews (the theatre shows the first 3), for the
+   *  "how did they know" theatre. */
   reviews: ScanReview[];
 }
 

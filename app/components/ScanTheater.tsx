@@ -6,12 +6,15 @@ import type { PlaceDetails } from "../lib/scan-types";
 import PhotoFanReveal from "./PhotoFanReveal";
 import ReviewProfileCards from "./ReviewProfileCards";
 
-// Photos and reviews both reveal on this exact cadence — slow and
-// deliberate on purpose, not a UI detail: a fast reveal reads as a data
-// dump, a slower reveal reads as something actually looking. Widened
-// 2026-07-19: the map intro shrank, and that time now goes here instead —
-// photos and reviews are the part worth lingering on, not the map.
-const REVEAL_STAGGER = 3.1;
+// Photos and reviews both reveal on this cadence. Pulled back in 2026-07-19b
+// (was 3.1s — too slow, and with 3 reviews now shown instead of 2, that pace
+// wouldn't finish revealing before the theater wrapped at all). 1.4s is
+// still deliberate, not instant, but the third review needs to be fully on
+// screen with room to spare before the checklist finishes.
+const REVEAL_STAGGER = 1.4;
+// How long before the FIRST item (first photo) starts revealing, once the
+// map has shrunk into place.
+const REVEAL_START = 0.2;
 
 /**
  * The scan choreography.
@@ -23,15 +26,16 @@ const REVEAL_STAGGER = 3.1;
  * only the unhurried reveal, which exists because a diagnosis delivered in 400ms
  * reads as a lookup, not an examination.
  *
- * Sequence (2026-07-19): the map opens alone, large, centered — the only
+ * Sequence (2026-07-19b): the map opens alone, large, centered — the only
  * thing on screen. It sweeps once, then shrinks to the left and everything
  * else arrives around it: a checklist ticking below the map, business
- * photos scattering in with spring physics, reviews and the rating popping
- * in beside them. The map intro is deliberately brief now — it's the
- * establishing shot, not where the time should go. Photos and reviews are
- * the part worth lingering on, so REVEAL_STAGGER is wide and several PHASES
- * entries (profile/photos, social presence) run long enough to cover the
- * slower reveal. Nothing here names where it came from (no "found on
+ * photos scattering in with spring physics, then the rating and three real
+ * reviews popping in beside them. The map intro is brief on purpose — it's
+ * the establishing shot, not where the time should go. REVEAL_STAGGER was
+ * widened once already and that overcorrected: with 3 reviews now shown
+ * instead of 2, a wide stagger didn't finish revealing before the checklist
+ * did. PHASES was trimmed to match the faster reveal rather than padded to
+ * match a slow one. Nothing here names where it came from (no "found on
  * Google," no "pulled from your profile") — the effect this is going for is
  * "how did they know that," and naming the source is the one thing that
  * would break it. The photos are still the visitor's own, pulled from their
@@ -48,15 +52,15 @@ interface Phase {
 }
 
 const PHASES: Phase[] = [
-  { label: "Locating your business", ms: 1400 },
-  { label: "Pulling your profile and photos", ms: 3000 },
-  { label: "Reaching your website", ms: 1800 },
-  { label: "Checking your SSL certificate", ms: 1400 },
-  { label: "Reading your pages", ms: 2000 },
-  { label: "Looking for schema markup", ms: 1600 },
-  { label: "Checking your social presence", ms: 2800 },
-  { label: "Auditing your business listing", ms: 1800 },
-  { label: "Calculating your SIMPL Score", ms: 1600 },
+  { label: "Locating your business", ms: 1000 },
+  { label: "Pulling your profile and photos", ms: 1400 },
+  { label: "Reaching your website", ms: 1200 },
+  { label: "Checking your SSL certificate", ms: 900 },
+  { label: "Reading your pages", ms: 1600 },
+  { label: "Looking for schema markup", ms: 1100 },
+  { label: "Checking your social presence", ms: 1300 },
+  { label: "Auditing your business listing", ms: 1500 },
+  { label: "Calculating your SIMPL Score", ms: 1200 },
 ];
 
 // The last phase is the one that waits on real data, so the script only covers
@@ -172,7 +176,9 @@ export default function ScanTheater({
 
   // Real signals, no source named. A star row and a quote read as evidence
   // on their own; captioning them "found on Google" hands the trick away.
-  const reviewCards = (place.reviews ?? []).slice(0, 2);
+  // At least 3, not 2 — the visitor needs to see three real reviews land
+  // before the theater wraps, not just two.
+  const reviewCards = (place.reviews ?? []).slice(0, 3);
 
   return (
     <div
@@ -310,14 +316,14 @@ export default function ScanTheater({
                     profile cards beneath them. No source named anywhere
                     here — the rating stat and the reviews just appear. */}
                 <div style={{ flex: 1, minWidth: 320 }}>
-                  <PhotoFanReveal photos={photos} delay={0.3} stagger={REVEAL_STAGGER} />
+                  <PhotoFanReveal photos={photos} delay={REVEAL_START} stagger={REVEAL_STAGGER} />
 
                   <div style={{ marginTop: 18 }}>
                     {place.rating !== null && place.reviewCount !== null && (
                       <motion.div
                         initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ type: "spring", stiffness: 140, damping: 16, delay: reduce ? 0 : 0.3 + photos.length * REVEAL_STAGGER }}
+                        transition={{ type: "spring", stiffness: 140, damping: 16, delay: reduce ? 0 : REVEAL_START + photos.length * REVEAL_STAGGER }}
                         style={{
                           display: "inline-flex",
                           alignItems: "center",
@@ -339,7 +345,7 @@ export default function ScanTheater({
 
                     <ReviewProfileCards
                       reviews={reviewCards}
-                      delay={0.3 + (photos.length + (place.rating !== null ? 1 : 0)) * REVEAL_STAGGER}
+                      delay={REVEAL_START + (photos.length + (place.rating !== null ? 1 : 0)) * REVEAL_STAGGER}
                       stagger={REVEAL_STAGGER}
                     />
                   </div>
