@@ -3,7 +3,7 @@ import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ContactForm from "../components/ContactForm";
-import ScanTool from "../components/ScanTool";
+import WhatAmIMissingScanner from "./Scanner";
 
 export const metadata: Metadata = {
   title: "What am I missing? | SIMPL",
@@ -71,39 +71,38 @@ export default function WhatAmIMissingPage() {
           </p>
         </section>
 
-        {/* The form: the primary action on this page */}
+        {/* Two doors into the same funnel, side by side on purpose: scan it
+            yourself, or skip straight to a person. Neither is buried under
+            the other. */}
         <section data-section="contact" style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px" }}>
-            <div className="grid-contact" style={{ display: "grid", gridTemplateColumns: "minmax(0, 2fr) minmax(220px, 1fr)", gap: 56, alignItems: "start" }}>
-              <ContactForm ctaLabel="Tell me what's broken" sourcePage="/what-am-i-missing" />
-              <div style={{ display: "grid", gap: 28 }}>
-                {PROMISES.map((p) => (
-                  <div key={p.k}>
-                    <div className="mono" style={{ ...label, marginBottom: 10 }}>{p.k}</div>
-                    <div style={{ fontSize: 16, lineHeight: 1.5 }}>{p.v}</div>
-                  </div>
-                ))}
-                <div>
-                  <div className="mono" style={{ ...label, marginBottom: 10 }}>Direct</div>
-                  <a href="mailto:team@simpl.pro" className="mono" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>team@simpl.pro</a>
+            <div className="grid-diagnosis-split" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 48, alignItems: "start" }}>
+              <div>
+                <div className="mono" style={{ ...label, marginBottom: 16 }}>Scan it yourself</div>
+                <p style={{ margin: "0 0 24px", fontSize: 15, lineHeight: 1.6, color: "var(--muted)" }}>
+                  Type your business name. Get your score in about a minute, no waiting and no conversation required.
+                </p>
+                <WhatAmIMissingScanner />
+              </div>
+              <div>
+                <div className="mono" style={{ ...label, marginBottom: 16 }}>Skip straight to a person</div>
+                <ContactForm ctaLabel="Tell me what's broken" sourcePage="/what-am-i-missing" />
+              </div>
+            </div>
+
+            <div style={{ marginTop: 56, paddingTop: 40, borderTop: "1px solid var(--rule)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 28 }}>
+              {PROMISES.map((p) => (
+                <div key={p.k}>
+                  <div className="mono" style={{ ...label, marginBottom: 10 }}>{p.k}</div>
+                  <div style={{ fontSize: 15, lineHeight: 1.5 }}>{p.v}</div>
                 </div>
+              ))}
+              <div>
+                <div className="mono" style={{ ...label, marginBottom: 10 }}>Direct</div>
+                <a href="mailto:team@simpl.pro" className="mono" style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>team@simpl.pro</a>
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Don't want to wait? */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div className="mono" style={{ ...label, marginBottom: 28 }}>
-            <span style={{ color: "var(--accent)" }}>Don&apos;t want to wait?</span> · see it yourself
-          </div>
-          <h2 style={{ margin: 0, fontSize: "clamp(24px, 3.2vw, 36px)", lineHeight: 1.12, fontWeight: 400, maxWidth: 660 }}>
-            Type your domain. Get your score in about a minute.
-          </h2>
-          <p style={{ marginTop: 20, maxWidth: 620, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-            Same answer, no waiting and no conversation. Most businesses land between 40 and 65.
-          </p>
-          <div style={{ marginTop: 40 }}><ScanTool compact /></div>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />

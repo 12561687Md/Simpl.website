@@ -181,6 +181,31 @@ export async function GET(req: Request) {
     };
     if (parsed.data.token) body.sessionToken = parsed.data.token;
 
+    // Location bias. Without this, a well-established local business can lose
+    // to a same-named business in another state entirely — verified live:
+    // "stone creek landscaping apex nc" (the real client's registered name +
+    // city) surfaced a same-named business in Doylestown, PA before a real
+    // 4.7-star, 84-review Apex, NC listing. Autocomplete has no location
+    // context by default; Vercel supplies the visitor's approximate location
+    // as request headers on every production request, no extra API call or
+    // permission prompt needed. Absent locally (no `x-vercel-ip-*` headers
+    // outside Vercel's own infrastructure), so this degrades to unbiased
+    // search in dev, matching today's behavior there.
+    const lat = req.headers.get("x-vercel-ip-latitude");
+    const lng = req.headers.get("x-vercel-ip-longitude");
+    if (lat && lng) {
+      body.locationBias = {
+        circle: {
+          center: { latitude: Number(lat), longitude: Number(lng) },
+          // Wide enough to cover a metro area (a searcher in Raleigh scanning
+          // a business in Apex is common), narrow enough to still separate
+          // "nearby" from "a different state." A bias, not a restriction —
+          // a real match further out still surfaces, just ranked lower.
+          radius: 80000,
+        },
+      };
+    }
+
     const resp = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
       method: "POST",
       headers: {

@@ -80,7 +80,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </Link>
           </div>
 
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 18 }}>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 18 }}>
             {post.category} · {post.readMinutes} min read
           </div>
           <h1 style={{ margin: 0, fontSize: "clamp(28px, 4.4vw, 44px)", lineHeight: 1.1, letterSpacing: "-0.03em", fontWeight: 600 }}>
@@ -155,7 +155,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               Run a free scan and see exactly where you stand on everything above, in about thirty seconds.
             </p>
             <Link
-              href="/"
+              href="/what-am-i-missing"
               className="cta-primary"
               style={{
                 display: "inline-flex",
@@ -168,7 +168,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 textDecoration: "none",
               }}
             >
-              Scan my business →
+              Start Now →
             </Link>
           </section>
         </article>

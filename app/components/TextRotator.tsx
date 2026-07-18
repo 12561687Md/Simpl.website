@@ -36,15 +36,17 @@ export default function TextRotator({
   return (
     <span style={{ display: "inline-grid", verticalAlign: "baseline", color, textAlign: "left" }}>
       {/* Hidden sizers: one per word, all in cell 1/1. They overlap, so the grid
-          sizes to the widest word and to a single line of height. */}
+          sizes to the widest word and to a single line of height. Bottom padding
+          matches the visible wrapper below — without it, descenders (the tail on
+          a "g") sit right at the overflow:hidden edge and get clipped. */}
       {words.map((w) => (
-        <span key={w} aria-hidden="true" style={{ gridArea: "1 / 1", visibility: "hidden", whiteSpace: "nowrap" }}>
+        <span key={w} aria-hidden="true" style={{ gridArea: "1 / 1", visibility: "hidden", whiteSpace: "nowrap", paddingBottom: "0.14em" }}>
           {w}
         </span>
       ))}
 
       {/* Visible, animated word, in the same cell. */}
-      <span style={{ gridArea: "1 / 1", position: "relative", overflow: "hidden" }}>
+      <span style={{ gridArea: "1 / 1", position: "relative", overflow: "hidden", paddingBottom: "0.14em" }}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
             key={words[i]}

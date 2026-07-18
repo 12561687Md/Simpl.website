@@ -17,8 +17,8 @@ export type Category = {
 };
 
 const GRADE_COLOR: Record<string, string> = {
-  A: "var(--accent)",
-  B: "var(--accent)",
+  A: "var(--ok)",
+  B: "var(--ok)",
   C: "#E0A852",
   D: "#E05252",
   F: "#E05252",
@@ -94,7 +94,7 @@ export default function CategoryShowcase({ categories }: { categories: Category[
             exit={reduce ? undefined : { opacity: 0, y: -6 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
           >
-            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 14 }}>
               {current.name}
             </div>
             <p style={{ margin: 0, fontSize: 20, lineHeight: 1.35, fontWeight: 500 }}>{current.hook}</p>

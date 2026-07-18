@@ -35,11 +35,11 @@ const CATEGORIES = [
     hrefLabel: "Performance",
   },
   {
-    name: "On-Page SEO",
+    name: "SEO & Rankings",
     grade: "C",
-    hook: "Missing titles, no meta descriptions, zero schema markup.",
-    detail: "Google can't figure out what your site is about, so it ranks someone else.",
-    fix: "We map the exact SEO signals Google uses to rank you, flagging hidden gaps before your competitors outrank you.",
+    hook: "Missing titles, zero schema markup, and no idea where you actually rank.",
+    detail: "Google can't figure out what your site is about, so it ranks someone else, and you find out from a slow month instead of a number.",
+    fix: "We map the exact SEO signals Google uses to rank you and track your real position for the searches that matter, not just whether the page loads.",
     href: "/discoverability",
     hrefLabel: "Discoverability",
   },
@@ -53,22 +53,22 @@ const CATEGORIES = [
     hrefLabel: "Organic growth",
   },
   {
-    name: "Social Presence",
+    name: "Advertising & Socials",
     grade: "D",
-    hook: "No Facebook, no Instagram, no LinkedIn linked on the site.",
-    detail: "Customers search for you on social and find nothing. That's a trust problem.",
-    fix: "We flag every platform you're invisible on and show which ones actually matter for your industry.",
-    href: "/reputation",
-    hrefLabel: "Reputation",
+    hook: "No Facebook, no Instagram, and no clear read on whether ad spend is working.",
+    detail: "Customers search for you on social and find nothing, and every dollar spent on ads with no way to tell what it bought is a dollar you can't account for.",
+    fix: "We flag every platform you're invisible on and show exactly where ad spend is going, so nothing burns quietly in the background.",
+    href: "/spend",
+    hrefLabel: "Spend",
   },
   {
-    name: "Crawlability",
+    name: "CRM & Reputation",
     grade: "B",
-    hook: "No sitemap, broken internal links, robots.txt blocking Google.",
-    detail: "Your pages exist but search engines can't reach them.",
-    fix: "We check the technical infrastructure most people never touch: robots.txt, sitemaps, canonicals, internal link health.",
-    href: "/services/quick-wins",
-    hrefLabel: "Quick wins",
+    hook: "Leads that never got a follow-up, and reviews trickling in at random.",
+    detail: "A lead goes cold the moment nobody follows up, and your reputation online is whatever happens to get posted, not what your actual customers think.",
+    fix: "We track every lead so none go cold, and build a steady, real system for turning happy customers into five-star reviews.",
+    href: "/reputation",
+    hrefLabel: "Reputation",
   },
   {
     name: "Google Business Profile",
@@ -142,23 +142,23 @@ export default function Home() {
                 Run your free scan<span>→</span>
               </a>
             </div>
-            <div style={{ background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 8, overflow: "hidden", boxShadow: "0 0 40px rgba(155,255,26,0.06)" }}>
+            <div style={{ background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 8, overflow: "hidden", boxShadow: "0 0 40px rgba(137,207,240,0.06)" }}>
               <div style={{ background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ width: 8, height: 8, borderRadius: 99, background: "#E05252", opacity: 0.6 }} />
                 <span style={{ width: 8, height: 8, borderRadius: 99, background: "#E0A852", opacity: 0.6 }} />
-                <span style={{ width: 8, height: 8, borderRadius: 99, background: "#9BFF1A", opacity: 0.6 }} />
+                <span style={{ width: 8, height: 8, borderRadius: 99, background: "#1E8F5A", opacity: 0.6 }} />
                 <span className="mono" style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginLeft: 8 }}>simpl.report</span>
               </div>
               <div style={{ padding: "24px 24px 28px", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
               <div style={{ position: "relative", width: 200, height: 200 }}>
                 <svg width="200" height="200" viewBox="0 0 200 200" style={{ transform: "rotate(-90deg)" }}>
                   <circle cx="100" cy="100" r="90" fill="none" stroke="var(--rule)" strokeWidth="4" />
-                  <circle cx="100" cy="100" r="90" fill="none" stroke="var(--accent)" strokeWidth="4"
+                  <circle cx="100" cy="100" r="90" fill="none" stroke="#1E8F5A" strokeWidth="4"
                     strokeDasharray={2 * Math.PI * 90} strokeDashoffset={2 * Math.PI * 90 * 0.28}
                     strokeLinecap="round" />
                 </svg>
                 <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontSize: 64, fontWeight: 200, color: "var(--accent)", lineHeight: 1, letterSpacing: "-0.04em" }}>B</span>
+                  <span style={{ fontSize: 64, fontWeight: 200, color: "#1E8F5A", lineHeight: 1, letterSpacing: "-0.04em" }}>B</span>
                   <span className="mono" style={{ fontSize: 16, color: "var(--muted)", marginTop: 4 }}>72%</span>
                 </div>
               </div>
@@ -173,7 +173,7 @@ export default function Home() {
                 ].map((c) => (
                   <div key={c.cat} style={{ textAlign: "center", padding: "8px 4px", background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 4 }}>
                     <div className="mono" style={{ fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2 }}>{c.cat}</div>
-                    <div style={{ fontSize: 16, fontWeight: 400, color: c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E0A852" : "#9BFF1A" }}>{c.grade}</div>
+                    <div style={{ fontSize: 16, fontWeight: 400, color: c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E0A852" : "#1E8F5A" }}>{c.grade}</div>
                   </div>
                 ))}
               </div>
@@ -204,23 +204,26 @@ export default function Home() {
               { name: "Pro", tag: "From $1,997/mo", desc: "Get your time back" },
             ].map((t) => (
               <div key={t.name} style={{ background: "var(--bg)", padding: "32px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase" }}>Simpl.{t.name.toLowerCase()}</div>
+                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--fg)", textTransform: "uppercase" }}>Simpl.{t.name.toLowerCase()}</div>
                 <div style={{ fontSize: 20, fontWeight: 400 }}>{t.tag}</div>
                 <div style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.4 }}>{t.desc}</div>
               </div>
             ))}
           </div>
-          {/* Standalone offer: the personalized audit. Sits apart from the tiers
-              because it's a one-time deliverable, not a monthly plan. */}
+          {/* Standalone offer: the free strategy call. The personalized
+              breakdown itself is already free the moment someone unlocks
+              their scan report, so this sits apart from the tiers as the
+              next step, a conversation, not a priced deliverable
+              (docs/funnel/OFFER_STACK.md, decided 2026-07-17). */}
           <div style={{ marginTop: 28, display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap", justifyContent: "space-between", padding: "24px 28px", border: "1px solid var(--rule)", borderRadius: 10, background: "var(--bg-soft)" }}>
             <div style={{ maxWidth: 620 }}>
-              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>Personalized audit &amp; breakdown · $247, free with any tier</div>
+              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>Free strategy call</div>
               <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "var(--muted)" }}>
-                Want more than a scan? We build a full, personalized breakdown of your business online: where leads are leaking, how you stack up against your competitors, and the exact order to fix it in. Yours to keep.
+                Already unlocked your report? Get on a call and we&apos;ll walk through where leads are leaking, how you stack up against your competitors, and the exact order to fix it in.
               </p>
             </div>
-            <Link href="/start" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "12px 20px", fontSize: 13.5, fontWeight: 700, borderRadius: 6, textDecoration: "none", whiteSpace: "nowrap" }}>
-              Get your breakdown →
+            <Link href="/what-am-i-missing" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "12px 20px", fontSize: 13.5, fontWeight: 700, borderRadius: 6, textDecoration: "none", whiteSpace: "nowrap" }}>
+              Book your call →
             </Link>
           </div>
 

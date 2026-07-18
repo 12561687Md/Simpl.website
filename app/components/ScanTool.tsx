@@ -19,10 +19,13 @@ const SCAN_STEPS = [
 
 function gradeColor(grade: string | undefined) {
   // Missing or N/A is not a passing grade. Render it neutral grey, never the
-  // accent green, so an absent category can't masquerade as an A.
+  // success color, so an absent category can't masquerade as an A. A passing
+  // grade is deliberately --ok (a dedicated success green), not --accent —
+  // conflating "this passed" with "this is on brand" was the old system's
+  // mistake, and the new brand accent is blue, not green.
   if (!grade || grade === "N/A") return "#8A8D8C";
-  if (grade.startsWith("A")) return "#9BFF1A";
-  if (grade.startsWith("B")) return "#9BFF1A";
+  if (grade.startsWith("A")) return "#1E8F5A";
+  if (grade.startsWith("B")) return "#1E8F5A";
   if (grade.startsWith("C")) return "#E0A852";
   return "#E05252";
 }
@@ -80,20 +83,43 @@ function ScoreRing({ grade, percentage, size = 130 }: { grade: string; percentag
   );
 }
 
-export default function ScanTool({ compact = false, onStateChange }: { compact?: boolean; onStateChange?: (state: "idle" | "scanning" | "done") => void }) {
-  const [url, setUrl] = useState("");
+export default function ScanTool({
+  compact = false,
+  onStateChange,
+  initialUrl = "",
+  autoRun = false,
+}: {
+  compact?: boolean;
+  onStateChange?: (state: "idle" | "scanning" | "done") => void;
+  /** Prefills the input. Without this, a caller that already collected a URL
+   *  (e.g. UrlFallbackScanner falling back after finding no verified Google
+   *  listing) loses it: this component owns its own `url` state, so the
+   *  visitor would otherwise have to retype what they just typed. */
+  initialUrl?: string;
+  /** Fires `run()` once on mount when true, skipping the extra click a
+   *  caller that already has a URL and already got an explicit submit
+   *  shouldn't need to ask for again. */
+  autoRun?: boolean;
+}) {
+  const [url, setUrl] = useState(initialUrl);
   const [state, setState] = useState<"idle" | "scanning" | "done">("idle");
   const [stepIdx, setStepIdx] = useState(0);
   const [result, setResult] = useState<ScanResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const stepTimer = useRef<ReturnType<typeof setInterval> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const autoRan = useRef(false);
 
   const [reportEmail, setReportEmail] = useState("");
   const [emailState, setEmailState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [emailError, setEmailError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (autoRun && initialUrl.trim() && !autoRan.current) {
+      autoRan.current = true;
+      run();
+      return;
+    }
     if (!compact && window.innerWidth > 768) inputRef.current?.focus();
   }, [compact]);
 
@@ -106,8 +132,8 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
     return () => { if (stepTimer.current) clearInterval(stepTimer.current); };
   }, [state]);
 
-  function run(e: React.FormEvent) {
-    e.preventDefault();
+  function run(e?: React.FormEvent) {
+    e?.preventDefault();
     if (!url.trim()) return;
     setState("scanning"); setResult(null); setError(null);
     fetch(SIMPL_API + "/scan/quick", {
@@ -196,7 +222,7 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
               <div style={{ position: "absolute", top: 0, left: 0, height: "100%", background: "var(--accent)", borderRadius: 1, width: `${Math.min(((stepIdx + 1) / SCAN_STEPS.length) * 85 + 10, 95)}%`, transition: "width 600ms cubic-bezier(0.4, 0, 0.2, 1)" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 12 }}>
-              <div style={{ ...mono, fontSize: 11, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Scanning {url}</div>
+              <div style={{ ...mono, fontSize: 11, color: "var(--fg)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Scanning {url}</div>
               <div style={{ ...mono, fontSize: 11, color: "var(--muted)" }}>~{Math.max(20 - (stepIdx + 1) * 2, 2)}s</div>
             </div>
             <div style={{ ...mono, color: "var(--muted)", fontSize: 12, lineHeight: 1.8 }}>
@@ -221,7 +247,7 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
-              style={{ ...mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}
+              style={{ ...mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--ok)", marginBottom: 14 }}
             >
               Scan complete
             </motion.div>
@@ -324,8 +350,8 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
                 <span style={{ ...mono, fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Social</span>
                 {result.social_profiles?.map((p) => (
                   <div key={p} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ ...mono, fontSize: 11, color: "#9BFF1A", fontWeight: 600 }}>✓</span>
-                    <span style={{ ...mono, fontSize: 11, color: "#9BFF1A" }}>{p}</span>
+                    <span style={{ ...mono, fontSize: 11, color: "#1E8F5A", fontWeight: 600 }}>✓</span>
+                    <span style={{ ...mono, fontSize: 11, color: "#1E8F5A" }}>{p}</span>
                   </div>
                 ))}
                 {result.social_missing?.filter(p => ["Facebook", "Instagram", "LinkedIn", "YouTube", "TikTok"].includes(p)).map((p) => (
@@ -404,13 +430,13 @@ export default function ScanTool({ compact = false, onStateChange }: { compact?:
               style={{
                 background: "linear-gradient(180deg, var(--bg-soft), var(--bg))",
                 border: "1px solid var(--accent)",
-                boxShadow: "0 0 0 1px rgba(155,255,26,0.08), 0 16px 48px -24px var(--accent)",
+                boxShadow: "0 0 0 1px rgba(137,207,240,0.08), 0 16px 48px -24px var(--accent)",
                 borderRadius: 6, padding: "26px 28px", marginBottom: 14,
               }}
             >
               {emailState === "sent" ? (
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, background: "#9BFF1A", flexShrink: 0 }} />
+                  <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 99, background: "#1E8F5A", flexShrink: 0 }} />
                   <div>
                     <div style={{ fontSize: 15, fontWeight: 500, color: "var(--fg)" }}>Check your inbox. Your full report is on its way.</div>
                     <a href="/results" style={{ ...mono, fontSize: 11, color: "var(--accent)", letterSpacing: "0.06em", display: "inline-block", marginTop: 8 }}>

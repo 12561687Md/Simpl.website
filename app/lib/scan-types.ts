@@ -33,6 +33,10 @@ export interface Finding {
   severity: string;
   title: string;
   category: string;
+  /** Real, general remediation guidance for this class of problem (from the
+   *  rubric config, not fabricated per-business). Null for the rare
+   *  meta-findings that aren't tied to a specific rubric check. */
+  fix: string | null;
 }
 
 export interface BusinessInfo {

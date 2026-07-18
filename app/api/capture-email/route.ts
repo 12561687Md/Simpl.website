@@ -39,7 +39,7 @@ function gradeColor(grade: string | undefined): string {
   // Missing or N/A is neutral grey, never the accent green: an absent grade must
   // not read as a passing one in the emailed report.
   if (!grade || grade === "N/A") return "#8A8D8C";
-  if (grade.startsWith("A") || grade.startsWith("B")) return "#9BFF1A";
+  if (grade.startsWith("A") || grade.startsWith("B")) return "#1E8F5A";
   if (grade.startsWith("C")) return "#E0A852";
   return "#E05252";
 }
@@ -54,7 +54,7 @@ function buildEmailHtml(params: {
   categories?: Record<string, { grade?: string; score?: number; max?: number }>;
 }) {
   const { businessName, scanUrl, scanScore, scanGrade, findings = [], categories = {} } = params;
-  const accent = "#9BFF1A";
+  const accent = "#89CFF0";
   const color = gradeColor(scanGrade);
 
   const topFindings = findings
@@ -113,7 +113,7 @@ function buildEmailHtml(params: {
       </div>` : ""}
 
       <div style="padding:8px 32px 36px;text-align:center;">
-        <a href="https://simpl.pro/start" style="display:inline-block;background:${accent};color:#0b1f1a;text-decoration:none;font-weight:600;font-size:14px;padding:14px 28px;border-radius:4px;">
+        <a href="https://simpl.pro/start" style="display:inline-block;background:${accent};color:#0A140D;text-decoration:none;font-weight:600;font-size:14px;padding:14px 28px;border-radius:4px;">
           See the full report &rarr;
         </a>
       </div>

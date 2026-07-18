@@ -8,24 +8,25 @@ import type { Relationship } from "../lib/scan-types";
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 /**
- * The gate, shown before the scan runs.
+ * The unlock gate, shown as an overlay once the scan has already run.
  *
- * It is personalised entirely from the autocomplete prediction (name + address),
- * which we already have for free. Nothing here costs a Places call — the
- * expensive work only starts once this returns a token.
+ * Scanner V2: the scan runs on page load, before any email exists (see
+ * AuditFlow). By the time this renders, the report is already sitting
+ * blurred underneath it — this gate's only job is to unlock what's already
+ * there, not to authorize new work. That's why step 1 promises an instant
+ * unlock rather than "we'll run your scan now."
  *
- * Design note: asking before showing value costs completion, so the ask has to
- * feel like it is already working. Hence their own business name and address at
- * the top: we found you, we just need somewhere to send it.
+ * Still personalised from the same free prediction data (name + address),
+ * same reasoning as before: recognition earns the ask.
  */
 export default function ScanGate({
   businessName,
   address,
-  onStart,
+  onUnlock,
 }: {
   businessName: string;
   address: string;
-  onStart: (email: string, relationship: Relationship, optIn: boolean) => Promise<void>;
+  onUnlock: (email: string, relationship: Relationship, optIn: boolean) => Promise<void>;
 }) {
   const [step, setStep] = useState<"email" | "relationship">("email");
   const [email, setEmail] = useState("");
@@ -45,10 +46,10 @@ export default function ScanGate({
     setBusy(true);
     setErr(null);
     try {
-      await onStart(email.trim(), rel, optIn);
+      await onUnlock(email.trim(), rel, optIn);
     } catch (e) {
       setBusy(false);
-      setErr(e instanceof Error ? e.message : "Could not start your scan. Try again.");
+      setErr(e instanceof Error ? e.message : "Could not unlock your report. Try again.");
     }
   }
 
@@ -90,7 +91,7 @@ export default function ScanGate({
         style={{
           background: "linear-gradient(180deg, var(--bg-soft), var(--bg))",
           border: "1px solid var(--accent)",
-          boxShadow: "0 0 0 1px rgba(155,255,26,0.08), 0 16px 48px -24px var(--accent)",
+          boxShadow: "0 0 0 1px rgba(137,207,240,0.08), 0 16px 48px -24px var(--accent)",
           borderRadius: 8,
           padding: "28px 30px",
         }}
@@ -104,15 +105,15 @@ export default function ScanGate({
               exit={{ opacity: 0, x: reduce ? 0 : -10 }}
               transition={{ duration: 0.22 }}
             >
-              <div style={{ ...mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>
+              <div style={{ ...mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 10 }}>
                 Step 1 of 2
               </div>
               <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 8, lineHeight: 1.35 }}>
-                Where should we send your audit?
+                Your report is ready. Unlock it now.
               </div>
               <p style={{ fontSize: 13.5, color: "var(--muted)", margin: "0 0 18px", lineHeight: 1.55 }}>
-                We&apos;ll run the full scan now and show you everything on this page. The email is so you can come back
-                to your report later.
+                Everything unlocks on this page the second you submit. No waiting, no checking your inbox first. We&apos;ll
+                also send you a copy to keep.
               </p>
               <form onSubmit={submitEmail} style={{ display: "flex" }}>
                 <label htmlFor="gate-email" className="sr-only">
@@ -168,7 +169,7 @@ export default function ScanGate({
               exit={{ opacity: 0, x: reduce ? 0 : -10 }}
               transition={{ duration: 0.22 }}
             >
-              <div style={{ ...mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>
+              <div style={{ ...mono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 10 }}>
                 Step 2 of 2
               </div>
               <div style={{ fontSize: 18, fontWeight: 500, marginBottom: 18, lineHeight: 1.35 }}>
@@ -216,8 +217,8 @@ export default function ScanGate({
               </label>
 
               {busy && (
-                <div style={{ ...mono, fontSize: 11.5, color: "var(--accent)", marginTop: 14 }} role="status">
-                  Starting your scan…
+                <div style={{ ...mono, fontSize: 11.5, color: "var(--fg)", marginTop: 14 }} role="status">
+                  Unlocking your report…
                 </div>
               )}
               {err && <div style={{ fontSize: 12.5, color: "#E05252", marginTop: 12 }}>{err}</div>}

@@ -144,7 +144,7 @@ export default function AboutPage() {
             style={{
               marginTop: 24,
               fontSize: 15,
-              color: "var(--accent)",
+              color: "var(--fg)",
               lineHeight: 1.55,
             }}
           >
@@ -261,7 +261,7 @@ export default function AboutPage() {
             style={{
               marginTop: 24,
               fontSize: 15,
-              color: "var(--accent)",
+              color: "var(--fg)",
               lineHeight: 1.55,
             }}
           >

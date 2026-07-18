@@ -42,7 +42,7 @@ function confirmationEmailHtml() {
         </p>
       </div>
       <div style="padding:0 32px 36px;">
-        <a href="https://simpl.pro/scan" style="display:inline-block;background:#9BFF1A;color:#0b1f1a;text-decoration:none;font-weight:600;font-size:14px;padding:14px 28px;border-radius:4px;">
+        <a href="https://simpl.pro/scan" style="display:inline-block;background:#89CFF0;color:#0A140D;text-decoration:none;font-weight:600;font-size:14px;padding:14px 28px;border-radius:4px;">
           Run my free scan &rarr;
         </a>
       </div>

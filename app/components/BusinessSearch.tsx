@@ -158,7 +158,7 @@ export default function BusinessSearch({
           background: "var(--bg-soft)",
           overflow: "hidden",
           transition: "border-color 180ms ease, box-shadow 180ms ease",
-          ...(open ? { borderColor: "var(--accent)", boxShadow: "0 0 0 3px rgba(155,255,26,0.10)" } : {}),
+          ...(open ? { borderColor: "var(--accent)", boxShadow: "0 0 0 3px rgba(137,207,240,0.10)" } : {}),
         }}
       >
         <span
@@ -211,7 +211,7 @@ export default function BusinessSearch({
             style={{
               display: "flex",
               alignItems: "center",
-              paddingRight: 16,
+              paddingRight: 12,
               color: "var(--accent)",
               flexShrink: 0,
             }}
@@ -219,6 +219,37 @@ export default function BusinessSearch({
             <span className="ts-spinner" />
           </span>
         )}
+
+        {/* Attached CTA, not a floating callout: pressing it selects the top
+            result if one is showing, otherwise just focuses the input. Real
+            affordance, not decoration. */}
+        <button
+          type="button"
+          className="business-search-cta"
+          onClick={() => {
+            if (predictions.length > 0) choose(predictions[activeIdx >= 0 ? activeIdx : 0]);
+            else inputRef.current?.focus();
+          }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            flexShrink: 0,
+            border: 0,
+            borderRadius: "0 7px 7px 0",
+            padding: "0 18px",
+            background: "var(--bg)",
+            color: "var(--accent)",
+            fontSize: 13.5,
+            fontWeight: 700,
+            letterSpacing: "-0.005em",
+            cursor: "pointer",
+            whiteSpace: "nowrap",
+          }}
+        >
+          <span className="business-search-cta-label">Free audit</span>
+          <span aria-hidden="true" style={{ fontSize: 16, lineHeight: 1 }}>↑</span>
+        </button>
       </div>
 
       {/* Screen readers get the result count; the visual list alone is silent. */}
@@ -272,7 +303,7 @@ export default function BusinessSearch({
                   padding: "11px 12px",
                   borderRadius: 5,
                   cursor: "pointer",
-                  background: i === activeIdx ? "rgba(155,255,26,0.08)" : "transparent",
+                  background: i === activeIdx ? "rgba(137,207,240,0.08)" : "transparent",
                   transition: "background 120ms ease",
                 }}
               >

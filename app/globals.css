@@ -9,44 +9,51 @@
 @tailwind utilities;
 
 :root {
-  /* Layered dark surfaces, cool-tinted, NOT flat pure black.
-     Pure #000 smears on OLED and reads amateur; premium dark UIs (Linear,
-     Vercel, Resend) stack subtly-lit slate surfaces so cards have real depth.
-     Each step up = one surface closer to the viewer. */
-  --bg: #0B0D0F;         /* page base */
-  --bg-soft: #101317;    /* section band / raised region */
-  --bg-elev: #15181D;    /* cards, panels */
-  --bg-elev-2: #1A1E24;  /* card hover / nested */
-  --glass: rgba(17,20,25,0.62); /* glassmorphism (nav, floating) */
+  /* Rebrand 2026-07-18d: baby blue replaces green as the accent. Black
+     background and white body text are UNCHANGED — this only swaps the one
+     accent color reserved for CTAs/trust-keywords, same role green had. */
+  --bg: #0B0C0D;          /* page base, near-black */
+  --bg-soft: #131517;     /* section band / raised region */
+  --bg-elev: #1B1E21;     /* cards, panels */
+  --bg-elev-2: #24282C;   /* card hover / nested */
+  --glass: rgba(11,12,13,0.78); /* glassmorphism (nav, floating) */
 
-  /* Text hierarchy: three real steps, not one fg + one muted. */
-  --fg: #F1EFE9;         /* headings / primary (warm cream, brand) */
-  --muted: #A6A9AD;      /* body / secondary (cool grey) */
-  --fg-dim: #6C7075;     /* captions / tertiary (5.0:1 on --bg) */
+  /* Text hierarchy: white-forward, never pure black bg / pure white text
+     clash — off-white keeps it from glaring. Accent is the exception color,
+     not the default text color. */
+  --fg: #F3F2ED;          /* headings / primary — reads as white */
+  --muted: #ADACA7;       /* body / secondary */
+  --fg-dim: #78766F;      /* captions / tertiary */
 
   /* Hairlines. --rule is decorative; --rule-strong is the interactive-control
-     boundary WCAG 1.4.11 needs at 3:1 (3.5:1 on --bg). Don't drop it. */
-  --rule: #202429;
-  --rule-soft: #191C21;
-  --rule-strong: #666A6C;
+     boundary WCAG 1.4.11 needs at 3:1. Don't drop it. */
+  --rule: #262829;
+  --rule-soft: #1D1F21;
+  --rule-strong: #3A3E41;
 
-  /* Green is the ONE accent, and it is punctuation, never a wash. It lives on
-     CTAs, the live-pulse dot, the score ring, and the rare highlighted word.
-     Everything structural is neutral. Contrast on --bg is ~15:1. */
-  --accent: #9BFF1A;
-  --accent-dim: #7ACF16;      /* pressed / lower-energy accent */
-  --accent-soft: rgba(155,255,26,0.08);
-  --accent-line: rgba(155,255,26,0.22);
-  --accent-ink: #0B0D0F;
-  --pulse: #9BFF1A;
+  /* Baby blue is the ONE brand accent — CTAs, the live-pulse dot, and ONLY
+     the highest-converting/trust keywords in copy (never general body or
+     label text; that's white). Everything structural is neutral. Dark ink
+     on the accent (not white) — this is a light pastel, so white text on it
+     fails contrast just as badly as it did on the brighter greens/blues. */
+  --accent: #89CFF0;
+  --accent-dim: #5AB4DE;      /* pressed / lower-energy accent */
+  --accent-soft: rgba(137,207,240,0.14);
+  --accent-line: rgba(137,207,240,0.34);
+  --accent-ink: #081420;
+  --pulse: #89CFF0;
 
-  /* Ambient blobs are now COOL (slate/blue), not green. This is the whole fix:
-     the atmosphere reads premium and neutral, and green stays an accent instead
-     of tinting the entire page. A whisper of green only in one corner, low. */
-  --aura-cool: rgba(120,150,190,0.16);
-  --aura-accent: rgba(155,255,26,0.07);
+  /* Deliberately separate from --accent: a passing grade should read as
+     "success," not as "on brand." Conflating the two (the old system's
+     green did double duty as both) muddies what a color is telling you —
+     now that blue is brand again, success moves back to green. */
+  --ok: #34A853;
+  --ok-soft: rgba(52,168,83,0.12);
 
-  --shadow-card: 0 1px 0 rgba(255,255,255,0.03) inset, 0 20px 40px -28px rgba(0,0,0,0.7);
+  --aura-cool: rgba(90,130,180,0.08);
+  --aura-accent: rgba(137,207,240,0.08);
+
+  --shadow-card: 0 1px 0 rgba(255,255,255,0.04) inset, 0 20px 40px -28px rgba(0,0,0,0.6);
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -55,11 +62,11 @@ html { scroll-behavior: smooth; }
 html, body {
   margin: 0; padding: 0;
   color: var(--fg);
-  /* Not a flat fill: a faint top-lit radial + vertical wash gives the page a
-     light source and stops the "black void" look. */
+  /* Not a flat fill: a faint top-lit radial + vertical wash gives the page
+     depth instead of reading as a flat black fill. */
   background:
-    radial-gradient(120% 80% at 50% -10%, #14181D 0%, transparent 55%),
-    linear-gradient(180deg, #0C0E11 0%, var(--bg) 40%, #090B0D 100%),
+    radial-gradient(120% 80% at 50% -10%, #16181A 0%, transparent 55%),
+    linear-gradient(180deg, #0E1012 0%, var(--bg) 40%, #08090A 100%),
     var(--bg);
   background-attachment: fixed;
 }
@@ -106,7 +113,7 @@ html {
   font-feature-settings: "ss02", "calt", "zero";
 }
 
-/* Ambient light blobs. Cool slate top-left for atmosphere; a single faint green
+/* Ambient light blobs. Cool slate top-left for atmosphere; a single faint blue
    whisper bottom-right so the accent is *present* but not the page color. These
    drift slowly so the background feels alive, not static. */
 body::before, body::after {
@@ -137,6 +144,27 @@ body::after {
 @keyframes aura-drift-b {
   from { transform: translate3d(0, 0, 0) scale(1); }
   to   { transform: translate3d(-5vw, -3vw, 0) scale(1.1); }
+}
+
+/* Hero aura (components/ui/hero-aura.tsx) — glacial drift, barely
+   perceptible frame to frame on purpose. Paused entirely under
+   prefers-reduced-motion below. */
+@keyframes hero-aura-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(4vw, 3vw, 0) scale(1.08); }
+}
+@keyframes hero-aura-b {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-3vw, 2vw, 0) scale(1.06); }
+}
+@keyframes hero-aura-c {
+  from { transform: translate3d(-50%, 0, 0) scale(1); }
+  to   { transform: translate3d(-50%, -2vw, 0) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [style*="hero-aura-a"], [style*="hero-aura-b"], [style*="hero-aura-c"] {
+    animation: none !important;
+  }
 }
 #root { position: relative; z-index: 1; }
 main, footer, header { position: relative; z-index: 1; }
@@ -622,7 +650,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  border: 1.5px solid rgba(155, 255, 26, 0.22);
+  border: 1.5px solid rgba(137, 207, 240, 0.22);
   border-top-color: var(--accent);
   animation: ts-spin 0.7s linear infinite;
 }
@@ -663,11 +691,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(155, 255, 26, 0.05) 40%,
-    rgba(155, 255, 26, 0.16) 78%,
-    rgba(155, 255, 26, 0.9) 100%
+    rgba(137, 207, 240, 0.06) 40%,
+    rgba(137, 207, 240, 0.2) 78%,
+    rgba(137, 207, 240, 0.95) 100%
   );
-  box-shadow: 0 2px 14px 1px rgba(155, 255, 26, 0.35);
+  box-shadow: 0 2px 14px 1px rgba(137, 207, 240, 0.4);
   will-change: transform;
   animation: scan-sweep 2.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
@@ -717,16 +745,42 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 .phone-frame {
+  position: relative;
   width: 268px;
   padding: 9px;
-  border-radius: 38px;
-  background: linear-gradient(160deg, #2a2d2f, #141617 60%);
+  border-radius: 44px;
+  background: linear-gradient(160deg, #303436, #131516 60%);
   border: 1px solid var(--rule);
   /* The glow is what stops the frame reading as a flat grey rectangle. */
   box-shadow:
     0 40px 90px -30px rgba(0, 0, 0, 0.9),
     0 0 0 1px rgba(255, 255, 255, 0.04) inset,
     0 22px 70px -34px var(--accent);
+}
+
+/* Side buttons: a real device silhouette reads as a product, a plain rounded
+   rectangle reads as a mockup. Positioned and sized off real iPhone
+   proportions, pure CSS so nothing depends on a shipped image asset. */
+.phone-frame::before,
+.phone-frame::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(90deg, #1c1e1f, #34383a 45%, #1c1e1f);
+  border-radius: 2px;
+}
+/* Left side: volume rocker. */
+.phone-frame::before {
+  left: -3px;
+  top: 118px;
+  width: 3px;
+  height: 56px;
+}
+/* Right side: power button. */
+.phone-frame::after {
+  right: -3px;
+  top: 148px;
+  width: 3px;
+  height: 66px;
 }
 
 .phone-screen {
@@ -771,6 +825,43 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   background: #050607;
   z-index: 2;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+/* The camera dot inside the island. Small, cool-toned, off-centre right,
+   exactly where it sits on a real device — the detail that keeps the island
+   from reading as a plain black pill. */
+.phone-island::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  background: radial-gradient(circle at 35% 35%, #4a7fb8, #0a1420 70%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ---- Phone: status bar (PhoneLoop) ----
+   Time left, signal/wifi/battery right, flanking the dynamic island — the
+   detail that makes the header read as a real running app, not a mockup. */
+.phone-status-bar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px 0;
+  color: var(--fg);
+}
+
+.business-search-cta:hover { background: var(--bg-soft); }
+
+/* Below this width the label crowds the input text against the edge, so
+   only the arrow survives, same affordance in less space. */
+@media (max-width: 480px) {
+  .business-search-cta-label { display: none; }
+  .business-search-cta { padding: 0 14px !important; }
 }
 
 /* Two-column section that pairs copy with a phone. Shared by the 2nd section
@@ -820,4 +911,27 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (prefers-reduced-motion: reduce) {
   .blog-card { transition: border-color 180ms ease; }
   .blog-card:hover { transform: none; }
+}
+
+/* /what-am-i-missing: scanner and form side by side, stacked on mobile. */
+@media (max-width: 860px) {
+  .grid-diagnosis-split { grid-template-columns: 1fr !important; }
+}
+
+/* Scan theater reveal row: map+checklist column stacks above the
+   photos/reviews column on narrow screens rather than squeezing both
+   into a viewport too small for the fan-out to read. */
+@media (max-width: 720px) {
+  .theater-reveal-row { flex-direction: column; }
+  .theater-reveal-row > div:first-child { width: 100% !important; }
+}
+
+/* Audit report (ScanReport): the gauge, KPI strip, bar chart, and
+   diagnostics table all narrow gracefully instead of squeezing a desktop
+   grid onto a phone screen. */
+@media (max-width: 600px) {
+  .grid-audit-gauge { grid-template-columns: 1fr !important; text-align: center; }
+  .grid-audit-kpis { grid-template-columns: 1fr !important; }
+  .grid-audit-bar { grid-template-columns: 84px 1fr 34px !important; gap: 10px !important; }
+  .grid-audit-diag-row { grid-template-columns: 1fr !important; gap: 4px !important; }
 }
