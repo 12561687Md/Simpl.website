@@ -6,14 +6,14 @@ import type { PlaceDetails } from "../lib/scan-types";
 import PhotoFanReveal from "./PhotoFanReveal";
 import ReviewProfileCards from "./ReviewProfileCards";
 
-// Photos and reviews both reveal on this cadence. Pulled back in 2026-07-19b
-// (was 3.1s — too slow, and with 3 reviews now shown instead of 2, that pace
-// wouldn't finish revealing before the theater wrapped at all). 1.4s is
-// still deliberate, not instant, but the third review needs to be fully on
-// screen with room to spare before the checklist finishes.
-const REVEAL_STAGGER = 1.4;
-// How long before the FIRST item (first photo) starts revealing, once the
-// map has shrunk into place.
+// Exact spec (2026-07-19c): 1.5s between each review, then 1.5s between each
+// photo. This is a presentation, not a speed race — PHASES below is sized
+// with real buffer after the last photo settles, not the bare minimum to
+// avoid a cutoff. Every review AND every photo must be fully on screen
+// before the theater is allowed to finish.
+const REVEAL_STAGGER = 1.5;
+// How long before the FIRST item (the rating badge) starts revealing, once
+// the map has shrunk into place.
 const REVEAL_START = 0.2;
 
 /**
@@ -52,15 +52,15 @@ interface Phase {
 }
 
 const PHASES: Phase[] = [
-  { label: "Locating your business", ms: 1000 },
-  { label: "Pulling your profile and photos", ms: 1400 },
-  { label: "Reaching your website", ms: 1200 },
-  { label: "Checking your SSL certificate", ms: 900 },
-  { label: "Reading your pages", ms: 1600 },
-  { label: "Looking for schema markup", ms: 1100 },
-  { label: "Checking your social presence", ms: 1300 },
-  { label: "Auditing your business listing", ms: 1700 },
-  { label: "Calculating your SIMPL Score", ms: 1500 },
+  { label: "Locating your business", ms: 1200 },
+  { label: "Pulling your profile and photos", ms: 1800 },
+  { label: "Reaching your website", ms: 1500 },
+  { label: "Checking your SSL certificate", ms: 1100 },
+  { label: "Reading your pages", ms: 1900 },
+  { label: "Looking for schema markup", ms: 1400 },
+  { label: "Checking your social presence", ms: 1700 },
+  { label: "Auditing your business listing", ms: 1900 },
+  { label: "Calculating your SIMPL Score", ms: 2000 },
 ];
 
 // The last phase is the one that waits on real data, so the script only covers
@@ -129,7 +129,7 @@ export default function ScanTheater({
 
   const photos = place.photos ?? [];
 
-  // Map intro: exactly two sweeps, then hand off to the reveal layout.
+  // Map intro: one sweep, then hand off to the reveal layout.
   useEffect(() => {
     if (stage !== "map-intro") return;
     if (reduce) {
@@ -225,42 +225,37 @@ export default function ScanTheater({
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Identity. Arrives with everything else, not before — the map
-                  alone was the opening beat. */}
-              <motion.div
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-                style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, flexWrap: "wrap" }}
-              >
-                <span
-                  aria-hidden="true"
-                  style={{ width: 9, height: 9, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 5px rgba(137,207,240,0.15)" }}
-                />
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: "clamp(24px, 4vw, 34px)", fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-                    {place.name}
-                  </div>
-                  <div style={{ ...mono, fontSize: 12.5, color: "var(--muted)", marginTop: 6, display: "flex", gap: 9, flexWrap: "wrap" }}>
-                    {place.address && <span>{place.address}</span>}
-                    {place.phone && (
-                      <>
-                        <span style={{ opacity: 0.3 }}>·</span>
-                        <span>{place.phone}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-
               <div
                 style={{ display: "flex", gap: 56, alignItems: "flex-start", flexWrap: "wrap" }}
                 className="theater-reveal-row"
               >
-                {/* Left: the map, settled small, with the checklist ticking
-                    beneath it. Narrow on purpose — the right side is the
-                    main event and should read as ~75%+ of the panel. */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 22, width: 240, flexShrink: 0 }}>
+                {/* Left: NAP, then the map settled small, then the checklist
+                    ticking beneath it — all one column, top to bottom, per
+                    the exact layout spec (NAP + map together, checklist
+                    directly under). Narrow on purpose — the right side is
+                    the main event and should read as ~75%+ of the panel. */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 18, width: 240, flexShrink: 0 }}>
+                  <motion.div
+                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 }}
+                    style={{ display: "flex", alignItems: "flex-start", gap: 10 }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{ width: 8, height: 8, marginTop: 6, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 4px rgba(137,207,240,0.15)", flexShrink: 0 }}
+                    />
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.015em", lineHeight: 1.25 }}>
+                        {place.name}
+                      </div>
+                      <div style={{ ...mono, fontSize: 11, color: "var(--muted)", marginTop: 5, lineHeight: 1.6 }}>
+                        {place.address && <div>{place.address}</div>}
+                        {place.phone && <div>{place.phone}</div>}
+                      </div>
+                    </div>
+                  </motion.div>
+
                   {place.mapUrl && (
                     <motion.div
                       layout
