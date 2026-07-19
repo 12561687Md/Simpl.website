@@ -247,7 +247,12 @@ export default function ScanTheater({
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
               <div
-                style={{ display: "flex", gap: 56, alignItems: "flex-start", flexWrap: "wrap" }}
+                // minHeight fills the viewport below the page padding
+                // (40 top + 48 bottom): both columns alignSelf:stretch
+                // against it, so the divider line AND the right panel's
+                // scanline sweep run to the bottom of the page instead of
+                // stopping where the content happens to end (~75% down).
+                style={{ display: "flex", gap: 56, alignItems: "flex-start", flexWrap: "wrap", minHeight: "calc(100dvh - 88px)" }}
                 className="theater-reveal-row"
               >
                 {/* Left: NAP big in the top corner, the map right under it,

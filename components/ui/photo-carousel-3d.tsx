@@ -22,6 +22,10 @@ import { motion, useAnimationFrame, useMotionValue, useReducedMotion, useTransfo
  * the set repeats to 8 faces to fill the drum. Under prefers-reduced-motion
  * the drum holds still (front faces remain visible) instead of spinning.
  */
+// Deterministic per-face slant, alternating direction — a design accent,
+// not randomness, so it never reshuffles between renders.
+const TILTS = [-4, 3, -3, 4];
+
 export default function PhotoCarousel3D({
   photos,
   size = 300,
@@ -109,11 +113,18 @@ export default function PhotoCarousel3D({
                 style={{
                   width: "100%",
                   height: "100%",
-                  borderRadius: 32,
+                  // Same radius as the review cards, so the light cards and
+                  // the drum photos read as one card family.
+                  borderRadius: 12,
+                  // A slight polaroid slant per face, alternating direction.
+                  // `rotate` goes through framer-motion's own transform
+                  // pipeline, so it composes with the scale entrance instead
+                  // of being clobbered by it.
+                  rotate: TILTS[i % TILTS.length],
                   overflow: "hidden",
                   border: "1px solid var(--rule)",
                   background: "var(--bg-soft)",
-                  boxShadow: "0 20px 40px -18px rgba(0,0,0,0.22)",
+                  boxShadow: "0 20px 40px -18px rgba(0,0,0,0.4)",
                 }}
               >
                 <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
