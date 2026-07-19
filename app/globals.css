@@ -678,9 +678,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   pointer-events: none;
 }
 
-/* Scanline color is the on-light accent, not the site's baby blue: this
-   class only ever renders inside the scan theater, which runs on the cream
-   CREAM_THEME surface where the pale baby blue disappears. */
 .scanline {
   position: absolute;
   left: 0;
@@ -690,11 +687,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(62, 155, 196, 0.05) 40%,
-    rgba(62, 155, 196, 0.18) 78%,
-    rgba(62, 155, 196, 0.9) 100%
+    rgba(137, 207, 240, 0.06) 40%,
+    rgba(137, 207, 240, 0.2) 78%,
+    rgba(137, 207, 240, 0.95) 100%
   );
-  box-shadow: 0 2px 14px 1px rgba(62, 155, 196, 0.35);
+  box-shadow: 0 2px 14px 1px rgba(137, 207, 240, 0.4);
   will-change: transform;
   animation: scan-sweep 2.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }

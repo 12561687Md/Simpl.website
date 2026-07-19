@@ -109,7 +109,7 @@ export default function PhotoCarousel3D({
                 style={{
                   width: "100%",
                   height: "100%",
-                  borderRadius: 24,
+                  borderRadius: 32,
                   overflow: "hidden",
                   border: "1px solid var(--rule)",
                   background: "var(--bg-soft)",

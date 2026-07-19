@@ -4,7 +4,8 @@ import { isRateLimited, getClientIp } from "../../../../lib/rate-limit";
 import { verifyScanToken } from "../../../../lib/scan-token";
 
 /**
- * A dark-styled Google Static Map of the scanned business, streamed through our
+ * A hybrid (satellite + labels) Google Static Map of the scanned business,
+ * streamed through our
  * origin so the key never ships to the browser. Metered (~$2/1000), hence the gate.
  *
  * Three things this route learned the hard way:
@@ -32,24 +33,11 @@ const querySchema = z.object({
 
 const RATE_LIMIT_MAX = 60;
 
-// Tuned to the scan theater's cream surface (CREAM_THEME in
-// ScanTheater.tsx — the only consumer of this map), not Google's default
-// light map and not the site's dark theme. Every rule still carries a
-// `feature:` prefix, see note 3 above.
-const STYLE = [
-  "feature:all|element:geometry|color:0xf3ecd9",
-  "feature:all|element:labels.icon|visibility:off",
-  "feature:all|element:labels.text.fill|color:0x8a7a5c",
-  "feature:all|element:labels.text.stroke|color:0xf7f2e7",
-  "feature:administrative|element:geometry|color:0xe2d6b8",
-  "feature:poi|element:geometry|color:0xebe1ca",
-  "feature:poi|element:labels.text|visibility:off",
-  "feature:road|element:geometry|color:0xfdfbf5",
-  "feature:road|element:labels.text.fill|color:0x9c8f72",
-  "feature:road.highway|element:geometry|color:0xe8dcc0",
-  "feature:transit|element:geometry|color:0xe2d6b8",
-  "feature:water|element:geometry|color:0xcfe0f0",
-];
+// No STYLE array anymore (2026-07-19: "keep the map colored, or even
+// satellite") — the map is satellite-with-labels (hybrid), and Static Maps
+// style rules only apply to roadmap tiles, so a custom palette here would
+// be dead weight. Note 3 above is retained for whoever reintroduces a
+// styled roadmap later.
 
 export async function GET(req: Request) {
   try {
@@ -84,17 +72,24 @@ export async function GET(req: Request) {
     const center = `${lat},${lng}`;
     const params = new URLSearchParams({
       center,
-      zoom: "15",
+      // Tight enough on satellite imagery to show their actual building and
+      // lot, not a fifteen-block abstraction (15 was tuned for the old
+      // styled roadmap).
+      zoom: "17",
       size: "640x480",
       // Retina. 640x480 is the free-tier ceiling; scale=2 renders 1280x960 from
       // the same billable request.
       scale: "2",
-      maptype: "roadmap",
-      // The on-light accent variant — baby blue washes out on the cream map.
-      markers: `color:0x3E9BC4|${center}`,
+      // Satellite imagery with road/label overlay. Real overhead photography
+      // of their actual location reads as far more "we found YOU" than any
+      // styled vector map.
+      maptype: "hybrid",
+      // Default red pin on purpose: on satellite photography a brand-colored
+      // marker vanishes into rooftops; red is the one color every map reader
+      // is trained on.
+      markers: center,
       key,
     });
-    for (const s of STYLE) params.append("style", s);
 
     const resp = await fetch(`https://maps.googleapis.com/maps/api/staticmap?${params}`, {
       signal: AbortSignal.timeout(8000),

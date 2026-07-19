@@ -55,13 +55,13 @@ export default function ReviewProfileCards({ reviews, delay = 0, stagger = 2.5 }
               flex: "1 1 250px",
               minWidth: 250,
               maxWidth: 340,
-              background: "var(--bg-soft)",
-              border: "1px solid var(--rule)",
+              // Cream card on the dark theater (the page stays dark; the
+              // cream lives on the cards) — mirrors CARD in ScanTheater.tsx.
+              background: "#FBF7EE",
+              border: "1px solid #E8E1CF",
               borderRadius: 12,
               padding: 24,
-              // Tuned for the theater's cream surface: a soft lift, not the
-              // hard dark-theme edge.
-              boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 10px 28px -14px rgba(0,0,0,0.14)",
+              boxShadow: "0 16px 38px -18px rgba(0,0,0,0.55)",
             }}
           >
             {/* Header: avatar + name + date left, star row right */}
@@ -86,11 +86,11 @@ export default function ReviewProfileCards({ reviews, delay = 0, stagger = 2.5 }
                   {initials(rv.author)}
                 </div>
                 <div style={{ minWidth: 0 }}>
-                  <h3 style={{ margin: 0, fontSize: 16.5, fontWeight: 600, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <h3 style={{ margin: 0, fontSize: 16.5, fontWeight: 600, lineHeight: 1.3, color: "#211C14", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                     {rv.author ?? "Verified customer"}
                   </h3>
                   {rv.when && (
-                    <p style={{ ...mono, margin: "3px 0 0", fontSize: 11.5, color: "var(--muted)" }}>{rv.when}</p>
+                    <p style={{ ...mono, margin: "3px 0 0", fontSize: 11.5, color: "#6E6553" }}>{rv.when}</p>
                   )}
                 </div>
               </div>
@@ -103,7 +103,7 @@ export default function ReviewProfileCards({ reviews, delay = 0, stagger = 2.5 }
                       style={{
                         width: 15,
                         height: 15,
-                        color: s < stars ? "#FACC15" : "var(--rule-strong)",
+                        color: s < stars ? "#FACC15" : "#D8D2C0",
                         fill: s < stars ? "#FACC15" : "none",
                       }}
                     />
@@ -113,7 +113,7 @@ export default function ReviewProfileCards({ reviews, delay = 0, stagger = 2.5 }
             </div>
 
             {/* Body */}
-            <p style={{ margin: "16px 0 0", fontSize: 13.5, lineHeight: 1.55, color: "var(--muted)" }}>
+            <p style={{ margin: "16px 0 0", fontSize: 13.5, lineHeight: 1.55, color: "#3F3A2F" }}>
               &ldquo;{rv.text}&rdquo;
             </p>
           </motion.article>

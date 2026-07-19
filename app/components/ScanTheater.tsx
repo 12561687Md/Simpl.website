@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, type CSSProperties } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { PlaceDetails } from "../lib/scan-types";
 import PhotoCarousel3D from "@/components/ui/photo-carousel-3d";
@@ -26,49 +26,36 @@ const REVEAL_START = 0.2;
  * only the unhurried reveal, which exists because a diagnosis delivered in 400ms
  * reads as a lookup, not an examination.
  *
- * Sequence (2026-07-19d): the map opens alone, large, centered — the only
- * thing on screen. It sweeps once, then shrinks into the left column under
- * the NAP block, with the checklist ticking beneath it. On the right (on a
- * cream surface, see CREAM_THEME): the rating badge, then four real
+ * Sequence (2026-07-19e): the satellite map opens alone, large, centered —
+ * the only thing on screen. It sweeps once, then collapses into a GBP
+ * snapshot card in the left column under the NAP block (photo + map side
+ * by side, listing line beneath — the knowledge-panel view a customer
+ * actually sees), with the checklist ticking under that. The page stays
+ * dark; the cream lives on the cards (CARD here, mirrored in
+ * ReviewProfileCards). On the right: the rating badge, then four real
  * reviews 1.5s apart, then the 3D photo carousel rises and its photos join
  * the spinning drum 1.5s apart, while the panel-wide scanline sweeps the
- * whole time. The map intro is brief on purpose — it's the establishing
- * shot, not where the time should go. Nothing here names where it came
- * from (no "found on Google," no "pulled from your profile") — the effect
- * this is going for is "how did they know that," and naming the source is
- * the one thing that would break it. The photos are still the visitor's
- * own, pulled from their listing, that data is real either way.
+ * whole time. Nothing here names where it came from (no "found on Google,"
+ * no "pulled from your profile") — the effect this is going for is "how
+ * did they know that," and naming the source is the one thing that would
+ * break it. The photos are still the visitor's own, pulled from their
+ * listing, that data is real either way.
  */
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 /**
- * Theater-scoped light theme (2026-07-19, per the Owner.com-style cream
- * reference): the scan runs on a cream-white surface even though the rest
- * of the site is dark. Done as CSS-variable overrides on the theater root
- * so every child that reads var(--fg)/var(--rule)/var(--bg-soft) — the
- * review cards, the checklist, the map corners, the carousel borders —
- * recolors consistently without per-component forks. The accent is the
- * brand blue's on-light variant (the baby blue itself washes out on cream).
+ * Light-card surface tokens (2026-07-19: the page STAYS dark — the cream
+ * goes on the cards, not the background). Used by the GBP snapshot card
+ * here and mirrored in ReviewProfileCards, so the light cards share one
+ * palette against the dark theater.
  */
-const CREAM_THEME = {
-  "--bg": "#FAF6EC",
-  "--bg-soft": "#FFFFFF",
-  "--bg-elev": "#F3EEE1",
-  "--bg-elev-2": "#EAE3D2",
-  "--fg": "#211C14",
-  "--muted": "#6E6553",
-  "--fg-dim": "#9A9078",
-  "--rule": "#E5DFCE",
-  "--rule-soft": "#EFE9DA",
-  "--rule-strong": "#C7BFA9",
-  "--accent": "#3E9BC4",
-  "--accent-dim": "#2F7FA3",
-  "--accent-soft": "rgba(62,155,196,0.12)",
-  "--accent-line": "rgba(62,155,196,0.34)",
-  "--pulse": "#3E9BC4",
-  "--ok": "#1E8F5A",
-} as CSSProperties;
+const CARD = {
+  bg: "#FBF7EE",
+  border: "#E8E1CF",
+  ink: "#211C14",
+  muted: "#6E6553",
+};
 
 interface Phase {
   label: string;
@@ -121,8 +108,9 @@ function MapBox({ mapUrl, active }: { mapUrl: string | null; active: boolean }) 
         style={{
           position: "absolute",
           inset: 0,
-          // Whisper-light wash: the map itself is cream-styled now, and the
-          // old dark-theme gradients (0.35-0.4 alpha) turned it to mud.
+          // Whisper-light wash: the map is satellite photography now, and a
+          // heavy gradient would mud it — just enough for the scanline and
+          // corner brackets to read.
           background: active
             ? "linear-gradient(180deg, rgba(33,28,20,0.02), rgba(33,28,20,0.14))"
             : "linear-gradient(180deg, rgba(33,28,20,0.05), rgba(33,28,20,0.12))",
@@ -211,7 +199,6 @@ export default function ScanTheater({
   return (
     <div
       style={{
-        ...CREAM_THEME,
         position: "relative",
         minHeight: "100dvh",
         display: "flex",
@@ -220,7 +207,6 @@ export default function ScanTheater({
         alignItems: "flex-start",
         padding: "40px 32px 48px",
         overflow: "hidden",
-        background: "var(--bg)",
       }}
     >
       <div
@@ -229,7 +215,7 @@ export default function ScanTheater({
           position: "absolute",
           inset: 0,
           zIndex: 0,
-          background: "radial-gradient(80% 60% at 50% 30%, rgba(62,155,196,0.08), transparent 65%)",
+          background: "radial-gradient(80% 60% at 50% 30%, rgba(137,207,240,0.07), transparent 65%)",
         }}
       />
       {/* No max-width cap: the left column should hug the actual left edge
@@ -290,7 +276,7 @@ export default function ScanTheater({
                   >
                     <span
                       aria-hidden="true"
-                      style={{ width: 10, height: 10, marginTop: 12, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 5px rgba(62,155,196,0.18)", flexShrink: 0 }}
+                      style={{ width: 10, height: 10, marginTop: 12, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 5px rgba(137,207,240,0.15)", flexShrink: 0 }}
                     />
                     <div style={{ minWidth: 0 }}>
                       <div style={{ fontSize: "clamp(28px, 2.6vw, 36px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
@@ -303,13 +289,48 @@ export default function ScanTheater({
                     </div>
                   </motion.div>
 
-                  {place.mapUrl && (
+                  {(place.mapUrl || photos[0]) && (
                     <motion.div
                       layout
                       transition={{ type: "spring", stiffness: 140, damping: 18 }}
-                      style={{ width: "100%", aspectRatio: "4 / 3" }}
+                      style={{
+                        width: "100%",
+                        background: CARD.bg,
+                        border: `1px solid ${CARD.border}`,
+                        borderRadius: 14,
+                        overflow: "hidden",
+                        boxShadow: "0 16px 38px -18px rgba(0,0,0,0.55)",
+                      }}
                     >
-                      <MapBox mapUrl={place.mapUrl} active={false} />
+                      {/* GBP snapshot: their first listing photo beside the
+                          map, then the listing line a customer actually sees
+                          — name, stars, count, and Google's own one-line
+                          description. All real fields off their profile. */}
+                      <div style={{ display: "flex", height: 118 }}>
+                        {photos[0] && (
+                          <img src={photos[0]} alt="" style={{ width: place.mapUrl ? "50%" : "100%", height: "100%", objectFit: "cover" }} />
+                        )}
+                        {place.mapUrl && (
+                          <img src={place.mapUrl} alt="" style={{ width: photos[0] ? "50%" : "100%", height: "100%", objectFit: "cover" }} />
+                        )}
+                      </div>
+                      <div style={{ padding: "12px 14px 14px" }}>
+                        <div style={{ fontSize: 15.5, fontWeight: 600, color: CARD.ink, lineHeight: 1.25 }}>{place.name}</div>
+                        {place.rating !== null && (
+                          <div style={{ display: "flex", alignItems: "center", gap: 7, marginTop: 5 }}>
+                            <span aria-hidden="true" style={{ color: "#FACC15", fontSize: 12, letterSpacing: 1 }}>
+                              {"★".repeat(Math.round(place.rating))}
+                            </span>
+                            <span style={{ fontSize: 12.5, fontWeight: 600, color: CARD.ink }}>{place.rating.toFixed(1)}</span>
+                            {place.reviewCount !== null && (
+                              <span style={{ ...mono, fontSize: 10.5, color: CARD.muted }}>({place.reviewCount.toLocaleString()})</span>
+                            )}
+                          </div>
+                        )}
+                        {place.summary && (
+                          <p style={{ margin: "7px 0 0", fontSize: 11.5, lineHeight: 1.45, color: CARD.muted }}>{place.summary}</p>
+                        )}
+                      </div>
                     </motion.div>
                   )}
 
@@ -318,7 +339,7 @@ export default function ScanTheater({
                       <motion.div
                         animate={{ width: `${progress}%` }}
                         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-                        style={{ position: "absolute", inset: 0, right: "auto", background: "var(--accent)", borderRadius: 2, boxShadow: "0 0 8px rgba(62,155,196,0.5)" }}
+                        style={{ position: "absolute", inset: 0, right: "auto", background: "var(--accent)", borderRadius: 2, boxShadow: "0 0 8px rgba(137,207,240,0.5)" }}
                       />
                     </div>
                     <ol role="status" aria-live="polite" style={{ listStyle: "none", margin: 0, padding: 0 }}>
