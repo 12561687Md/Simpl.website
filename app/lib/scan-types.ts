@@ -68,6 +68,32 @@ export interface ScanResult {
   critical_count: number;
   warning_count: number;
   is_free_tier: boolean;
+  /** Real DataForSEO search-visibility data (2026-07-19: wired into the
+   *  free scan, not email-gated). {available: false} with no credentials
+   *  or on any upstream failure — never a fabricated rank or keyword. */
+  search?: SearchData;
+}
+
+export interface SearchKeyword {
+  keyword: string;
+  search_volume: number | null;
+  rank: number | null;
+}
+
+export interface SearchCompetitor {
+  domain: string;
+  common_keywords: number | null;
+  organic_keywords: number | null;
+}
+
+export interface SearchData {
+  available: boolean;
+  organic_keywords?: number | null;
+  pos_1?: number | null;
+  pos_2_3?: number | null;
+  pos_4_10?: number | null;
+  keywords?: SearchKeyword[];
+  competitors?: SearchCompetitor[];
 }
 
 /**

@@ -202,6 +202,8 @@ export default function ScanReport({
   const seoFindings = (result.findings ?? []).filter((f) => f.category === "On-Page SEO" || f.category === "Crawlability");
   const reviews = (place.reviews ?? []).slice(0, 2);
   const worstTwo = weak.slice(0, 2);
+  const hasSearchKeywords = Boolean(result.search?.available && result.search.keywords && result.search.keywords.length > 0);
+  const hasCompetitors = Boolean(result.search?.available && result.search.competitors && result.search.competitors.length > 0);
 
   // Teaser reveal for the detailed findings section only: sections 01-03 and
   // the exec-summary breadth stay visible always, that's the hook. What's
@@ -459,47 +461,92 @@ export default function ScanReport({
         <SectionHead
           n="05"
           title="Search opportunity"
-          lead="The work that starts cold begins with a search. These are the real on-page and technical signals Google uses to decide whether you show up for it."
+          lead={
+            hasSearchKeywords
+              ? "Real Google data: the terms you already rank for, the real monthly search volume behind them, and where you currently sit."
+              : "The work that starts cold begins with a search. These are the real on-page and technical signals Google uses to decide whether you show up for it."
+          }
         />
-        <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
-          <div
-            style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 110px 2fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}
-          >
-            <span>Signal</span>
-            <span>Severity</span>
-            <span>What it costs you</span>
-          </div>
-          {(seoFindings.length > 0 ? seoFindings.slice(0, 6) : [{ severity: "info", title: "No search-visibility issues found", category: "On-Page SEO", fix: null } as Finding]).map((f, i) => (
-            <div
-              key={`${f.title}-${i}`}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "2fr 110px 2fr",
-                gap: 12,
-                padding: "13px 16px",
-                fontSize: 13.5,
-                borderBottom: i < Math.min(seoFindings.length, 6) - 1 ? "1px solid var(--rule)" : "none",
-                alignItems: "center",
-              }}
-            >
-              <span style={{ ...display, fontWeight: 600 }}>{f.title}</span>
-              <Pill color={f.severity === "critical" ? "#E05252" : f.severity === "warning" ? "#E0A852" : "var(--ok)"}>
-                {f.severity === "critical" ? "High" : f.severity === "warning" ? "Medium" : "OK"}
-              </Pill>
-              <span style={{ color: "var(--muted)" }}>{f.fix ?? "Already handled"}</span>
+        {hasSearchKeywords ? (
+          <>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginBottom: 20 }}>
+              <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "16px 18px" }}>
+                <div style={{ ...display, fontSize: "clamp(22px, 3vw, 28px)", fontWeight: 700, color: "var(--fg)", lineHeight: 1 }}>{result.search!.organic_keywords}</div>
+                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 8, lineHeight: 1.4 }}>keywords you show up for at all</div>
+              </div>
+              <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "16px 18px" }}>
+                <div style={{ ...display, fontSize: "clamp(22px, 3vw, 28px)", fontWeight: 700, color: (result.search!.pos_1 ?? 0) > 0 ? "var(--ok)" : "#E05252", lineHeight: 1 }}>{result.search!.pos_1 ?? 0}</div>
+                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 8, lineHeight: 1.4 }}>keywords ranked #1</div>
+              </div>
+              <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "16px 18px" }}>
+                <div style={{ ...display, fontSize: "clamp(22px, 3vw, 28px)", fontWeight: 700, color: "#E0A852", lineHeight: 1 }}>{result.search!.pos_4_10 ?? 0}</div>
+                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 8, lineHeight: 1.4 }}>on page 1 but not the top 3</div>
+              </div>
             </div>
-          ))}
-        </div>
-        <p style={{ ...rmono, fontSize: 11, color: "var(--faint, var(--muted))", letterSpacing: "0.03em", marginTop: 14, lineHeight: 1.6 }}>
-          This section shows the real on-page and crawlability signals from this scan. Exact search volumes, keyword
-          difficulty, and live rank positions require a paid data pull (DataForSEO) and aren&apos;t part of the free
-          scan — real numbers here, not placeholders, on the full audit call.
-        </p>
+            <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
+              <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 130px 90px", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
+                <span>Keyword</span>
+                <span>Monthly searches</span>
+                <span>Your rank</span>
+              </div>
+              {result.search!.keywords!.slice(0, 6).map((kw, i) => (
+                <div key={`${kw.keyword}-${i}`} style={{ display: "grid", gridTemplateColumns: "2fr 130px 90px", gap: 12, padding: "13px 16px", fontSize: 13.5, borderBottom: i < Math.min(result.search!.keywords!.length, 6) - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
+                  <span style={{ ...display, fontWeight: 600 }}>{kw.keyword}</span>
+                  <span style={{ ...rmono, color: "var(--muted)" }}>{kw.search_volume != null ? kw.search_volume.toLocaleString() : "—"}</span>
+                  <span style={{ ...rmono, color: kw.rank != null && kw.rank <= 10 ? "var(--ok)" : "#E0A852" }}>{kw.rank != null ? `#${kw.rank}` : "Not ranking"}</span>
+                </div>
+              ))}
+            </div>
+            <p style={{ ...rmono, fontSize: 11, color: "var(--faint, var(--muted))", letterSpacing: "0.03em", marginTop: 14, lineHeight: 1.6 }}>
+              Live Google rank + real search volume, pulled from DataForSEO at scan time. Not an estimate.
+            </p>
+          </>
+        ) : (
+          <>
+            <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
+              <div
+                style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 110px 2fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}
+              >
+                <span>Signal</span>
+                <span>Severity</span>
+                <span>What it costs you</span>
+              </div>
+              {(seoFindings.length > 0 ? seoFindings.slice(0, 6) : [{ severity: "info", title: "No search-visibility issues found", category: "On-Page SEO", fix: null } as Finding]).map((f, i) => (
+                <div
+                  key={`${f.title}-${i}`}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "2fr 110px 2fr",
+                    gap: 12,
+                    padding: "13px 16px",
+                    fontSize: 13.5,
+                    borderBottom: i < Math.min(seoFindings.length, 6) - 1 ? "1px solid var(--rule)" : "none",
+                    alignItems: "center",
+                  }}
+                >
+                  <span style={{ ...display, fontWeight: 600 }}>{f.title}</span>
+                  <Pill color={f.severity === "critical" ? "#E05252" : f.severity === "warning" ? "#E0A852" : "var(--ok)"}>
+                    {f.severity === "critical" ? "High" : f.severity === "warning" ? "Medium" : "OK"}
+                  </Pill>
+                  <span style={{ color: "var(--muted)" }}>{f.fix ?? "Already handled"}</span>
+                </div>
+              ))}
+            </div>
+            <p style={{ ...rmono, fontSize: 11, color: "var(--faint, var(--muted))", letterSpacing: "0.03em", marginTop: 14, lineHeight: 1.6 }}>
+              This section shows the real on-page and crawlability signals from this scan. Live search volumes and
+              rank positions need a DataForSEO pull that didn&apos;t return data for this domain (too new to have
+              search history, or the data source was unavailable) — real numbers, not placeholders, when there&apos;s
+              a footprint to measure.
+            </p>
+          </>
+        )}
         <SectionFix
           title="How to fix this"
           points={[
             "Google can't rank a page it can't understand. Missing titles, schema, and metadata are the difference between showing up and being invisible for the exact terms your customers type.",
-            "Fix the “High” severity signals first — those are the ones actively blocking discovery, not just weakening it.",
+            hasSearchKeywords
+              ? "Anything outside the top 3 is losing clicks to whoever is above you — the first result gets roughly a third of all clicks on a search."
+              : "Fix the “High” severity signals first — those are the ones actively blocking discovery, not just weakening it.",
             "This is the section that compounds slowest and pays the longest. Start it now even if the payoff is months out.",
           ]}
         />
@@ -562,6 +609,23 @@ export default function ScanReport({
             </p>
           </Box>
         </div>
+
+        {hasCompetitors && (
+          <div style={{ marginTop: 18, border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
+              <span>Domain competing for your keywords</span>
+              <span>Keywords in common</span>
+              <span>Their footprint</span>
+            </div>
+            {result.search!.competitors!.map((c, i) => (
+              <div key={c.domain} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 12, padding: "13px 16px", fontSize: 13.5, borderBottom: i < result.search!.competitors!.length - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
+                <span style={{ ...display, fontWeight: 600 }}>{c.domain}</span>
+                <span style={{ ...rmono, color: "var(--muted)" }}>{c.common_keywords ?? "—"}</span>
+                <span style={{ ...rmono, color: "var(--muted)" }}>{c.organic_keywords ?? "—"} keywords</span>
+              </div>
+            ))}
+          </div>
+        )}
         <SectionFix
           title="How to fix this"
           points={[
