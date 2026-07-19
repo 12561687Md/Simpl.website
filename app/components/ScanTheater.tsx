@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { PlaceDetails } from "../lib/scan-types";
-import PhotoFanReveal from "./PhotoFanReveal";
+import PhotoCarousel3D from "@/components/ui/photo-carousel-3d";
 import ReviewProfileCards from "./ReviewProfileCards";
 
 // Exact spec (2026-07-19c): 1.5s between each review, then 1.5s between each
@@ -202,7 +202,10 @@ export default function ScanTheater({
           background: "radial-gradient(80% 60% at 50% 30%, rgba(137,207,240,0.07), transparent 65%)",
         }}
       />
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1600, margin: "0 auto", width: "100%" }}>
+      {/* No max-width cap: the left column should hug the actual left edge
+          of the screen (inside the outer padding), not a centered 1600px
+          band that floats it inward on wide monitors. */}
+      <div style={{ position: "relative", zIndex: 1, width: "100%" }}>
         <AnimatePresence mode="wait">
           {stage === "map-intro" ? (
             <motion.div
@@ -242,7 +245,7 @@ export default function ScanTheater({
                     display: "flex",
                     flexDirection: "column",
                     gap: 20,
-                    width: 340,
+                    width: 380,
                     flexShrink: 0,
                     borderRight: "1px solid var(--rule)",
                     paddingRight: 40,
@@ -260,10 +263,10 @@ export default function ScanTheater({
                       style={{ width: 10, height: 10, marginTop: 12, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 5px rgba(137,207,240,0.15)", flexShrink: 0 }}
                     />
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: "clamp(26px, 2.4vw, 32px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+                      <div style={{ fontSize: "clamp(28px, 2.6vw, 36px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
                         {place.name}
                       </div>
-                      <div style={{ ...mono, fontSize: 13, color: "var(--muted)", marginTop: 8, lineHeight: 1.6 }}>
+                      <div style={{ ...mono, fontSize: 13.5, color: "var(--muted)", marginTop: 8, lineHeight: 1.6 }}>
                         {place.address && <div>{place.address}</div>}
                         {place.phone && <div>{place.phone}</div>}
                       </div>
@@ -281,11 +284,11 @@ export default function ScanTheater({
                   )}
 
                   <div>
-                    <div style={{ position: "relative", height: 2, background: "var(--rule)", borderRadius: 1, overflow: "hidden", marginBottom: 16 }}>
+                    <div style={{ position: "relative", height: 3, background: "var(--rule-strong)", borderRadius: 2, overflow: "hidden", marginBottom: 16 }}>
                       <motion.div
                         animate={{ width: `${progress}%` }}
                         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-                        style={{ position: "absolute", inset: 0, right: "auto", background: "var(--accent)", borderRadius: 1 }}
+                        style={{ position: "absolute", inset: 0, right: "auto", background: "var(--accent)", borderRadius: 2, boxShadow: "0 0 8px rgba(137,207,240,0.5)" }}
                       />
                     </div>
                     <ol role="status" aria-live="polite" style={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -296,13 +299,17 @@ export default function ScanTheater({
                           <motion.li
                             key={p.label}
                             initial={reduce ? { opacity: 0 } : { opacity: 0, x: -6 }}
-                            animate={{ opacity: state === "active" ? 1 : 0.45, x: 0 }}
+                            // Brighter than the first pass (was 0.45 muted-on-dark,
+                            // which read as barely-there): done items keep full
+                            // foreground color at a soft opacity.
+                            animate={{ opacity: state === "active" ? 1 : 0.78, x: 0 }}
                             transition={{ duration: 0.3 }}
                             style={{
                               ...mono,
-                              fontSize: 12,
-                              lineHeight: 1.95,
-                              color: state === "active" ? "var(--fg)" : "var(--muted)",
+                              fontSize: 13,
+                              lineHeight: 2,
+                              color: "var(--fg)",
+                              fontWeight: state === "active" ? 600 : 400,
                               display: "flex",
                               alignItems: "flex-start",
                               gap: 9,
@@ -310,7 +317,7 @@ export default function ScanTheater({
                           >
                             <span
                               aria-hidden="true"
-                              style={{ width: 13, flexShrink: 0, color: state === "done" ? "var(--ok)" : "var(--muted)" }}
+                              style={{ width: 14, flexShrink: 0, color: state === "done" ? "var(--ok)" : "var(--accent)" }}
                             >
                               {state === "done" ? "✓" : "→"}
                             </span>
@@ -323,10 +330,10 @@ export default function ScanTheater({
                 </div>
 
                 {/* Right: the main event, ~75%+ of the panel. Reviews and
-                    the rating pop in first, then photos scatter in big
+                    the rating pop in first, then the photo carousel spins
                     beneath them. No source named anywhere here — the
                     rating stat, the reviews, and the photos just appear. */}
-                <div style={{ flex: 1, minWidth: 420 }}>
+                <div style={{ flex: 1, minWidth: 420, position: "relative", alignSelf: "stretch" }}>
                   {place.rating !== null && place.reviewCount !== null && (
                     <motion.div
                       initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.96 }}
@@ -357,12 +364,23 @@ export default function ScanTheater({
                     stagger={REVEAL_STAGGER}
                   />
 
-                  <div style={{ marginTop: 26 }}>
-                    <PhotoFanReveal
-                      photos={photos}
-                      delay={REVEAL_START + ((place.rating !== null ? 1 : 0) + reviewCards.length) * REVEAL_STAGGER}
-                      stagger={REVEAL_STAGGER}
-                    />
+                  <motion.div
+                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: reduce ? 0 : REVEAL_START + ((place.rating !== null ? 1 : 0) + reviewCards.length) * REVEAL_STAGGER }}
+                    style={{ marginTop: 30 }}
+                  >
+                    <PhotoCarousel3D photos={photos} size={280} />
+                  </motion.div>
+
+                  {/* The scan bar, panel-scale: the same sweep that ran over
+                      the intro map now runs over the entire right panel —
+                      divider line to screen edge, top to bottom and back —
+                      for the whole remainder of the scan. Mounted last with
+                      an explicit z-index so it paints above the transformed
+                      review/photo layers. */}
+                  <div className="scanline-track" aria-hidden="true" style={{ zIndex: 10 }}>
+                    <div className="scanline" />
                   </div>
                 </div>
               </div>
