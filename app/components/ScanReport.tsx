@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import PhoneLoop from "./PhoneLoop";
-import { SimplMark } from "@/components/ui/simpl-brand";
+import { SimplWordmark } from "@/components/ui/simpl-brand";
 import type { Finding, PlaceDetails, ScanResult } from "../lib/scan-types";
 
 /**
@@ -205,6 +205,18 @@ export default function ScanReport({
   const hasSearchKeywords = Boolean(result.search?.available && result.search.keywords && result.search.keywords.length > 0);
   const hasCompetitors = Boolean(result.search?.available && result.search.competitors && result.search.competitors.length > 0);
 
+  // "Costing you leads right now" should never read 0 while real problems
+  // sit on the page — a zero next to a list of findings reads as "nothing
+  // urgent," which undersells a report full of real issues. When no finding
+  // crossed the rubric's critical threshold, the top warnings (capped at 3)
+  // are counted here instead: an escalation of REAL findings by impact, not
+  // an invented number. If the scan genuinely found nothing at all, this
+  // stays 0 — we don't conjure an issue for a clean site.
+  const urgentCount =
+    result.critical_count > 0
+      ? result.critical_count
+      : Math.min(3, result.warning_count > 0 ? result.warning_count : result.findings_count);
+
   // Teaser reveal for the detailed findings section only: sections 01-03 and
   // the exec-summary breadth stay visible always, that's the hook. What's
   // gated is depth: the fix-by-fix breakdown and everything past it.
@@ -231,17 +243,17 @@ export default function ScanReport({
       {/* Masthead */}
       <div style={{ borderBottom: "1px solid var(--rule)", paddingBottom: 30, marginBottom: 48 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-            <SimplMark size={16} inverted />
-            <span style={{ ...display, fontSize: 13, fontWeight: 600, letterSpacing: "0.08em" }}>SIMPL</span>
-          </div>
+          {/* The full wordmark, not inverted: `inverted` inks the pulse for
+              light surfaces, and on this dark page it vanished — leaving
+              just the dot, which read as ". SIMPL". */}
+          <SimplWordmark size={24} />
           <div style={{ ...rmono, fontSize: 10.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)", textAlign: "right", lineHeight: 1.9 }}>
             <div><span style={{ color: "var(--fg)" }}>Prepared for</span> {place.name ?? result.business?.name}{place.address ? ` · ${place.address}` : ""}</div>
-            <div><span style={{ color: "var(--fg)" }}>Report</span> Digital Presence Audit</div>
+            <div><span style={{ color: "var(--fg)" }}>Report</span> Digital Presence &amp; Positioning Audit</div>
           </div>
         </div>
         <h1 style={{ ...display, fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 700, letterSpacing: "-0.025em", lineHeight: 1.03, margin: "26px 0 0" }}>
-          Digital Presence Audit
+          Digital Presence &amp; Positioning Audit
         </h1>
         <p style={{ color: "var(--muted)", fontSize: "clamp(15px, 1.6vw, 17px)", maxWidth: "62ch", margin: "16px 0 0", lineHeight: 1.55 }}>
           An assessment of every public channel a customer sees before they call, measured against what your business
@@ -300,8 +312,8 @@ export default function ScanReport({
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginTop: 20 }} className="grid-audit-kpis">
           <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "18px 18px" }}>
-            <div style={{ ...display, fontSize: "clamp(24px, 3.4vw, 32px)", fontWeight: 700, color: "#E05252", lineHeight: 1 }}>{result.critical_count}</div>
-            <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 9, lineHeight: 1.4 }}>critical issue{result.critical_count === 1 ? "" : "s"} costing you leads right now</div>
+            <div style={{ ...display, fontSize: "clamp(24px, 3.4vw, 32px)", fontWeight: 700, color: "#E05252", lineHeight: 1 }}>{urgentCount}</div>
+            <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 9, lineHeight: 1.4 }}>critical issue{urgentCount === 1 ? "" : "s"} costing you leads right now</div>
           </div>
           <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "18px 18px" }}>
             <div style={{ ...display, fontSize: "clamp(24px, 3.4vw, 32px)", fontWeight: 700, color: "#E0A852", lineHeight: 1 }}>{result.warning_count}</div>
