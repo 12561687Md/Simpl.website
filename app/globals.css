@@ -924,6 +924,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
      room to breathe) would force horizontal overflow the moment the row
      stacks on a narrow phone — reset it so the column can shrink to fit. */
   .theater-reveal-row > div:last-child { min-width: 0 !important; }
+  /* The desktop section divider is a right border on the left column; once
+     the row stacks it has to become a bottom border or it draws a stray
+     vertical line through the middle of the page. */
+  .theater-left-col {
+    border-right: none !important;
+    padding-right: 0 !important;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 28px;
+  }
 }
 
 /* Audit report (ScanReport): the gauge, KPI strip, bar chart, and

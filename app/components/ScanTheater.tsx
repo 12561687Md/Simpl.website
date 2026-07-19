@@ -186,8 +186,10 @@ export default function ScanTheater({
         position: "relative",
         minHeight: "100dvh",
         display: "flex",
-        alignItems: "center",
-        padding: "48px 32px",
+        // Top-aligned, not centered: the NAP block belongs in the top-left
+        // corner of the screen, not floating at mid-height.
+        alignItems: "flex-start",
+        padding: "40px 32px 48px",
         overflow: "hidden",
       }}
     >
@@ -209,7 +211,7 @@ export default function ScanTheater({
               animate={{ opacity: 1, scale: 1 }}
               exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.97 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "60vh" }}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "80vh" }}
             >
               <div style={{ ...mono, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 20 }}>
                 Locating {place.name}
@@ -229,27 +231,39 @@ export default function ScanTheater({
                 style={{ display: "flex", gap: 56, alignItems: "flex-start", flexWrap: "wrap" }}
                 className="theater-reveal-row"
               >
-                {/* Left: NAP, then the map settled small, then the checklist
-                    ticking beneath it — all one column, top to bottom, per
-                    the exact layout spec (NAP + map together, checklist
-                    directly under). Narrow on purpose — the right side is
-                    the main event and should read as ~75%+ of the panel. */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 18, width: 240, flexShrink: 0 }}>
+                {/* Left: NAP big in the top corner, the map right under it,
+                    then the checklist ticking beneath — one column, top to
+                    bottom, sectioned off from the reveal panel by a real
+                    divider (the borderRight below; swaps to a bottom border
+                    when the row stacks on mobile, see .theater-left-col). */}
+                <div
+                  className="theater-left-col"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 20,
+                    width: 340,
+                    flexShrink: 0,
+                    borderRight: "1px solid var(--rule)",
+                    paddingRight: 40,
+                    alignSelf: "stretch",
+                  }}
+                >
                   <motion.div
                     initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.1 }}
-                    style={{ display: "flex", alignItems: "flex-start", gap: 10 }}
+                    style={{ display: "flex", alignItems: "flex-start", gap: 12 }}
                   >
                     <span
                       aria-hidden="true"
-                      style={{ width: 8, height: 8, marginTop: 6, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 4px rgba(137,207,240,0.15)", flexShrink: 0 }}
+                      style={{ width: 10, height: 10, marginTop: 12, borderRadius: 99, background: "var(--accent)", boxShadow: "0 0 0 5px rgba(137,207,240,0.15)", flexShrink: 0 }}
                     />
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.015em", lineHeight: 1.25 }}>
+                      <div style={{ fontSize: "clamp(26px, 2.4vw, 32px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
                         {place.name}
                       </div>
-                      <div style={{ ...mono, fontSize: 11, color: "var(--muted)", marginTop: 5, lineHeight: 1.6 }}>
+                      <div style={{ ...mono, fontSize: 13, color: "var(--muted)", marginTop: 8, lineHeight: 1.6 }}>
                         {place.address && <div>{place.address}</div>}
                         {place.phone && <div>{place.phone}</div>}
                       </div>
