@@ -32,21 +32,23 @@ const querySchema = z.object({
 
 const RATE_LIMIT_MAX = 60;
 
-// Tuned to the brand surfaces, not Google's default light map — every rule
-// still carries a `feature:` prefix, see note 3 above.
+// Tuned to the scan theater's cream surface (CREAM_THEME in
+// ScanTheater.tsx — the only consumer of this map), not Google's default
+// light map and not the site's dark theme. Every rule still carries a
+// `feature:` prefix, see note 3 above.
 const STYLE = [
-  "feature:all|element:geometry|color:0x131517",
+  "feature:all|element:geometry|color:0xf3ecd9",
   "feature:all|element:labels.icon|visibility:off",
-  "feature:all|element:labels.text.fill|color:0x8a8d90",
-  "feature:all|element:labels.text.stroke|color:0x0b0c0d",
-  "feature:administrative|element:geometry|color:0x262829",
-  "feature:poi|element:geometry|color:0x1b1e21",
+  "feature:all|element:labels.text.fill|color:0x8a7a5c",
+  "feature:all|element:labels.text.stroke|color:0xf7f2e7",
+  "feature:administrative|element:geometry|color:0xe2d6b8",
+  "feature:poi|element:geometry|color:0xebe1ca",
   "feature:poi|element:labels.text|visibility:off",
-  "feature:road|element:geometry|color:0x24282c",
-  "feature:road|element:labels.text.fill|color:0x9ca0a3",
-  "feature:road.highway|element:geometry|color:0x2f3438",
-  "feature:transit|element:geometry|color:0x1b1e21",
-  "feature:water|element:geometry|color:0x0e1a2b",
+  "feature:road|element:geometry|color:0xfdfbf5",
+  "feature:road|element:labels.text.fill|color:0x9c8f72",
+  "feature:road.highway|element:geometry|color:0xe8dcc0",
+  "feature:transit|element:geometry|color:0xe2d6b8",
+  "feature:water|element:geometry|color:0xcfe0f0",
 ];
 
 export async function GET(req: Request) {
@@ -88,7 +90,8 @@ export async function GET(req: Request) {
       // the same billable request.
       scale: "2",
       maptype: "roadmap",
-      markers: `color:0x89CFF0|${center}`,
+      // The on-light accent variant — baby blue washes out on the cream map.
+      markers: `color:0x3E9BC4|${center}`,
       key,
     });
     for (const s of STYLE) params.append("style", s);

@@ -5,13 +5,16 @@ import { motion, useAnimationFrame, useMotionValue, useReducedMotion, useTransfo
 
 /**
  * Auto-rotating 3D photo cylinder, adapted from the 21st.dev "3D carousel"
- * reference. Three deliberate departures:
+ * reference. Deliberate departures:
  *
  *  - No drag, no click-to-expand: it spins on its own at a slow constant
  *    rate. This lives inside the scan theater, which is a presentation the
  *    visitor watches, not a gallery they operate.
  *  - Real business photos (the same proxied Places photos the theater
  *    already pulls), not picsum placeholders.
+ *  - Faces don't all pop in at once: each unique photo joins the spinning
+ *    drum on the `stagger` cadence (its duplicate face appears with it), so
+ *    the carousel builds up photo by photo like the rest of the reveal.
  *  - Our inline-style idiom instead of the reference's Tailwind classes —
  *    the bg-mauve-dark-2 tokens it leans on don't exist in this codebase.
  *
@@ -19,7 +22,16 @@ import { motion, useAnimationFrame, useMotionValue, useReducedMotion, useTransfo
  * the set repeats to 8 faces to fill the drum. Under prefers-reduced-motion
  * the drum holds still (front faces remain visible) instead of spinning.
  */
-export default function PhotoCarousel3D({ photos, size = 260 }: { photos: string[]; size?: number }) {
+export default function PhotoCarousel3D({
+  photos,
+  size = 300,
+  stagger = 1.5,
+}: {
+  photos: string[];
+  size?: number;
+  /** Seconds between each unique photo joining the drum. */
+  stagger?: number;
+}) {
   const reduce = useReducedMotion();
   const rotation = useMotionValue(0);
 
@@ -37,18 +49,19 @@ export default function PhotoCarousel3D({ photos, size = 260 }: { photos: string
     return out.slice(0, 8);
   }, [photos]);
 
+  const uniqueCount = Math.min(photos.length, 8) || 1;
   const faceCount = faces.length;
-  // Face width plus a small gap decides the drum circumference, and the
+  // Face width plus a wide gap decides the drum circumference, and the
   // radius follows from it — sizing from the photo out, not the screen in,
   // so the front face is always `size` wide regardless of viewport.
-  const faceWidth = size + 24;
+  const faceWidth = size + 44;
   const cylinderWidth = faceWidth * faceCount;
   const radius = cylinderWidth / (2 * Math.PI);
 
   if (faces.length === 0) return null;
 
   return (
-    <div style={{ position: "relative", width: "100%", height: size + 36, overflow: "hidden" }}>
+    <div style={{ position: "relative", width: "100%", height: size + 44, overflow: "hidden" }}>
       <div
         style={{
           display: "flex",
@@ -73,6 +86,10 @@ export default function PhotoCarousel3D({ photos, size = 260 }: { photos: string
           }}
         >
           {faces.map((src, i) => (
+            // Placement transform lives on a static wrapper: framer-motion
+            // owns `transform` on the animated element (it composes scale/
+            // opacity into it), and would silently clobber a static
+            // rotateY/translateZ written on the same node.
             <div
               key={`${src}-${i}`}
               style={{
@@ -83,14 +100,24 @@ export default function PhotoCarousel3D({ photos, size = 260 }: { photos: string
                 height: size,
                 marginLeft: -size / 2,
                 transform: `rotateY(${i * (360 / faceCount)}deg) translateZ(${radius}px)`,
-                borderRadius: 16,
-                overflow: "hidden",
-                border: "1px solid var(--rule)",
-                background: "var(--bg-soft)",
-                boxShadow: "0 20px 44px -18px rgba(0,0,0,0.65)",
               }}
             >
-              <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <motion.div
+                initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.82 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: reduce ? 0 : (i % uniqueCount) * stagger }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 24,
+                  overflow: "hidden",
+                  border: "1px solid var(--rule)",
+                  background: "var(--bg-soft)",
+                  boxShadow: "0 20px 40px -18px rgba(0,0,0,0.22)",
+                }}
+              >
+                <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </motion.div>
             </div>
           ))}
         </motion.div>

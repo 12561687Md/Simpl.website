@@ -59,7 +59,9 @@ export default function ReviewProfileCards({ reviews, delay = 0, stagger = 2.5 }
               border: "1px solid var(--rule)",
               borderRadius: 12,
               padding: 24,
-              boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
+              // Tuned for the theater's cream surface: a soft lift, not the
+              // hard dark-theme edge.
+              boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 10px 28px -14px rgba(0,0,0,0.14)",
             }}
           >
             {/* Header: avatar + name + date left, star row right */}
