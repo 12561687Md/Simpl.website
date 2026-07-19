@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { Star } from "lucide-react";
 import type { ScanReview } from "../lib/scan-types";
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
@@ -21,117 +22,99 @@ function avatarColor(name: string | null): string {
   return AVATAR_HUES[sum % AVATAR_HUES.length];
 }
 
-// Alternating tilt + an asymmetric corner (one sharp corner, speech-bubble
-// style, pointing back toward whatever revealed just before it) instead of a
-// uniform rounded rectangle — deterministic per index, not random, so it
-// doesn't reshuffle on re-render.
-const TILTS = [-5, 4, -3, 6];
-const CORNERS = ["18px 18px 18px 4px", "18px 18px 4px 18px", "4px 18px 18px 18px", "18px 4px 18px 18px"];
-
 /**
- * Real reviews as tilted profile cards, side by side, not a stacked list of
- * quote blocks and not a flat rounded rectangle either — a speech-bubble
- * corner, a color-matched glow under the card, and a big decorative quote
- * mark give it presence instead of reading as a generic testimonial box. No
- * source named anywhere on the card, same rule as the rest of the theater:
- * the effect only works if nothing here explains itself.
+ * Real reviews as clean profile cards (shadcn ReviewCard structure, rebuilt
+ * in this codebase's inline-style/CSS-var idiom): avatar + name + date on
+ * the left of the header, the actual star row top-right (real stars, not a
+ * numeric "5.0" badge), review text below.
+ *
+ * Two deliberate departures from the reference component:
+ *  - Initials avatar, not an image. Google reviews give us the reviewer's
+ *    real name but no photo; pasting a stock face next to a real person's
+ *    name would be a fabricated trust signal.
+ *  - No source named anywhere on the card, same rule as the rest of the
+ *    theater: the effect only works if nothing here explains itself.
  */
 export default function ReviewProfileCards({ reviews, delay = 0, stagger = 2.5 }: { reviews: ScanReview[]; delay?: number; stagger?: number }) {
   const reduce = useReducedMotion();
   if (reviews.length === 0) return null;
 
   return (
-    <div style={{ display: "flex", gap: 20, flexWrap: "wrap", paddingTop: 6 }}>
+    <div style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
       {reviews.map((rv, i) => {
         const color = avatarColor(rv.author);
-        const tilt = TILTS[i % TILTS.length];
-        const corner = CORNERS[i % CORNERS.length];
+        const stars = Math.round(rv.rating ?? 0);
         return (
-          <motion.div
+          <motion.article
             key={`${rv.author}-${i}`}
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 22, scale: 0.88, rotate: 0 }}
-            animate={{ opacity: 1, y: 0, scale: 1, rotate: tilt }}
-            whileHover={reduce ? undefined : { rotate: 0, scale: 1.04, y: -4 }}
-            transition={{ type: "spring", stiffness: 130, damping: 15, delay: reduce ? 0 : delay + i * stagger }}
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: reduce ? 0 : delay + i * stagger }}
+            aria-label={rv.author ? `Review by ${rv.author}` : "Customer review"}
             style={{
-              position: "relative",
-              flex: "1 1 210px",
-              minWidth: 210,
-              maxWidth: 260,
-              border: `1px solid ${color}55`,
-              borderRadius: corner,
-              padding: "18px 20px",
-              background: `linear-gradient(160deg, var(--bg-elev) 0%, var(--bg-soft) 100%)`,
-              boxShadow: `0 20px 44px -22px rgba(0,0,0,0.7), 0 0 0 1px rgba(0,0,0,0.02), 0 14px 30px -18px ${color}40`,
-              overflow: "hidden",
+              flex: "1 1 250px",
+              minWidth: 250,
+              maxWidth: 340,
+              background: "var(--bg-soft)",
+              border: "1px solid var(--rule)",
+              borderRadius: 12,
+              padding: 24,
+              boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
             }}
           >
-            {/* Oversized decorative quote mark, clipped by the card, low
-                opacity — texture, not a UI element. */}
-            <div
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                top: -22,
-                right: -6,
-                fontSize: 90,
-                lineHeight: 1,
-                fontFamily: "Georgia, serif",
-                color,
-                opacity: 0.14,
-                pointerEvents: "none",
-                userSelect: "none",
-              }}
-            >
-              &rdquo;
+            {/* Header: avatar + name + date left, star row right */}
+            <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
+                <div
+                  aria-hidden="true"
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 99,
+                    background: color,
+                    color: "#0A140D",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 16,
+                    fontWeight: 700,
+                    flexShrink: 0,
+                  }}
+                >
+                  {initials(rv.author)}
+                </div>
+                <div style={{ minWidth: 0 }}>
+                  <h3 style={{ margin: 0, fontSize: 16.5, fontWeight: 600, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {rv.author ?? "Verified customer"}
+                  </h3>
+                  {rv.when && (
+                    <p style={{ ...mono, margin: "3px 0 0", fontSize: 11.5, color: "var(--muted)" }}>{rv.when}</p>
+                  )}
+                </div>
+              </div>
+              {stars > 0 && (
+                <div aria-label={`${stars} out of 5 stars`} style={{ display: "flex", gap: 2, flexShrink: 0, paddingTop: 4 }}>
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <Star
+                      key={s}
+                      aria-hidden="true"
+                      style={{
+                        width: 15,
+                        height: 15,
+                        color: s < stars ? "#FACC15" : "var(--rule-strong)",
+                        fill: s < stars ? "#FACC15" : "none",
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
 
-            <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-              <div
-                aria-hidden="true"
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 99,
-                  background: color,
-                  color: "#0A140D",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 12.5,
-                  fontWeight: 700,
-                  flexShrink: 0,
-                  boxShadow: `0 0 0 3px ${color}2A`,
-                }}
-              >
-                {initials(rv.author)}
-              </div>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {rv.author ?? "Verified customer"}
-                </div>
-                {rv.rating && (
-                  <div
-                    aria-hidden="true"
-                    style={{
-                      ...mono,
-                      display: "inline-flex",
-                      marginTop: 3,
-                      fontSize: 10,
-                      letterSpacing: 1,
-                      color: "#0A140D",
-                      background: color,
-                      borderRadius: 99,
-                      padding: "1.5px 7px",
-                    }}
-                  >
-                    {"★".repeat(Math.round(rv.rating))}
-                  </div>
-                )}
-              </div>
-            </div>
-            <div style={{ position: "relative", fontSize: 13, lineHeight: 1.5, color: "var(--fg)" }}>&ldquo;{rv.text}&rdquo;</div>
-          </motion.div>
+            {/* Body */}
+            <p style={{ margin: "16px 0 0", fontSize: 13.5, lineHeight: 1.55, color: "var(--muted)" }}>
+              &ldquo;{rv.text}&rdquo;
+            </p>
+          </motion.article>
         );
       })}
     </div>
