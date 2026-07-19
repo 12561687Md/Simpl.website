@@ -22,9 +22,9 @@ import { motion, useAnimationFrame, useMotionValue, useReducedMotion, useTransfo
  * the set repeats to 8 faces to fill the drum. Under prefers-reduced-motion
  * the drum holds still (front faces remain visible) instead of spinning.
  */
-// Deterministic per-face slant, alternating direction — a design accent,
-// not randomness, so it never reshuffles between renders.
-const TILTS = [-4, 3, -3, 4];
+// One uniform slant for every face: parallel edges read as a deliberate
+// design line; alternating directions read as photos colliding.
+const TILT = -3.5;
 
 export default function PhotoCarousel3D({
   photos,
@@ -116,18 +116,24 @@ export default function PhotoCarousel3D({
                   // Same radius as the review cards, so the light cards and
                   // the drum photos read as one card family.
                   borderRadius: 12,
-                  // A slight polaroid slant per face, alternating direction.
-                  // `rotate` goes through framer-motion's own transform
-                  // pipeline, so it composes with the scale entrance instead
-                  // of being clobbered by it.
-                  rotate: TILTS[i % TILTS.length],
+                  // Uniform slant, every face the same angle — parallel
+                  // ("flush") edges. The old alternating ± directions made
+                  // neighboring photos lean INTO each other. `rotate` goes
+                  // through framer-motion's own transform pipeline, so it
+                  // composes with the scale entrance instead of being
+                  // clobbered by it.
+                  rotate: TILT,
                   overflow: "hidden",
-                  border: "1px solid var(--rule)",
-                  background: "var(--bg-soft)",
+                  // A real visible frame: cream mat + border, polaroid-style.
+                  border: "1px solid #E8E1CF",
+                  background: "#FBF7EE",
+                  padding: 8,
                   boxShadow: "0 20px 40px -18px rgba(0,0,0,0.4)",
                 }}
               >
-                <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                {/* contain, not cover: the whole photo shows, letterboxed on
+                    the cream mat, instead of being crop-chopped to a square. */}
+                <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: 6 }} />
               </motion.div>
             </div>
           ))}

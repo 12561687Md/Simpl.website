@@ -147,12 +147,14 @@ export async function GET(req: Request) {
         `&scan=${encodeURIComponent(mapToken)}`;
     }
 
-    // Three real reviews, trimmed for the theatre — the theater needs at
-    // least 3 visible before it wraps up, so this pulls one more than it
-    // shows to survive the empty-text filter below. The author name is
-    // public review attribution from Google; the text is the customer's own
-    // words. Empty when Google has none — which is itself a finding, not a
-    // blank to fill.
+    // Four real reviews for the theatre, best foot forward: sorted by
+    // rating descending (5s, then 4s, then 3s...) before the cut — the sort
+    // is stable, so within the same star count Google's own relevance order
+    // holds. This is selection among REAL reviews, not alteration: every
+    // card shown is a verbatim public review with its author's name. The
+    // author name is public review attribution from Google; the text is the
+    // customer's own words. Empty when Google has none — which is itself a
+    // finding, not a blank to fill.
     const reviews = (r.reviews ?? [])
       .map((rv: NewReview) => {
         const text = rv.text?.text ?? rv.originalText?.text ?? "";
@@ -164,6 +166,7 @@ export async function GET(req: Request) {
         };
       })
       .filter((rv: { text: string }) => rv.text)
+      .sort((a: { rating: number | null }, b: { rating: number | null }) => (b.rating ?? 0) - (a.rating ?? 0))
       .slice(0, 4);
 
     return NextResponse.json({
