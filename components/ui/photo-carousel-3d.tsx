@@ -55,10 +55,13 @@ export default function PhotoCarousel3D({
 
   const uniqueCount = Math.min(photos.length, 8) || 1;
   const faceCount = faces.length;
-  // Face width plus a wide gap decides the drum circumference, and the
-  // radius follows from it — sizing from the photo out, not the screen in,
-  // so the front face is always `size` wide regardless of viewport.
-  const faceWidth = size + 44;
+  // Face width plus a gap decides the drum circumference, and the radius
+  // follows from it — sizing from the photo out, not the screen in, so the
+  // front face is always `size` wide regardless of viewport. Tightened from
+  // +44 to +18: with a big gap, neighboring frames drift apart as the drum
+  // turns; a tight gap keeps their bordered edges reading as one continuous,
+  // flush filmstrip instead of separate floating cards.
+  const faceWidth = size + 18;
   const cylinderWidth = faceWidth * faceCount;
   const radius = cylinderWidth / (2 * Math.PI);
 
@@ -113,8 +116,8 @@ export default function PhotoCarousel3D({
                 style={{
                   width: "100%",
                   height: "100%",
-                  // Same radius as the review cards, so the light cards and
-                  // the drum photos read as one card family.
+                  // Same radius as the review cards, so the frame family
+                  // reads as one system across the theater.
                   borderRadius: 12,
                   // Uniform slant, every face the same angle — parallel
                   // ("flush") edges. The old alternating ± directions made
@@ -124,16 +127,19 @@ export default function PhotoCarousel3D({
                   // clobbered by it.
                   rotate: TILT,
                   overflow: "hidden",
-                  // A real visible frame: cream mat + border, polaroid-style.
-                  border: "1px solid #E8E1CF",
-                  background: "#FBF7EE",
-                  padding: 8,
-                  boxShadow: "0 20px 40px -18px rgba(0,0,0,0.4)",
+                  // A thin brand-blue frame, no cream mat: the cream padding
+                  // read as a "white blob" around photos that don't fill a
+                  // square. A slim accent border directly on the image (2px
+                  // inset so it doesn't clip the corners) is the fix.
+                  border: "1.5px solid var(--accent)",
+                  background: "var(--bg-soft)",
+                  padding: 2,
+                  boxShadow: "0 20px 40px -18px rgba(0,0,0,0.4), 0 0 0 1px rgba(137,207,240,0.12)",
                 }}
               >
                 {/* contain, not cover: the whole photo shows, letterboxed on
-                    the cream mat, instead of being crop-chopped to a square. */}
-                <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: 6 }} />
+                    the dark mat, instead of being crop-chopped to a square. */}
+                <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: 9 }} />
               </motion.div>
             </div>
           ))}

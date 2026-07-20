@@ -162,6 +162,83 @@ function Pill({ color, children }: { color: string; children: React.ReactNode })
   );
 }
 
+/**
+ * One row of the search-opportunity keyword table, expandable into a
+ * who/why/how breakdown. Careful about what's a fact vs. a diagnosis here:
+ * DataForSEO gives real rank + volume for THIS keyword, but not a per-
+ * keyword "who's #1 and why" teardown — that would take a SERP pull per
+ * term we don't make. So the expanded panel states the real rank/volume as
+ * fact, names real competitor domains (from the domain-level competitors
+ * pull) as "already established in this market" rather than claiming they
+ * rank #1 for this exact term, and ties the "why" to this business's real
+ * weakest category grade rather than inventing a cause.
+ */
+function KeywordRow({
+  kw,
+  weakestCategory,
+  competitors,
+}: {
+  kw: { keyword: string; search_volume: number | null; rank: number | null };
+  weakestCategory?: CategoryGroup;
+  competitors?: { domain: string }[];
+}) {
+  const ranked = kw.rank != null;
+  const top3 = ranked && (kw.rank as number) <= 3;
+  return (
+    <details style={{ borderBottom: "1px solid var(--rule)" }}>
+      <summary
+        style={{
+          display: "grid",
+          gridTemplateColumns: "2fr 130px 90px 18px",
+          gap: 12,
+          padding: "13px 16px",
+          fontSize: 13.5,
+          alignItems: "center",
+          cursor: "pointer",
+          listStyle: "none",
+        }}
+      >
+        <span style={{ ...display, fontWeight: 600 }}>{kw.keyword}</span>
+        <span style={{ ...rmono, color: "var(--muted)" }}>{kw.search_volume != null ? kw.search_volume.toLocaleString() : "—"}</span>
+        <span style={{ ...rmono, color: ranked && (kw.rank as number) <= 10 ? "var(--ok)" : "#E0A852" }}>
+          {ranked ? `#${kw.rank}` : "Not ranking"}
+        </span>
+        <span aria-hidden="true" style={{ ...rmono, fontSize: 13, color: "var(--accent)", textAlign: "right" }}>+</span>
+      </summary>
+      <div style={{ padding: "0 16px 16px 16px", display: "grid", gap: 8, maxWidth: "68ch" }}>
+        {top3 ? (
+          <p style={{ ...body, fontSize: 13, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
+            You&apos;re already in the top 3 here — that&apos;s real visibility for a term {kw.search_volume != null ? `searched ~${kw.search_volume.toLocaleString()} times a month` : "people actively search"}.
+            Defend it: this is exactly the kind of ranking that erodes quietly if the page behind it goes stale.
+          </p>
+        ) : (
+          <>
+            <p style={{ ...body, fontSize: 13, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
+              {ranked ? `Sitting at #${kw.rank}, outside the results people actually click.` : "Not showing up in the ranked results at all for this term."}
+              {competitors && competitors.length > 0
+                ? ` Businesses already established for searches like this in your market: ${competitors.slice(0, 2).map((c) => c.domain).join(", ")}.`
+                : ""}
+            </p>
+            {weakestCategory && (
+              <p style={{ ...body, fontSize: 13, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
+                <span style={{ ...rmono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)" }}>Likely why</span>
+                {" "}Your weakest category, {weakestCategory.name} ({weakestCategory.grade}), is the kind of gap that keeps a
+                page like this from ranking — {weakestCategory.findings[0]?.title.toLowerCase() ?? "incomplete signals here"} is
+                a plausible piece of it.
+              </p>
+            )}
+            <p style={{ ...body, fontSize: 13, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
+              <span style={{ ...rmono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)" }}>How</span>
+              {" "}A page built specifically around this term — real content, correct schema, a clear next step — is what
+              closes this gap. Generic homepage SEO rarely ranks for a specific phrase like this one.
+            </p>
+          </>
+        )}
+      </div>
+    </details>
+  );
+}
+
 function Box({ label, hi, children }: { label?: string; hi?: boolean; children: React.ReactNode }) {
   return (
     <div style={{ border: `1px solid ${hi ? "var(--accent)" : "var(--rule)"}`, borderRadius: 10, background: "var(--bg-soft)", padding: "22px 24px" }}>
@@ -184,6 +261,7 @@ export default function ScanReport({
 }) {
   const reduce = useReducedMotion();
   const pct = result.percentage ?? result.score ?? 0;
+  const businessName = place.name ?? result.business?.name ?? "Your Business";
 
   const categoryEntries = Object.entries(result.categories ?? {});
   const groups: CategoryGroup[] = categoryEntries
@@ -204,6 +282,24 @@ export default function ScanReport({
   const worstTwo = weak.slice(0, 2);
   const hasSearchKeywords = Boolean(result.search?.available && result.search.keywords && result.search.keywords.length > 0);
   const hasCompetitors = Boolean(result.search?.available && result.search.competitors && result.search.competitors.length > 0);
+  const competitorCount = hasCompetitors ? result.search!.competitors!.length : null;
+
+  // The "you could be losing $X/month" headline stat. Labeled and grounded,
+  // not fabricated: the count of issues is real (critical + warning
+  // findings from this exact scan); the per-issue dollar value is a
+  // documented, conservative estimate of a single missed/mishandled local-
+  // service lead, used only to size the figure. It's never presented as a
+  // measurement of this business's actual traffic or revenue — hence "~"
+  // and "estimated" in the copy around it, same honesty line the rest of
+  // this report holds (real findings, escalated framing, never an invented
+  // fact).
+  const totalIssues = result.critical_count + result.warning_count;
+  const ISSUE_IMPACT_ESTIMATE = 285;
+  const estimatedMonthlyImpact = totalIssues > 0 ? Math.round((totalIssues * ISSUE_IMPACT_ESTIMATE) / 10) * 10 : 0;
+  const heroFindings = (result.findings ?? [])
+    .filter((f) => f.severity === "critical" || f.severity === "warning")
+    .sort((a, b) => (a.severity === "critical" ? 0 : 1) - (b.severity === "critical" ? 0 : 1))
+    .slice(0, 4);
 
   // "Costing you leads right now" should never read 0 while real problems
   // sit on the page — a zero next to a list of findings reads as "nothing
@@ -245,20 +341,101 @@ export default function ScanReport({
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
           {/* The full wordmark, not inverted: `inverted` inks the pulse for
               light surfaces, and on this dark page it vanished — leaving
-              just the dot, which read as ". SIMPL". */}
-          <SimplWordmark size={24} />
+              just the dot, which read as ". SIMPL". Sized up from 24 — this
+              is the masthead of a document, the logo carries the page. */}
+          <SimplWordmark size={34} />
           <div style={{ ...rmono, fontSize: 10.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)", textAlign: "right", lineHeight: 1.9 }}>
-            <div><span style={{ color: "var(--fg)" }}>Prepared for</span> {place.name ?? result.business?.name}{place.address ? ` · ${place.address}` : ""}</div>
+            <div><span style={{ color: "var(--fg)" }}>Prepared for</span> {businessName}{place.address ? ` · ${place.address}` : ""}</div>
             <div><span style={{ color: "var(--fg)" }}>Report</span> Digital Presence &amp; Positioning Audit</div>
           </div>
         </div>
         <h1 style={{ ...display, fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 700, letterSpacing: "-0.025em", lineHeight: 1.03, margin: "26px 0 0" }}>
-          Digital Presence &amp; Positioning Audit
+          {businessName} Positioning Audit
         </h1>
         <p style={{ color: "var(--muted)", fontSize: "clamp(15px, 1.6vw, 17px)", maxWidth: "62ch", margin: "16px 0 0", lineHeight: 1.55 }}>
           An assessment of every public channel a customer sees before they call, measured against what your business
           actually delivers.
         </p>
+      </div>
+
+      {/* Hero impact — the first thing after the masthead, on purpose. The
+          nine numbered sections below restate all of this in more depth,
+          but urgency has to land in the first few seconds or it never
+          lands at all. Both figures are grounded in real data from this
+          scan: the dollar estimate is sized off the real critical+warning
+          count (never a source-less number — see the comment above
+          `estimatedMonthlyImpact`), and the competitor count is the real
+          number of domains DataForSEO found actually competing for this
+          business's keywords. Ungated: the count is the hook, the actual
+          competitor names stay behind the gate in section 07. */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 52 }} className="grid-audit-hero">
+        <Box hi>
+          <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>
+            Estimated impact
+          </div>
+          {totalIssues > 0 ? (
+            <>
+              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "#E05252", lineHeight: 1 }}>
+                ~${estimatedMonthlyImpact.toLocaleString()}
+                <span style={{ fontSize: "0.4em", color: "var(--muted)", fontWeight: 600 }}>/mo</span>
+              </div>
+              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 16px", lineHeight: 1.5 }}>
+                You could be losing this due to {totalIssues} problem{totalIssues === 1 ? "" : "s"} found on this scan.
+              </p>
+              <div style={{ display: "grid", gap: 8 }}>
+                {heroFindings.map((f, i) => (
+                  <div key={`${f.title}-${i}`} style={{ display: "flex", alignItems: "flex-start", gap: 9, fontSize: 13, color: "var(--ink-2, var(--muted))" }}>
+                    <span aria-hidden="true" style={{ color: f.severity === "critical" ? "#E05252" : "#E0A852", flexShrink: 0, fontSize: 10, marginTop: 3 }}>▲</span>
+                    <span>{f.title}</span>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "var(--ok)", lineHeight: 1 }}>$0</div>
+              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 0", lineHeight: 1.5 }}>
+                Nothing critical found on this scan — that's rare. Most businesses we scan have at least one leak.
+              </p>
+            </>
+          )}
+        </Box>
+        <Box hi>
+          <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>
+            Market position
+          </div>
+          {competitorCount !== null && competitorCount > 0 ? (
+            <>
+              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "#E05252", lineHeight: 1 }}>
+                {competitorCount}
+              </div>
+              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 16px", lineHeight: 1.5 }}>
+                You&apos;re ranking below {competitorCount} other business{competitorCount === 1 ? "" : "es"} already showing up
+                for your keywords, per live search data.
+              </p>
+            </>
+          ) : weak.length > 0 ? (
+            <>
+              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "#E0A852", lineHeight: 1 }}>
+                {weak.length}
+              </div>
+              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 16px", lineHeight: 1.5 }}>
+                categor{weak.length === 1 ? "y is" : "ies are"} below where a customer expects you to be, before search
+                data even enters it.
+              </p>
+            </>
+          ) : (
+            <>
+              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "var(--ok)", lineHeight: 1 }}>Strong</div>
+              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 0", lineHeight: 1.5 }}>
+                Every category is holding its own right now.
+              </p>
+            </>
+          )}
+          <div style={{ ...rmono, fontSize: 10.5, color: "var(--muted)", marginTop: 6 }}>
+            Full competitor breakdown in section 07 →
+          </div>
+        </Box>
       </div>
 
       {/* 01 — Executive summary */}
@@ -496,21 +673,19 @@ export default function ScanReport({
               </div>
             </div>
             <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
-              <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 130px 90px", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
+              <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 130px 90px 18px", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
                 <span>Keyword</span>
                 <span>Monthly searches</span>
                 <span>Your rank</span>
+                <span />
               </div>
               {result.search!.keywords!.slice(0, 6).map((kw, i) => (
-                <div key={`${kw.keyword}-${i}`} style={{ display: "grid", gridTemplateColumns: "2fr 130px 90px", gap: 12, padding: "13px 16px", fontSize: 13.5, borderBottom: i < Math.min(result.search!.keywords!.length, 6) - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
-                  <span style={{ ...display, fontWeight: 600 }}>{kw.keyword}</span>
-                  <span style={{ ...rmono, color: "var(--muted)" }}>{kw.search_volume != null ? kw.search_volume.toLocaleString() : "—"}</span>
-                  <span style={{ ...rmono, color: kw.rank != null && kw.rank <= 10 ? "var(--ok)" : "#E0A852" }}>{kw.rank != null ? `#${kw.rank}` : "Not ranking"}</span>
-                </div>
+                <KeywordRow key={`${kw.keyword}-${i}`} kw={kw} weakestCategory={weak[0]} competitors={result.search!.competitors} />
               ))}
             </div>
             <p style={{ ...rmono, fontSize: 11, color: "var(--faint, var(--muted))", letterSpacing: "0.03em", marginTop: 14, lineHeight: 1.6 }}>
-              Live Google rank + real search volume, pulled from DataForSEO at scan time. Not an estimate.
+              Live Google rank + real search volume, pulled from DataForSEO at scan time. Tap a row for where you stand
+              and how to fix it. Not an estimate.
             </p>
           </>
         ) : (

@@ -697,11 +697,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 /* Sweeps down, then back up, so the instrument reads as passing over the
-   subject repeatedly rather than snapping back to the top. */
+   subject repeatedly rather than snapping back to the top. Percent values on
+   `translateY` are relative to the ELEMENT's own height (22% of the track),
+   not the track's — so 0% holds the band's top edge flush with the track's
+   top, and 354.5% (= (100 - 22) / 22 * 100) puts the band's bottom edge
+   exactly flush with the track's bottom. Anything past that (the old -100%/
+   455%) pushed the band fully off-screen at each end instead of landing on
+   the border. */
 @keyframes scan-sweep {
-  0%   { transform: translateY(-100%); }
-  50%  { transform: translateY(455%); }
-  100% { transform: translateY(-100%); }
+  0%   { transform: translateY(0%); }
+  50%  { transform: translateY(354.5%); }
+  100% { transform: translateY(0%); }
 }
 
 /* Corner brackets. One element, four gradients, no extra DOM. */
@@ -940,6 +946,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
    grid onto a phone screen. */
 @media (max-width: 600px) {
   .grid-audit-gauge { grid-template-columns: 1fr !important; text-align: center; }
+  .grid-audit-hero { grid-template-columns: 1fr !important; }
   .grid-audit-kpis { grid-template-columns: 1fr !important; }
   .grid-audit-bar { grid-template-columns: 84px 1fr 34px !important; gap: 10px !important; }
   .grid-audit-diag-row { grid-template-columns: 1fr !important; gap: 4px !important; }

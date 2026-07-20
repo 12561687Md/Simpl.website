@@ -17,6 +17,7 @@ const categorySchema = z.object({
 });
 
 const captureEmailSchema = z.object({
+  name: z.string().trim().min(1, "Enter your name.").max(200).optional(),
   email: z.string().email("Enter a valid email address."),
   scanUrl: z.string().min(1, "Missing scan URL."),
   scanScore: z.number().optional(),
@@ -46,6 +47,7 @@ function gradeColor(grade: string | undefined): string {
 
 function buildEmailHtml(params: {
   email: string;
+  name?: string;
   businessName?: string;
   scanUrl: string;
   scanScore?: number;
@@ -53,7 +55,8 @@ function buildEmailHtml(params: {
   findings?: { severity?: string; title?: string; category?: string }[];
   categories?: Record<string, { grade?: string; score?: number; max?: number }>;
 }) {
-  const { businessName, scanUrl, scanScore, scanGrade, findings = [], categories = {} } = params;
+  const { name, businessName, scanUrl, scanScore, scanGrade, findings = [], categories = {} } = params;
+  const firstName = name?.trim().split(/\s+/)[0];
   const accent = "#89CFF0";
   const color = gradeColor(scanGrade);
 
@@ -86,6 +89,7 @@ function buildEmailHtml(params: {
 
       <div style="padding:32px 32px 0;">
         <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#888;margin-bottom:24px;">SIMPL Score Report</div>
+        ${firstName ? `<div style="font-size:14px;color:#666;margin-bottom:10px;">Hey ${firstName},</div>` : ""}
         ${businessName ? `<div style="font-size:20px;font-weight:600;color:#111;margin-bottom:4px;">${businessName}</div>` : ""}
         <div style="font-size:13px;color:#666;margin-bottom:24px;">${scanUrl}</div>
       </div>
@@ -148,16 +152,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: message }, { status: 400 });
     }
 
-    const { email, scanUrl, scanScore, scanGrade, businessName, placeId, relationship, optIn, findings, categories } =
+    const { name, email, scanUrl, scanScore, scanGrade, businessName, placeId, relationship, optIn, findings, categories } =
       parsed.data;
 
     try {
       const pool = getPool();
       await pool.query(
         `INSERT INTO leads
-           (email, source, source_page, scan_url, scan_score, scan_grade, place_id, relationship, opt_in, website)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+           (name, email, source, source_page, scan_url, scan_score, scan_grade, place_id, relationship, opt_in, website)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
         [
+          name ?? null,
           email,
           "scan_report",
           placeId ? "/audit" : "/scan",
@@ -183,7 +188,7 @@ export async function POST(req: Request) {
         from: "SIMPL <team@simpl.pro>",
         to: email,
         subject: `Your SIMPL Score: ${scanGrade ?? "N/A"} (${scanScore ?? 0}%)`,
-        html: buildEmailHtml({ email, businessName, scanUrl, scanScore, scanGrade, findings, categories }),
+        html: buildEmailHtml({ email, name, businessName, scanUrl, scanScore, scanGrade, findings, categories }),
       });
     } catch (emailError) {
       console.error("capture-email: failed to send email via Resend", emailError);

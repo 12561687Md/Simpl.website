@@ -127,13 +127,14 @@ export default function AuditFlow() {
   // The gate overlay's submit. Everything it needs is already in state — no
   // Details or backend scan call happens here, only the lead capture + email.
   const unlock = useCallback(
-    async (email: string, relationship: Relationship, optIn: boolean) => {
+    async (name: string, email: string, relationship: Relationship, optIn: boolean) => {
       if (!place || !result) throw new Error("Nothing to unlock yet.");
 
       const res = await fetch("/api/capture-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name,
           email,
           scanUrl: place.website,
           scanScore: result.percentage ?? result.score,

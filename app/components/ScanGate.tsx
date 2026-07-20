@@ -26,9 +26,10 @@ export default function ScanGate({
 }: {
   businessName: string;
   address: string;
-  onUnlock: (email: string, relationship: Relationship, optIn: boolean) => Promise<void>;
+  onUnlock: (name: string, email: string, relationship: Relationship, optIn: boolean) => Promise<void>;
 }) {
   const [step, setStep] = useState<"email" | "relationship">("email");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [optIn, setOptIn] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -37,7 +38,7 @@ export default function ScanGate({
 
   function submitEmail(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!name.trim() || !email.trim()) return;
     setErr(null);
     setStep("relationship");
   }
@@ -46,7 +47,7 @@ export default function ScanGate({
     setBusy(true);
     setErr(null);
     try {
-      await onUnlock(email.trim(), rel, optIn);
+      await onUnlock(name.trim(), email.trim(), rel, optIn);
     } catch (e) {
       setBusy(false);
       setErr(e instanceof Error ? e.message : "Could not unlock your report. Try again.");
@@ -115,50 +116,77 @@ export default function ScanGate({
                 Everything unlocks on this page the second you submit. No waiting, no checking your inbox first. We&apos;ll
                 also send you a copy to keep.
               </p>
-              <form onSubmit={submitEmail} style={{ display: "flex" }}>
-                <label htmlFor="gate-email" className="sr-only">
-                  Your email address
+              <form onSubmit={submitEmail} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <label htmlFor="gate-name" className="sr-only">
+                  Your name
                 </label>
                 <input
-                  id="gate-email"
-                  type="email"
+                  id="gate-name"
+                  type="text"
                   required
                   autoFocus
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="name"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   style={{
                     ...mono,
-                    flex: 1,
                     border: "1px solid var(--rule)",
-                    borderRight: 0,
                     background: "var(--bg)",
                     color: "var(--fg)",
                     padding: "13px 14px",
                     fontSize: 14,
                     outline: "none",
-                    borderRadius: "4px 0 0 4px",
+                    borderRadius: 4,
                     minHeight: 48,
                     minWidth: 0,
                   }}
                 />
-                <button
-                  type="submit"
-                  className="cta-primary"
-                  style={{
-                    color: "var(--accent-ink)",
-                    padding: "0 20px",
-                    fontSize: 13,
-                    border: 0,
-                    borderRadius: "0 4px 4px 0",
-                    whiteSpace: "nowrap",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    minHeight: 48,
-                  }}
-                >
-                  Continue →
-                </button>
+                <div style={{ display: "flex" }}>
+                  <label htmlFor="gate-email" className="sr-only">
+                    Your email address
+                  </label>
+                  <input
+                    id="gate-email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={{
+                      ...mono,
+                      flex: 1,
+                      border: "1px solid var(--rule)",
+                      borderRight: 0,
+                      background: "var(--bg)",
+                      color: "var(--fg)",
+                      padding: "13px 14px",
+                      fontSize: 14,
+                      outline: "none",
+                      borderRadius: "4px 0 0 4px",
+                      minHeight: 48,
+                      minWidth: 0,
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    className="cta-primary"
+                    style={{
+                      color: "var(--accent-ink)",
+                      padding: "0 20px",
+                      fontSize: 13,
+                      border: 0,
+                      borderRadius: "0 4px 4px 0",
+                      whiteSpace: "nowrap",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      minHeight: 48,
+                    }}
+                  >
+                    Continue →
+                  </button>
+                </div>
               </form>
             </motion.div>
           ) : (
