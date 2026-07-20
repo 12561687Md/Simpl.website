@@ -67,6 +67,9 @@ export interface ScanResult {
   findings_hidden: number;
   critical_count: number;
   warning_count: number;
+  /** Real count of every check the rubric evaluates (currently 67) — not a
+   *  marketing round number. Optional: older cached scans predate this field. */
+  total_checks?: number;
   is_free_tier: boolean;
   /** Real DataForSEO search-visibility data (2026-07-19: wired into the
    *  free scan, not email-gated). {available: false} with no credentials

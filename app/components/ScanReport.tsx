@@ -262,6 +262,7 @@ export default function ScanReport({
   const reduce = useReducedMotion();
   const pct = result.percentage ?? result.score ?? 0;
   const businessName = place.name ?? result.business?.name ?? "Your Business";
+  const photos = place.photos ?? [];
 
   const categoryEntries = Object.entries(result.categories ?? {});
   const groups: CategoryGroup[] = categoryEntries
@@ -358,6 +359,31 @@ export default function ScanReport({
         </p>
       </div>
 
+      {/* Real photos off the listing, up front — color and proof before a
+          single number shows up. Same treatment as the theater carousel
+          (thin accent-blue frame, cover-fit, no gaps) so the report and the
+          scan read as one system. */}
+      {photos.length > 0 && (
+        <div style={{ display: "flex", gap: 12, marginBottom: 48, overflowX: "auto", paddingBottom: 2 }}>
+          {photos.slice(0, 4).map((src, i) => (
+            <div
+              key={i}
+              style={{
+                flex: "1 1 0",
+                minWidth: 130,
+                aspectRatio: "4 / 3",
+                borderRadius: 10,
+                overflow: "hidden",
+                border: "1.5px solid var(--accent)",
+                boxShadow: "0 14px 32px -20px rgba(0,0,0,0.55)",
+              }}
+            >
+              <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Hero impact — the first thing after the masthead, on purpose. The
           nine numbered sections below restate all of this in more depth,
           but urgency has to land in the first few seconds or it never
@@ -441,6 +467,15 @@ export default function ScanReport({
       {/* 01 — Executive summary */}
       <section style={{ marginBottom: 52 }}>
         <SectionHead n="01" title="Executive summary" />
+        {result.total_checks != null && (
+          <p style={{ ...display, fontSize: "clamp(17px, 2.4vw, 21px)", fontWeight: 600, margin: "0 0 20px", lineHeight: 1.35 }}>
+            {result.total_checks} things reviewed,{" "}
+            <span style={{ color: result.findings_count > 0 ? "#E05252" : "var(--ok)" }}>
+              {result.findings_count} need{result.findings_count === 1 ? "s" : ""} work
+            </span>
+            .
+          </p>
+        )}
         <div
           style={{
             display: "grid",
@@ -799,18 +834,38 @@ export default function ScanReport({
 
         {hasCompetitors && (
           <div style={{ marginTop: 18, border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
-            <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
+            <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 1fr 1.4fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
               <span>Domain competing for your keywords</span>
               <span>Keywords in common</span>
               <span>Their footprint</span>
             </div>
-            {result.search!.competitors!.map((c, i) => (
-              <div key={c.domain} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 12, padding: "13px 16px", fontSize: 13.5, borderBottom: i < result.search!.competitors!.length - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
-                <span style={{ ...display, fontWeight: 600 }}>{c.domain}</span>
-                <span style={{ ...rmono, color: "var(--muted)" }}>{c.common_keywords ?? "—"}</span>
-                <span style={{ ...rmono, color: "var(--muted)" }}>{c.organic_keywords ?? "—"} keywords</span>
-              </div>
-            ))}
+            {result.search!.competitors!.map((c, i) => {
+              const maxOrganic = Math.max(...result.search!.competitors!.map((x) => x.organic_keywords ?? 0), 1);
+              const footprintPct = Math.round(((c.organic_keywords ?? 0) / maxOrganic) * 100);
+              return (
+                <div key={c.domain} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1.4fr", gap: 12, padding: "13px 16px", fontSize: 13.5, borderBottom: i < result.search!.competitors!.length - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
+                  <span style={{ ...display, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}>
+                    {/* Real favicon for the real domain — a public, unauthenticated
+                        lookup, not a fabricated logo. */}
+                    <img
+                      src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(c.domain)}&sz=32`}
+                      alt=""
+                      width={16}
+                      height={16}
+                      style={{ borderRadius: 3, flexShrink: 0 }}
+                    />
+                    {c.domain}
+                  </span>
+                  <span style={{ ...rmono, color: "var(--muted)" }}>{c.common_keywords ?? "—"}</span>
+                  <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <span style={{ flex: 1 }}>
+                      <Track pct={footprintPct} color="var(--accent)" />
+                    </span>
+                    <span style={{ ...rmono, color: "var(--muted)", fontSize: 11.5, whiteSpace: "nowrap" }}>{c.organic_keywords ?? "—"}</span>
+                  </span>
+                </div>
+              );
+            })}
           </div>
         )}
         <SectionFix

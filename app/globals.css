@@ -668,9 +668,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .scan-theater-grid { grid-template-columns: 1fr; gap: 24px; }
 }
 
-/* The sweep. Only `transform` animates, so this stays on the compositor and
-   never triggers layout: it runs over a decoded photo for ~20s straight and a
-   top/height animation here would jank the whole page. */
+/* The sweep. `top` is animated (not `transform: translateY`, the earlier
+   approach) specifically so the band's travel range is unambiguous: a
+   percentage on `top` is ALWAYS relative to the containing block (the
+   track, i.e. the full photo/review panel), where a percentage on
+   `translateY` is relative to the ELEMENT's OWN box — a self-referential
+   footgun that's easy to get subtly wrong. The element itself is a thin,
+   cheap-to-paint gradient div, not the photos/reviews under it (those are
+   separate composited layers via framer's own transforms), so animating
+   `top` here doesn't jank the heavier content underneath. */
 .scanline-track {
   position: absolute;
   inset: 0;
@@ -682,7 +688,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
   height: 22%;
   background: linear-gradient(
     180deg,
@@ -692,22 +697,20 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     rgba(137, 207, 240, 0.95) 100%
   );
   box-shadow: 0 2px 14px 1px rgba(137, 207, 240, 0.4);
-  will-change: transform;
+  will-change: top;
   animation: scan-sweep 2.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
 /* Sweeps down, then back up, so the instrument reads as passing over the
-   subject repeatedly rather than snapping back to the top. Percent values on
-   `translateY` are relative to the ELEMENT's own height (22% of the track),
-   not the track's — so 0% holds the band's top edge flush with the track's
-   top, and 354.5% (= (100 - 22) / 22 * 100) puts the band's bottom edge
-   exactly flush with the track's bottom. Anything past that (the old -100%/
-   455%) pushed the band fully off-screen at each end instead of landing on
-   the border. */
+   subject repeatedly rather than snapping back to the top. top: 0% holds the
+   band's top edge exactly flush with the track's top border; top: 78% (=
+   100% - the element's own 22% height) puts the band's bottom edge exactly
+   flush with the track's bottom border. Both ends land on the border, never
+   past it. */
 @keyframes scan-sweep {
-  0%   { transform: translateY(0%); }
-  50%  { transform: translateY(354.5%); }
-  100% { transform: translateY(0%); }
+  0%   { top: 0%; }
+  50%  { top: 78%; }
+  100% { top: 0%; }
 }
 
 /* Corner brackets. One element, four gradients, no extra DOM. */

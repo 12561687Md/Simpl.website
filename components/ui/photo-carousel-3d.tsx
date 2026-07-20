@@ -127,19 +127,20 @@ export default function PhotoCarousel3D({
                   // clobbered by it.
                   rotate: TILT,
                   overflow: "hidden",
-                  // A thin brand-blue frame, no cream mat: the cream padding
-                  // read as a "white blob" around photos that don't fill a
-                  // square. A slim accent border directly on the image (2px
-                  // inset so it doesn't clip the corners) is the fix.
+                  // A thin brand-blue frame, no mat at all: any inset padding
+                  // around a `contain`-fit photo left dark gaps between the
+                  // image and the border. The photo now fills the frame
+                  // completely (`cover`, edge-to-edge) with the border sitting
+                  // directly on the image — no gap of any color to read as a
+                  // "blob."
                   border: "1.5px solid var(--accent)",
-                  background: "var(--bg-soft)",
-                  padding: 2,
                   boxShadow: "0 20px 40px -18px rgba(0,0,0,0.4), 0 0 0 1px rgba(137,207,240,0.12)",
                 }}
               >
-                {/* contain, not cover: the whole photo shows, letterboxed on
-                    the dark mat, instead of being crop-chopped to a square. */}
-                <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: 9 }} />
+                {/* cover: the photo fills the frame edge-to-edge, scaled
+                    proportionally (aspect ratio preserved, no stretching) —
+                    it's cropped to fit rather than letterboxed with gaps. */}
+                <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 10.5 }} />
               </motion.div>
             </div>
           ))}
