@@ -73,7 +73,7 @@ const PHASES: Phase[] = [
   { label: "Looking for schema markup", ms: 1400 },
   { label: "Checking your social presence", ms: 1700 },
   { label: "Auditing your business listing", ms: 1900 },
-  { label: "Calculating your SIMPL Score", ms: 2000 },
+  { label: "Calculating your Simpl Score", ms: 2000 },
 ];
 
 // The last phase is the one that waits on real data, so the script only covers
@@ -432,13 +432,16 @@ export default function ScanTheater({
                     <PhotoCarousel3D photos={photos} size={320} stagger={REVEAL_STAGGER} />
                   </motion.div>
 
-                  {/* The scan bar, panel-scale: the same sweep that ran over
-                      the intro map now runs over the entire right panel —
-                      divider line to screen edge, top to bottom and back —
-                      for the whole remainder of the scan. Mounted last with
-                      an explicit z-index so it paints above the transformed
-                      review/photo layers. */}
-                  <div className="scanline-track" aria-hidden="true" style={{ zIndex: 10 }}>
+                  {/* The scan bar, panel-scale: sweeps the entire right panel,
+                      divider line to screen edge, and now the FULL height of the
+                      screen top to bottom. The track is inset:0 to this column,
+                      whose top sits 40px down (the page's top padding) and whose
+                      bottom sits 48px up (bottom padding); the negative top/bottom
+                      cancel exactly that padding so the track spans the true
+                      viewport edges (root has overflow:hidden, so it clips at the
+                      screen, never scrolls). Mounted last with an explicit z-index
+                      so it paints above the transformed review/photo layers. */}
+                  <div className="scanline-track" aria-hidden="true" style={{ zIndex: 10, top: -40, bottom: -48 }}>
                     <div className="scanline" />
                   </div>
                 </div>

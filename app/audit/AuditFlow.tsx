@@ -6,9 +6,12 @@ import { motion } from "framer-motion";
 import ScanGate from "../components/ScanGate";
 import ScanTheater from "../components/ScanTheater";
 import ScanReport from "../components/ScanReport";
-import type { PlaceDetails, ScanResult, Relationship } from "../lib/scan-types";
+import type { PlaceDetails, ScanResult, Relationship, SerpBoard } from "../lib/scan-types";
 
-const SIMPL_API = "https://simpl-506452749067.us-east1.run.app";
+// Prod backend by default; NEXT_PUBLIC_SIMPL_API points local dev at a local
+// backend (http://localhost:8000) so the scan + SERP board can be reviewed
+// end-to-end before anything ships.
+const SIMPL_API = process.env.NEXT_PUBLIC_SIMPL_API || "https://simpl-506452749067.us-east1.run.app";
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 type Stage = "bootstrapping" | "scanning" | "gated" | "unlocked" | "error";
@@ -40,6 +43,9 @@ export default function AuditFlow() {
   const [stage, setStage] = useState<Stage>("bootstrapping");
   const [place, setPlace] = useState<PlaceDetails | null>(null);
   const [result, setResult] = useState<ScanResult | null>(null);
+  // The live-SERP board loads on its own slower track (~15-25s) so it never
+  // holds up the report. null = still loading, {available:false} = done, none.
+  const [board, setBoard] = useState<SerpBoard | null>(null);
   const [error, setError] = useState<string | null>(null);
   const scanPromise = useRef<Promise<unknown> | null>(null);
   const started = useRef(false);
@@ -85,6 +91,26 @@ export default function AuditFlow() {
           setStage("error");
           return;
         }
+
+        // Live-SERP board, fired in parallel on its own slow track. It's
+        // ~15-25s of Maps Live Advanced calls, far past the theater's floor,
+        // so it MUST NOT be awaited into scanPromise — it fills in during the
+        // gate. Failures are swallowed to {available:false}; the board section
+        // renders an honest "not available" state and the report is unaffected.
+        fetch(`${SIMPL_API}/scan/serp-board`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            url: details.website,
+            business_name: details.name ?? predictedName,
+            location: details.address ?? predictedAddress,
+            lat: details.lat ?? null,
+            lng: details.lng ?? null,
+          }),
+        })
+          .then((r) => (r.ok ? (r.json() as Promise<SerpBoard>) : { available: false }))
+          .then((data) => setBoard(data))
+          .catch(() => setBoard({ available: false }));
 
         // No email yet — the backend accepts that (FullReportRequest.email is
         // Optional, and _capture_lead no-ops on empty), so the scan runs
@@ -214,7 +240,7 @@ export default function AuditFlow() {
 
       {stage === "gated" && result && place && (
         <div style={{ position: "relative" }}>
-          <ScanReport place={place} result={result} teaser />
+          <ScanReport place={place} result={result} board={board} teaser />
 
           {/* Unlock overlay. Fixed to the viewport rather than positioned
               against the report's height, so it lands centered on screen no
@@ -240,7 +266,7 @@ export default function AuditFlow() {
 
       {stage === "unlocked" && result && place && (
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <ScanReport place={place} result={result} />
+          <ScanReport place={place} result={result} board={board} />
         </motion.div>
       )}
     </div>

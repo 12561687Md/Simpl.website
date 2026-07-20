@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   description:
     "Continuous data-driven direction to scale your entire digital presence. Monthly audits, competitor intelligence, and full attribution reporting.",
   openGraph: {
-    title: "Fractional CMO & Strategy | SIMPL",
+    title: "Fractional CMO & Strategy | Simpl",
     description: "Continuous data-driven direction to scale your entire digital presence. Monthly audits, competitor intelligence, and full attribution reporting.",
     url: "https://simpl.pro/services/strategy",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/services/strategy" },
@@ -40,7 +40,7 @@ export default function Strategy() {
           "description": "Continuous data-driven strategic direction for your entire digital presence with monthly audits, competitor intelligence, and full attribution reporting.",
           "provider": {
             "@type": "Organization",
-            "name": "SIMPL",
+            "name": "Simpl",
             "url": "https://simpl.pro"
           },
           "areaServed": { "@type": "Country", "name": "United States" },
@@ -62,17 +62,17 @@ export default function Strategy() {
             {
               "@type": "Question",
               "name": "What does a fractional CMO actually do?",
-              "acceptedAnswer": { "@type": "Answer", "text": "A fractional CMO gives you senior marketing leadership without the six-figure salary. At SIMPL, that means monthly audits across your entire digital presence, quarterly strategy sessions, competitor monitoring, budget allocation guidance, and a clear roadmap that connects every marketing dollar to revenue. Think of it as having a marketing executive on your team part-time." }
+              "acceptedAnswer": { "@type": "Answer", "text": "A fractional CMO gives you senior marketing leadership without the six-figure salary. At Simpl, that means monthly audits across your entire digital presence, quarterly strategy sessions, competitor monitoring, budget allocation guidance, and a clear roadmap that connects every marketing dollar to revenue. Think of it as having a marketing executive on your team part-time." }
             },
             {
               "@type": "Question",
               "name": "How often do we meet?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Most clients meet with their SIMPL strategist monthly for a full review and quarterly for deep strategy sessions. Between meetings, you have direct access for questions and urgent decisions. We also send proactive alerts when we spot issues or opportunities you need to act on quickly." }
+              "acceptedAnswer": { "@type": "Answer", "text": "Most clients meet with their Simpl strategist monthly for a full review and quarterly for deep strategy sessions. Between meetings, you have direct access for questions and urgent decisions. We also send proactive alerts when we spot issues or opportunities you need to act on quickly." }
             },
             {
               "@type": "Question",
               "name": "Can I see examples of past strategy work?",
-              "acceptedAnswer": { "@type": "Answer", "text": "We do not publish client case studies publicly, but we are happy to walk you through anonymized examples during an initial conversation. Every engagement starts with a free scan so you can see the depth of analysis SIMPL provides before committing to anything." }
+              "acceptedAnswer": { "@type": "Answer", "text": "We do not publish client case studies publicly, but we are happy to walk you through anonymized examples during an initial conversation. Every engagement starts with a free scan so you can see the depth of analysis Simpl provides before committing to anything." }
             }
           ]
         }) }} />
@@ -164,19 +164,19 @@ export default function Strategy() {
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>What does a fractional CMO actually do?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                A fractional CMO gives you senior marketing leadership without the six-figure salary. At SIMPL, that means monthly audits across your entire digital presence, quarterly strategy sessions, competitor monitoring, budget allocation guidance, and a clear roadmap that connects every marketing dollar to revenue. Think of it as having a marketing executive on your team part-time.
+                A fractional CMO gives you senior marketing leadership without the six-figure salary. At Simpl, that means monthly audits across your entire digital presence, quarterly strategy sessions, competitor monitoring, budget allocation guidance, and a clear roadmap that connects every marketing dollar to revenue. Think of it as having a marketing executive on your team part-time.
               </p>
             </div>
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How often do we meet?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                Most clients meet with their SIMPL strategist monthly for a full review and quarterly for deep strategy sessions. Between meetings, you have direct access for questions and urgent decisions. We also send proactive alerts when we spot issues or opportunities you need to act on quickly.
+                Most clients meet with their Simpl strategist monthly for a full review and quarterly for deep strategy sessions. Between meetings, you have direct access for questions and urgent decisions. We also send proactive alerts when we spot issues or opportunities you need to act on quickly.
               </p>
             </div>
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>Can I see examples of past strategy work?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                We do not publish client case studies publicly, but we are happy to walk you through anonymized examples during an initial conversation. Every engagement starts with a free scan so you can see the depth of analysis SIMPL provides before committing to anything.
+                We do not publish client case studies publicly, but we are happy to walk you through anonymized examples during an initial conversation. Every engagement starts with a free scan so you can see the depth of analysis Simpl provides before committing to anything.
               </p>
             </div>
           </div>

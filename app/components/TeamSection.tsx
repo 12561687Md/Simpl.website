@@ -2,7 +2,7 @@ import ScrollReveal from "./ScrollReveal";
 import { StaggerReveal, StaggerItem } from "./ScrollReveal";
 
 // The combined "what we stand for" set (this section absorbed the standalone
-// beliefs block, so this is now the single place SIMPL states its principles).
+// beliefs block, so this is now the single place Simpl states its principles).
 const BELIEFS = [
   {
     title: "You should never be the last to know.",
@@ -46,7 +46,7 @@ export default function TeamSection() {
         className="grid-founder"
       >
         {/* Coverage card: real numbers instead of a person's face, deliberately —
-            SIMPL is a small team, not a solo act, and a stat is honest where a
+            Simpl is a small team, not a solo act, and a stat is honest where a
             stock-feeling headshot placeholder wasn't earning trust. */}
         <ScrollReveal direction="right">
           <div
@@ -65,7 +65,7 @@ export default function TeamSection() {
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <span className="pulse-dot" style={{ width: 7, height: 7, borderRadius: 999, background: "var(--accent)" }} />
               <div className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)" }}>
-                The SIMPL team
+                The Simpl team
               </div>
             </div>
             <div style={{ display: "grid", gap: 20 }}>
@@ -87,7 +87,7 @@ export default function TeamSection() {
               You&apos;ll deal with the team doing the work.
             </h2>
             <p style={{ marginTop: 20, maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)" }}>
-              SIMPL isn&apos;t a call center reading from a script. It&apos;s a small, hands-on team that answers your emails and owns the outcome. Here&apos;s what we stand for, and what that means for you.
+              Simpl isn&apos;t a call center reading from a script. It&apos;s a small, hands-on team that answers your emails and owns the outcome. Here&apos;s what we stand for, and what that means for you.
             </p>
           </ScrollReveal>
 

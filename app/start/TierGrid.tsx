@@ -11,7 +11,7 @@ const TIERS = [
     tag: "See what's broken",
     desc: "Your score out of 100, and the five things costing you the most.",
     bullets: [
-      "SIMPL Score with a grade in every category",
+      "Simpl Score with a grade in every category",
       "Your five biggest problems, ranked by what they cost",
       "Full report with every finding, emailed free",
     ],

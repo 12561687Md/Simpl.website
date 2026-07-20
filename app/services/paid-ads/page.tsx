@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   description:
     "Scale traffic instantly with campaigns that actually convert. Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking.",
   openGraph: {
-    title: "Paid Performance Marketing | SIMPL",
+    title: "Paid Performance Marketing | Simpl",
     description: "Scale traffic instantly with campaigns that actually convert. Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking.",
     url: "https://simpl.pro/services/paid-ads",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/services/paid-ads" },
@@ -41,7 +41,7 @@ export default function PaidAds() {
           "description": "Scale traffic instantly with Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking that proves ROI.",
           "provider": {
             "@type": "Organization",
-            "name": "SIMPL",
+            "name": "Simpl",
             "url": "https://simpl.pro"
           },
           "areaServed": { "@type": "Country", "name": "United States" },
@@ -63,17 +63,17 @@ export default function PaidAds() {
             {
               "@type": "Question",
               "name": "How much should I budget for Google Ads?",
-              "acceptedAnswer": { "@type": "Answer", "text": "It depends on your industry and market, but most local service businesses see strong results starting at $1,500-3,000 per month in ad spend. SIMPL helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume." }
+              "acceptedAnswer": { "@type": "Answer", "text": "It depends on your industry and market, but most local service businesses see strong results starting at $1,500-3,000 per month in ad spend. Simpl helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume." }
             },
             {
               "@type": "Question",
               "name": "How quickly will I see results from paid ads?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Paid ads can generate leads within the first week of launch. Unlike SEO, you do not have to wait for Google to crawl and rank your pages. Most SIMPL clients see their first qualified leads within 7-14 days of campaign launch, with optimization improving results every week after that." }
+              "acceptedAnswer": { "@type": "Answer", "text": "Paid ads can generate leads within the first week of launch. Unlike SEO, you do not have to wait for Google to crawl and rank your pages. Most Simpl clients see their first qualified leads within 7-14 days of campaign launch, with optimization improving results every week after that." }
             },
             {
               "@type": "Question",
               "name": "Can competitors really bid on my brand name?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, and many do. It is completely legal for a competitor to bid on your business name as a keyword in Google Ads. That means when someone searches for you specifically, a competitor's ad can appear above your organic listing. SIMPL includes branded search defense to protect the traffic you have already earned." }
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, and many do. It is completely legal for a competitor to bid on your business name as a keyword in Google Ads. That means when someone searches for you specifically, a competitor's ad can appear above your organic listing. Simpl includes branded search defense to protect the traffic you have already earned." }
             }
           ]
         }) }} />
@@ -156,19 +156,19 @@ export default function PaidAds() {
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How much should I budget for Google Ads?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                It depends on your industry and market, but most local service businesses see strong results starting at $1,500-3,000 per month in ad spend. SIMPL helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume.
+                It depends on your industry and market, but most local service businesses see strong results starting at $1,500-3,000 per month in ad spend. Simpl helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume.
               </p>
             </div>
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How quickly will I see results from paid ads?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                Paid ads can generate leads within the first week of launch. Unlike SEO, you do not have to wait for Google to crawl and rank your pages. Most SIMPL clients see their first qualified leads within 7-14 days of campaign launch, with optimization improving results every week after that.
+                Paid ads can generate leads within the first week of launch. Unlike SEO, you do not have to wait for Google to crawl and rank your pages. Most Simpl clients see their first qualified leads within 7-14 days of campaign launch, with optimization improving results every week after that.
               </p>
             </div>
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>Can competitors really bid on my brand name?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                Yes, and many do. It is completely legal for a competitor to bid on your business name as a keyword in Google Ads. That means when someone searches for you specifically, a competitor&apos;s ad can appear above your organic listing. SIMPL includes branded search defense to protect the traffic you have already earned.
+                Yes, and many do. It is completely legal for a competitor to bid on your business name as a keyword in Google Ads. That means when someone searches for you specifically, a competitor&apos;s ad can appear above your organic listing. Simpl includes branded search defense to protect the traffic you have already earned.
               </p>
             </div>
           </div>

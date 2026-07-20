@@ -7,13 +7,13 @@ import ContactForm from "../components/ContactForm";
 import TierGrid from "./TierGrid";
 
 export const metadata: Metadata = {
-  title: "Pricing | SIMPL",
+  title: "Pricing | Simpl",
   description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working. Local SEO from $497/mo, website build free on Team. No contracts you can't leave.",
   openGraph: {
-    title: "Pricing | SIMPL",
+    title: "Pricing | Simpl",
     description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working. Local SEO from $497/mo, website build free on Team.",
     url: "https://simpl.pro/start",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/start" },
@@ -79,26 +79,26 @@ export default function StartPage() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "SIMPL",
+          "name": "Simpl",
           "url": "https://simpl.pro",
           "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
           "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" },
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
-            "name": "SIMPL Services",
+            "name": "Simpl Services",
             "itemListElement": [
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Scan", "description": "Free digital presence scan with the full report emailed free" }, "price": "0", "priceCurrency": "USD" },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Core", "description": "Google Business Profile optimization, Local SEO & AI Search Visibility, and lead tracking. Includes a free strategy call." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Team", "description": "Everything in Core, plus a free website build on a 3-month start, content, social, reviews, and rank tracking." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro", "description": "Everything in Team, plus landing pages, conversion optimization, monthly strategy, multi-location coverage, and waived AI Response/Quoting Agent setup." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "1997", "priceCurrency": "USD", "billingDuration": "P1M" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SIMPL Pro Performance", "description": "Pro on a lower monthly base plus a per-qualified-lead or per-booked-appointment fee, billed on tracked calls and bookings both sides see in one dashboard. Requires SIMPL ad management and call/conversion tracking. Not a share of revenue." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Simpl Scan", "description": "Free digital presence scan with the full report emailed free" }, "price": "0", "priceCurrency": "USD" },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Simpl Core", "description": "Google Business Profile optimization, Local SEO & AI Search Visibility, and lead tracking. Includes a free strategy call." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Simpl Team", "description": "Everything in Core, plus a free website build on a 3-month start, content, social, reviews, and rank tracking." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Simpl Pro", "description": "Everything in Team, plus landing pages, conversion optimization, monthly strategy, multi-location coverage, and waived AI Response/Quoting Agent setup." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "1997", "priceCurrency": "USD", "billingDuration": "P1M" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Simpl Pro Performance", "description": "Pro on a lower monthly base plus a per-qualified-lead or per-booked-appointment fee, billed on tracked calls and bookings both sides see in one dashboard. Requires Simpl ad management and call/conversion tracking. Not a share of revenue." }, "priceSpecification": { "@type": "UnitPriceSpecification", "minPrice": "997", "priceCurrency": "USD", "billingDuration": "P1M" } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Paid Ads Management", "description": "Google, Meta, and LSA campaign management. Quoted per account. No markup on ad spend." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
                 { "@type": "UnitPriceSpecification", "name": "Monthly management", "minPrice": "497", "priceCurrency": "USD", "billingDuration": "P1M" },
                 { "@type": "UnitPriceSpecification", "name": "One-time setup, 50% of the monthly management fee", "minPrice": "248", "priceCurrency": "USD" }
               ] } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Response/Quoting Agent", "description": "Chat and voice agent that answers leads, quotes jobs, and books calls 24/7. Setup waived on SIMPL Pro." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Response/Quoting Agent", "description": "Chat and voice agent that answers leads, quotes jobs, and books calls 24/7. Setup waived on Simpl Pro." }, "priceSpecification": { "@type": "CompoundPriceSpecification", "priceCurrency": "USD", "priceComponent": [
                 { "@type": "UnitPriceSpecification", "name": "Monthly", "minPrice": "147", "maxPrice": "447", "priceCurrency": "USD", "billingDuration": "P1M" },
-                { "@type": "UnitPriceSpecification", "name": "One-time setup, waived on SIMPL Pro", "minPrice": "497", "maxPrice": "747", "priceCurrency": "USD" }
+                { "@type": "UnitPriceSpecification", "name": "One-time setup, waived on Simpl Pro", "minPrice": "497", "maxPrice": "747", "priceCurrency": "USD" }
               ] } },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Free Strategy Call", "description": "A real conversation about what's broken in a business's online presence and what to fix first, once they've unlocked their free scan report." }, "price": "0", "priceCurrency": "USD" },
               { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Build", "description": "Flat-rate website build, scope-based. Free when starting on Team with a 3-month commitment." }, "priceSpecification": { "@type": "PriceSpecification", "minPrice": "997", "maxPrice": "2997", "priceCurrency": "USD" } }
@@ -271,7 +271,7 @@ export default function StartPage() {
               <div className="mono grid-anchor anchor-head" style={{ background: "var(--bg)", padding: "14px 28px", ...label, fontSize: 10 }}>
                 <div>What you need</div>
                 <div>Everyone else</div>
-                <div style={{ color: "var(--accent)" }}>SIMPL</div>
+                <div style={{ color: "var(--accent)" }}>Simpl</div>
               </div>
               {ELSEWHERE.map((e) => (
                 <div key={e.what} className="grid-anchor" style={{ background: "var(--bg)", padding: "20px 28px" }}>
@@ -281,7 +281,7 @@ export default function StartPage() {
                     <div className="mono" style={{ fontSize: 13, color: "var(--muted)", textDecoration: "line-through", textDecorationColor: "var(--muted)" }}>{e.them}</div>
                   </div>
                   <div>
-                    <div className="mono anchor-mini" style={{ ...label, fontSize: 9, marginBottom: 3, color: "var(--accent)" }}>SIMPL</div>
+                    <div className="mono anchor-mini" style={{ ...label, fontSize: 9, marginBottom: 3, color: "var(--accent)" }}>Simpl</div>
                     <div className="mono" style={{ fontSize: 13, color: "var(--accent)", fontWeight: 500 }}>{e.us}</div>
                   </div>
                 </div>

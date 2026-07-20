@@ -1,6 +1,6 @@
 /**
  * Shared shapes for the scan flow. `PlaceDetails` mirrors /api/places/details;
- * `ScanResult` mirrors the SIMPL backend's /scan/quick response.
+ * `ScanResult` mirrors the Simpl backend's /scan/quick response.
  */
 
 export interface PlaceDetails {
@@ -21,6 +21,30 @@ export interface PlaceDetails {
   /** Up to four real Google reviews (the theatre shows the first 3), for the
    *  "how did they know" theatre. */
   reviews: ScanReview[];
+  /** Everything Google publicly lists about the profile. Real fields or null —
+   *  the absence of hours/price/etc. is itself a finding the report uses. */
+  profile?: PlaceProfile;
+  /** The business's own coordinates, so the SERP board searches from its exact
+   *  location instead of the city centroid. */
+  lat?: number | null;
+  lng?: number | null;
+}
+
+export interface PlaceProfile {
+  /** OPERATIONAL | CLOSED_TEMPORARILY | CLOSED_PERMANENTLY, or null. */
+  status: string | null;
+  /** "$".."$$$$" from Google's price level, or null when not set. */
+  priceLevel: string | null;
+  /** Google's own primary category label, e.g. "Mediterranean restaurant". */
+  primaryType: string | null;
+  /** Link to the live Google listing. */
+  mapsUri: string | null;
+  openNow: boolean | null;
+  /** Seven "Monday: 11 AM – 9 PM" strings, or empty when no hours are set. */
+  hours: string[];
+  /** Human labels for the service attributes Google reports true (dine-in,
+   *  delivery, reservations, ...). Shows how much the profile actually says. */
+  attributes: string[];
 }
 
 export interface ScanReview {
@@ -106,6 +130,47 @@ export interface SearchData {
  * separates a buyer from a rival agency pulling a free audit on someone else's
  * listing. Everyone sees their report; only `owner` is worth our hours.
  */
+/**
+ * The live-SERP "how you're doing online" board, from POST /scan/serp-board.
+ * Loaded separately from the main scan (it's ~15-25s of Maps Live Advanced
+ * calls) so the report renders fast while this fills in during the gate.
+ */
+export interface SerpBoard {
+  available: boolean;
+  location?: string;
+  snapshots?: SerpSnapshot[];
+  keyword_ideas?: KeywordOpportunity[];
+}
+
+export interface SerpSnapshot {
+  keyword: string;
+  your_maps_rank: number | null;
+  your_organic_rank: number | null;
+  maps: SerpMapsResult[];
+  organic: SerpOrganicResult[];
+}
+
+export interface SerpMapsResult {
+  title: string | null;
+  rank: number | null;
+  rating: number | null;
+  reviews: number | null;
+  is_you: boolean;
+}
+
+export interface SerpOrganicResult {
+  title: string | null;
+  domain: string | null;
+  rank: number | null;
+  is_you: boolean;
+}
+
+export interface KeywordOpportunity {
+  keyword: string;
+  search_volume: number | null;
+  competition: string | null;
+}
+
 export type Relationship = "owner" | "works_with" | "other";
 
 export const RELATIONSHIP_OPTIONS: { value: Relationship; label: string }[] = [

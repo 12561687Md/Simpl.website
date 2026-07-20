@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import AuditFlow from "./AuditFlow";
 
 export const metadata: Metadata = {
-  title: "Your SIMPL Score | SIMPL",
+  title: "Your Simpl Score | Simpl",
   description: "See exactly what's costing your business customers online.",
   // A report is scoped to one business and one scan. Nothing here belongs in an
   // index.

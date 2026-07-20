@@ -75,13 +75,13 @@ export default function HomeHero() {
         >
           Your business is always online.
           <br />
-          SIMPL makes sure it&apos;s always{" "}
+          Simpl makes sure it&apos;s always{" "}
           <TextRotator words={["winning.", "ranking.", "running.", "learning."]} />
         </h1>
 
         {/* The pitch paragraph lived here and was cut on purpose: it was the only
             thing competing with the scan input for attention. It is not retired —
-            it's the root description of SIMPL (see .agents/product-marketing.md)
+            it's the root description of Simpl (see .agents/product-marketing.md)
             and needs a permanent home further down the page. */}
 
         <div style={{ marginTop: 40 }}>

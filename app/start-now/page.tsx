@@ -6,13 +6,13 @@ import ContactForm from "../components/ContactForm";
 import WhatAmIMissingScanner from "./Scanner";
 
 export const metadata: Metadata = {
-  title: "What am I missing? | SIMPL",
+  title: "What am I missing? | Simpl",
   description: "Tell us what's going on and we'll tell you what's costing you calls. Real people read every message and reply the same business day, usually within four hours.",
   openGraph: {
-    title: "What am I missing? | SIMPL",
+    title: "What am I missing? | Simpl",
     description: "Tell us what's going on and we'll tell you what's costing you calls. We reply the same business day.",
     url: "https://simpl.pro/start-now",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/start-now" },
@@ -37,10 +37,10 @@ export default function WhatAmIMissingPage() {
           "@type": "ContactPage",
           "name": "What am I missing?",
           "url": "https://simpl.pro/start-now",
-          "description": "Tell SIMPL what's going on and we'll tell you what's costing you calls. We reply the same business day.",
+          "description": "Tell Simpl what's going on and we'll tell you what's costing you calls. We reply the same business day.",
           "mainEntity": {
             "@type": "Organization",
-            "name": "SIMPL",
+            "name": "Simpl",
             "url": "https://simpl.pro",
             "contactPoint": {
               "@type": "ContactPoint",

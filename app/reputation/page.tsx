@@ -3,7 +3,7 @@ import ServicePage from "../components/ServicePage";
 
 export const metadata: Metadata = {
   title: "Reputation",
-  description: "SIMPL monitors your Google reviews, Yelp ratings, social mentions, and online reputation. Respond to negative reviews before they cost you customers.",
+  description: "Simpl monitors your Google reviews, Yelp ratings, social mentions, and online reputation. Respond to negative reviews before they cost you customers.",
   alternates: { canonical: "https://simpl.pro/reputation" },
 };
 
@@ -14,11 +14,11 @@ export default function Page() {
       code="03 / REPUTATION"
       headline="What people say about you"
       accentTail="when you're not in the room."
-      sub="SIMPL watches every review, mention, and sentiment shift across the platforms that matter, so you never get blindsided."
+      sub="Simpl watches every review, mention, and sentiment shift across the platforms that matter, so you never get blindsided."
       subHook="By the time you notice your rating dropped, potential customers have already noticed. They just went somewhere else."
       watches={[
         { code: "01", title: "Review monitoring", desc: "Every new review across Google, Yelp, Facebook, and industry platforms. Flagged within minutes." },
-        { code: "02", title: "Sentiment tracking", desc: "Are reviews getting more negative? SIMPL tracks the trend before your rating drops." },
+        { code: "02", title: "Sentiment tracking", desc: "Are reviews getting more negative? Simpl tracks the trend before your rating drops." },
         { code: "03", title: "Response cadence", desc: "How fast you respond to negative reviews, and whether you respond at all. Google watches this." },
         { code: "04", title: "Rating velocity", desc: "Are you getting fewer reviews than last quarter? Stalling means slipping. Competitors don't stall." },
         { code: "05", title: "Competitor monitoring", desc: "When a competitor's rating passes yours, you need to know immediately. Not next month." },
@@ -34,7 +34,7 @@ export default function Page() {
         "Positive reviews stop because your automated review request email broke. Your rating slowly decays.",
       ]}
       missHook="These aren't hypothetical. Here's one from last quarter."
-      findingBody="A roofing contractor's Google rating dropped from 4.7 to 4.1 over six weeks due to three unanswered negative reviews. SIMPL flagged the first review within 30 minutes."
+      findingBody="A roofing contractor's Google rating dropped from 4.7 to 4.1 over six weeks due to three unanswered negative reviews. Simpl flagged the first review within 30 minutes."
       findingStat="30 min"
       findingLabel="from review to alert"
       findingHook="Reputation is one piece. But even a 5-star business loses if nobody can find them, or if their site doesn't work when customers arrive."

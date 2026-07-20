@@ -10,7 +10,7 @@ type DottedSurfaceProps = Omit<React.ComponentProps<"div">, "ref">;
  * Animated dot-grid wave, adapted from the shadcn/21st.dev "Dotted Surface"
  * component. Two changes from the original:
  *
- * 1. No next-themes: SIMPL has one permanent dark theme, no light/dark
+ * 1. No next-themes: Simpl has one permanent dark theme, no light/dark
  *    toggle exists (or is planned), so a theme provider just for this
  *    component's color branch would be dead weight. Dot color is the site's
  *    own off-white foreground token instead, resolved once from the CSS

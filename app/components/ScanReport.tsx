@@ -1,9 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import PhoneLoop from "./PhoneLoop";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
-import type { Finding, PlaceDetails, ScanResult } from "../lib/scan-types";
+import type { Finding, PlaceDetails, ScanResult, SerpBoard, SerpSnapshot, KeywordOpportunity } from "../lib/scan-types";
 
 /**
  * Document-style audit report, rebuilt to match the Noovis Digital Presence
@@ -30,6 +29,12 @@ const display = { fontFamily: "var(--font-report-display), var(--font-inter), sa
 const body = { fontFamily: "var(--font-report-body), var(--font-inter), sans-serif" };
 const rmono = { fontFamily: "var(--font-report-mono), var(--font-jetbrains-mono), monospace" };
 
+function ordinal(n: number) {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
 function gradeColor(grade: string | undefined) {
   if (!grade || grade === "N/A") return "#8A8D8C";
   if (grade.startsWith("A") || grade.startsWith("B")) return "var(--ok)";
@@ -41,7 +46,12 @@ function gradeStatusWord(grade: string | undefined) {
   if (grade.startsWith("A")) return "Strong";
   if (grade.startsWith("B")) return "Solid";
   if (grade.startsWith("C")) return "Needs work";
-  return "Critical";
+  if (grade.startsWith("D")) return "Poor";
+  // "Failing," never "Critical": a failing category grade is a different thing
+  // from a critical *finding* (a specific severity the count reports). Reusing
+  // "Critical" here made a category with only warning-level findings contradict
+  // the honest "0 critical findings" the KPI card shows.
+  return "Failing";
 }
 
 const GRADE_RANK: Record<string, number> = { F: 0, D: 1, "D-": 1, "D+": 1, C: 2, "C-": 2, "C+": 2, B: 3, "B-": 3, "B+": 3, A: 4, "A-": 4 };
@@ -162,80 +172,163 @@ function Pill({ color, children }: { color: string; children: React.ReactNode })
   );
 }
 
-/**
- * One row of the search-opportunity keyword table, expandable into a
- * who/why/how breakdown. Careful about what's a fact vs. a diagnosis here:
- * DataForSEO gives real rank + volume for THIS keyword, but not a per-
- * keyword "who's #1 and why" teardown — that would take a SERP pull per
- * term we don't make. So the expanded panel states the real rank/volume as
- * fact, names real competitor domains (from the domain-level competitors
- * pull) as "already established in this market" rather than claiming they
- * rank #1 for this exact term, and ties the "why" to this business's real
- * weakest category grade rather than inventing a cause.
- */
-function KeywordRow({
-  kw,
-  weakestCategory,
-  competitors,
-}: {
-  kw: { keyword: string; search_volume: number | null; rank: number | null };
-  weakestCategory?: CategoryGroup;
-  competitors?: { domain: string }[];
-}) {
-  const ranked = kw.rank != null;
-  const top3 = ranked && (kw.rank as number) <= 3;
+/** One keyword's live SERP: a collapsible row showing the real Google Maps
+ *  pack and organic results a searcher sees, with the business highlighted.
+ *  This is the Owner.com "how you're doing online" board — every row real,
+ *  location-accurate, pulled live at scan time. */
+function SerpBoardRow({ snap }: { snap: SerpSnapshot }) {
+  const topMap = snap.maps.find((m) => !m.is_you && m.rank === Math.min(...snap.maps.filter((x) => x.rank != null).map((x) => x.rank as number)));
+  const youMaps = snap.your_maps_rank;
   return (
     <details style={{ borderBottom: "1px solid var(--rule)" }}>
       <summary
         style={{
-          display: "grid",
-          gridTemplateColumns: "2fr 130px 90px 18px",
+          display: "flex",
+          alignItems: "center",
           gap: 12,
           padding: "13px 16px",
-          fontSize: 13.5,
-          alignItems: "center",
           cursor: "pointer",
           listStyle: "none",
+          flexWrap: "wrap",
         }}
       >
-        <span style={{ ...display, fontWeight: 600 }}>{kw.keyword}</span>
-        <span style={{ ...rmono, color: "var(--muted)" }}>{kw.search_volume != null ? kw.search_volume.toLocaleString() : "—"}</span>
-        <span style={{ ...rmono, color: ranked && (kw.rank as number) <= 10 ? "var(--ok)" : "#E0A852" }}>
-          {ranked ? `#${kw.rank}` : "Not ranking"}
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style={{ flexShrink: 0 }}>
+          <path fill="#4285F4" d="M22.5 12.2c0-.7-.1-1.4-.2-2H12v3.9h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-2 3.2-4.9 3.2-7.9Z" />
+          <path fill="#34A853" d="M12 23c2.9 0 5.4-1 7.2-2.6l-3.6-2.7c-1 .7-2.2 1-3.6 1-2.8 0-5.1-1.9-6-4.4H2.3v2.8A11 11 0 0 0 12 23Z" />
+          <path fill="#FBBC05" d="M6 14.3a6.6 6.6 0 0 1 0-4.2V7.3H2.3a11 11 0 0 0 0 9.8L6 14.3Z" />
+          <path fill="#EA4335" d="M12 5.4c1.6 0 3 .5 4.1 1.6l3.1-3.1A11 11 0 0 0 2.3 7.3L6 10.1c.9-2.6 3.2-4.7 6-4.7Z" />
+        </svg>
+        <span style={{ ...display, fontWeight: 600, fontSize: 14.5, flex: "1 1 200px" }}>{snap.keyword}</span>
+        <span
+          style={{
+            ...rmono,
+            fontSize: 10.5,
+            fontWeight: 600,
+            padding: "3px 9px",
+            borderRadius: 99,
+            color: youMaps && youMaps <= 3 ? "var(--ok)" : "#E05252",
+            background: youMaps && youMaps <= 3 ? "rgba(52,168,83,0.12)" : "rgba(224,82,82,0.12)",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {youMaps ? `You're #${youMaps} in Maps` : "You're unranked"}
         </span>
-        <span aria-hidden="true" style={{ ...rmono, fontSize: 13, color: "var(--accent)", textAlign: "right" }}>+</span>
-      </summary>
-      <div style={{ padding: "0 16px 16px 16px", display: "grid", gap: 8, maxWidth: "68ch" }}>
-        {top3 ? (
-          <p style={{ ...body, fontSize: 13, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
-            You&apos;re already in the top 3 here — that&apos;s real visibility for a term {kw.search_volume != null ? `searched ~${kw.search_volume.toLocaleString()} times a month` : "people actively search"}.
-            Defend it: this is exactly the kind of ranking that erodes quietly if the page behind it goes stale.
-          </p>
-        ) : (
-          <>
-            <p style={{ ...body, fontSize: 13, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
-              {ranked ? `Sitting at #${kw.rank}, outside the results people actually click.` : "Not showing up in the ranked results at all for this term."}
-              {competitors && competitors.length > 0
-                ? ` Businesses already established for searches like this in your market: ${competitors.slice(0, 2).map((c) => c.domain).join(", ")}.`
-                : ""}
-            </p>
-            {weakestCategory && (
-              <p style={{ ...body, fontSize: 13, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
-                <span style={{ ...rmono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)" }}>Likely why</span>
-                {" "}Your weakest category, {weakestCategory.name} ({weakestCategory.grade}), is the kind of gap that keeps a
-                page like this from ranking — {weakestCategory.findings[0]?.title.toLowerCase() ?? "incomplete signals here"} is
-                a plausible piece of it.
-              </p>
-            )}
-            <p style={{ ...body, fontSize: 13, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
-              <span style={{ ...rmono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)" }}>How</span>
-              {" "}A page built specifically around this term — real content, correct schema, a clear next step — is what
-              closes this gap. Generic homepage SEO rarely ranks for a specific phrase like this one.
-            </p>
-          </>
+        {topMap?.title && (
+          <span style={{ ...rmono, fontSize: 10.5, color: "var(--muted)", whiteSpace: "nowrap" }}>
+            #1: {topMap.title}
+          </span>
         )}
+        <span aria-hidden="true" style={{ ...rmono, fontSize: 14, color: "var(--accent)" }}>+</span>
+      </summary>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, padding: "4px 16px 18px" }} className="grid-audit-serp">
+        {/* Maps pack — the results that get the clicks */}
+        <div>
+          <div style={{ ...rmono, fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 9 }}>
+            Google Maps · top 3
+          </div>
+          <div style={{ display: "grid", gap: 7 }}>
+            {snap.maps.length > 0 ? snap.maps.map((m, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 13, padding: "6px 9px", borderRadius: 6, background: m.is_you ? "rgba(137,207,240,0.1)" : "transparent", border: m.is_you ? "1px solid var(--accent)" : "1px solid transparent" }}>
+                <span style={{ ...rmono, fontSize: 11, color: "var(--muted)", width: 16 }}>#{m.rank}</span>
+                <span style={{ flex: 1, fontWeight: m.is_you ? 700 : 500, color: m.is_you ? "var(--accent)" : "var(--fg)" }}>{m.title}{m.is_you ? " (you)" : ""}</span>
+                {m.rating != null && <span style={{ ...rmono, fontSize: 11, color: "#E0A852" }}>★{m.rating.toFixed(1)}</span>}
+              </div>
+            )) : <div style={{ fontSize: 12.5, color: "var(--muted)" }}>No local pack for this term.</div>}
+          </div>
+        </div>
+        {/* Organic — the classic blue links */}
+        <div>
+          <div style={{ ...rmono, fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 9 }}>
+            Google Search · {snap.your_organic_rank ? `you're #${snap.your_organic_rank}` : "you're unranked"}
+          </div>
+          <div style={{ display: "grid", gap: 7 }}>
+            {snap.organic.length > 0 ? snap.organic.slice(0, 5).map((o, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 12.5, padding: "5px 9px", borderRadius: 6, background: o.is_you ? "rgba(137,207,240,0.1)" : "transparent", border: o.is_you ? "1px solid var(--accent)" : "1px solid transparent" }}>
+                <span style={{ ...rmono, fontSize: 11, color: "var(--muted)", width: 16 }}>#{o.rank}</span>
+                <span style={{ flex: 1, color: o.is_you ? "var(--accent)" : "var(--muted)", fontWeight: o.is_you ? 700 : 400 }}>{o.domain}{o.is_you ? " (you)" : ""}</span>
+              </div>
+            )) : <div style={{ fontSize: 12.5, color: "var(--muted)" }}>No organic results captured.</div>}
+          </div>
+        </div>
       </div>
     </details>
+  );
+}
+
+/** The whole "how you're doing online" board: a loading state while the slow
+ *  SERP endpoint runs, then the real per-keyword snapshots, then a keyword-
+ *  opportunity table. Honest "not available" when the board can't be built. */
+function SerpBoard({
+  loading,
+  snapshots,
+  opportunities,
+  location,
+}: {
+  loading: boolean;
+  snapshots: SerpSnapshot[];
+  opportunities: KeywordOpportunity[];
+  location?: string;
+}) {
+  if (loading) {
+    return (
+      <div style={{ border: "1px solid var(--rule)", borderRadius: 10, background: "var(--bg-soft)", padding: "28px 22px", textAlign: "center" }}>
+        <div className="serp-pulse" style={{ ...rmono, fontSize: 12.5, color: "var(--accent)", letterSpacing: "0.04em" }}>
+          Pulling your live search results…
+        </div>
+        <div style={{ ...rmono, fontSize: 11, color: "var(--muted)", marginTop: 8 }}>
+          Running your real Google Maps + Search rankings against your competitors, keyword by keyword.
+        </div>
+      </div>
+    );
+  }
+  if (snapshots.length === 0) {
+    return (
+      <div style={{ border: "1px solid var(--rule)", borderRadius: 10, background: "var(--bg-soft)", padding: "20px 22px" }}>
+        <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>
+          No competitive search board yet — this business doesn&apos;t rank for enough non-branded local terms to build one.
+          That&apos;s itself the finding: you&apos;re invisible for the searches that bring new customers, only findable if
+          someone already knows your name.
+        </p>
+      </div>
+    );
+  }
+  return (
+    <>
+      <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
+        {snapshots.map((s) => <SerpBoardRow key={s.keyword} snap={s} />)}
+      </div>
+      {/* Reference-point transparency: local rankings genuinely shift with the
+          searcher's exact location, so we say plainly where these were measured
+          from. Preempts "these don't match what I see" — a customer three towns
+          over sees a different pack, and that's expected, not an error. */}
+      <p style={{ ...rmono, fontSize: 10.5, color: "var(--faint, var(--muted))", letterSpacing: "0.02em", marginTop: 12, lineHeight: 1.6 }}>
+        Live Google Maps + Search results{location ? `, as a customer searching from ${location} sees them` : ""}. Local
+        rankings shift with the searcher&apos;s exact location — your own view varies, this is the reference point.
+      </p>
+      {opportunities.length > 0 && (
+        <div style={{ marginTop: 22 }}>
+          <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 12 }}>
+            Keywords you could own · real Google Keyword Planner volume
+          </div>
+          <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 130px 110px", gap: 12, padding: "11px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
+              <span>Keyword</span>
+              <span>Monthly searches</span>
+              <span>Competition</span>
+            </div>
+            {opportunities.map((o, i) => (
+              <div key={`${o.keyword}-${i}`} style={{ display: "grid", gridTemplateColumns: "2fr 130px 110px", gap: 12, padding: "12px 16px", fontSize: 13.5, borderBottom: i < opportunities.length - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
+                <span style={{ ...display, fontWeight: 600 }}>{o.keyword}</span>
+                <span style={{ ...rmono, color: "var(--fg)" }}>{o.search_volume != null ? o.search_volume.toLocaleString() : "—"}</span>
+                <span style={{ ...rmono, fontSize: 11.5, color: o.competition === "HIGH" ? "#E05252" : o.competition === "MEDIUM" ? "#E0A852" : "var(--ok)" }}>
+                  {o.competition ? o.competition.charAt(0) + o.competition.slice(1).toLowerCase() : "—"}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -253,10 +346,13 @@ function Box({ label, hi, children }: { label?: string; hi?: boolean; children: 
 export default function ScanReport({
   place,
   result,
+  board = null,
   teaser = false,
 }: {
   place: PlaceDetails;
   result: ScanResult;
+  /** Live-SERP board, loaded on its own track. null = still loading. */
+  board?: SerpBoard | null;
   teaser?: boolean;
 }) {
   const reduce = useReducedMotion();
@@ -273,17 +369,70 @@ export default function ScanReport({
       findings: (result.findings ?? []).filter((f) => f.category === name),
     }))
     .sort((a, b) => gradeRank(a.grade) - gradeRank(b.grade));
-  const groupsWithFindings = groups.filter((g) => g.findings.length > 0);
   const strong = groups.filter((g) => gradeRank(g.grade) >= 3);
   const weak = groups.filter((g) => gradeRank(g.grade) < 3).sort((a, b) => a.pct - b.pct);
 
   const gbp = groups.find((g) => g.name === "Google Business Profile");
-  const seoFindings = (result.findings ?? []).filter((f) => f.category === "On-Page SEO" || f.category === "Crawlability");
   const reviews = (place.reviews ?? []).slice(0, 2);
-  const worstTwo = weak.slice(0, 2);
-  const hasSearchKeywords = Boolean(result.search?.available && result.search.keywords && result.search.keywords.length > 0);
-  const hasCompetitors = Boolean(result.search?.available && result.search.competitors && result.search.competitors.length > 0);
-  const competitorCount = hasCompetitors ? result.search!.competitors!.length : null;
+  // Reputation is only a "finding" when it's genuinely thin. Strong reviews
+  // don't get a section calling them a problem (see section 06).
+  const reviewsWeak =
+    place.rating == null || place.rating < 4.2 || place.reviewCount == null || place.reviewCount < 20;
+  const competitorCount =
+    result.search?.available && result.search.competitors ? result.search.competitors.length : null;
+
+  // Live-SERP board: null while its slower endpoint is still loading, then
+  // either real snapshots or an unavailable state. Drives the "how you're
+  // doing online" section and the opportunity-keywords table.
+  const boardLoading = board === null;
+  const boardSnapshots = board?.available && board.snapshots ? board.snapshots : [];
+  const opportunityKeywords = board?.available && board.keyword_ideas ? board.keyword_ideas : [];
+  const profile = place.profile;
+
+  // Profile-completeness checks, every signal Google's API actually lets us
+  // verify off the live listing. Present = green check, missing = red gap, and
+  // the gaps are the finding. Signals Google doesn't expose in its API (posts,
+  // products, the booking-CTA button, organic sitelinks) are omitted rather
+  // than guessed at. Split in half so each half sits inside one of the two GBP
+  // boxes instead of a separate full-width panel below them.
+  const gbpChecks: [string, boolean][] = [
+    ["Business hours", (profile?.hours?.length ?? 0) > 0],
+    ["Physical address", Boolean(place.address)],
+    ["Phone number", Boolean(place.phone)],
+    ["Website linked", Boolean(place.website)],
+    ["Primary category", Boolean(profile?.primaryType)],
+    ["Business description", Boolean(place.summary)],
+    ["Price level", Boolean(profile?.priceLevel)],
+    ["Photos uploaded", photos.length > 0],
+    ["Services & attributes", (profile?.attributes?.length ?? 0) > 0],
+    ["25+ reviews", (place.reviewCount ?? 0) >= 25],
+  ];
+  const gbpChecksLeft = gbpChecks.slice(0, 5);
+  const gbpChecksRight = gbpChecks.slice(5);
+
+  // The real local-pack competitors, aggregated across every keyword board:
+  // the named businesses (with their star ratings) that outrank this business
+  // in at least one local search. This is the Owner.com "you're ranking below
+  // N competitors" list — every name and rating is real off the live Maps
+  // results, deduped, ranked by how high and how often they beat the business.
+  const localCompetitors = (() => {
+    const agg = new Map<string, { name: string; rating: number | null; bestRank: number | null; beats: boolean; count: number }>();
+    for (const snap of boardSnapshots) {
+      const you = snap.your_maps_rank; // null = unranked here, so everyone beats you
+      for (const m of snap.maps) {
+        if (m.is_you || !m.title) continue;
+        const e = agg.get(m.title) ?? { name: m.title, rating: null, bestRank: null, beats: false, count: 0 };
+        e.count += 1;
+        if (e.rating == null && m.rating != null) e.rating = m.rating;
+        if (m.rank != null && (e.bestRank == null || m.rank < e.bestRank)) e.bestRank = m.rank;
+        if (you == null || (m.rank != null && m.rank < you)) e.beats = true;
+        agg.set(m.title, e);
+      }
+    }
+    return [...agg.values()]
+      .filter((c) => c.beats)
+      .sort((a, b) => (a.bestRank ?? 99) - (b.bestRank ?? 99) || b.count - a.count);
+  })();
 
   // The "you could be losing $X/month" headline stat. Labeled and grounded,
   // not fabricated: the count of issues is real (critical + warning
@@ -302,36 +451,21 @@ export default function ScanReport({
     .sort((a, b) => (a.severity === "critical" ? 0 : 1) - (b.severity === "critical" ? 0 : 1))
     .slice(0, 4);
 
-  // "Costing you leads right now" should never read 0 while real problems
-  // sit on the page — a zero next to a list of findings reads as "nothing
-  // urgent," which undersells a report full of real issues. When no finding
-  // crossed the rubric's critical threshold, the top warnings (capped at 3)
-  // are counted here instead: an escalation of REAL findings by impact, not
-  // an invented number. If the scan genuinely found nothing at all, this
-  // stays 0 — we don't conjure an issue for a clean site.
-  const urgentCount =
-    result.critical_count > 0
-      ? result.critical_count
-      : Math.min(3, result.warning_count > 0 ? result.warning_count : result.findings_count);
+  // Real counts only, everywhere. The old code escalated warnings into a
+  // "critical" number when critical_count was 0 (to avoid showing a zero),
+  // but that contradicted the real "0 critical" shown elsewhere and read as
+  // fabrication. `criticalCount` is the true critical count; the "costing you
+  // leads" framing uses `totalIssues` (critical + warning) and is labeled
+  // "issues," never "critical," so warnings are never dressed up as criticals.
+  const criticalCount = result.critical_count;
 
-  // Teaser reveal for the detailed findings section only: sections 01-03 and
-  // the exec-summary breadth stay visible always, that's the hook. What's
-  // gated is depth: the fix-by-fix breakdown and everything past it.
-  const TEASER_FINDING_THRESHOLD = 3;
-  let revealed = 0;
-  let cutIndex = groupsWithFindings.length;
-  if (teaser) {
-    for (let i = 0; i < groupsWithFindings.length; i++) {
-      if (revealed >= TEASER_FINDING_THRESHOLD) {
-        cutIndex = i;
-        break;
-      }
-      revealed += groupsWithFindings[i].findings.length;
-    }
-  }
-  const shownGroups = groupsWithFindings.slice(0, cutIndex);
-  const hiddenGroups = groupsWithFindings.slice(cutIndex);
-  const hiddenFindingCount = hiddenGroups.reduce((n, g) => n + g.findings.length, 0);
+  // Teaser gate: section 03 opens the two worst channels' findings as the hook;
+  // every channel past those (index >= 2) is blurred, and sections 04+ are
+  // gated whole. hiddenFindingCount = the findings sitting behind the gate, for
+  // the "+N more unlock with your report" nudge.
+  const hiddenFindingCount = teaser
+    ? groups.slice(2).reduce((n, g) => n + g.findings.length, 0)
+    : 0;
 
   const gatedStyle = teaser ? ({ filter: "blur(6px)", userSelect: "none" as const, pointerEvents: "none" as const }) : {};
 
@@ -342,7 +476,7 @@ export default function ScanReport({
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
           {/* The full wordmark, not inverted: `inverted` inks the pulse for
               light surfaces, and on this dark page it vanished — leaving
-              just the dot, which read as ". SIMPL". Sized up from 24 — this
+              just the dot, which read as ". Simpl". Sized up from 24 — this
               is the masthead of a document, the logo carries the page. */}
           <SimplWordmark size={34} />
           <div style={{ ...rmono, fontSize: 10.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)", textAlign: "right", lineHeight: 1.9 }}>
@@ -350,13 +484,45 @@ export default function ScanReport({
             <div><span style={{ color: "var(--fg)" }}>Report</span> Digital Presence &amp; Positioning Audit</div>
           </div>
         </div>
-        <h1 style={{ ...display, fontSize: "clamp(32px, 5vw, 52px)", fontWeight: 700, letterSpacing: "-0.025em", lineHeight: 1.03, margin: "26px 0 0" }}>
-          {businessName} Positioning Audit
-        </h1>
-        <p style={{ color: "var(--muted)", fontSize: "clamp(15px, 1.6vw, 17px)", maxWidth: "62ch", margin: "16px 0 0", lineHeight: 1.55 }}>
-          An assessment of every public channel a customer sees before they call, measured against what your business
-          actually delivers.
-        </p>
+        {/* The title slot is a CTA instead of a headline: someone who's already
+            convinced can convert straight from the top without scrolling to the
+            bottom of the report. The report is still identified by the "Report:
+            Digital Presence & Positioning Audit" line above. Promise-based CTA,
+            leads to the booking/contact form at /start-now. */}
+        <div
+          style={{
+            marginTop: 26,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 24,
+            flexWrap: "wrap",
+            border: "1px solid var(--accent)",
+            borderRadius: 14,
+            background: "linear-gradient(180deg, var(--bg-soft), var(--bg))",
+            padding: "clamp(20px, 3vw, 30px)",
+            boxShadow: "0 24px 70px -44px var(--accent)",
+          }}
+        >
+          <div style={{ minWidth: 260, flex: "1 1 340px" }}>
+            <h1 style={{ ...display, fontSize: "clamp(24px, 3.4vw, 36px)", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.08, margin: 0 }}>
+              {totalIssues > 0
+                ? `Fix the ${totalIssues} issue${totalIssues === 1 ? "" : "s"} costing ${businessName} leads.`
+                : `Let's get ${businessName} ranking where your competitors are.`}
+            </h1>
+            <p style={{ color: "var(--muted)", fontSize: "clamp(14px, 1.5vw, 16px)", margin: "12px 0 0", lineHeight: 1.5, maxWidth: "52ch" }}>
+              We&apos;ll fix everything in this report in priority order and get you found where customers are searching.
+              Start now, or book a free call first, no pitch attached.
+            </p>
+          </div>
+          <a
+            href="/start-now"
+            className="cta-primary"
+            style={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap", color: "var(--accent-ink)", padding: "15px 26px", fontSize: 15, fontWeight: 700, borderRadius: 7, textDecoration: "none", flexShrink: 0 }}
+          >
+            Fix these issues now →
+          </a>
+        </div>
       </div>
 
       {/* Real photos off the listing, up front — color and proof before a
@@ -390,10 +556,11 @@ export default function ScanReport({
           lands at all. Both figures are grounded in real data from this
           scan: the dollar estimate is sized off the real critical+warning
           count (never a source-less number — see the comment above
-          `estimatedMonthlyImpact`), and the competitor count is the real
-          number of domains DataForSEO found actually competing for this
-          business's keywords. Ungated: the count is the hook, the actual
-          competitor names stay behind the gate in section 07. */}
+          `estimatedMonthlyImpact`), and the market-position box names the real
+          local-pack competitors (with their real star ratings) that outrank
+          this business, aggregated live from the SERP board. Ungated on
+          purpose: the named competitors beating you are the sharpest hook we
+          have, same as Owner.com leads with them. */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 52 }} className="grid-audit-hero">
         <Box hi>
           <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>
@@ -430,37 +597,56 @@ export default function ScanReport({
           <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>
             Market position
           </div>
-          {competitorCount !== null && competitorCount > 0 ? (
+          {localCompetitors.length > 0 ? (
+            <>
+              <p style={{ fontSize: 15, fontWeight: 600, color: "var(--fg)", margin: "0 0 14px", lineHeight: 1.35 }}>
+                You&apos;re ranking below{" "}
+                <span style={{ color: "#E05252" }}>{localCompetitors.length} competitor{localCompetitors.length === 1 ? "" : "s"}</span>{" "}
+                in local search.
+              </p>
+              <div style={{ display: "grid", gap: 9 }}>
+                {localCompetitors.slice(0, 5).map((c, i) => (
+                  <div key={c.name} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13.5 }}>
+                    <span style={{ ...rmono, fontSize: 10.5, color: "var(--muted)", width: 26, flexShrink: 0 }}>{ordinal(i + 1)}</span>
+                    <span style={{ flex: 1, fontWeight: 600, color: "var(--fg)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.name}</span>
+                    {c.rating != null && (
+                      <span style={{ ...rmono, fontSize: 12, color: "#E0A852", flexShrink: 0 }}>★ {c.rating.toFixed(1)}</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {localCompetitors.length > 5 && (
+                <div style={{ ...rmono, fontSize: 10.5, color: "var(--muted)", marginTop: 10 }}>
+                  +{localCompetitors.length - 5} more ranking above you
+                </div>
+              )}
+            </>
+          ) : boardLoading ? (
+            <>
+              <div className="serp-pulse" style={{ ...rmono, fontSize: 13, color: "var(--accent)", marginBottom: 8 }}>
+                Checking who&apos;s ranking above you…
+              </div>
+              <p style={{ fontSize: 13, color: "var(--muted)", margin: 0, lineHeight: 1.5 }}>
+                Running your local searches against every competitor in your market.
+              </p>
+            </>
+          ) : competitorCount !== null && competitorCount > 0 ? (
             <>
               <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "#E05252", lineHeight: 1 }}>
                 {competitorCount}
               </div>
-              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 16px", lineHeight: 1.5 }}>
-                You&apos;re ranking below {competitorCount} other business{competitorCount === 1 ? "" : "es"} already showing up
-                for your keywords, per live search data.
-              </p>
-            </>
-          ) : weak.length > 0 ? (
-            <>
-              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "#E0A852", lineHeight: 1 }}>
-                {weak.length}
-              </div>
-              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 16px", lineHeight: 1.5 }}>
-                categor{weak.length === 1 ? "y is" : "ies are"} below where a customer expects you to be, before search
-                data even enters it.
+              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 0", lineHeight: 1.5 }}>
+                other business{competitorCount === 1 ? "" : "es"} are competing for your keywords online, per live search data.
               </p>
             </>
           ) : (
             <>
               <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "var(--ok)", lineHeight: 1 }}>Strong</div>
               <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 0", lineHeight: 1.5 }}>
-                Every category is holding its own right now.
+                No competitor is consistently outranking you in local search right now.
               </p>
             </>
           )}
-          <div style={{ ...rmono, fontSize: 10.5, color: "var(--muted)", marginTop: 6 }}>
-            Full competitor breakdown in section 07 →
-          </div>
         </Box>
       </div>
 
@@ -495,7 +681,7 @@ export default function ScanReport({
             </div>
             <div style={{ ...rmono, fontSize: 11, color: "var(--muted)", marginTop: 6 }}>/ 100</div>
             <div style={{ ...rmono, fontSize: 9.5, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginTop: 10 }}>
-              SIMPL Score
+              Simpl Score
             </div>
           </div>
           <div style={{ display: "flex", gap: 26, flexWrap: "wrap" }}>
@@ -524,8 +710,12 @@ export default function ScanReport({
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginTop: 20 }} className="grid-audit-kpis">
           <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "18px 18px" }}>
-            <div style={{ ...display, fontSize: "clamp(24px, 3.4vw, 32px)", fontWeight: 700, color: "#E05252", lineHeight: 1 }}>{urgentCount}</div>
-            <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 9, lineHeight: 1.4 }}>critical issue{urgentCount === 1 ? "" : "s"} costing you leads right now</div>
+            <div style={{ ...display, fontSize: "clamp(24px, 3.4vw, 32px)", fontWeight: 700, color: criticalCount > 0 ? "#E05252" : "var(--ok)", lineHeight: 1 }}>{criticalCount}</div>
+            <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 9, lineHeight: 1.4 }}>
+              {criticalCount > 0
+                ? `critical issue${criticalCount === 1 ? "" : "s"} costing you leads right now`
+                : "critical issues — none, nothing is actively broken"}
+            </div>
           </div>
           <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "18px 18px" }}>
             <div style={{ ...display, fontSize: "clamp(24px, 3.4vw, 32px)", fontWeight: 700, color: "#E0A852", lineHeight: 1 }}>{result.warning_count}</div>
@@ -539,9 +729,11 @@ export default function ScanReport({
         <SectionFix
           title="How to fix this"
           points={[
-            "Work the categories in “What's not” first, worst grade to best — that's the order a customer actually experiences you in.",
-            "A critical finding blocks a sale in progress; a warning slows one down. Fix critical first, always.",
-            "This score moves as fast as the fixes ship. Rescan after each change to see it move.",
+            weak.length > 0
+              ? `Start with ${weak.map((g) => CATEGORY_SHORT[g.name] ?? g.name).join(", then ")} — that's your weak-to-strong order, and it's the order a customer runs into you in.`
+              : "Every category is holding — the work now is keeping it there, not fixing a hole.",
+            `You have ${result.critical_count} critical finding${result.critical_count === 1 ? "" : "s"} and ${result.warning_count} warning${result.warning_count === 1 ? "" : "s"}. A critical blocks a sale in progress; a warning slows one down — clear critical first, always.`,
+            `Your score is ${pct}. It moves as fast as the fixes ship — rescan after each change to watch it climb.`,
           ]}
         />
       </section>
@@ -586,50 +778,83 @@ export default function ScanReport({
         <SectionFix
           title="How to fix this"
           points={[
-            "The gap between your best category and your worst is exactly the gap a customer notices when they cross-check you across channels.",
+            strong.length > 0 && weak.length > 0
+              ? `The gap between your best (${CATEGORY_SHORT[strong[0].name] ?? strong[0].name}, ${strong[0].pct}) and your worst (${CATEGORY_SHORT[weak[0].name] ?? weak[0].name}, ${weak[0].pct}) is exactly what a customer notices when they cross-check you across channels.`
+              : "The gap between your best and worst channel is exactly what a customer notices when they cross-check you.",
             "One strong channel doesn't cover for a weak one — a customer who lands on a good website then finds a dead Google profile hesitates anyway.",
-            "Aim for no category below a C. A single critical category drags the whole score down disproportionately.",
+            weak.length > 0
+              ? `Aim for no channel below a C. Right now ${weak.length} ${weak.length === 1 ? "is" : "are"} dragging the whole score down disproportionately.`
+              : "Aim to keep every channel at a C or better — a single critical category drags the whole score down disproportionately.",
           ]}
         />
       </section>
 
-      {/* 03 — Channel diagnostics */}
+      {/* 03 — Findings by channel. The single home for every finding: one per
+          category, grouped, worst-first, each category collapsible so the
+          section is short by default and deep on demand. This replaces the old
+          thin diagnostics table AND the separate "findings in full" dump that
+          made the report twice as long — nothing is listed twice now. */}
       <section style={{ marginBottom: 52 }}>
-        <SectionHead n="03" title="Channel diagnostics" />
-        <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
-          <div
-            style={{ ...rmono, display: "grid", gridTemplateColumns: "1fr 110px 2fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}
-            className="grid-audit-diag-row"
-          >
-            <span>Category</span>
-            <span>Status</span>
-            <span>Top finding</span>
-          </div>
-          {groups.map((g, i) => (
-            <div
-              key={g.name}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 110px 2fr",
-                gap: 12,
-                padding: "13px 16px",
-                fontSize: 13.5,
-                borderBottom: i < groups.length - 1 ? "1px solid var(--rule)" : "none",
-                alignItems: "center",
-              }}
-              className="grid-audit-diag-row"
-            >
-              <span style={{ ...display, fontWeight: 600 }}>{g.name}</span>
-              <Pill color={gradeColor(g.grade)}>{gradeStatusWord(g.grade)}</Pill>
-              <span style={{ color: "var(--muted)" }}>{g.findings[0]?.title ?? "No issues found"}</span>
-            </div>
-          ))}
+        <SectionHead
+          n="03"
+          title="Findings by channel"
+          lead="Every issue this scan found, grouped by the channel it lives on, worst grade first. Open any channel for the full list and how to fix each one."
+        />
+        <div style={{ display: "grid", gap: 10 }}>
+          {groups.map((g, gi) => {
+            const gated = teaser && gi >= 2 && g.findings.length > 0;
+            return (
+              <details
+                key={g.name}
+                open={!teaser && gi < 2 && g.findings.length > 0}
+                style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden", background: "var(--bg-soft)" }}
+              >
+                <summary
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr auto auto",
+                    gap: 12,
+                    alignItems: "center",
+                    padding: "14px 16px",
+                    cursor: "pointer",
+                    listStyle: "none",
+                  }}
+                >
+                  <span style={{ ...display, fontWeight: 600, fontSize: 15, display: "flex", alignItems: "center", gap: 10 }}>
+                    {g.name}
+                    <Pill color={gradeColor(g.grade)}>{gradeStatusWord(g.grade)}</Pill>
+                  </span>
+                  <span style={{ ...rmono, fontSize: 11.5, color: g.findings.length > 0 ? "#E0A852" : "var(--ok)" }}>
+                    {g.findings.length > 0 ? `${g.findings.length} to fix` : "clean"}
+                  </span>
+                  <span aria-hidden="true" style={{ ...rmono, fontSize: 14, color: "var(--accent)" }}>+</span>
+                </summary>
+                <div style={{ padding: "0 16px 14px", ...(gated ? { filter: "blur(5px)", userSelect: "none" as const, pointerEvents: "none" as const } : {}) }}>
+                  {g.findings.length > 0 ? (
+                    g.findings.map((f, i) => <FindingRow key={`${g.name}-${f.title}-${i}`} f={f} index={i} />)
+                  ) : (
+                    <div style={{ fontSize: 13.5, color: "var(--muted)", padding: "4px 0 6px" }}>
+                      Nothing wrong here — this channel is doing its job.
+                    </div>
+                  )}
+                </div>
+              </details>
+            );
+          })}
         </div>
+        {teaser && hiddenFindingCount > 0 && (
+          <div style={{ ...rmono, fontSize: 12, fontWeight: 600, color: "var(--accent)", textAlign: "center", marginTop: 14 }}>
+            +{hiddenFindingCount} more issue{hiddenFindingCount === 1 ? "" : "s"} unlock with your report
+          </div>
+        )}
         <SectionFix
           title="How to fix this"
           points={[
-            "“Critical” channels are actively turning customers away today, not someday — those get fixed this week, not this quarter.",
-            "“Solid” and “Strong” channels still get monitored. Presence decays quietly: a review goes unanswered, a page goes stale, nobody notices until the calls slow down.",
+            weak.length > 0
+              ? `Start with ${weak[0].name} (${weak[0].grade}) — it's your lowest grade, and it's the channel actively costing you the most right now.`
+              : "No channel is critical — keep every one from slipping by monitoring, not just fixing once.",
+            `“Critical” findings are turning customers away today; “warning” findings slow them down. You have ${result.critical_count} critical and ${result.warning_count} warning — clear the critical ones first.`,
+            "Presence decays quietly: a review goes unanswered, a page goes stale, hours drift out of date. Rescan after each fix to watch the grade move.",
           ]}
         />
       </section>
@@ -642,39 +867,70 @@ export default function ScanReport({
             title="Google Business Profile"
             lead="The profile is the first thing a customer checks after a referral or a search. Right now it's either backing up what you actually do, or contradicting it."
           />
+          {/* Two boxes, and the profile-completeness checks live INSIDE them —
+              five per box — instead of a separate full-width panel below. Each
+              signal is a single ✓/× line (including "Business hours"), so the
+              listing's real hours are never pasted out to eat vertical room. */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22 }} className="grid-audit-gbp">
             <Box>
-              <div style={{ ...display, fontSize: "clamp(44px, 6vw, 64px)", fontWeight: 700, lineHeight: 0.9, color: place.reviewCount && place.reviewCount >= 25 ? "var(--ok)" : "#E05252", letterSpacing: "-0.02em" }}>
+              <div style={{ ...display, fontSize: "clamp(40px, 5.4vw, 56px)", fontWeight: 700, lineHeight: 0.9, color: place.reviewCount && place.reviewCount >= 25 ? "var(--ok)" : "#E05252", letterSpacing: "-0.02em" }}>
                 {place.reviewCount ?? 0}
               </div>
-              <p style={{ fontSize: 14, color: "var(--ink-2, var(--muted))", margin: "12px 0 0", lineHeight: 1.4 }}>
+              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "11px 0 0", lineHeight: 1.4 }}>
                 Google review{place.reviewCount === 1 ? "" : "s"}{place.rating ? ` at a ${place.rating.toFixed(1)}-star average` : ""} carrying your entire public reputation on this channel.
               </p>
-            </Box>
-            <Box label="Profile completeness">
-              <div style={{ display: "grid", gap: 10 }}>
-                {gbp.findings.length > 0 ? (
-                  gbp.findings.slice(0, 5).map((f) => (
-                    <div key={f.title} style={{ display: "flex", alignItems: "flex-start", gap: 11, fontSize: 13.5, color: "var(--ink-2, var(--muted))" }}>
-                      <span style={{ ...rmono, fontWeight: 700, flexShrink: 0, width: 16, textAlign: "center", color: "#E05252" }}>×</span>
-                      <span>{f.title}</span>
-                    </div>
-                  ))
-                ) : (
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: 11, fontSize: 13.5, color: "var(--ink-2, var(--muted))" }}>
-                    <span style={{ ...rmono, fontWeight: 700, flexShrink: 0, width: 16, textAlign: "center", color: "var(--ok)" }}>✓</span>
-                    <span>No profile issues found — this one's in good shape</span>
+              <div style={{ borderTop: "1px solid var(--rule)", margin: "16px 0 12px" }} />
+              <div style={{ display: "grid", gap: 2 }}>
+                {gbpChecksLeft.map(([label, ok]) => (
+                  <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, padding: "3px 0" }}>
+                    <span style={{ ...rmono, fontWeight: 700, width: 15, textAlign: "center", color: ok ? "var(--ok)" : "#E05252", flexShrink: 0 }}>{ok ? "✓" : "×"}</span>
+                    <span style={{ color: ok ? "var(--ink-2, var(--muted))" : "var(--fg)" }}>{label}</span>
                   </div>
+                ))}
+              </div>
+            </Box>
+            <Box label="What your profile says">
+              {/* Real Places data up front — category, price, open/closed — then
+                  the rest of the completeness checks. */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 24 }}>
+                {profile?.primaryType && (
+                  <span style={{ ...rmono, fontSize: 11.5, color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 99, padding: "3px 11px" }}>{profile.primaryType}</span>
                 )}
+                {profile?.priceLevel && (
+                  <span style={{ ...rmono, fontSize: 12, fontWeight: 600, color: "var(--ok)" }}>{profile.priceLevel}</span>
+                )}
+                {profile?.openNow != null && (
+                  <span style={{ ...rmono, fontSize: 11.5, color: profile.openNow ? "var(--ok)" : "#E0A852" }}>
+                    {profile.openNow ? "Open now" : "Closed now"}
+                  </span>
+                )}
+                {!profile?.primaryType && !profile?.priceLevel && profile?.openNow == null && (
+                  <span style={{ ...rmono, fontSize: 11.5, color: "var(--muted)" }}>Little public detail on this listing</span>
+                )}
+              </div>
+              <div style={{ borderTop: "1px solid var(--rule)", margin: "16px 0 12px" }} />
+              <div style={{ display: "grid", gap: 2 }}>
+                {gbpChecksRight.map(([label, ok]) => (
+                  <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, padding: "3px 0" }}>
+                    <span style={{ ...rmono, fontWeight: 700, width: 15, textAlign: "center", color: ok ? "var(--ok)" : "#E05252", flexShrink: 0 }}>{ok ? "✓" : "×"}</span>
+                    <span style={{ color: ok ? "var(--ink-2, var(--muted))" : "var(--fg)" }}>{label}</span>
+                  </div>
+                ))}
               </div>
             </Box>
           </div>
           <SectionFix
             title="How to fix this"
             points={[
-              "Every unanswered review is a visible gap. Answering the last 90 days of reviews, positive and negative, is the fastest credibility fix on this list.",
-              "A profile with photos, correct hours, and regular posts reads as active. An empty one reads as closed, even when you're not.",
-              "Review volume compounds: a simple ask at the end of a job, done consistently, closes this gap in months, not years.",
+              place.reviewCount != null && place.reviewCount < 25
+                ? `You have ${place.reviewCount} review${place.reviewCount === 1 ? "" : "s"}. A simple ask at the end of every job, done consistently, is the fastest way to close that gap — reviews are the single biggest local-pack ranking factor you control.`
+                : `${place.reviewCount ?? 0} reviews is real credibility — protect it by replying to every new one, good or bad. Google and customers both read the replies.`,
+              (profile?.hours?.length ?? 0) === 0
+                ? "Set your hours today. A profile with no hours reads as “maybe closed” and quietly loses walk-ins and calls before a customer ever reaches you."
+                : "Keep hours, photos, and posts current. An active-looking profile outranks a stale one, even at the same review count.",
+              !place.website
+                ? "Link your website on the profile — right now there's no path from your Google listing to your site."
+                : "Every attribute Google can show (services, price, options) is another reason a customer picks you from the pack. Fill in what's still blank.",
             ]}
           />
         </section>
@@ -684,322 +940,179 @@ export default function ScanReport({
       <section style={{ marginBottom: 52, ...gatedStyle }}>
         <SectionHead
           n="05"
-          title="Search opportunity"
-          lead={
-            hasSearchKeywords
-              ? "Real Google data: the terms you already rank for, the real monthly search volume behind them, and where you currently sit."
-              : "The work that starts cold begins with a search. These are the real on-page and technical signals Google uses to decide whether you show up for it."
-          }
+          title="This is how you're doing online"
+          lead="Where you actually show up when a customer searches for what you do, right next to the competitors beating you to the click. Real Google Maps and Search results, pulled live, keyword by keyword."
         />
-        {hasSearchKeywords ? (
-          <>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginBottom: 20 }}>
-              <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "16px 18px" }}>
-                <div style={{ ...display, fontSize: "clamp(22px, 3vw, 28px)", fontWeight: 700, color: "var(--fg)", lineHeight: 1 }}>{result.search!.organic_keywords}</div>
-                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 8, lineHeight: 1.4 }}>keywords you show up for at all</div>
-              </div>
-              <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "16px 18px" }}>
-                <div style={{ ...display, fontSize: "clamp(22px, 3vw, 28px)", fontWeight: 700, color: (result.search!.pos_1 ?? 0) > 0 ? "var(--ok)" : "#E05252", lineHeight: 1 }}>{result.search!.pos_1 ?? 0}</div>
-                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 8, lineHeight: 1.4 }}>keywords ranked #1</div>
-              </div>
-              <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "16px 18px" }}>
-                <div style={{ ...display, fontSize: "clamp(22px, 3vw, 28px)", fontWeight: 700, color: "#E0A852", lineHeight: 1 }}>{result.search!.pos_4_10 ?? 0}</div>
-                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 8, lineHeight: 1.4 }}>on page 1 but not the top 3</div>
-              </div>
-            </div>
-            <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
-              <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 130px 90px 18px", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
-                <span>Keyword</span>
-                <span>Monthly searches</span>
-                <span>Your rank</span>
-                <span />
-              </div>
-              {result.search!.keywords!.slice(0, 6).map((kw, i) => (
-                <KeywordRow key={`${kw.keyword}-${i}`} kw={kw} weakestCategory={weak[0]} competitors={result.search!.competitors} />
-              ))}
-            </div>
-            <p style={{ ...rmono, fontSize: 11, color: "var(--faint, var(--muted))", letterSpacing: "0.03em", marginTop: 14, lineHeight: 1.6 }}>
-              Live Google rank + real search volume, pulled from DataForSEO at scan time. Tap a row for where you stand
-              and how to fix it. Not an estimate.
-            </p>
-          </>
-        ) : (
-          <>
-            <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
-              <div
-                style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 110px 2fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}
-              >
-                <span>Signal</span>
-                <span>Severity</span>
-                <span>What it costs you</span>
-              </div>
-              {(seoFindings.length > 0 ? seoFindings.slice(0, 6) : [{ severity: "info", title: "No search-visibility issues found", category: "On-Page SEO", fix: null } as Finding]).map((f, i) => (
-                <div
-                  key={`${f.title}-${i}`}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "2fr 110px 2fr",
-                    gap: 12,
-                    padding: "13px 16px",
-                    fontSize: 13.5,
-                    borderBottom: i < Math.min(seoFindings.length, 6) - 1 ? "1px solid var(--rule)" : "none",
-                    alignItems: "center",
-                  }}
-                >
-                  <span style={{ ...display, fontWeight: 600 }}>{f.title}</span>
-                  <Pill color={f.severity === "critical" ? "#E05252" : f.severity === "warning" ? "#E0A852" : "var(--ok)"}>
-                    {f.severity === "critical" ? "High" : f.severity === "warning" ? "Medium" : "OK"}
-                  </Pill>
-                  <span style={{ color: "var(--muted)" }}>{f.fix ?? "Already handled"}</span>
-                </div>
-              ))}
-            </div>
-            <p style={{ ...rmono, fontSize: 11, color: "var(--faint, var(--muted))", letterSpacing: "0.03em", marginTop: 14, lineHeight: 1.6 }}>
-              This section shows the real on-page and crawlability signals from this scan. Live search volumes and
-              rank positions need a DataForSEO pull that didn&apos;t return data for this domain (too new to have
-              search history, or the data source was unavailable) — real numbers, not placeholders, when there&apos;s
-              a footprint to measure.
-            </p>
-          </>
-        )}
-        <SectionFix
-          title="How to fix this"
-          points={[
-            "Google can't rank a page it can't understand. Missing titles, schema, and metadata are the difference between showing up and being invisible for the exact terms your customers type.",
-            hasSearchKeywords
-              ? "Anything outside the top 3 is losing clicks to whoever is above you — the first result gets roughly a third of all clicks on a search."
-              : "Fix the “High” severity signals first — those are the ones actively blocking discovery, not just weakening it.",
-            "This is the section that compounds slowest and pays the longest. Start it now even if the payoff is months out.",
-          ]}
-        />
-      </section>
 
-      {/* 06 — Proof and case studies */}
-      <section style={{ marginBottom: 52, ...gatedStyle }}>
-        <SectionHead
-          n="06"
-          title="Proof and case studies"
-          lead="What your own customers already say about you — the proof a new customer should find in the first ten seconds of looking you up."
-        />
-        {reviews.length > 0 ? (
-          <div style={{ display: "grid", gridTemplateColumns: reviews.length > 1 ? "1fr 1fr" : "1fr", gap: 18 }} className="grid-audit-proof">
-            {reviews.map((rv, i) => (
-              <Box key={i} label={rv.author ?? "Verified customer"}>
-                <div style={{ color: "#E0A852", fontSize: 13, marginBottom: 10 }}>{"★".repeat(Math.round(rv.rating ?? 5))}</div>
-                <p style={{ fontSize: 14, color: "var(--fg)", lineHeight: 1.55, margin: 0 }}>&ldquo;{rv.text}&rdquo;</p>
-              </Box>
-            ))}
-          </div>
-        ) : (
-          <Box>
-            <p style={{ fontSize: 14, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>
-              No published reviews to pull proof from yet — which is itself the finding. A customer with no visible
-              reviews is asking a stranger to take the first risk.
-            </p>
-          </Box>
-        )}
-        <SectionFix
-          title="How to fix this"
-          points={[
-            "Real reviews are the cheapest, most trusted proof there is — a five-star review outperforms a paragraph of your own marketing copy.",
-            "If you have finished jobs with happy customers and nothing published, that's a capture problem, not a quality problem. Ask at the moment of highest satisfaction, right after the job's done.",
-            "One detailed review beats five one-word ones. A short ask (“what specifically made this easy?”) gets you the detail.",
-          ]}
-        />
-      </section>
-
-      {/* 07 — Competitive positioning and exposure assessment */}
-      <section style={{ marginBottom: 52, ...gatedStyle }}>
-        <SectionHead
-          n="07"
-          title="Competitive positioning and exposure assessment"
-          lead="You don't need a specific competitor's name to see the exposure: every category below average is a door held open for whoever is better set up to walk through it."
-        />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }} className="grid-audit-competitive">
-          <Box hi label="Local search exposure">
-            <p style={{ fontSize: 14, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
-              {gbp && gradeRank(gbp.grade) < 3
-                ? "A weak Google Business Profile is the single most common reason a comparable business loses the local pack. That's the listing customers see before they see your website at all."
-                : "Your local listing is carrying its weight. The remaining exposure is further down the funnel, in content and follow-through."}
-            </p>
-          </Box>
-          <Box hi label="Conversion exposure">
-            <p style={{ fontSize: 14, color: "var(--ink-2, var(--muted))", margin: 0, lineHeight: 1.55 }}>
-              Every visitor who lands on a slow page, a missing service page, or a site with no clear next step is a
-              visitor who came looking and left with nothing to act on. That traffic isn&apos;t lost, it&apos;s
-              leaking.
-            </p>
-          </Box>
+        {/* The live-SERP board is the whole section now. The old labs-based
+            keyword table was removed: its ranks came from a periodic DataForSEO
+            Labs snapshot that lagged reality (it reported a business at #31 for
+            a term it was actually #1 for in the local pack), and showing a
+            stale number next to the live board destroyed trust. The board's
+            ranks are pulled live at scan time, so they're the ones we stand
+            behind. */}
+        <div style={{ marginBottom: 28 }}>
+          <SerpBoard loading={boardLoading} snapshots={boardSnapshots} opportunities={opportunityKeywords} location={board?.location} />
         </div>
+        <SectionFix
+          title="How to fix this"
+          points={[
+            boardSnapshots.length > 0
+              ? (() => {
+                  const unranked = boardSnapshots.find((s) => !s.your_maps_rank);
+                  const behind = boardSnapshots.find((s) => s.your_maps_rank && s.your_maps_rank > 3);
+                  if (unranked) return `You don't appear at all for "${unranked.keyword}" — that's a search your customers are running right now, going straight to a competitor. A page built specifically for that term is where you start.`;
+                  if (behind) return `For "${behind.keyword}" you sit at #${behind.your_maps_rank} in the Maps pack — outside the top 3 that get almost every click. Closing that gap is the highest-value move on this page.`;
+                  return "You're in the top 3 on the terms that matter — defend it. These rankings erode the moment the page behind them or the profile goes stale.";
+                })()
+              : "Google can't rank a page it can't understand. Missing titles, schema, and metadata decide whether you show up for the exact terms your customers type.",
+            opportunityKeywords.length > 0
+              ? `"${opportunityKeywords[0].keyword}" gets about ${(opportunityKeywords[0].search_volume ?? 0).toLocaleString()} searches a month and you're not competing for it. That's a page you don't have yet.`
+              : "Anything outside the top 3 is losing clicks to whoever's above you — the first result takes roughly a third of all clicks.",
+            "Local search compounds slowly and pays the longest. The businesses above you started this months ago — the only fix is to start now.",
+          ]}
+        />
+      </section>
 
-        {hasCompetitors && (
-          <div style={{ marginTop: 18, border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
-            <div style={{ ...rmono, display: "grid", gridTemplateColumns: "2fr 1fr 1.4fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
-              <span>Domain competing for your keywords</span>
-              <span>Keywords in common</span>
-              <span>Their footprint</span>
+      {/* 06 — Reputation. Only rendered when reviews are genuinely weak (few,
+          low-rated, or none) — that's the only case where it's a real problem.
+          A business with strong reviews doesn't get a section telling them
+          their reviews are an issue while showing off two five-star quotes. */}
+      {reviewsWeak && (
+        <section style={{ marginBottom: 52, ...gatedStyle }}>
+          <SectionHead
+            n="06"
+            title="Reputation gap"
+            lead="A new customer checks your reviews before they call. Right now there isn't enough there to make the decision easy for them."
+          />
+          {reviews.length > 0 ? (
+            <div style={{ display: "grid", gridTemplateColumns: reviews.length > 1 ? "1fr 1fr" : "1fr", gap: 18 }} className="grid-audit-proof">
+              {reviews.map((rv, i) => (
+                <Box key={i} label={rv.author ?? "Verified customer"}>
+                  <div style={{ color: "#E0A852", fontSize: 13, marginBottom: 10 }}>{"★".repeat(Math.round(rv.rating ?? 5))}</div>
+                  <p style={{ fontSize: 14, color: "var(--fg)", lineHeight: 1.55, margin: 0 }}>&ldquo;{rv.text}&rdquo;</p>
+                </Box>
+              ))}
             </div>
-            {result.search!.competitors!.map((c, i) => {
-              const maxOrganic = Math.max(...result.search!.competitors!.map((x) => x.organic_keywords ?? 0), 1);
-              const footprintPct = Math.round(((c.organic_keywords ?? 0) / maxOrganic) * 100);
+          ) : (
+            <Box>
+              <p style={{ fontSize: 14, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>
+                No published reviews to pull proof from yet — which is the finding. A customer with no visible reviews is
+                being asked to take the first risk, and most won&apos;t.
+              </p>
+            </Box>
+          )}
+          <SectionFix
+            title="How to fix this"
+            points={[
+              place.reviewCount != null
+                ? `You have ${place.reviewCount} review${place.reviewCount === 1 ? "" : "s"}${place.rating != null ? ` at ${place.rating.toFixed(1)} stars` : ""}. In most local markets it takes 25+ recent reviews to look like the obvious choice — that gap is costing you clicks to competitors who have them.`
+                : "Reviews are the cheapest, most trusted proof there is, and you have none visible. A five-star review outperforms a paragraph of your own marketing copy.",
+              "This is a capture problem, not a quality problem. Ask at the moment of highest satisfaction, right after the job's done, and make it one tap.",
+              "One detailed review beats five one-word ones. A short prompt (“what specifically made this easy?”) gets you the detail that actually persuades the next customer.",
+            ]}
+          />
+        </section>
+      )}
+
+      {/* 07 — Competitive positioning. STRICTLY local competitors (the real
+          named businesses from the live Maps board), never organic citation
+          domains like homeadvisor.com or mapquest.com — those aren't
+          competitors, they're directories, and listing them read as noise. */}
+      {localCompetitors.length > 0 && (
+        <section style={{ marginBottom: 52, ...gatedStyle }}>
+          <SectionHead
+            n="07"
+            title="Who's beating you, and where"
+            lead="The real local businesses ranking above you when a customer searches — how strong their reputation is, and how many of your keywords they're taking."
+          />
+          <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ ...rmono, display: "grid", gridTemplateColumns: "1.6fr 90px 1.2fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
+              <span>Competitor</span>
+              <span>Rating</span>
+              <span>Beats you on</span>
+            </div>
+            {localCompetitors.slice(0, 6).map((c, i) => {
+              const beatKeywords = boardSnapshots.filter((s) => {
+                const you = s.your_maps_rank;
+                const theirRank = s.maps.find((m) => m.title === c.name)?.rank;
+                return theirRank != null && (you == null || theirRank < you);
+              }).length;
+              const pct = Math.round((beatKeywords / Math.max(boardSnapshots.length, 1)) * 100);
               return (
-                <div key={c.domain} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1.4fr", gap: 12, padding: "13px 16px", fontSize: 13.5, borderBottom: i < result.search!.competitors!.length - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
-                  <span style={{ ...display, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}>
-                    {/* Real favicon for the real domain — a public, unauthenticated
-                        lookup, not a fabricated logo. */}
-                    <img
-                      src={`https://www.google.com/s2/favicons?domain=${encodeURIComponent(c.domain)}&sz=32`}
-                      alt=""
-                      width={16}
-                      height={16}
-                      style={{ borderRadius: 3, flexShrink: 0 }}
-                    />
-                    {c.domain}
-                  </span>
-                  <span style={{ ...rmono, color: "var(--muted)" }}>{c.common_keywords ?? "—"}</span>
+                <div key={c.name} style={{ display: "grid", gridTemplateColumns: "1.6fr 90px 1.2fr", gap: 12, padding: "13px 16px", fontSize: 13.5, borderBottom: i < Math.min(localCompetitors.length, 6) - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
+                  <span style={{ ...display, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.name}</span>
+                  <span style={{ ...rmono, fontSize: 12, color: c.rating != null ? "#E0A852" : "var(--muted)" }}>{c.rating != null ? `★ ${c.rating.toFixed(1)}` : "—"}</span>
                   <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ flex: 1 }}>
-                      <Track pct={footprintPct} color="var(--accent)" />
-                    </span>
-                    <span style={{ ...rmono, color: "var(--muted)", fontSize: 11.5, whiteSpace: "nowrap" }}>{c.organic_keywords ?? "—"}</span>
+                    <span style={{ flex: 1 }}><Track pct={pct} color="#E05252" /></span>
+                    <span style={{ ...rmono, color: "var(--muted)", fontSize: 11.5, whiteSpace: "nowrap" }}>{beatKeywords}/{boardSnapshots.length}</span>
                   </span>
                 </div>
               );
             })}
           </div>
-        )}
-        <SectionFix
-          title="How to fix this"
-          points={[
-            "You don't have to be the biggest business in your market to win the search. You have to be the most complete, accurate, and responsive one at the moment someone's looking.",
-            "Close the two boxes above in order: get found, then give the person who found you a reason to call before they check the next result.",
-          ]}
-        />
-      </section>
-
-      {/* 08 — Engagement plan */}
-      <section style={{ marginBottom: 52, ...gatedStyle }}>
-        <SectionHead n="08" title="Engagement plan" lead="Two movements, worst category first. This is the floor, not the ceiling." />
-        <div style={{ display: "grid", gridTemplateColumns: worstTwo.length > 1 ? "1fr 1fr" : "1fr", gap: 16 }} className="grid-audit-engagement">
-          {(worstTwo.length > 0 ? worstTwo : groups.slice(0, 1)).map((g, i) => (
-            <Box key={g.name} label={`Movement 0${i + 1}`}>
-              <div style={{ ...display, fontWeight: 700, fontSize: 19 }}>{g.name}</div>
-              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 0", lineHeight: 1.5 }}>
-                {g.findings[0]?.fix ?? `Bring ${CATEGORY_SHORT[g.name] ?? g.name} up to at least a C before anything else — it's the ceiling on everything downstream of it.`}
-              </p>
-            </Box>
-          ))}
-        </div>
-        <SectionFix
-          title="How to fix this"
-          points={[
-            "Fix in this order, not by preference — each movement is picked because it's the category currently doing the most damage.",
-            "One movement at a time. Spreading effort across all six categories at once is how nothing gets fixed properly.",
-          ]}
-        />
-      </section>
-
-      {/* Findings & fixes — the detailed, teaser-gated breakdown */}
-      <section style={{ marginBottom: 8 }}>
-        <SectionHead title="Findings & fixes, in full" lead="Every issue behind the nine sections above, grouped by category, worst first." />
-        {shownGroups.map((g) => (
-          <div key={g.name} style={{ marginBottom: 30 }}>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12 }}>
-              <span style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }}>{g.name}</span>
-              <span style={{ fontSize: 13, fontWeight: 600, color: gradeColor(g.grade) }}>{g.grade}</span>
-            </div>
-            {g.findings.map((f, i) => (
-              <FindingRow key={`${g.name}-${f.title}-${i}`} f={f} index={i} />
-            ))}
-          </div>
-        ))}
-
-        {hiddenGroups.length > 0 && (
-          <div style={{ position: "relative" }}>
-            <div aria-hidden="true" style={{ filter: "blur(6px)", userSelect: "none", pointerEvents: "none" }}>
-              {hiddenGroups.map((g) => (
-                <div key={g.name} style={{ marginBottom: 30 }}>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12 }}>
-                    <span style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)" }}>{g.name}</span>
-                    <span style={{ fontSize: 13, fontWeight: 600, color: gradeColor(g.grade) }}>{g.grade}</span>
-                  </div>
-                  {g.findings.map((f, i) => (
-                    <FindingRow key={`${g.name}-${f.title}-${i}`} f={f} index={i} />
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(180deg, transparent, var(--bg) 55%)" }}>
-              <span style={{ ...rmono, fontSize: 12, fontWeight: 600, color: "var(--accent)", letterSpacing: "0.02em" }}>
-                +{hiddenFindingCount} more issue{hiddenFindingCount === 1 ? "" : "s"} across {hiddenGroups.length} categor{hiddenGroups.length === 1 ? "y" : "ies"}
-              </span>
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* Aspirational close */}
-      <motion.div
-        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.45 }}
-        className="split-phone-grid"
-        style={{ marginTop: 16, paddingTop: 40, borderTop: "1px solid var(--rule)", ...gatedStyle }}
-      >
-        <div>
-          <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>Where you could be</div>
-          <h2 style={{ ...display, margin: 0, fontSize: "clamp(24px, 3.4vw, 36px)", fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.12 }}>
-            This is what winning looks like.
-          </h2>
-          <p style={{ margin: "18px 0 0", maxWidth: 460, fontSize: 15.5, lineHeight: 1.6, color: "var(--muted)" }}>
-            Every issue above, fixed. Your score climbing, your competitors behind you, and the leads landing in your
-            pocket instead of theirs. That&apos;s the job. We&apos;d start this week.
-          </p>
-        </div>
-        <div className="split-phone-visual" style={{ display: "flex", justifyContent: "center" }}>
-          <PhoneLoop optimized />
-        </div>
-      </motion.div>
-
-      {/* 09 — Scope and next step */}
-      {!teaser && (
-        <section style={{ marginTop: 40, borderBottom: "none" }}>
-          <SectionHead
-            n="09"
-            title="Scope and next step"
-            lead="You wouldn't quote a job off a phone call. You'd walk the site first, scope it, then put a real number on it. Same method here."
+          <SectionFix
+            title="How to fix this"
+            points={[
+              `${localCompetitors[0].name} isn't necessarily a better business than you — they're a more visible one at the moment someone searches. That's a fixable gap, not a permanent one.`,
+              localCompetitors[0].rating != null && place.rating != null && place.rating >= localCompetitors[0].rating
+                ? "You already match or beat them on reviews — the gap is visibility, not reputation. Close it with the search and profile fixes above and you take their spot."
+                : "Close two gaps at once: get more recent reviews to match their reputation, and fix the search signals above so you rank where they do.",
+            ]}
           />
-          <div
-            style={{
-              border: "1px solid var(--accent)",
-              borderRadius: 12,
-              background: "linear-gradient(180deg, var(--bg-soft), var(--bg))",
-              padding: "clamp(24px, 4vw, 38px)",
-              boxShadow: "0 24px 70px -40px var(--accent)",
-            }}
-          >
-            <div style={{ ...rmono, fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 12 }}>
-              Free strategy call
-            </div>
-            <h2 style={{ ...display, margin: 0, fontSize: "clamp(21px, 3vw, 28px)", fontWeight: 600, lineHeight: 1.2 }}>
-              A real conversation about what to fix first, and what it costs.
-            </h2>
-            <p style={{ color: "var(--muted)", fontSize: 15.5, lineHeight: 1.6, margin: "14px 0 0", maxWidth: 560 }}>
-              No pitch attached to a first reply. We&apos;ll walk through this exact report, prioritize it by what&apos;s
-              actually costing you, and tell you honestly if there&apos;s nothing worth fixing.
-            </p>
-            <div style={{ marginTop: 24 }}>
-              <a
-                href="/start-now"
-                className="cta-primary"
-                style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "14px 24px", fontSize: 14, fontWeight: 700, borderRadius: 6, textDecoration: "none" }}
-              >
-                Book your call →
-              </a>
-            </div>
-          </div>
         </section>
       )}
+
+      {/* Bottom CTA. Mirrors the top CTA so a reader who scrolled the whole
+          report can act without scrolling back up. Shown in every state (in
+          the teaser it sits behind the gate overlay, which is fine). Copy is
+          action-first per the ask: "Fix these issues now", not "book a call". */}
+      <div
+        style={{
+          marginTop: 24,
+          borderTop: "1px solid var(--rule)",
+          paddingTop: 44,
+          ...gatedStyle,
+        }}
+      >
+        <div
+          style={{
+            border: "1px solid var(--accent)",
+            borderRadius: 14,
+            background: "linear-gradient(180deg, var(--bg-soft), var(--bg))",
+            padding: "clamp(26px, 4vw, 40px)",
+            boxShadow: "0 24px 70px -40px var(--accent)",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ ...rmono, fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>
+            {totalIssues > 0 ? `${totalIssues} issue${totalIssues === 1 ? "" : "s"} costing you leads right now` : "Your next move"}
+          </div>
+          <h2 style={{ ...display, margin: "0 auto", maxWidth: "20ch", fontSize: "clamp(24px, 3.6vw, 38px)", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.08 }}>
+            Let&apos;s fix what&apos;s costing {businessName} leads.
+          </h2>
+          <p style={{ color: "var(--muted)", fontSize: "clamp(15px, 1.6vw, 17px)", lineHeight: 1.6, margin: "18px auto 0", maxWidth: "58ch" }}>
+            We&apos;ll take this exact report, fix the issues on it in priority order, and get you ranking where your
+            competitors are now. Book a free call and we&apos;ll walk it through together, no pitch, no obligation, and
+            we&apos;ll tell you honestly if there&apos;s nothing worth paying for.
+          </p>
+          <div style={{ marginTop: 26, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <a
+              href="/start-now"
+              className="cta-primary"
+              style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "15px 30px", fontSize: 15.5, fontWeight: 700, borderRadius: 7, textDecoration: "none" }}
+            >
+              Fix these issues now →
+            </a>
+            <a
+              href="tel:+19194289452"
+              style={{ display: "inline-flex", alignItems: "center", color: "var(--fg)", border: "1px solid var(--rule)", padding: "15px 26px", fontSize: 15, fontWeight: 600, borderRadius: 7, textDecoration: "none" }}
+            >
+              Call (919) 428-9452
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

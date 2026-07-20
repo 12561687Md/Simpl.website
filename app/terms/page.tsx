@@ -3,14 +3,14 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | SIMPL",
+  title: "Terms of Service | Simpl",
   description:
-    "Terms and conditions for using SIMPL, the digital presence scanning and agency platform.",
+    "Terms and conditions for using Simpl, the digital presence scanning and agency platform.",
   openGraph: {
-    title: "Terms of Service | SIMPL",
-    description: "Terms and conditions for using SIMPL, the digital presence scanning and agency platform.",
+    title: "Terms of Service | Simpl",
+    description: "Terms and conditions for using Simpl, the digital presence scanning and agency platform.",
     url: "https://simpl.pro/terms",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/terms" },
@@ -121,13 +121,13 @@ export default function TermsPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>1. Acceptance of Terms</h2>
             <p style={paragraph}>
-              By accessing or using SIMPL (&quot;we,&quot; &quot;us,&quot; or
+              By accessing or using Simpl (&quot;we,&quot; &quot;us,&quot; or
               &quot;our&quot;) at simpl.pro, you agree to be bound by these
               Terms of Service. If you do not agree to these terms, do not use
               our services.
             </p>
             <p style={paragraph}>
-              These terms apply to all visitors, users, and customers of SIMPL,
+              These terms apply to all visitors, users, and customers of Simpl,
               whether using the free scan tool or any paid service.
             </p>
           </div>
@@ -135,7 +135,7 @@ export default function TermsPage() {
           {/* 2. Description of Service */}
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>2. Description of Service</h2>
-            <p style={paragraph}>SIMPL provides the following services:</p>
+            <p style={paragraph}>Simpl provides the following services:</p>
             <ul style={list}>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>Free Scan Tool.</strong>{" "}
@@ -164,7 +164,7 @@ export default function TermsPage() {
           {/* 3. User Responsibilities */}
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>3. User Responsibilities</h2>
-            <p style={paragraph}>When using SIMPL, you agree to:</p>
+            <p style={paragraph}>When using Simpl, you agree to:</p>
             <ul style={list}>
               <li style={{ marginBottom: 8 }}>
                 Provide accurate URLs and information when using the scan tool
@@ -183,7 +183,7 @@ export default function TermsPage() {
                 source code of our scanning engine.
               </li>
               <li style={{ marginBottom: 8 }}>
-                Not use SIMPL to scan websites for malicious purposes,
+                Not use Simpl to scan websites for malicious purposes,
                 including but not limited to identifying vulnerabilities for
                 exploitation.
               </li>
@@ -200,7 +200,7 @@ export default function TermsPage() {
               4. Scan Limitations and Disclaimers
             </h2>
             <p style={paragraph}>
-              SIMPL scans only publicly available data. We analyze HTML content,
+              Simpl scans only publicly available data. We analyze HTML content,
               metadata, headers, and publicly listed business information. We do
               not access password-protected areas, admin panels, databases, or
               any private content.
@@ -225,9 +225,9 @@ export default function TermsPage() {
             <h2 style={sectionHeading}>5. Intellectual Property</h2>
             <p style={paragraph}>
               <strong style={{ color: "var(--fg)" }}>Our property.</strong> The
-              SIMPL platform, including the scanning engine, scoring rubric,
+              Simpl platform, including the scanning engine, scoring rubric,
               website design, branding, and all associated code and content, is
-              owned by SIMPL. You may not copy, reproduce, or redistribute any
+              owned by Simpl. You may not copy, reproduce, or redistribute any
               part of our platform without written permission.
             </p>
             <p style={paragraph}>
@@ -243,9 +243,9 @@ export default function TermsPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>6. Payment Terms</h2>
             <p style={paragraph}>
-              SIMPL offers a free website scan and report, plus paid services.
+              Simpl offers a free website scan and report, plus paid services.
               All published prices are starting prices. Your final price depends
-              on the scope you and SIMPL agree to in writing before work begins:
+              on the scope you and Simpl agree to in writing before work begins:
             </p>
             <ul style={list}>
               <li style={{ marginBottom: 8 }}>
@@ -268,10 +268,10 @@ export default function TermsPage() {
                 <strong style={{ color: "var(--fg)" }}>
                   Website build included with Simpl.team.
                 </strong>{" "}
-                Where SIMPL provides a website build at no charge as part of a
+                Where Simpl provides a website build at no charge as part of a
                 Simpl.team engagement, that engagement carries a three-month
                 minimum term. If you cancel before the third billing period
-                ends, the remaining months of that minimum become due, or SIMPL
+                ends, the remaining months of that minimum become due, or Simpl
                 may instead invoice the build at its standard rate. You keep the
                 website either way.
               </li>
@@ -281,8 +281,8 @@ export default function TermsPage() {
                 </strong>{" "}
                 Quoted per account, plus a one-time setup fee equal to 50% of
                 the monthly management fee. Advertising spend is billed to you
-                directly by the ad platform, is not collected by SIMPL, and
-                carries no SIMPL markup. You retain ownership of your ad
+                directly by the ad platform, is not collected by Simpl, and
+                carries no Simpl markup. You retain ownership of your ad
                 accounts and data.
               </li>
             </ul>
@@ -335,7 +335,7 @@ export default function TermsPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>8. Service Availability</h2>
             <p style={paragraph}>
-              We make reasonable efforts to keep SIMPL available and operational.
+              We make reasonable efforts to keep Simpl available and operational.
               However, we do not guarantee uninterrupted or error-free service.
               Downtime may occur for maintenance, updates, or due to
               circumstances beyond our control.
@@ -350,7 +350,7 @@ export default function TermsPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>9. Limitation of Liability</h2>
             <p style={paragraph}>
-              To the fullest extent permitted by law, SIMPL and its owners,
+              To the fullest extent permitted by law, Simpl and its owners,
               employees, and contractors shall not be liable for any indirect,
               incidental, special, consequential, or punitive damages arising
               from your use of the service.
@@ -374,13 +374,13 @@ export default function TermsPage() {
             <h2 style={sectionHeading}>10. Termination</h2>
             <p style={paragraph}>
               <strong style={{ color: "var(--fg)" }}>By you.</strong> You may
-              stop using SIMPL at any time. If you are on a paid retainer, you
+              stop using Simpl at any time. If you are on a paid retainer, you
               may cancel, and your service will continue through the end of the
               current billing period.
             </p>
             <p style={paragraph}>
               <strong style={{ color: "var(--fg)" }}>By us.</strong> We may
-              suspend or terminate your access to SIMPL at any time if you
+              suspend or terminate your access to Simpl at any time if you
               violate these terms, abuse the platform, or engage in conduct that
               we determine, in our sole discretion, to be harmful to the service
               or other users.
@@ -401,7 +401,7 @@ export default function TermsPage() {
               regard to its conflict of law principles.
             </p>
             <p style={paragraph}>
-              Any disputes arising from these terms or your use of SIMPL shall
+              Any disputes arising from these terms or your use of Simpl shall
               be resolved in the state or federal courts located in New York,
               and you consent to the jurisdiction of those courts.
             </p>
@@ -417,7 +417,7 @@ export default function TermsPage() {
               to notify affected users.
             </p>
             <p style={paragraph}>
-              Your continued use of SIMPL after changes are posted constitutes
+              Your continued use of Simpl after changes are posted constitutes
               your acceptance of the revised terms.
             </p>
           </div>
@@ -438,7 +438,7 @@ export default function TermsPage() {
               }}
             >
               <div style={{ marginBottom: 4 }}>
-                <strong>SIMPL</strong>
+                <strong>Simpl</strong>
               </div>
               <div style={{ color: "var(--muted)" }}>
                 Email:{" "}

@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "How It Works | SIMPL",
+  title: "How It Works | Simpl",
   description: "From a free scan to a working plan: exactly what happens, in order.",
   alternates: { canonical: "https://simpl.pro/how-it-works" },
 };
@@ -13,7 +13,7 @@ const STEPS = [
   {
     n: "01",
     h: "You scan your business. Free.",
-    p: "Type your business name or your URL. No signup for the surface score. SIMPL checks Website Foundation, SEO & Rankings, Content & Pages, Advertising & Socials, CRM & Reputation, and your Google Business Profile, six categories, one number.",
+    p: "Type your business name or your URL. No signup for the surface score. Simpl checks Website Foundation, SEO & Rankings, Content & Pages, Advertising & Socials, CRM & Reputation, and your Google Business Profile, six categories, one number.",
   },
   {
     n: "02",

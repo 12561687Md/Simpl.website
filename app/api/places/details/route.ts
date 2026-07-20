@@ -45,6 +45,29 @@ const FIELD_MASK = [
   // Enrichment for the theatre. Real, or absent — never fabricated.
   "editorialSummary",
   "reviews",
+  // Profile-completeness signal (2026-07-20): everything Google publicly knows
+  // about this business's listing. All still within the Atmosphere tier the
+  // reviews field already put us in, so no extra SKU cost. Surfaced in the
+  // report's GBP section as "here's what your profile says" — real fields only.
+  "regularOpeningHours",
+  "currentOpeningHours",
+  "businessStatus",
+  "priceLevel",
+  "primaryTypeDisplayName",
+  "googleMapsUri",
+  "dineIn",
+  "takeout",
+  "delivery",
+  "curbsidePickup",
+  "reservable",
+  "servesLunch",
+  "servesDinner",
+  "servesVegetarianFood",
+  "outdoorSeating",
+  "goodForChildren",
+  "goodForGroups",
+  "restroom",
+  "accessibilityOptions",
 ].join(",");
 
 interface NewPhoto {
@@ -58,6 +81,31 @@ interface NewReview {
   relativePublishTimeDescription?: string;
   authorAttribution?: { displayName?: string };
 }
+
+// PRICE_LEVEL_* enum -> $ symbols. Absent stays null (no invented price band).
+const PRICE_SYMBOLS: Record<string, string> = {
+  PRICE_LEVEL_INEXPENSIVE: "$",
+  PRICE_LEVEL_MODERATE: "$$",
+  PRICE_LEVEL_EXPENSIVE: "$$$",
+  PRICE_LEVEL_VERY_EXPENSIVE: "$$$$",
+};
+
+// Boolean service attributes Google exposes -> human labels. Only the ones
+// Google reports TRUE get surfaced (a real "your profile says this" list).
+const ATTRIBUTE_LABELS: [string, string][] = [
+  ["dineIn", "Dine-in"],
+  ["takeout", "Takeout"],
+  ["delivery", "Delivery"],
+  ["curbsidePickup", "Curbside pickup"],
+  ["reservable", "Reservations"],
+  ["servesLunch", "Serves lunch"],
+  ["servesDinner", "Serves dinner"],
+  ["servesVegetarianFood", "Vegetarian options"],
+  ["outdoorSeating", "Outdoor seating"],
+  ["goodForChildren", "Good for kids"],
+  ["goodForGroups", "Good for groups"],
+  ["restroom", "Restroom"],
+];
 
 export async function GET(req: Request) {
   try {
@@ -169,6 +217,24 @@ export async function GET(req: Request) {
       .sort((a: { rating: number | null }, b: { rating: number | null }) => (b.rating ?? 0) - (a.rating ?? 0))
       .slice(0, 4);
 
+    // Profile-completeness snapshot: everything Google publicly lists. Every
+    // field is real off the listing, or absent — the ABSENCE is itself the
+    // finding the report leans on ("no hours set", "no price"), so nulls are
+    // meaningful here and never backfilled.
+    const attributes = ATTRIBUTE_LABELS
+      .filter(([key]) => r[key] === true)
+      .map(([, label]) => label);
+    if (r.accessibilityOptions?.wheelchairAccessibleEntrance === true) attributes.push("Wheelchair accessible");
+    const profile = {
+      status: r.businessStatus ?? null,
+      priceLevel: (typeof r.priceLevel === "string" && PRICE_SYMBOLS[r.priceLevel]) || null,
+      primaryType: r.primaryTypeDisplayName?.text ?? null,
+      mapsUri: r.googleMapsUri ?? null,
+      openNow: r.regularOpeningHours?.openNow ?? r.currentOpeningHours?.openNow ?? null,
+      hours: (r.regularOpeningHours?.weekdayDescriptions ?? []) as string[],
+      attributes,
+    };
+
     return NextResponse.json({
       placeId: r.id ?? parsed.data.placeId,
       mapUrl,
@@ -186,6 +252,12 @@ export async function GET(req: Request) {
       summary: r.editorialSummary?.text ?? null,
       reviews,
       photos,
+      profile,
+      // The business's own coordinates, so the SERP board can search from its
+      // exact location (a customer near the business sees a different local
+      // pack than the city-centroid default). Real lat/lng or null.
+      lat: typeof loc?.latitude === "number" ? loc.latitude : null,
+      lng: typeof loc?.longitude === "number" ? loc.longitude : null,
     });
   } catch (error) {
     console.error("places/details: unexpected error", error);

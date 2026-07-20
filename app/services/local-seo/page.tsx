@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   description:
     "Dominate the local 3-pack and show up when someone asks AI who to call. GBP optimization, citation building, review strategy, local keyword targeting, and AI-search visibility.",
   openGraph: {
-    title: "Local SEO & AI Search Visibility | SIMPL",
+    title: "Local SEO & AI Search Visibility | Simpl",
     description: "Dominate the local 3-pack and show up when someone asks AI who to call. GBP optimization, citation building, review strategy, and AI-search visibility.",
     url: "https://simpl.pro/services/local-seo",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/services/local-seo" },
@@ -42,7 +42,7 @@ export default function LocalSEO() {
           "description": "Dominate the local 3-pack with GBP optimization, citation building, review strategy, and local keyword targeting for high-intent searchers.",
           "provider": {
             "@type": "Organization",
-            "name": "SIMPL",
+            "name": "Simpl",
             "url": "https://simpl.pro"
           },
           "areaServed": { "@type": "Country", "name": "United States" },

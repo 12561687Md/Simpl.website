@@ -14,7 +14,7 @@ const SCAN_STEPS = [
   "checking social presence…",
   "searching Google Business Profile…",
   "verifying business identity…",
-  "calculating SIMPL Score…",
+  "calculating Simpl Score…",
 ];
 
 function gradeColor(grade: string | undefined) {

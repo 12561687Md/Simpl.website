@@ -4,14 +4,14 @@ import Footer from "../components/Footer";
 import ScanTool from "../components/ScanTool";
 
 export const metadata: Metadata = {
-  title: "Why SIMPL | Built for businesses tired of guessing",
+  title: "Why Simpl | Built for businesses tired of guessing",
   description:
-    "Nobody told you your Google listing was broken. That's why we built SIMPL. One scan, six categories, zero guesswork.",
+    "Nobody told you your Google listing was broken. That's why we built Simpl. One scan, six categories, zero guesswork.",
   openGraph: {
-    title: "Why SIMPL | Built for businesses tired of guessing",
-    description: "Nobody told you your Google listing was broken. That's why we built SIMPL. One scan, six categories, zero guesswork.",
+    title: "Why Simpl | Built for businesses tired of guessing",
+    description: "Nobody told you your Google listing was broken. That's why we built Simpl. One scan, six categories, zero guesswork.",
     url: "https://simpl.pro/about",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/about" },
@@ -44,12 +44,12 @@ export default function AboutPage() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "AboutPage",
-          "name": "Why SIMPL",
-          "description": "Nobody told you your Google listing was broken. That's why we built SIMPL. One scan, six categories, zero guesswork.",
+          "name": "Why Simpl",
+          "description": "Nobody told you your Google listing was broken. That's why we built Simpl. One scan, six categories, zero guesswork.",
           "url": "https://simpl.pro/about",
           "mainEntity": {
             "@type": "Organization",
-            "name": "SIMPL",
+            "name": "Simpl",
             "url": "https://simpl.pro",
             "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
             "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" }
@@ -60,7 +60,7 @@ export default function AboutPage() {
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Why SIMPL", "item": "https://simpl.pro/about" }
+            { "@type": "ListItem", "position": 2, "name": "Why Simpl", "item": "https://simpl.pro/about" }
           ]
         }) }} />
         {/* Hero */}
@@ -75,7 +75,7 @@ export default function AboutPage() {
               marginBottom: 40,
             }}
           >
-            Why SIMPL
+            Why Simpl
           </div>
           <h1
             style={{
@@ -87,7 +87,7 @@ export default function AboutPage() {
               maxWidth: 900,
             }}
           >
-            Nobody told you your Google listing was broken. That&apos;s why we built SIMPL.
+            Nobody told you your Google listing was broken. That&apos;s why we built Simpl.
           </h1>
           <p
             style={{
@@ -194,7 +194,7 @@ export default function AboutPage() {
                 color: "var(--muted)",
               }}
             >
-              Type your URL. In 30 seconds, SIMPL checks six areas of your digital presence and grades each one A through F. Every issue ranked by severity. You see exactly what&apos;s costing you leads and what to fix first. No jargon. No 47-page reports. No monthly calls where someone reads you a spreadsheet. You see what&apos;s broken. We fix it. You see the results. That&apos;s the whole thing. Plain and simpl.
+              Type your URL. In 30 seconds, Simpl checks six areas of your digital presence and grades each one A through F. Every issue ranked by severity. You see exactly what&apos;s costing you leads and what to fix first. No jargon. No 47-page reports. No monthly calls where someone reads you a spreadsheet. You see what&apos;s broken. We fix it. You see the results. That&apos;s the whole thing. Plain and simpl.
             </p>
             <p
               style={{
@@ -244,7 +244,7 @@ export default function AboutPage() {
               color: "var(--muted)",
             }}
           >
-            SIMPL was built by a team that spent years inside the digital marketing industry watching the same problems on repeat. Businesses overpaying for services they couldn&apos;t measure. Agencies selling retainers with no accountability. Website problems going unnoticed for months while leads quietly disappeared. Every client conversation started the same way: &quot;I&apos;m paying for all this stuff and I have no idea if it&apos;s working.&quot;
+            Simpl was built by a team that spent years inside the digital marketing industry watching the same problems on repeat. Businesses overpaying for services they couldn&apos;t measure. Agencies selling retainers with no accountability. Website problems going unnoticed for months while leads quietly disappeared. Every client conversation started the same way: &quot;I&apos;m paying for all this stuff and I have no idea if it&apos;s working.&quot;
           </p>
           <p
             style={{
@@ -255,7 +255,7 @@ export default function AboutPage() {
               color: "var(--muted)",
             }}
           >
-            The only thing on our minds through all of it was how to make the whole thing simpler for everyone. Not a little simpler. Fundamentally simpler. That obsession became SIMPL. Plain and simpl.
+            The only thing on our minds through all of it was how to make the whole thing simpler for everyone. Not a little simpler. Fundamentally simpler. That obsession became Simpl. Plain and simpl.
           </p>
           <p
             style={{

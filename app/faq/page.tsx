@@ -4,18 +4,18 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "FAQ | SIMPL",
-  description: "Straight answers about the SIMPL Score, pricing, and how the team works.",
+  title: "FAQ | Simpl",
+  description: "Straight answers about the Simpl Score, pricing, and how the team works.",
   alternates: { canonical: "https://simpl.pro/faq" },
 };
 
 const FAQS = [
   {
-    q: "What is SIMPL, in one sentence?",
+    q: "What is Simpl, in one sentence?",
     a: "A team that scans, scores, and fixes what's broken in your online presence, your website, Google listing, SEO, and reviews, so customers find you instead of the competitor down the street.",
   },
   {
-    q: "What's the SIMPL Score?",
+    q: "What's the Simpl Score?",
     a: "A 0 to 100 score broken into six graded categories: Website Foundation, SEO & Rankings, Content & Pages, Advertising & Socials, CRM & Reputation, and Google Business Profile. It's the same thing a doctor's test results are, a real number, not a sales pitch, and every finding behind it is measured, never invented.",
   },
   {

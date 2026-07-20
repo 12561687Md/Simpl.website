@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   description:
     "A fast, findable website built to turn visitors into calls. $997 to $2,997, or free when you start on Team.",
   openGraph: {
-    title: "Custom Website Build | SIMPL",
+    title: "Custom Website Build | Simpl",
     description: "A fast, findable website built to turn visitors into calls. Free when you start on Team.",
     url: "https://simpl.pro/services/website-build",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/services/website-build" },
@@ -37,7 +37,7 @@ export default function WebsiteBuild() {
           "@type": "Service",
           "name": "Custom Website Build",
           "description": "A fast, findable website built to turn visitors into calls. Flat-rate, scope-based pricing, free when starting on Team with a 3-month commitment.",
-          "provider": { "@type": "Organization", "name": "SIMPL", "url": "https://simpl.pro" },
+          "provider": { "@type": "Organization", "name": "Simpl", "url": "https://simpl.pro" },
           "areaServed": { "@type": "Country", "name": "United States" },
           "url": "https://simpl.pro/services/website-build",
           "offers": { "@type": "Offer", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "997", "maxPrice": "2997", "priceCurrency": "USD" } }

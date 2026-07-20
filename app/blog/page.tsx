@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { BLOG_POSTS } from "../lib/blog";
 
 export const metadata: Metadata = {
-  title: "SIMPL Blog | Answers for local businesses growing online",
+  title: "Simpl Blog | Answers for local businesses growing online",
   description:
     "Plain-English answers to the questions local service businesses actually ask about ranking on Google, getting reviews, and winning online.",
   alternates: { canonical: "https://simpl.pro/blog" },
@@ -25,7 +25,7 @@ export default function BlogIndex() {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Blog",
-              name: "SIMPL Blog",
+              name: "Simpl Blog",
               url: "https://simpl.pro/blog",
               blogPost: BLOG_POSTS.map((p) => ({
                 "@type": "BlogPosting",
@@ -40,7 +40,7 @@ export default function BlogIndex() {
 
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "120px 32px 40px" }}>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 20 }}>
-            The SIMPL blog
+            The Simpl blog
           </div>
           <h1 style={{ margin: 0, fontSize: "clamp(32px, 5vw, 56px)", lineHeight: 1.05, letterSpacing: "-0.03em", fontWeight: 600, maxWidth: 760 }}>
             Straight answers to the questions you&apos;re already Googling.

@@ -3,14 +3,14 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | SIMPL",
+  title: "Privacy Policy | Simpl",
   description:
-    "How SIMPL collects, uses, and protects your information. We never sell your data.",
+    "How Simpl collects, uses, and protects your information. We never sell your data.",
   openGraph: {
-    title: "Privacy Policy | SIMPL",
-    description: "How SIMPL collects, uses, and protects your information. We never sell your data.",
+    title: "Privacy Policy | Simpl",
+    description: "How Simpl collects, uses, and protects your information. We never sell your data.",
     url: "https://simpl.pro/privacy",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/privacy" },
@@ -120,14 +120,14 @@ export default function PrivacyPage() {
           {/* Intro */}
           <div style={sectionBlock}>
             <p style={paragraph}>
-              SIMPL (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;)
-              operates the website at simpl.pro and the SIMPL scanning and
+              Simpl (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;)
+              operates the website at simpl.pro and the Simpl scanning and
               digital presence platform. This Privacy Policy explains what
               information we collect, how we use it, and your choices regarding
               that information.
             </p>
             <p style={paragraph}>
-              By using SIMPL, you agree to the collection and use of information
+              By using Simpl, you agree to the collection and use of information
               as described in this policy. If you do not agree, please do not use
               our services.
             </p>
@@ -302,7 +302,7 @@ export default function PrivacyPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>5. Third-Party Services</h2>
             <p style={paragraph}>
-              We use the following third-party services to operate SIMPL. Each
+              We use the following third-party services to operate Simpl. Each
               has its own privacy policy governing how it handles data:
             </p>
             <ul style={list}>
@@ -409,7 +409,7 @@ export default function PrivacyPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>7. Children&apos;s Privacy</h2>
             <p style={paragraph}>
-              SIMPL is not directed at children under the age of 13. We do not
+              Simpl is not directed at children under the age of 13. We do not
               knowingly collect personal information from children under 13. If
               we become aware that we have collected personal information from a
               child under 13, we will take steps to delete that information
@@ -436,7 +436,7 @@ export default function PrivacyPage() {
               We may update this Privacy Policy from time to time. When we do,
               we will update the &quot;Last updated&quot; date at the top of this
               page. We encourage you to review this policy periodically. Your
-              continued use of SIMPL after any changes indicates your acceptance
+              continued use of Simpl after any changes indicates your acceptance
               of the updated policy.
             </p>
           </div>
@@ -458,7 +458,7 @@ export default function PrivacyPage() {
               }}
             >
               <div style={{ marginBottom: 4 }}>
-                <strong>SIMPL</strong>
+                <strong>Simpl</strong>
               </div>
               <div style={{ color: "var(--muted)" }}>
                 Email:{" "}

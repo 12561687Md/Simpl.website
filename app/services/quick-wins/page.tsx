@@ -7,12 +7,12 @@ import ScanTool from "../../components/ScanTool";
 export const metadata: Metadata = {
   title: "Quick Wins & Site Triage",
   description:
-    "Stop leaking leads from broken elements you don't know are failing. SIMPL fixes core web vitals, mobile issues, crawler errors, and more.",
+    "Stop leaking leads from broken elements you don't know are failing. Simpl fixes core web vitals, mobile issues, crawler errors, and more.",
   openGraph: {
-    title: "Quick Wins & Site Triage | SIMPL",
-    description: "Stop leaking leads from broken elements you don't know are failing. SIMPL fixes core web vitals, mobile issues, crawler errors, and more.",
+    title: "Quick Wins & Site Triage | Simpl",
+    description: "Stop leaking leads from broken elements you don't know are failing. Simpl fixes core web vitals, mobile issues, crawler errors, and more.",
     url: "https://simpl.pro/services/quick-wins",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/services/quick-wins" },
@@ -41,7 +41,7 @@ export default function QuickWins() {
           "description": "Fix broken site elements, speed issues, and technical problems that silently leak leads. Core web vitals, mobile repair, crawler errors, and more.",
           "provider": {
             "@type": "Organization",
-            "name": "SIMPL",
+            "name": "Simpl",
             "url": "https://simpl.pro"
           },
           "areaServed": { "@type": "Country", "name": "United States" },
@@ -63,7 +63,7 @@ export default function QuickWins() {
             {
               "@type": "Question",
               "name": "How long does a site triage take?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Most site triages are completed within the first week. SIMPL runs a full diagnostic scan, prioritizes the critical issues, and starts fixing them immediately. You will see measurable improvements in speed and functionality within days, not months." }
+              "acceptedAnswer": { "@type": "Answer", "text": "Most site triages are completed within the first week. Simpl runs a full diagnostic scan, prioritizes the critical issues, and starts fixing them immediately. You will see measurable improvements in speed and functionality within days, not months." }
             },
             {
               "@type": "Question",
@@ -156,7 +156,7 @@ export default function QuickWins() {
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How long does a site triage take?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                Most site triages are completed within the first week. SIMPL runs a full diagnostic scan, prioritizes the critical issues, and starts fixing them immediately. You will see measurable improvements in speed and functionality within days, not months.
+                Most site triages are completed within the first week. Simpl runs a full diagnostic scan, prioritizes the critical issues, and starts fixing them immediately. You will see measurable improvements in speed and functionality within days, not months.
               </p>
             </div>
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>

@@ -46,15 +46,15 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "SIMPL | Your Digital Presence, Handled",
-    template: "%s · SIMPL",
+    default: "Simpl | Your Digital Presence, Handled",
+    template: "%s · Simpl",
   },
   description:
-    "SIMPL monitors your website, Google Business Profile, SEO, and online presence 24/7. Type your URL and get your free SIMPL Score in seconds.",
+    "Simpl monitors your website, Google Business Profile, SEO, and online presence 24/7. Type your URL and get your free Simpl Score in seconds.",
   metadataBase: new URL("https://simpl.pro"),
   openGraph: {
     type: "website",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     url: "https://simpl.pro",
   },
   twitter: {

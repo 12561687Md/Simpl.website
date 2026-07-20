@@ -4,14 +4,14 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Success Stories | SIMPL",
-  description: "Real before/afters from SIMPL clients, coming as soon as the work is done.",
+  title: "Success Stories | Simpl",
+  description: "Real before/afters from Simpl clients, coming as soon as the work is done.",
   robots: { index: false, follow: true },
   alternates: { canonical: "https://simpl.pro/success-stories" },
 };
 
 /**
- * Honest empty state. SIMPL has zero paying clients as of this build
+ * Honest empty state. Simpl has zero paying clients as of this build
  * (docs/STATUS.md) — no invented numbers, names, or testimonials belong
  * here under any circumstance (docs/standards/TRUST_SIGNALS.md). This page
  * exists so the nav link works and says something true, not something
@@ -31,7 +31,7 @@ export default function SuccessStoriesPage() {
             We&apos;re just getting started.
           </h1>
           <p style={{ marginTop: 28, fontSize: 17, lineHeight: 1.65, color: "var(--muted)", maxWidth: 560, marginInline: "auto" }}>
-            SIMPL is new enough that we don&apos;t have a wall of client logos to show you yet, and we&apos;d rather tell you
+            Simpl is new enough that we don&apos;t have a wall of client logos to show you yet, and we&apos;d rather tell you
             that plainly than dress up something that isn&apos;t true. What we do have: a real scoring engine, a real
             process, and clients in progress right now.
           </p>

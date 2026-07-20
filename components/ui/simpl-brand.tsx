@@ -3,7 +3,7 @@
 import { useId } from "react";
 
 /**
- * The SIMPL brand marks, from the final brand kit.
+ * The Simpl brand marks, from the final brand kit.
  *
  * Provenance: the supplied files were auto-traced from screenshots, so each one
  * shipped with a full-bleed black background rect, a giant black "everything
@@ -49,7 +49,7 @@ interface MarkProps {
  * The bare vitalsign: a thin pulse with the green identity dot beneath it.
  * Natural aspect is portrait (roughly 63 x 145).
  */
-export function SimplMark({ size = 30, inverted = false, className, style, title = "SIMPL" }: MarkProps) {
+export function SimplMark({ size = 30, inverted = false, className, style, title = "Simpl" }: MarkProps) {
   const pulse = inverted ? INK : FG;
   const dot = inverted ? ACCENT_ON_LIGHT : ACCENT;
 
@@ -90,7 +90,7 @@ export function SimplAppIcon({
   frame,
   className,
   style,
-  title = "SIMPL",
+  title = "Simpl",
 }: MarkProps & { frame?: string }) {
   const pulse = inverted ? INK : FG;
   const dot = inverted ? ACCENT_ON_LIGHT : ACCENT;
@@ -136,10 +136,10 @@ export function SimplAppIcon({
 }
 
 /**
- * The SIMPL wordmark. The "I" is the vitalsign and the dot beneath it is the
+ * The Simpl wordmark. The "I" is the vitalsign and the dot beneath it is the
  * green identity dot: the mark is built into the word, never set beside it.
  */
-export function SimplWordmark({ size = 28, inverted = false, className, style, title = "SIMPL" }: MarkProps) {
+export function SimplWordmark({ size = 28, inverted = false, className, style, title = "Simpl" }: MarkProps) {
   const fg = inverted ? INK : FG;
   const dot = inverted ? ACCENT_ON_LIGHT : ACCENT;
   const uid = useId().replace(/:/g, "");
@@ -180,10 +180,10 @@ export function SimplWordmark({ size = 28, inverted = false, className, style, t
 }
 
 /**
- * The SIMPL.pro wordmark. Note the green dot here is the period in ".pro",
+ * The Simpl.pro wordmark. Note the green dot here is the period in ".pro",
  * doing double duty as the identity dot.
  */
-export function SimplProWordmark({ size = 28, inverted = false, className, style, title = "SIMPL.pro" }: MarkProps) {
+export function SimplProWordmark({ size = 28, inverted = false, className, style, title = "Simpl.pro" }: MarkProps) {
   const fg = inverted ? INK : FG;
   const dot = inverted ? ACCENT_ON_LIGHT : ACCENT;
   const uid = useId().replace(/:/g, "");

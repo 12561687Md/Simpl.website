@@ -12,7 +12,7 @@ export default function Footer() {
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <span style={{ display: "inline-block", width: 6, height: 6, background: "var(--pulse)", borderRadius: 999 }} />
-              <span style={{ fontWeight: 500, letterSpacing: "0.32em", fontSize: 14 }}>SIMPL</span>
+              <span style={{ fontWeight: 500, letterSpacing: "0.32em", fontSize: 14 }}>Simpl</span>
             </div>
             <p style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.6, maxWidth: 280, margin: 0 }}>
               Your digital presence, handled. One scan to see what's broken. One team to fix it.
@@ -30,7 +30,7 @@ export default function Footer() {
             <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16 }}>Product</div>
             <nav style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <Link href="/scan" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Free Scan</Link>
-              <Link href="/about" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Why SIMPL</Link>
+              <Link href="/about" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Why Simpl</Link>
               <Link href="/start" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Pricing</Link>
               <Link href="/results" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Results</Link>
             </nav>
@@ -63,7 +63,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
           <div className="mono" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.04em" }}>
-            &copy; {new Date().getFullYear()} SIMPL. All rights reserved.
+            &copy; {new Date().getFullYear()} Simpl. All rights reserved.
           </div>
           <div style={{ display: "flex", gap: 20 }}>
             <Link href="/privacy" style={{ color: "var(--muted)", textDecoration: "none", fontSize: 12 }}>Privacy</Link>

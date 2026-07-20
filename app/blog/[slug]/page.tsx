@@ -15,9 +15,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return { title: "Not found | SIMPL" };
+  if (!post) return { title: "Not found | Simpl" };
   return {
-    title: `${post.metaTitle} | SIMPL`,
+    title: `${post.metaTitle} | Simpl`,
     description: post.description,
     alternates: { canonical: `https://simpl.pro/blog/${post.slug}` },
     openGraph: { title: post.metaTitle, description: post.description, type: "article" },
@@ -49,8 +49,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 datePublished: post.updated,
                 dateModified: post.updated,
                 mainEntityOfPage: url,
-                author: { "@type": "Organization", name: "SIMPL", url: "https://simpl.pro" },
-                publisher: { "@type": "Organization", name: "SIMPL", url: "https://simpl.pro" },
+                author: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+                publisher: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
               },
               {
                 "@context": "https://schema.org",

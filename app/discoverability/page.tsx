@@ -3,7 +3,7 @@ import ServicePage from "../components/ServicePage";
 
 export const metadata: Metadata = {
   title: "Discoverability",
-  description: "SIMPL monitors your Google indexing, Business Profile, map rankings, schema, and local citations. If Google can't find you, neither can your customers.",
+  description: "Simpl monitors your Google indexing, Business Profile, map rankings, schema, and local citations. If Google can't find you, neither can your customers.",
   alternates: { canonical: "https://simpl.pro/discoverability" },
 };
 
@@ -14,7 +14,7 @@ export default function Page() {
       code="01 / DISCOVERABILITY"
       headline="When Google can't find you,"
       accentTail="neither can your customers."
-      sub="SIMPL watches the surfaces that decide whether anyone shows up at all: your indexing, your map listing, your business profile, the words people type when they're looking for you."
+      sub="Simpl watches the surfaces that decide whether anyone shows up at all: your indexing, your map listing, your business profile, the words people type when they're looking for you."
       subHook="Most businesses don't realize something is wrong until leads stop coming in. By then, the damage has been compounding for weeks."
       watches={[
         { code: "01", title: "Indexing health", desc: "Every page on your site, checked against Google's index. We see drops within hours, not weeks." },
@@ -34,7 +34,7 @@ export default function Page() {
         "An automated directory updates your phone number to a disconnected tracking line. You wonder why the phone stopped ringing.",
       ]}
       missHook="Think none of these apply to you? One business thought the same thing. Here's what we found."
-      findingBody="Three service pages on a regional plumbing site were blocked from Google's index by a robots.txt directive added during a March CMS migration. Discovered by SIMPL within 11 hours."
+      findingBody="Three service pages on a regional plumbing site were blocked from Google's index by a robots.txt directive added during a March CMS migration. Discovered by Simpl within 11 hours."
       findingStat="11 hours"
       findingLabel="from regression to alert"
       findingHook="That was one surface. Discoverability. But what if the site was also slow, the forms were broken, and the reviews were tanking at the same time?"

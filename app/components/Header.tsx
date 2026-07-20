@@ -10,7 +10,7 @@ import { SimplMark, SimplWordmark } from "@/components/ui/simpl-brand";
 import { RippleLink } from "@/components/ui/ripple-link";
 
 const NAV_LINKS = [
-  { name: "Why SIMPL", href: "/about" },
+  { name: "Why Simpl", href: "/about" },
   { name: "Pricing", href: "/start" },
 ];
 
@@ -193,7 +193,7 @@ export default function Header() {
       >
         {/* Brand mark (left when expanded) */}
         <motion.div variants={itemVariants} className="flex flex-shrink-0 items-center pl-4 pr-1.5">
-          <Link href="/" onClick={(e) => e.stopPropagation()} aria-label="SIMPL home" className="flex items-center no-underline">
+          <Link href="/" onClick={(e) => e.stopPropagation()} aria-label="Simpl home" className="flex items-center no-underline">
             <SimplWordmark size={26} />
           </Link>
         </motion.div>

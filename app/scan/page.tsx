@@ -4,13 +4,13 @@ import Footer from "../components/Footer";
 import ScanTool from "../components/ScanTool";
 
 export const metadata: Metadata = {
-  title: "Free Website Scan | SIMPL",
-  description: "See exactly what SIMPL checks: discoverability, performance, reputation, and spend. Type your domain, get your SIMPL Score in 30 seconds.",
+  title: "Free Website Scan | Simpl",
+  description: "See exactly what Simpl checks: discoverability, performance, reputation, and spend. Type your domain, get your Simpl Score in 30 seconds.",
   openGraph: {
-    title: "Free Website Scan | SIMPL",
-    description: "Type your domain, get your SIMPL Score in 30 seconds. No signup, no email required.",
+    title: "Free Website Scan | Simpl",
+    description: "Type your domain, get your Simpl Score in 30 seconds. No signup, no email required.",
     url: "https://simpl.pro/scan",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/scan" },
@@ -25,9 +25,9 @@ const SURFACES = [
 
 const STEPS = [
   { n: "01", h: "You give us a domain.", p: "No login, no credit card, no questionnaire. A field and a button." },
-  { n: "02", h: "SIMPL runs all eight checks.", p: "Website, crawlability, SEO, content, trust, schema, social, and Google Business Profile. 50+ individual signals, most of which you've never seen." },
+  { n: "02", h: "Simpl runs all eight checks.", p: "Website, crawlability, SEO, content, trust, schema, social, and Google Business Profile. 50+ individual signals, most of which you've never seen." },
   { n: "03", h: "We rank what's wrong.", p: "Findings get sorted by severity. Critical issues first, nice-to-haves last. The order usually surprises people." },
-  { n: "04", h: "You see your SIMPL Score.", p: "A grade from A to F across 8 categories. Every finding explained in plain English. No jargon, no upsell walls." },
+  { n: "04", h: "You see your Simpl Score.", p: "A grade from A to F across 8 categories. Every finding explained in plain English. No jargon, no upsell walls." },
   { n: "05", h: "We fix it, or you do.", p: "Start a plan and our team handles everything. Or take the findings and fix them yourself. Either way, you'll know exactly what's broken." },
 ];
 
@@ -39,8 +39,8 @@ export default function ScanPage() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "WebApplication",
-          "name": "SIMPL Free Website Scanner",
-          "description": "Free tool that scans your website, Google Business Profile, SEO, and digital presence. Get a SIMPL Score from 0 to 100 in 30 seconds.",
+          "name": "Simpl Free Website Scanner",
+          "description": "Free tool that scans your website, Google Business Profile, SEO, and digital presence. Get a Simpl Score from 0 to 100 in 30 seconds.",
           "url": "https://simpl.pro/scan",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Any",
@@ -51,7 +51,7 @@ export default function ScanPage() {
           },
           "provider": {
             "@type": "Organization",
-            "name": "SIMPL",
+            "name": "Simpl",
             "url": "https://simpl.pro"
           }
         }) }} />
@@ -64,12 +64,12 @@ export default function ScanPage() {
           ]
         }) }} />
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 96px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>The SIMPL Scan</div>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>The Simpl Scan</div>
           <h1 style={{ margin: 0, fontSize: "clamp(40px, 6.4vw, 81px)", lineHeight: 1.04, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 1000 }}>
             Type your domain.<br /><span style={{ color: "var(--muted)" }}>See what nobody told you.</span>
           </h1>
           <p style={{ marginTop: 40, maxWidth: 680, fontSize: 19, lineHeight: 1.55 }}>
-            One scan. No signup. No email. SIMPL checks your entire digital presence and gives you a score from 0 to 100. Most businesses score lower than they expect.
+            One scan. No signup. No email. Simpl checks your entire digital presence and gives you a score from 0 to 100. Most businesses score lower than they expect.
           </p>
           <div style={{ marginTop: 56 }}><ScanTool /></div>
         </section>

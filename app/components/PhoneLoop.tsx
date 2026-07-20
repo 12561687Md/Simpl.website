@@ -7,7 +7,7 @@ import { SimplMark } from "@/components/ui/simpl-brand";
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 /**
- * The SIMPL app, four tabs on a loop: score/overview, rankings + positive
+ * The Simpl app, four tabs on a loop: score/overview, rankings + positive
  * notifications, competitors, and issues fixed. Real app structure (a status
  * bar, a pinned header, tab content), not a slideshow of unrelated screens.
  *
@@ -18,7 +18,7 @@ const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace"
  * Names in the competitor tab ("Oakwood Landscaping") are illustrative
  * placeholders for the demo, not real businesses, same rule as the rest of
  * the mockup: nothing here is a fabricated claim about a real company or a
- * real SIMPL customer (docs/standards/TRUST_SIGNALS.md).
+ * real Simpl customer (docs/standards/TRUST_SIGNALS.md).
  *
  * `optimized` freezes on the overview tab at its winning value, for the
  * "here's where you'd be" panel beside an unlocked report.

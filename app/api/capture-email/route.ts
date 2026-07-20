@@ -88,7 +88,7 @@ function buildEmailHtml(params: {
     <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e5e5e5;">
 
       <div style="padding:32px 32px 0;">
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#888;margin-bottom:24px;">SIMPL Score Report</div>
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#888;margin-bottom:24px;">Simpl Score Report</div>
         ${firstName ? `<div style="font-size:14px;color:#666;margin-bottom:10px;">Hey ${firstName},</div>` : ""}
         ${businessName ? `<div style="font-size:20px;font-weight:600;color:#111;margin-bottom:4px;">${businessName}</div>` : ""}
         <div style="font-size:13px;color:#666;margin-bottom:24px;">${scanUrl}</div>
@@ -124,7 +124,7 @@ function buildEmailHtml(params: {
 
       <div style="background:#fafafa;border-top:1px solid #e5e5e5;padding:20px 32px;text-align:center;">
         <div style="font-size:12px;color:#999;">Plain and simpl.</div>
-        <div style="font-size:12px;color:#999;margin-top:4px;">SIMPL &middot; simpl.pro</div>
+        <div style="font-size:12px;color:#999;margin-top:4px;">Simpl &middot; simpl.pro</div>
       </div>
 
     </div>
@@ -185,9 +185,9 @@ export async function POST(req: Request) {
 
     try {
       await resend.emails.send({
-        from: "SIMPL <team@simpl.pro>",
+        from: "Simpl <team@simpl.pro>",
         to: email,
-        subject: `Your SIMPL Score: ${scanGrade ?? "N/A"} (${scanScore ?? 0}%)`,
+        subject: `Your Simpl Score: ${scanGrade ?? "N/A"} (${scanScore ?? 0}%)`,
         html: buildEmailHtml({ email, name, businessName, scanUrl, scanScore, scanGrade, findings, categories }),
       });
     } catch (emailError) {

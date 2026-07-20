@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   description:
     "Build compounding search authority that outlasts any ad budget. Content architecture, essential page builds, domain authority, and backlink acquisition.",
   openGraph: {
-    title: "Long-Term Organic Growth | SIMPL",
+    title: "Long-Term Organic Growth | Simpl",
     description: "Build compounding search authority that outlasts any ad budget. Content architecture, essential page builds, domain authority, and backlink acquisition.",
     url: "https://simpl.pro/services/organic-growth",
-    siteName: "SIMPL",
+    siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://simpl.pro/services/organic-growth" },
@@ -41,7 +41,7 @@ export default function OrganicGrowth() {
           "description": "Build compounding search authority with content architecture, essential page builds, domain authority growth, and backlink acquisition that outlasts any ad budget.",
           "provider": {
             "@type": "Organization",
-            "name": "SIMPL",
+            "name": "Simpl",
             "url": "https://simpl.pro"
           },
           "areaServed": { "@type": "Country", "name": "United States" },
@@ -73,7 +73,7 @@ export default function OrganicGrowth() {
             {
               "@type": "Question",
               "name": "Will I own the content you produce?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Yes, 100%. Every page, article, and asset we create belongs to you. If you ever stop working with SIMPL, all the content stays on your site. That is the whole point of organic growth: you are building assets you own, not renting attention from an ad platform." }
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes, 100%. Every page, article, and asset we create belongs to you. If you ever stop working with Simpl, all the content stays on your site. That is the whole point of organic growth: you are building assets you own, not renting attention from an ad platform." }
             }
           ]
         }) }} />
@@ -168,7 +168,7 @@ export default function OrganicGrowth() {
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>Will I own the content you produce?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                Yes, 100%. Every page, article, and asset we create belongs to you. If you ever stop working with SIMPL, all the content stays on your site. That is the whole point of organic growth: you are building assets you own, not renting attention from an ad platform.
+                Yes, 100%. Every page, article, and asset we create belongs to you. If you ever stop working with Simpl, all the content stays on your site. That is the whole point of organic growth: you are building assets you own, not renting attention from an ad platform.
               </p>
             </div>
           </div>

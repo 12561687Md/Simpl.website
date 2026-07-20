@@ -249,7 +249,7 @@ void main() {
 }`;
 
 // u_colors[8], first 4 used (low -> high). Rethemed off the original grayscale
-// (which flashed a near-white #F5F5F5) to SIMPL's dark cool-slate palette, so the
+// (which flashed a near-white #F5F5F5) to Simpl's dark cool-slate palette, so the
 // smoke reads as subtle moving atmosphere that matches the site instead of bright
 // plumes. Deepest ~= page bg; the lightest is a muted slate, never white.
 const COLORS = new Float32Array(24);

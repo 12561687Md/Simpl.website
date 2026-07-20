@@ -32,7 +32,7 @@ function confirmationEmailHtml() {
   <div style="background:#f5f5f3;padding:32px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
     <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e5e5e5;">
       <div style="padding:36px 32px 8px;">
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#888;margin-bottom:20px;">SIMPL</div>
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#888;margin-bottom:20px;">Simpl</div>
         <div style="font-size:20px;font-weight:600;color:#111;margin-bottom:12px;">We got your message</div>
         <p style="font-size:15px;line-height:1.6;color:#333;margin:0 0 16px;">
           Thanks for reaching out. We&rsquo;ll get back to you within 4 hours.
@@ -48,7 +48,7 @@ function confirmationEmailHtml() {
       </div>
       <div style="background:#fafafa;border-top:1px solid #e5e5e5;padding:20px 32px;text-align:center;">
         <div style="font-size:12px;color:#999;">Plain and simpl.</div>
-        <div style="font-size:12px;color:#999;margin-top:4px;">SIMPL &middot; simpl.pro</div>
+        <div style="font-size:12px;color:#999;margin-top:4px;">Simpl &middot; simpl.pro</div>
       </div>
     </div>
   </div>`;
@@ -131,7 +131,7 @@ export async function POST(req: Request) {
 
     try {
       await resend.emails.send({
-        from: "SIMPL <team@simpl.pro>",
+        from: "Simpl <team@simpl.pro>",
         to: email,
         subject: "We got your message",
         html: confirmationEmailHtml(),
@@ -142,7 +142,7 @@ export async function POST(req: Request) {
 
     try {
       await resend.emails.send({
-        from: "SIMPL <team@simpl.pro>",
+        from: "Simpl <team@simpl.pro>",
         to: TEAM_INBOX,
         subject: `New lead: ${name}${website ? ` (${website})` : ""}`,
         html: notificationEmailHtml({ name, email, phone, message, service, website, sourcePage: fromPage }),

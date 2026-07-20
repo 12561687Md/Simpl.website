@@ -40,7 +40,7 @@ interface Suggestion {
 /**
  * Scanner calibration.
  *
- * SIMPL serves local SERVICE businesses. We deliberately do NOT serve, and in
+ * Simpl serves local SERVICE businesses. We deliberately do NOT serve, and in
  * some cases cannot touch: restaurants and food (not our motion, and not copying
  * Owner.com), universities and schools, government, worship, transit, parks, and
  * lodging. This is the exclusion set, verified against the live Places API types.
@@ -129,7 +129,7 @@ function looksInstitutional(name: string): boolean {
 }
 
 /**
- * The target niches SIMPL covers, mapped to Google place types. Documentation and
+ * The target niches Simpl covers, mapped to Google place types. Documentation and
  * a hook for future lead-scoring; the runtime gate above is exclusion-based so we
  * never drop a real service business that isn't on this list. Grouped by vertical:
  *

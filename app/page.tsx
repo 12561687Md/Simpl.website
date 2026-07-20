@@ -13,11 +13,11 @@ import OutcomePillars from "./components/OutcomePillars";
 import TeamSection from "./components/TeamSection";
 
 export const metadata: Metadata = {
-  title: "SIMPL | Your Digital Presence, Handled",
+  title: "Simpl | Your Digital Presence, Handled",
   description:
-    "SIMPL monitors your website, Google Business Profile, SEO, and online presence 24/7. Type your URL and get your free SIMPL Score in seconds.",
+    "Simpl monitors your website, Google Business Profile, SEO, and online presence 24/7. Type your URL and get your free Simpl Score in seconds.",
   openGraph: {
-    title: "SIMPL | Your Digital Presence, Handled",
+    title: "Simpl | Your Digital Presence, Handled",
     description:
       "Find out what's broken with your online presence. Free scan, real results, in seconds.",
   },
@@ -48,7 +48,7 @@ const CATEGORIES = [
     grade: "D",
     hook: "No services page, no about page, no testimonials, no blog.",
     detail: "Your site exists but it doesn't sell. Visitors land, look around, and leave.",
-    fix: "SIMPL identifies the essential pages your site is missing and prioritizes them by how much traffic they'll recover.",
+    fix: "Simpl identifies the essential pages your site is missing and prioritizes them by how much traffic they'll recover.",
     href: "/services/organic-growth",
     hrefLabel: "Organic growth",
   },
@@ -89,7 +89,7 @@ export default function Home() {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "SIMPL",
+          "name": "Simpl",
           "url": "https://simpl.pro",
           "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
           "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" }
@@ -114,7 +114,7 @@ export default function Home() {
                 Six categories. Most businesses are failing at least three.
               </h2>
               <p style={{ marginTop: 20, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-                Every SIMPL Score breaks down into six areas. Each one is graded independently. The question isn&apos;t whether you&apos;re failing. It&apos;s which ones.
+                Every Simpl Score breaks down into six areas. Each one is graded independently. The question isn&apos;t whether you&apos;re failing. It&apos;s which ones.
               </p>
             </ScrollReveal>
             <div style={{ marginTop: 40 }}>
@@ -123,12 +123,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SIMPL Score */}
+        {/* Simpl Score */}
         <section data-section="simpl-score" style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
           <ScrollReveal>
           <div className="grid-score" style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px" }}>
             <div>
-              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>The SIMPL Score</div>
+              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>The Simpl Score</div>
               <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 44px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, marginBottom: 20 }}>
                 One number that tells you<br />if your online presence is working.
               </h2>
