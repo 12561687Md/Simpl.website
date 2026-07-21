@@ -1,4 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
+# Host
+Host: https://simpl.pro
+
+# Sitemaps
 Sitemap: https://simpl.pro/sitemap.xml

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, useId } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { MovingBorderFrame } from "@/components/ui/moving-border";
 
 /**
  * Business typeahead. Type a name, pick your business, go.
@@ -33,9 +34,11 @@ function newSessionToken(): string {
 export default function BusinessSearch({
   onSelect,
   autoFocus = false,
+  movingBorder = false,
 }: {
   onSelect: (prediction: Prediction, sessionToken: string) => void;
   autoFocus?: boolean;
+  movingBorder?: boolean;
 }) {
   const [query, setQuery] = useState("");
   const [predictions, setPredictions] = useState<Prediction[]>([]);
@@ -149,6 +152,7 @@ export default function BusinessSearch({
 
   return (
     <div ref={wrapRef} style={{ position: "relative", maxWidth: 660, minWidth: 0 }}>
+      <MovingBorderFrame enabled={movingBorder} radius={10}>
       <div
         style={{
           display: "flex",
@@ -251,6 +255,7 @@ export default function BusinessSearch({
           <span aria-hidden="true" style={{ fontSize: 16, lineHeight: 1 }}>↑</span>
         </button>
       </div>
+      </MovingBorderFrame>
 
       {/* Screen readers get the result count; the visual list alone is silent. */}
       <div role="status" aria-live="polite" className="sr-only">

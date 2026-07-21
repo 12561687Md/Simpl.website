@@ -59,16 +59,27 @@ export default function PlatformLogos() {
   );
 
   return (
-    <div
+    <>
+      {/* NOTE: "Trusted by experts" over platform logos is not literally true
+          yet (these are integrations, not client/expert endorsements, and there
+          are 0 signed clients). Kept per explicit request for local preview.
+          Change or remove before this homepage is committed + deployed. */}
+      <p
+        style={{
+          textAlign: "center",
+          margin: "0 0 18px",
+          fontSize: 16,
+          fontWeight: 500,
+          letterSpacing: "-0.01em",
+          color: "var(--muted)",
+        }}
+      >
+        Trusted by <span style={{ color: "var(--fg)" }}>experts</span>
+      </p>
+      <div
       style={{
         position: "relative",
-        marginTop: 20,
-        padding: "34px 0 26px",
-        background: "rgba(255,255,255,0.02)",
-        border: "1px solid var(--rule)",
-        borderRadius: 12,
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.12)",
-        overflow: "hidden",
+        marginTop: 10,
       }}
     >
       <div
@@ -85,5 +96,6 @@ export default function PlatformLogos() {
         </div>
       </div>
     </div>
+    </>
   );
 }

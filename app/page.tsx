@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
+import SpaceField from "./components/SpaceField";
 import FloatingCTA from "./components/FloatingCTA";
 import CategoryShowcase from "./components/CategoryShowcase";
 import WhyOwnersHireUs from "./components/WhyOwnersHireUs";
@@ -85,7 +86,10 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <main>
+      {/* Shared page-wide starfield behind every section, so the whole page
+          flows as one space scene. Content sits above it via position/z-index. */}
+      <SpaceField />
+      <main style={{ position: "relative", zIndex: 1 }}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
@@ -106,7 +110,7 @@ export default function Home() {
         <OutcomePillars />
 
         {/* What We Score */}
-        <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+        <section>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
             <ScrollReveal>
               <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What we score</div>

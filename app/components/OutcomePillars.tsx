@@ -1,6 +1,5 @@
-import ScrollReveal, { StaggerReveal, StaggerItem, WiggleIn } from "./ScrollReveal";
+import ScrollReveal, { StaggerReveal, StaggerItem, WiggleIn, SlideIn } from "./ScrollReveal";
 import { GlowCard } from "@/components/ui/spotlight-card";
-import { FlowingLinesUp } from "@/components/ui/flowing-lines";
 
 type Pillar = {
   icon: React.ReactNode;
@@ -57,8 +56,7 @@ const PILLARS: Pillar[] = [
 export default function OutcomePillars() {
   return (
     <section style={{ position: "relative", overflow: "hidden" }}>
-      <FlowingLinesUp />
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1120, margin: "0 auto", padding: "104px 32px" }}>
+      <SlideIn from="right" style={{ position: "relative", zIndex: 1, maxWidth: 1120, margin: "0 auto", padding: "104px 32px" }}>
         <ScrollReveal>
           <div className="eyebrow" style={{ marginBottom: 28 }}>More traffic. More sales. Less stress.</div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 600, maxWidth: 760 }}>
@@ -105,7 +103,7 @@ export default function OutcomePillars() {
             </StaggerItem>
           ))}
         </StaggerReveal>
-      </div>
+      </SlideIn>
     </section>
   );
 }

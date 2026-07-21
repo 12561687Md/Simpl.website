@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import BusinessSearch, { type Prediction } from "./BusinessSearch";
-import PlatformLogos from "./PlatformLogos";
 import UrlFallbackScanner from "./UrlFallbackScanner";
-import TextRotator from "./TextRotator";
-import { DottedSurface } from "@/components/ui/dotted-surface";
+import TextMorph from "@/components/ui/text-morph";
+import { StarsCanvas } from "@/components/ui/stars-canvas";
+import HeroCurvedBottom from "./HeroCurvedBottom";
 
 /**
  * The hero is now purely an entrance. Scanning used to happen in place, which
@@ -35,31 +35,33 @@ export default function HomeHero() {
 
   return (
     <div style={{ position: "relative" }}>
-      <DottedSurface />
-      {/* Legibility scrim, centre-weighted to sit behind the centred copy. Kept
-          light on purpose — the dotted surface should read, not get half-erased
-          to stay readable. */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 0,
-          background:
-            "radial-gradient(95% 85% at 50% 42%, rgba(11,12,13,0.26) 0%, rgba(11,12,13,0.13) 55%, rgba(11,12,13,0.03) 100%)",
-        }}
-      />
+      {/* Big rotating starfield for the hero "sky", contained to the hero and
+          layered over the shared small SpaceField. The small field continues
+          below into the rest of the page, so the hero flows into section 2 with
+          no flat-black cut. Vignette keeps the centred copy legible. */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0, overflow: "hidden" }}>
+        <StarsCanvas className="!absolute" hue={205} speedMultiplier={0.08} />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(90% 80% at 50% 40%, rgba(11,12,13,0.55) 0%, rgba(11,12,13,0.25) 55%, transparent 100%)",
+          }}
+        />
+      </div>
       <section
         style={{
+          // zIndex 2 (above HeroCurvedBottom's zIndex 1) so the business-search
+          // results dropdown renders in FRONT of the curve/half-circle instead
+          // of disappearing behind it.
           position: "relative",
-          zIndex: 1,
+          zIndex: 2,
           maxWidth: 1120,
           margin: "0 auto",
-          // Enough clearance that "Your business is" doesn't rub against the
-          // floating nav puck (which sits at top-5, ~80-90px tall including
-          // its own padding). Matches the top padding used on every other
-          // page's hero (start, scan, faq: 120-140px).
-          padding: "132px 32px 40px",
+          // Top clearance for the fixed 92px header + a little breathing room;
+          // trimmed from 132 to shrink the hero.
+          padding: "110px 32px 16px",
           textAlign: "center",
         }}
       >
@@ -76,7 +78,7 @@ export default function HomeHero() {
           Your business is always online.
           <br />
           Simpl makes sure it&apos;s always{" "}
-          <TextRotator words={["winning.", "ranking.", "running.", "learning."]} />
+          <TextMorph words={["winning.", "ranking.", "running."]} interval={2200} />
         </h1>
 
         {/* The pitch paragraph lived here and was cut on purpose: it was the only
@@ -98,7 +100,6 @@ export default function HomeHero() {
               gap: 12,
             }}
           >
-            <span>See where you stand. Find your business</span>
             <a
               href="#"
               onClick={(e) => {
@@ -161,7 +162,7 @@ export default function HomeHero() {
                       assumes they know it; asking for their business name
                       assumes nothing, and the listing hands us the domain
                       anyway. */}
-                  <BusinessSearch onSelect={startAudit} autoFocus />
+                  <BusinessSearch onSelect={startAudit} autoFocus movingBorder />
 
                   {/* Reassurance sits directly under the input, where the
                       hesitation is. Worded to stay true after the email gate:
@@ -209,9 +210,12 @@ export default function HomeHero() {
             </AnimatePresence>
           </div>
 
-          <PlatformLogos />
         </div>
       </section>
+
+      {/* Curved, glowing hero bottom: the platform marquee sits on a baby-blue
+          horizon with rising sparkles. Replaces the old plain rule / character. */}
+      <HeroCurvedBottom />
     </div>
   );
 }

@@ -111,6 +111,56 @@ export function WiggleIn({
   );
 }
 
+/**
+ * Section-scale entrance: the whole block slides in from its side (left/right)
+ * and fades, once, on scroll. `boxed` wraps it in a subtle panel so the section
+ * reads as a card floating on the starfield. Larger offset than ScrollReveal so
+ * it reads as "flowing onto the page from the side," not a nudge.
+ */
+export function SlideIn({
+  children,
+  from = "left",
+  boxed = false,
+  distance = 90,
+  duration = 0.8,
+  className,
+  style,
+}: {
+  children: ReactNode;
+  from?: "left" | "right";
+  boxed?: boolean;
+  /** How far off-screen it starts, in px. Bigger = harder slide. */
+  distance?: number;
+  /** Seconds. Larger = slower slide. */
+  duration?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
+  const reduce = useReducedMotion();
+  const boxStyle: React.CSSProperties = boxed
+    ? {
+        border: "1px solid var(--rule)",
+        borderRadius: 24,
+        background: "rgba(255,255,255,0.018)",
+        boxShadow: "0 24px 70px -34px rgba(0,0,0,0.85)",
+      }
+    : {};
+  const merged = { ...boxStyle, ...style };
+  if (reduce) return <div className={className} style={merged}>{children}</div>;
+  return (
+    <motion.div
+      className={className}
+      style={merged}
+      initial={{ opacity: 0, x: from === "left" ? -distance : distance }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration, ease: EXPO }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function StaggerItem({
   children,
   className,

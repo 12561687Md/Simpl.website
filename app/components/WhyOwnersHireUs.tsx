@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import PhoneLoop from "./PhoneLoop";
+import { SlideIn } from "./ScrollReveal";
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
@@ -30,16 +31,15 @@ export default function WhyOwnersHireUs() {
   const reduce = useReducedMotion();
 
   return (
-    <section
-      style={{
-        borderTop: "1px solid var(--rule)",
-        borderBottom: "1px solid var(--rule)",
-        background: "linear-gradient(180deg, rgba(255,255,255,0.018), transparent)",
-      }}
-    >
-      <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-        <div className="split-phone-grid">
-          <div>
+    <section style={{ overflow: "hidden", padding: "40px 24px" }}>{/* Transparent:
+        sits on the shared page-wide starfield. overflow-hidden so the side-slide
+        never spawns a horizontal scrollbar. */}
+      <div style={{ maxWidth: 1120, margin: "0 auto" }}>
+        <div className="split-phone-grid" style={{ gap: 88 }}>
+          {/* Text column: boxed, slides in from the FAR right (slower), while
+              the phone slides in from the far left at the same pace, so the two
+              cross each other on the way in. */}
+          <SlideIn from="right" boxed distance={760} duration={1.5} style={{ padding: "40px 56px" }}>
             <motion.div
               initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -53,12 +53,12 @@ export default function WhyOwnersHireUs() {
                 <span style={{ width: 6, height: 6, borderRadius: 999, background: "var(--pulse)" }} />
                 Why owners hire us
               </div>
-              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 46px)", lineHeight: 1.1, letterSpacing: "-0.025em", fontWeight: 600, maxWidth: 520 }}>
+              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 46px)", lineHeight: 1.1, letterSpacing: "-0.025em", fontWeight: 600, maxWidth: 620 }}>
                 You run the business. We run the internet.
               </h2>
             </motion.div>
 
-            <div style={{ marginTop: 36, display: "grid", gap: 26, maxWidth: 520 }}>
+            <div style={{ marginTop: 36, display: "grid", gap: 26, maxWidth: 620 }}>
               {REASONS.map((r, i) => (
                 <motion.div
                   key={r.t}
@@ -88,16 +88,20 @@ export default function WhyOwnersHireUs() {
                 See how we fit your business →
               </a>
             </motion.div>
-          </div>
+          </SlideIn>
 
           <div className="split-phone-visual" style={{ display: "flex", justifyContent: "center" }}>
             <motion.div
-              initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={reduce ? { opacity: 0 } : { opacity: 0, x: -760 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              <PhoneLoop />
+              {/* Scaled locally (the global phone-frame scale was removed so
+                  ScanReport is unaffected). */}
+              <div style={{ transform: "scale(1.35)", transformOrigin: "center" }}>
+                <PhoneLoop />
+              </div>
             </motion.div>
           </div>
         </div>

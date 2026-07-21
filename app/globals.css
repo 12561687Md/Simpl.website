@@ -767,14 +767,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .phone-frame {
   position: relative;
   width: 268px;
-  padding: 9px;
-  border-radius: 44px;
-  background: linear-gradient(160deg, #303436, #131516 60%);
-  border: 1px solid var(--rule);
-  /* The glow is what stops the frame reading as a flat grey rectangle. */
+  padding: 8px;
+  border-radius: 46px;
+  background: #111;
+  /* Realistic titanium-edge iPhone hardware: a bright metal rim, a black inner
+     bezel, then layered ambient shadows for weight. The brand-accent glow is
+     kept as the bottom layer so the frame still lifts off the dark page. */
   box-shadow:
-    0 40px 90px -30px rgba(0, 0, 0, 0.9),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    inset 0 0 0 2px #52525b,
+    inset 0 0 0 7px #000,
+    0 40px 80px -15px rgba(0, 0, 0, 0.9),
+    0 15px 25px -5px rgba(0, 0, 0, 0.7),
     0 22px 70px -34px var(--accent);
 }
 
@@ -785,8 +788,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .phone-frame::after {
   content: "";
   position: absolute;
-  background: linear-gradient(90deg, #1c1e1f, #34383a 45%, #1c1e1f);
+  background: linear-gradient(90deg, #404040 0%, #171717 100%);
   border-radius: 2px;
+  box-shadow: -1px 0 4px rgba(0, 0, 0, 0.8), inset -1px 0 1px rgba(255, 255, 255, 0.12);
 }
 /* Left side: volume rocker. */
 .phone-frame::before {
@@ -809,6 +813,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   overflow: hidden;
   background: var(--bg);
   min-height: 452px;
+}
+/* Diagonal glass glare sweeping across the top-left of the screen — the tell
+   that sells "real device" more than any bezel detail. Non-interactive so it
+   never blocks the CTA inside the mock. */
+.phone-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background: linear-gradient(110deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 45%);
 }
 
 .phone-notch {
@@ -888,7 +903,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
    and the beliefs/about blocks. */
 .split-phone-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  /* Text column widened relative to the phone so the boxed text panel reads
+     wider (and, filling more width, wraps less and stays shorter). */
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr);
   gap: 56px;
   align-items: center;
 }

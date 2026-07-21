@@ -32,7 +32,7 @@ const COVERAGE = [
 
 export default function TeamSection() {
   return (
-    <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+    <section>{/* Transparent so the shared page-wide starfield flows through. */}
       <div
         style={{
           maxWidth: 1120,
