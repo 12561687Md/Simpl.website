@@ -565,7 +565,7 @@ export default function ScanReport({
           have, same as Owner.com leads with them. */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 52 }} className="grid-audit-hero">
         <Box hi>
-          <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>
+          <div style={{ ...rmono, fontSize: 12.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 12 }}>
             Estimated impact
           </div>
           {totalIssues > 0 ? (
@@ -596,7 +596,7 @@ export default function ScanReport({
           )}
         </Box>
         <Box hi>
-          <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>
+          <div style={{ ...rmono, fontSize: 12.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 12 }}>
             Market position
           </div>
           {localCompetitors.length > 0 ? (
@@ -878,11 +878,11 @@ export default function ScanReport({
               grades the listing, right shows what's on it. */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22, alignItems: "stretch" }} className="grid-audit-gbp">
             <Box>
-              <div style={{ ...display, fontSize: "clamp(40px, 5.4vw, 56px)", fontWeight: 700, lineHeight: 0.9, color: place.reviewCount && place.reviewCount >= 25 ? "var(--ok)" : "#E05252", letterSpacing: "-0.02em" }}>
-                {place.reviewCount ?? 0}
+              <div style={{ ...display, fontSize: "clamp(24px, 3.2vw, 34px)", fontWeight: 700, lineHeight: 1, color: place.reviewCount && place.reviewCount >= 25 ? "var(--ok)" : "#E05252", letterSpacing: "-0.02em" }}>
+                {place.reviewCount ?? 0} <span style={{ fontSize: "0.42em", fontWeight: 600, color: "var(--muted)", letterSpacing: "0.02em" }}>reviews</span>
               </div>
               <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "11px 0 0", lineHeight: 1.4 }}>
-                Google review{place.reviewCount === 1 ? "" : "s"}{place.rating ? ` at a ${place.rating.toFixed(1)}-star average` : ""} carrying your entire public reputation on this channel.
+                {place.rating ? `At a ${place.rating.toFixed(1)}-star average, this is` : "This is"} the entire public reputation you carry on Google.
               </p>
               <div style={{ borderTop: "1px solid var(--rule)", margin: "16px 0 12px" }} />
               <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
