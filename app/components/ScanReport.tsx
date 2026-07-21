@@ -393,8 +393,8 @@ export default function ScanReport({
   // verify off the live listing. Present = green check, missing = red gap, and
   // the gaps are the finding. Signals Google doesn't expose in its API (posts,
   // products, the booking-CTA button, organic sitelinks) are omitted rather
-  // than guessed at. Split in half so each half sits inside one of the two GBP
-  // boxes instead of a separate full-width panel below them.
+  // than guessed at. All ten render as a two-column scorecard inside the LEFT
+  // GBP box; the right box shows the real profile content instead.
   const gbpChecks: [string, boolean][] = [
     ["Business hours", (profile?.hours?.length ?? 0) > 0],
     ["Physical address", Boolean(place.address)],
@@ -407,8 +407,6 @@ export default function ScanReport({
     ["Services & attributes", (profile?.attributes?.length ?? 0) > 0],
     ["25+ reviews", (place.reviewCount ?? 0) >= 25],
   ];
-  const gbpChecksLeft = gbpChecks.slice(0, 5);
-  const gbpChecksRight = gbpChecks.slice(5);
 
   // The real local-pack competitors, aggregated across every keyword board:
   // the named businesses (with their star ratings) that outrank this business
@@ -867,11 +865,14 @@ export default function ScanReport({
             title="Google Business Profile"
             lead="The profile is the first thing a customer checks after a referral or a search. Right now it's either backing up what you actually do, or contradicting it."
           />
-          {/* Two boxes, and the profile-completeness checks live INSIDE them —
-              five per box — instead of a separate full-width panel below. Each
-              signal is a single ✓/× line (including "Business hours"), so the
-              listing's real hours are never pasted out to eat vertical room. */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22 }} className="grid-audit-gbp">
+          {/* LEFT box = the completeness scorecard: review-count hero + ALL ten
+              ✓/× signals in two columns (so the box fills its width instead of a
+              lone left column). RIGHT box = the real profile content Google
+              actually shows a customer — category, price, open/closed, the live
+              hours, and every service attribute. The two views balance: the left
+              grades the listing, the right shows what's on it, and the gaps in
+              one explain the gaps in the other. */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22, alignItems: "stretch" }} className="grid-audit-gbp">
             <Box>
               <div style={{ ...display, fontSize: "clamp(40px, 5.4vw, 56px)", fontWeight: 700, lineHeight: 0.9, color: place.reviewCount && place.reviewCount >= 25 ? "var(--ok)" : "#E05252", letterSpacing: "-0.02em" }}>
                 {place.reviewCount ?? 0}
@@ -880,19 +881,21 @@ export default function ScanReport({
                 Google review{place.reviewCount === 1 ? "" : "s"}{place.rating ? ` at a ${place.rating.toFixed(1)}-star average` : ""} carrying your entire public reputation on this channel.
               </p>
               <div style={{ borderTop: "1px solid var(--rule)", margin: "16px 0 12px" }} />
-              <div style={{ display: "grid", gap: 2 }}>
-                {gbpChecksLeft.map(([label, ok]) => (
-                  <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, padding: "3px 0" }}>
-                    <span style={{ ...rmono, fontWeight: 700, width: 15, textAlign: "center", color: ok ? "var(--ok)" : "#E05252", flexShrink: 0 }}>{ok ? "✓" : "×"}</span>
+              <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                Profile completeness
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px 20px" }} className="grid-gbp-checks">
+                {gbpChecks.map(([label, ok]) => (
+                  <div key={label} style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 12.5, padding: "3px 0" }}>
+                    <span style={{ ...rmono, fontWeight: 700, width: 13, textAlign: "center", color: ok ? "var(--ok)" : "#E05252", flexShrink: 0 }}>{ok ? "✓" : "×"}</span>
                     <span style={{ color: ok ? "var(--ink-2, var(--muted))" : "var(--fg)" }}>{label}</span>
                   </div>
                 ))}
               </div>
             </Box>
             <Box label="What your profile says">
-              {/* Real Places data up front — category, price, open/closed — then
-                  the rest of the completeness checks. */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 24 }}>
+              {/* The real Places content, the customer's-eye view of the listing. */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 24, marginBottom: 14 }}>
                 {profile?.primaryType && (
                   <span style={{ ...rmono, fontSize: 11.5, color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 99, padding: "3px 11px" }}>{profile.primaryType}</span>
                 )}
@@ -908,15 +911,30 @@ export default function ScanReport({
                   <span style={{ ...rmono, fontSize: 11.5, color: "var(--muted)" }}>Little public detail on this listing</span>
                 )}
               </div>
-              <div style={{ borderTop: "1px solid var(--rule)", margin: "16px 0 12px" }} />
-              <div style={{ display: "grid", gap: 2 }}>
-                {gbpChecksRight.map(([label, ok]) => (
-                  <div key={label} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, padding: "3px 0" }}>
-                    <span style={{ ...rmono, fontWeight: 700, width: 15, textAlign: "center", color: ok ? "var(--ok)" : "#E05252", flexShrink: 0 }}>{ok ? "✓" : "×"}</span>
-                    <span style={{ color: ok ? "var(--ink-2, var(--muted))" : "var(--fg)" }}>{label}</span>
-                  </div>
-                ))}
-              </div>
+              {profile?.hours && profile.hours.length > 0 ? (
+                <div style={{ ...rmono, fontSize: 11.5, color: "var(--ink-2, var(--muted))", lineHeight: 1.9 }}>
+                  {profile.hours.map((h) => {
+                    const [day, ...rest] = h.split(": ");
+                    return (
+                      <div key={h} style={{ display: "flex", justifyContent: "space-between", gap: 12, borderBottom: "1px solid var(--rule)", padding: "1px 0" }}>
+                        <span>{day}</span>
+                        <span style={{ color: "var(--fg)", textAlign: "right" }}>{rest.join(": ") || "—"}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p style={{ fontSize: 13, color: "#E05252", margin: "0 0 14px", lineHeight: 1.5 }}>
+                  No hours on your listing. A customer sees &ldquo;Hours not available&rdquo; and assumes you might be closed, so they call the competitor whose hours are right there.
+                </p>
+              )}
+              {profile?.attributes && profile.attributes.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 14 }}>
+                  {profile.attributes.map((a) => (
+                    <span key={a} style={{ fontSize: 11, color: "var(--ink-2, var(--muted))", background: "var(--bg-elev, var(--bg))", border: "1px solid var(--rule)", borderRadius: 5, padding: "3px 8px" }}>{a}</span>
+                  ))}
+                </div>
+              )}
             </Box>
           </div>
           <SectionFix

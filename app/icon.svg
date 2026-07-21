@@ -5,22 +5,24 @@
     Redrawn 2026-07-20. The previous favicon drew the pulse HORIZONTALLY (a wide
     flat line with a spike), which read as "stretched out" in the tab and did not
     match the mark. The real vitalsign (brand/final/assets/simpl-mark-dark.svg)
-    is a TALL VERTICAL heartbeat: a sharp peak at the top, a short baseline flag
-    to the left, a deep trough at the bottom, a shorter baseline flag to the
-    right, and the identity dot beneath. This redraws that exact gesture and
-    orientation as a stroked path weighted to survive a browser tab (~3.8/64).
-    Embedding the kit art verbatim was tried and rejected: its hairline needle
-    falls below a pixel at 16px and renders as a grey speck (the original reason
-    a simplified mark exists). The dot stays oversized because, per the kit, it
-    is the one element that always reads. Baby blue (#89CFF0), 2026-07-18d rebrand.
+    is a TALL VERTICAL heartbeat: a sharp peak near the top, a baseline flag to
+    the left, a deep trough near the bottom, a matching baseline flag to the
+    right, and the identity dot beneath. This redraws that gesture as a stroked
+    path weighted to survive a browser tab (~3.8/64). It is drawn SYMMETRIC
+    about the vertical center (x=32): the two flags are equal length at equal
+    height, peak and trough are point-symmetric about center, and the dot is
+    centered, so the mark reads balanced rather than left-heavy. Embedding the
+    kit art verbatim was tried and rejected: its hairline needle falls below a
+    pixel at 16px and renders as a grey speck (the reason a simplified mark
+    exists). Baby blue dot (#89CFF0), 2026-07-18d rebrand.
   -->
   <rect width="64" height="64" rx="14" fill="#0B0C0D"/>
   <path
-    d="M12 27 H25 L30 6 L35 51 L40 37 H50"
+    d="M12 29 H25 L30 8 L34 50 L39 29 H52"
     stroke="#EDEBE4"
     stroke-width="3.8"
     stroke-linecap="round"
     stroke-linejoin="round"
     fill="none"/>
-  <circle cx="35" cy="58" r="4.4" fill="#89CFF0"/>
+  <circle cx="32" cy="57" r="4.4" fill="#89CFF0"/>
 </svg>
