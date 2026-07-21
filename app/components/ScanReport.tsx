@@ -391,9 +391,15 @@ export default function ScanReport({
 
   // Profile-completeness checks, every signal Google's API actually lets us
   // verify off the live listing. Present = green check, missing = red gap, and
-  // the gaps are the finding. Signals Google doesn't expose in its API (posts,
-  // products, the booking-CTA button, organic sitelinks) are omitted rather
-  // than guessed at. All ten render as a two-column scorecard inside the LEFT
+  // the gaps are the finding. Only signals whose ABSENCE from the API truly
+  // means absence on the listing are here. Deliberately NOT checked, because the
+  // Places API doesn't expose them (so a blank would be a false ✗ on a business
+  // that actually has them, exactly the Sidekick case): the owner-written "From
+  // the business" description (the API only returns Google's rare editorial
+  // summary, not the owner's), the GBP Products/Services list (the API's
+  // `attributes` are restaurant-style service options like dine-in, not a
+  // service business's product cards), and posts / the booking-CTA button /
+  // organic sitelinks. These render as a two-column scorecard inside the LEFT
   // GBP box; the right box shows the real profile content instead.
   const gbpChecks: [string, boolean][] = [
     ["Business hours", (profile?.hours?.length ?? 0) > 0],
@@ -401,10 +407,8 @@ export default function ScanReport({
     ["Phone number", Boolean(place.phone)],
     ["Website linked", Boolean(place.website)],
     ["Primary category", Boolean(profile?.primaryType)],
-    ["Business description", Boolean(place.summary)],
     ["Price level", Boolean(profile?.priceLevel)],
     ["Photos uploaded", photos.length > 0],
-    ["Services & attributes", (profile?.attributes?.length ?? 0) > 0],
     ["25+ reviews", (place.reviewCount ?? 0) >= 25],
   ];
 
@@ -865,13 +869,13 @@ export default function ScanReport({
             title="Google Business Profile"
             lead="The profile is the first thing a customer checks after a referral or a search. Right now it's either backing up what you actually do, or contradicting it."
           />
-          {/* LEFT box = the completeness scorecard: review-count hero + ALL ten
-              ✓/× signals in two columns (so the box fills its width instead of a
-              lone left column). RIGHT box = the real profile content Google
-              actually shows a customer — category, price, open/closed, the live
-              hours, and every service attribute. The two views balance: the left
-              grades the listing, the right shows what's on it, and the gaps in
-              one explain the gaps in the other. */}
+          {/* Two boxes with matching scaffolding — headline stat, divider,
+              uppercase sublabel, content — so they read as a symmetric pair.
+              LEFT = the completeness scorecard: review-count hero + the ✓/×
+              signals in two columns (fills the box width). RIGHT = the real
+              profile content Google shows a customer: listed category + status,
+              then the live opening hours (and any service attributes). Left
+              grades the listing, right shows what's on it. */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22, alignItems: "stretch" }} className="grid-audit-gbp">
             <Box>
               <div style={{ ...display, fontSize: "clamp(40px, 5.4vw, 56px)", fontWeight: 700, lineHeight: 0.9, color: place.reviewCount && place.reviewCount >= 25 ? "var(--ok)" : "#E05252", letterSpacing: "-0.02em" }}>
@@ -893,23 +897,27 @@ export default function ScanReport({
                 ))}
               </div>
             </Box>
-            <Box label="What your profile says">
-              {/* The real Places content, the customer's-eye view of the listing. */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", minHeight: 24, marginBottom: 14 }}>
-                {profile?.primaryType && (
-                  <span style={{ ...rmono, fontSize: 11.5, color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 99, padding: "3px 11px" }}>{profile.primaryType}</span>
-                )}
-                {profile?.priceLevel && (
-                  <span style={{ ...rmono, fontSize: 12, fontWeight: 600, color: "var(--ok)" }}>{profile.priceLevel}</span>
-                )}
+            <Box>
+              {/* Mirrors the LEFT box's rhythm exactly: a headline (the listed
+                  category, standing in for the review-count stat) + a one-line
+                  status, then the same divider and uppercase sublabel, then the
+                  content. Real Places data throughout — the customer's-eye view
+                  of the listing. */}
+              <div style={{ ...display, fontSize: "clamp(24px, 3.2vw, 34px)", fontWeight: 700, lineHeight: 1, letterSpacing: "-0.02em", color: profile?.primaryType ? "var(--fg)" : "#E0A852" }}>
+                {profile?.primaryType ?? "No category set"}
+              </div>
+              <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "11px 0 0", lineHeight: 1.4 }}>
                 {profile?.openNow != null && (
-                  <span style={{ ...rmono, fontSize: 11.5, color: profile.openNow ? "var(--ok)" : "#E0A852" }}>
-                    {profile.openNow ? "Open now" : "Closed now"}
-                  </span>
+                  <span style={{ color: profile.openNow ? "var(--ok)" : "#E0A852", fontWeight: 600 }}>{profile.openNow ? "Open now" : "Closed now"}</span>
                 )}
-                {!profile?.primaryType && !profile?.priceLevel && profile?.openNow == null && (
-                  <span style={{ ...rmono, fontSize: 11.5, color: "var(--muted)" }}>Little public detail on this listing</span>
-                )}
+                {profile?.openNow != null && profile?.priceLevel ? " · " : ""}
+                {profile?.priceLevel && <span style={{ color: "var(--ok)", fontWeight: 600 }}>{profile.priceLevel}</span>}
+                {(profile?.openNow != null || profile?.priceLevel) ? ". " : ""}
+                How your listing is categorized, and what a customer sees at a glance.
+              </p>
+              <div style={{ borderTop: "1px solid var(--rule)", margin: "16px 0 12px" }} />
+              <div style={{ ...rmono, fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                Opening hours
               </div>
               {profile?.hours && profile.hours.length > 0 ? (
                 <div style={{ ...rmono, fontSize: 11.5, color: "var(--ink-2, var(--muted))", lineHeight: 1.9 }}>
@@ -924,7 +932,7 @@ export default function ScanReport({
                   })}
                 </div>
               ) : (
-                <p style={{ fontSize: 13, color: "#E05252", margin: "0 0 14px", lineHeight: 1.5 }}>
+                <p style={{ fontSize: 13, color: "#E05252", margin: 0, lineHeight: 1.5 }}>
                   No hours on your listing. A customer sees &ldquo;Hours not available&rdquo; and assumes you might be closed, so they call the competitor whose hours are right there.
                 </p>
               )}
