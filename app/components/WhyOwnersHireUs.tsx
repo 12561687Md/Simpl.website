@@ -39,7 +39,7 @@ export default function WhyOwnersHireUs() {
           {/* Text column: boxed, slides in from the FAR right (slower), while
               the phone slides in from the far left at the same pace, so the two
               cross each other on the way in. */}
-          <SlideIn from="right" boxed distance={760} duration={1.5} style={{ padding: "40px 56px" }}>
+          <SlideIn from="right" boxed distance={760} duration={1.9} style={{ padding: "40px 56px" }}>
             <motion.div
               initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -95,7 +95,7 @@ export default function WhyOwnersHireUs() {
               initial={reduce ? { opacity: 0 } : { opacity: 0, x: -760 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.9, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Scaled locally (the global phone-frame scale was removed so
                   ScanReport is unaffected). */}

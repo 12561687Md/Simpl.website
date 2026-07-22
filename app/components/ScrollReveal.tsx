@@ -81,30 +81,52 @@ export function StaggerReveal({
 }
 
 /**
- * Attention wiggle: rocks back and forth once when scrolled into view. Used on
- * the outcome-pillar icons so the eye lands on them. Reduced-motion renders flat.
+ * Attention wiggle: rocks back and forth. By default it fires once when
+ * scrolled into view. `loop` makes it keep jingling on a forever loop with a
+ * short pause between takes, so the icon stays lively the whole time. Used on
+ * the outcome-pillar icons so the eye keeps landing on them. Reduced-motion
+ * renders flat either way.
  */
+const WIGGLE_KEYS = [0, -12, 10, -8, 6, -3, 0];
+const WIGGLE_TIMES = [0, 0.14, 0.3, 0.46, 0.62, 0.8, 1];
+
 export function WiggleIn({
   children,
   delay = 0,
+  loop = false,
   className,
   style,
 }: {
   children: ReactNode;
   delay?: number;
+  loop?: boolean;
   className?: string;
   style?: React.CSSProperties;
 }) {
   const reduce = useReducedMotion();
   if (reduce) return <div className={className} style={style}>{children}</div>;
+
+  if (loop) {
+    return (
+      <motion.div
+        className={className}
+        style={{ transformOrigin: "50% 85%", ...style }}
+        animate={{ rotate: WIGGLE_KEYS }}
+        transition={{ duration: 1.2, delay, ease: "easeInOut", times: WIGGLE_TIMES, repeat: Infinity, repeatDelay: 1.4 }}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       className={className}
       style={{ transformOrigin: "50% 85%", ...style }}
       initial={{ rotate: 0 }}
-      whileInView={{ rotate: [0, -12, 10, -8, 6, -3, 0] }}
+      whileInView={{ rotate: WIGGLE_KEYS }}
       viewport={{ once: true, margin: "-70px" }}
-      transition={{ duration: 1.2, delay, ease: "easeInOut", times: [0, 0.14, 0.3, 0.46, 0.62, 0.8, 1] }}
+      transition={{ duration: 1.2, delay, ease: "easeInOut", times: WIGGLE_TIMES }}
     >
       {children}
     </motion.div>
@@ -127,7 +149,7 @@ export function SlideIn({
   style,
 }: {
   children: ReactNode;
-  from?: "left" | "right";
+  from?: "left" | "right" | "top" | "bottom";
   boxed?: boolean;
   /** How far off-screen it starts, in px. Bigger = harder slide. */
   distance?: number;
@@ -146,13 +168,18 @@ export function SlideIn({
       }
     : {};
   const merged = { ...boxStyle, ...style };
+  const offset =
+    from === "left" ? { x: -distance }
+    : from === "right" ? { x: distance }
+    : from === "top" ? { y: -distance }
+    : { y: distance }; // "bottom": starts below and slides up into place
   if (reduce) return <div className={className} style={merged}>{children}</div>;
   return (
     <motion.div
       className={className}
       style={merged}
-      initial={{ opacity: 0, x: from === "left" ? -distance : distance }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, ...offset }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration, ease: EXPO }}
     >

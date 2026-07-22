@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
 import SpaceField from "./components/SpaceField";
 import FloatingCTA from "./components/FloatingCTA";
+import AuditDemo from "./components/AuditDemo";
 import CategoryShowcase from "./components/CategoryShowcase";
 import WhyOwnersHireUs from "./components/WhyOwnersHireUs";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
-import ScrollReveal from "./components/ScrollReveal";
+import ScrollReveal, { SlideIn } from "./components/ScrollReveal";
 import OutcomePillars from "./components/OutcomePillars";
 import TeamSection from "./components/TeamSection";
 
@@ -25,60 +25,65 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://simpl.pro" },
 };
 
-const CATEGORIES = [
+// The six services shown in the interactive showcase, matched 1:1 to the nav
+// dropdown. Each proves a real service: what it is (hook), why the business
+// needs it / the cost of not having it (detail), and the concrete deliverable
+// as proof it's real work, not a vague retainer (deliverable). Links go to the
+// specific /services page. Keyword-rich for SEO.
+const SERVICES = [
   {
-    name: "Website Foundation",
-    grade: "B",
-    hook: "Slow load times, missing SSL, broken mobile layouts.",
-    detail: "Visitors leave before they even read your homepage.",
-    fix: "We catch the silent killers: speed issues, expired certificates, and mobile breakage that's costing you visitors right now.",
-    href: "/performance",
-    hrefLabel: "Performance",
+    name: "Custom Website",
+    tag: "Sites that convert",
+    hook: "A fast, modern website built to turn visitors into booked jobs.",
+    detail: "An outdated or slow site sends the customers you worked to earn straight to the competitor whose page loads first and looks like they'll answer the phone.",
+    deliverable: "A custom, mobile-fast website with the pages, load speed, and calls-to-action engineered to turn traffic into booked work.",
+    href: "/services/website-build",
+    hrefLabel: "Custom Website",
   },
   {
-    name: "SEO & Rankings",
-    grade: "C",
-    hook: "Missing titles, zero schema markup, and no idea where you actually rank.",
-    detail: "Google can't figure out what your site is about, so it ranks someone else, and you find out from a slow month instead of a number.",
-    fix: "We map the exact SEO signals Google uses to rank you and track your real position for the searches that matter, not just whether the page loads.",
-    href: "/discoverability",
-    hrefLabel: "Discoverability",
+    name: "Quick Wins & Site Triage",
+    tag: "Fix the leaks first",
+    hook: "The fast fixes that stop you losing customers this week.",
+    detail: "Broken forms, expired SSL, dead links, and slow pages leak leads every day, and most owners never spot them until the phone goes quiet.",
+    deliverable: "A prioritized list of what's broken and a first round of fixes shipped fast, so the leaks stop before you spend on anything bigger.",
+    href: "/services/quick-wins",
+    hrefLabel: "Quick Wins",
   },
   {
-    name: "Content & Pages",
-    grade: "D",
-    hook: "No services page, no about page, no testimonials, no blog.",
-    detail: "Your site exists but it doesn't sell. Visitors land, look around, and leave.",
-    fix: "Simpl identifies the essential pages your site is missing and prioritizes them by how much traffic they'll recover.",
-    href: "/services/organic-growth",
-    hrefLabel: "Organic growth",
-  },
-  {
-    name: "Advertising & Socials",
-    grade: "D",
-    hook: "No Facebook, no Instagram, and no clear read on whether ad spend is working.",
-    detail: "Customers search for you on social and find nothing, and every dollar spent on ads with no way to tell what it bought is a dollar you can't account for.",
-    fix: "We flag every platform you're invisible on and show exactly where ad spend is going, so nothing burns quietly in the background.",
-    href: "/spend",
-    hrefLabel: "Spend",
-  },
-  {
-    name: "CRM & Reputation",
-    grade: "B",
-    hook: "Leads that never got a follow-up, and reviews trickling in at random.",
-    detail: "A lead goes cold the moment nobody follows up, and your reputation online is whatever happens to get posted, not what your actual customers think.",
-    fix: "We track every lead so none go cold, and build a steady, real system for turning happy customers into five-star reviews.",
-    href: "/reputation",
-    hrefLabel: "Reputation",
-  },
-  {
-    name: "Google Business Profile",
-    grade: "C",
-    hook: "Low reviews, no photos, missing hours, no owner responses.",
-    detail: "Your listing is live but it's losing you calls every day.",
-    fix: "We verify your GBP, grade every field, and show exactly what's keeping you out of the local 3-pack.",
+    name: "Local SEO & AI Search Visibility",
+    tag: "Own local search",
+    hook: "Get found first in Google Maps, local search, and AI answers.",
+    detail: "If you're not in the Google local three-pack and the AI answers customers now trust, you're invisible to the people searching for exactly what you sell, right now.",
+    deliverable: "An optimized Google Business Profile, ranked local service pages, and monthly tracking that shows your real position climbing for the searches that bring calls.",
     href: "/services/local-seo",
     hrefLabel: "Local SEO",
+  },
+  {
+    name: "Paid Performance Marketing",
+    tag: "Scale with ads",
+    hook: "Google and Meta ads that bring back more than they cost.",
+    detail: "Boosted posts and guesswork quietly drain your budget. With no real tracking, you can't tell which dollar booked a job and which one just vanished.",
+    deliverable: "Managed Google and Meta campaigns with full conversion tracking and a plain-English report on cost per lead, so every dollar is accountable.",
+    href: "/services/paid-ads",
+    hrefLabel: "Paid Ads",
+  },
+  {
+    name: "Long-Term Organic Growth",
+    tag: "Compounding traffic",
+    hook: "Content and SEO that compound into free traffic every month.",
+    detail: "Lean on ads alone and the leads stop the moment you stop paying. With no organic content, you're renting your traffic instead of owning it.",
+    deliverable: "A content engine built around the questions your customers actually search, plus month-over-month growth in rankings and organic leads you don't pay per click for.",
+    href: "/services/organic-growth",
+    hrefLabel: "Organic Growth",
+  },
+  {
+    name: "Fractional CMO & Strategy",
+    tag: "Senior oversight",
+    hook: "A senior marketing lead steering the whole thing, without the hire.",
+    detail: "Marketing done piecemeal with no strategy means paying for activity instead of results, with no one owning the number that actually matters: booked revenue.",
+    deliverable: "A clear quarterly plan, monthly strategy sessions, and one team accountable for turning your marketing into booked revenue.",
+    href: "/services/strategy",
+    hrefLabel: "Strategy",
   },
 ];
 
@@ -101,7 +106,7 @@ export default function Home() {
 
         {/* Hero + Scan Tool */}
         <HomeHero />
-        <FloatingCTA />
+        <FloatingCTA label="Free audit" />
 
         {/* 2nd section: reasons owners hire us, paired with the looping phone. */}
         <WhyOwnersHireUs />
@@ -109,161 +114,75 @@ export default function Home() {
         {/* Outcome pillars: what the work is actually for (calls / jobs / time). */}
         <OutcomePillars />
 
-        {/* What We Score */}
+        {/* What we do: the six services, matched 1:1 to the nav dropdown */}
         <section>
           <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
             <ScrollReveal>
-              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What we score</div>
-              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
-                Six categories. Most businesses are failing at least three.
+              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What we do</div>
+              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 860 }}>
+                One team for your website, local SEO, ads, and the strategy behind them.
               </h2>
-              <p style={{ marginTop: 20, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-                Every Simpl Score breaks down into six areas. Each one is graded independently. The question isn&apos;t whether you&apos;re failing. It&apos;s which ones.
+              <p style={{ marginTop: 20, maxWidth: 660, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
+                Six services that cover every part of getting found and getting booked online, from a faster website to local SEO, paid ads, and long-term organic growth. Each one ships a real deliverable you can point to, not a vague monthly retainer.
               </p>
             </ScrollReveal>
             <div style={{ marginTop: 40 }}>
-              <CategoryShowcase categories={CATEGORIES} />
+              <CategoryShowcase categories={SERVICES} />
             </div>
           </div>
         </section>
 
-        {/* Simpl Score */}
+        {/* Simpl Score + a scrollable live sample of the real audit */}
         <section data-section="simpl-score" style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
-          <ScrollReveal>
-          <div className="grid-score" style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px" }}>
-            <div>
-              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 24 }}>The Simpl Score</div>
-              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 44px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, marginBottom: 20 }}>
-                One number that tells you<br />if your online presence is working.
-              </h2>
-              <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 12 }}>
-                We scan six areas of your digital presence and grade each one. Most sites we&apos;ve scanned score between 40 and 65.
-              </p>
-              <p style={{ fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 32 }}>
-                The businesses that score higher have one thing in common: they knew where the problems were before their customers did.
-              </p>
-              <a href="/scan" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
-                Start now, free audit<span>→</span>
-              </a>
-            </div>
-            <div style={{ background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 8, overflow: "hidden", boxShadow: "0 0 40px rgba(137,207,240,0.06)" }}>
-              <div style={{ background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)", padding: "10px 16px", display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ width: 8, height: 8, borderRadius: 99, background: "#E05252", opacity: 0.6 }} />
-                <span style={{ width: 8, height: 8, borderRadius: 99, background: "#E0A852", opacity: 0.6 }} />
-                <span style={{ width: 8, height: 8, borderRadius: 99, background: "var(--ok)", opacity: 0.6 }} />
-                <span className="mono" style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginLeft: 8 }}>simpl.report</span>
-              </div>
-              <div style={{ padding: "24px 24px 28px", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-              <div style={{ position: "relative", width: 200, height: 200 }}>
-                <svg width="200" height="200" viewBox="0 0 200 200" style={{ transform: "rotate(-90deg)" }}>
-                  <circle cx="100" cy="100" r="90" fill="none" stroke="var(--rule)" strokeWidth="4" />
-                  <circle cx="100" cy="100" r="90" fill="none" stroke="var(--accent)" strokeWidth="4"
-                    strokeDasharray={2 * Math.PI * 90} strokeDashoffset={2 * Math.PI * 90 * 0.28}
-                    strokeLinecap="round" />
-                </svg>
-                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontSize: 64, fontWeight: 200, color: "var(--accent)", lineHeight: 1, letterSpacing: "-0.04em" }}>B</span>
-                  <span className="mono" style={{ fontSize: 16, color: "var(--muted)", marginTop: 4 }}>72%</span>
-                </div>
-              </div>
-              {/* Real links, not decoration: each badge goes to that category's
-                  actual deep-dive page, so this "mock" report is also doing real
-                  internal-linking work instead of being a dead-end graphic. */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, width: "100%", maxWidth: 280 }}>
-                {[
-                  { cat: "SEO", grade: "B", href: "/discoverability" },
-                  { cat: "Content", grade: "D", href: "/services/organic-growth" },
-                  { cat: "Social", grade: "B", href: "/spend" },
-                  { cat: "Website", grade: "A", href: "/performance" },
-                  { cat: "GBP", grade: "A-", href: "/services/local-seo" },
-                  { cat: "Crawl", grade: "A", href: "/discoverability" },
-                ].map((c) => (
-                  <Link key={c.cat} href={c.href} className="no-underline" style={{ textAlign: "center", padding: "8px 4px", background: "var(--bg-soft)", border: "1px solid var(--rule)", borderRadius: 4, transition: "border-color 150ms ease" }}>
-                    <div className="mono" style={{ fontSize: 10, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2 }}>{c.cat}</div>
-                    <div style={{ fontSize: 16, fontWeight: 400, color: c.grade.startsWith("D") || c.grade.startsWith("F") ? "#E0A852" : "var(--ok)" }}>{c.grade}</div>
-                  </Link>
-                ))}
-              </div>
-              {/* Top findings: the report's actual job isn't the grade, it's what
-                  the grade is hiding. Two real-shaped findings, same severity-
-                  color + fix language as the live ScanReport, so this mock isn't
-                  just a score badge, it previews the report itself. */}
-              <div style={{ width: "100%", maxWidth: 280, display: "grid", gap: 8, marginTop: 4 }}>
-                {[
-                  { severity: "#E0A852", title: "No blog or FAQ content", fix: "Add 3-5 pages targeting what customers actually search for." },
-                  { severity: "#E05252", title: "Missing schema markup", fix: "Google can't confirm your business type, hours, or service area." },
-                ].map((f) => (
-                  <div key={f.title} style={{ borderLeft: `3px solid ${f.severity}`, background: "var(--bg-soft)", padding: "8px 10px", borderRadius: "0 4px 4px 0" }}>
-                    <div style={{ fontSize: 12.5, fontWeight: 500, lineHeight: 1.35 }}>{f.title}</div>
-                    <div style={{ fontSize: 11, color: "var(--muted)", lineHeight: 1.4, marginTop: 2 }}>{f.fix}</div>
-                  </div>
-                ))}
-              </div>
-              </div>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px" }}>
+            {/* Audit sample on the left (wider), copy on the right, so the two
+                sit side by side instead of stacking. grid-score stacks them on
+                mobile. */}
+            <div className="grid-score" style={{ gridTemplateColumns: "minmax(0, 1.25fr) minmax(0, 0.75fr)" }}>
+              <ScrollReveal direction="left">
+                <AuditDemo />
+              </ScrollReveal>
+              {/* Accent-tinted card (its own colorful style, not the neutral
+                  boxes), sliding up from far below and slow. SEO-weighted (names
+                  the graded signals) and conversion-framed, pointing at the live
+                  sample instead of a button. */}
+              <SlideIn
+                from="bottom"
+                distance={120}
+                duration={1.5}
+                style={{
+                  padding: "36px 32px",
+                  borderRadius: 22,
+                  border: "1px solid rgba(137,207,240,0.32)",
+                  background: "linear-gradient(155deg, rgba(137,207,240,0.14), rgba(137,207,240,0.02) 62%)",
+                  boxShadow: "0 34px 90px -44px rgba(137,207,240,0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
+                }}
+              >
+                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 16 }}>The Simpl Score</div>
+                <h2 style={{ margin: "0 0 16px", fontSize: "clamp(24px, 2.6vw, 32px)", lineHeight: 1.15, letterSpacing: "-0.02em", fontWeight: 400 }}>
+                  One score for everything that decides whether customers <span style={{ color: "var(--accent)" }}>find you</span>.
+                </h2>
+                <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "var(--muted)" }}>
+                  We grade your website, SEO, Google Business Profile, reviews, and social presence, the signals that decide whether you show up when someone searches for what you do.
+                </p>
+                <p style={{ margin: "14px 0 0", fontSize: 15.5, lineHeight: 1.65, color: "var(--muted)" }}>
+                  Every weak spot is a customer picking a competitor instead. The report on the left is a real sample. Scroll it to see exactly what we catch.
+                </p>
+              </SlideIn>
             </div>
           </div>
-          </ScrollReveal>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
-        {/* What you get */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <ScrollReveal>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>What you get</div>
-            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 800 }}>
-              Start with a free scan. Let us know what you find.
-            </h2>
-          </ScrollReveal>
-          <p style={{ marginTop: 24, maxWidth: 640, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>
-            Most people start by scanning their site and reading the free report. Others want us to fix everything. You decide how far to go.
-          </p>
-          <div className="grid-tiers" style={{ marginTop: 40, background: "var(--rule)", border: "1px solid var(--rule)" }}>
-            {[
-              { name: "Scan", tag: "Free", desc: "See what's broken" },
-              { name: "Core", tag: "From $497/mo", desc: "Get found" },
-              { name: "Team", tag: "From $997/mo", desc: "Get booked" },
-              { name: "Pro", tag: "From $1,997/mo", desc: "Get your time back" },
-            ].map((t) => (
-              <div key={t.name} style={{ background: "var(--bg)", padding: "32px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--fg)", textTransform: "uppercase" }}>Simpl.{t.name.toLowerCase()}</div>
-                <div style={{ fontSize: 20, fontWeight: 400 }}>{t.tag}</div>
-                <div style={{ color: "var(--muted)", fontSize: 14, lineHeight: 1.4 }}>{t.desc}</div>
-              </div>
-            ))}
-          </div>
-          {/* Standalone offer: the free strategy call. The personalized
-              breakdown itself is already free the moment someone unlocks
-              their scan report, so this sits apart from the tiers as the
-              next step, a conversation, not a priced deliverable
-              (docs/funnel/OFFER_STACK.md, decided 2026-07-17). */}
-          <div style={{ marginTop: 28, display: "flex", gap: 20, alignItems: "center", flexWrap: "wrap", justifyContent: "space-between", padding: "24px 28px", border: "1px solid var(--rule)", borderRadius: 10, background: "var(--bg-soft)" }}>
-            <div style={{ maxWidth: 620 }}>
-              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>Free strategy call</div>
-              <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: "var(--muted)" }}>
-                Already unlocked your report? Get on a call and we&apos;ll walk through where leads are leaking, how you stack up against your competitors, and the exact order to fix it in.
-              </p>
-            </div>
-            <Link href="/start-now" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "12px 20px", fontSize: 13.5, fontWeight: 700, borderRadius: 6, textDecoration: "none", whiteSpace: "nowrap" }}>
-              Book your call →
-            </Link>
-          </div>
-
-          <div style={{ marginTop: 40, textAlign: "center" }}>
-            <Link href="/start" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--fg)", textDecoration: "none", borderBottom: "1px solid var(--fg)", paddingBottom: 4, fontSize: 15 }}>
-              Find the right fit<span>→</span>
-            </Link>
-          </div>
-        </section>
+        {/* Founder + principles, moved into the old "what you get" slot. The
+            tiers (and pricing) now live only on the /start pricing page. */}
+        <TeamSection />
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
         {/* Section 4 reserved for testimonials + reviews (goes live once we have
             real ones; never fabricated). See docs/standards/TRUST_SIGNALS.md. */}
-
-        {/* What we stand for + a real team: the beliefs block is now merged
-            into the team section (one combined section, not two). */}
-        <TeamSection />
 
         {/* Trust */}
         <section style={{ borderBottom: "1px solid var(--rule)" }}>

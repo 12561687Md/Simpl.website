@@ -28,8 +28,8 @@ const SERVICE_GROUPS = [
 ];
 
 const ALSO_AVAILABLE = [
-  { label: "Google Business Profile", desc: "from $197/mo" },
-  { label: "AI Response/Quoting Agent", desc: "$147 to $447/mo" },
+  { label: "Google Business Profile", desc: "Own the local map" },
+  { label: "AI Response/Quoting Agent", desc: "Never miss a lead" },
   { label: "Free Strategy Call", desc: "Free, once you've unlocked your scan" },
 ];
 

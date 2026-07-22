@@ -1,3 +1,4 @@
+import Image from "next/image";
 import ScrollReveal from "./ScrollReveal";
 import { StaggerReveal, StaggerItem } from "./ScrollReveal";
 
@@ -6,28 +7,20 @@ import { StaggerReveal, StaggerItem } from "./ScrollReveal";
 const BELIEFS = [
   {
     title: "You should never be the last to know.",
-    body: "When your listing drops or your form breaks, you find out from us, not from a slow month. That is the entire point of watching it.",
+    body: "When your listing drops or a form breaks, you hear it from us first, not from a slow month.",
   },
   {
     title: "Winning beats being busy.",
-    body: "Other agencies report activity: posts published, hours logged. We report one thing, whether you are winning more customers than last month. Everything starts there.",
+    body: "We don't report posts published or hours logged. We report whether you're winning more customers than last month.",
   },
   {
-    title: "You're paying for results, not overhead.",
-    body: "No account manager, no sales floor, no office lease baked into your invoice. That is why the price looks the way it does, and it is the only reason.",
+    title: "You pay for results, not overhead.",
+    body: "No account manager, no sales floor, no office lease in your invoice. That's the only reason the price looks the way it does.",
   },
   {
     title: "We'd rather show you what's broken.",
-    body: "Every conversation starts with your real score and the real gaps. If there's nothing worth fixing, we'll tell you that too.",
+    body: "Every conversation starts with your real score and the real gaps. If there's nothing worth fixing, we'll say so.",
   },
-];
-
-// Real, unfabricated numbers, pulled from the same figures used elsewhere on
-// the site (results/page.tsx) rather than invented for this card.
-const COVERAGE = [
-  { n: "24/7", l: "continuous monitoring" },
-  { n: "<4h", l: "typical reply time" },
-  { n: "6", l: "areas watched, every scan" },
 ];
 
 export default function TeamSection() {
@@ -37,67 +30,78 @@ export default function TeamSection() {
         style={{
           maxWidth: 1120,
           margin: "0 auto",
-          padding: "104px 32px",
+          padding: "88px 32px",
           display: "grid",
-          gridTemplateColumns: "minmax(0, 0.85fr) minmax(0, 1.15fr)",
+          gridTemplateColumns: "minmax(0, 0.8fr) minmax(0, 1.2fr)",
           gap: 64,
           alignItems: "center",
         }}
         className="grid-founder"
       >
-        {/* Coverage card: real numbers instead of a person's face, deliberately —
-            Simpl is a small team, not a solo act, and a stat is honest where a
-            stock-feeling headshot placeholder wasn't earning trust. */}
+        {/* Founder photo: a real face is the least corny, most trust-building
+            thing this section can hold. Drop the headshot at
+            public/team/matt-dubois.jpg. */}
         <ScrollReveal direction="right">
-          <div
+          <figure
             className="surface-card"
             style={{
+              margin: "0 auto",
+              maxWidth: 320,
+              width: "100%",
+              position: "relative",
+              aspectRatio: "4 / 5",
               borderRadius: 16,
               overflow: "hidden",
-              padding: "36px 32px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 28,
-              background:
-                "radial-gradient(120% 90% at 50% 0%, rgba(137,207,240,0.06), transparent 55%), linear-gradient(180deg, var(--bg-elev-2), var(--bg-elev))",
+              border: "1px solid var(--rule)",
+              boxShadow: "0 30px 80px -40px rgba(0,0,0,0.8)",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span className="pulse-dot" style={{ width: 7, height: 7, borderRadius: 999, background: "var(--accent)" }} />
-              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)" }}>
-                The Simpl team
-              </div>
-            </div>
-            <div style={{ display: "grid", gap: 20 }}>
-              {COVERAGE.map((c) => (
-                <div key={c.l} style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-                  <span className="mono" style={{ fontSize: 28, fontWeight: 300, color: "var(--fg)", minWidth: 64 }}>{c.n}</span>
-                  <span style={{ fontSize: 14.5, color: "var(--muted)", lineHeight: 1.4 }}>{c.l}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+            <Image
+              src="/team/matt-dubois.png"
+              alt="Matt DuBois, founder and CEO of Simpl"
+              fill
+              sizes="(max-width: 900px) 100vw, 380px"
+              style={{ objectFit: "cover", objectPosition: "50% 18%" }}
+            />
+            {/* Scrim sits over the dark blazer at the bottom of the frame, so the
+                white caption stays legible without dimming his face. */}
+            <figcaption
+              style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                padding: "56px 24px 22px",
+                background: "linear-gradient(180deg, transparent, rgba(0,0,0,0.78))",
+                display: "flex",
+                alignItems: "center",
+                gap: 11,
+              }}
+            >
+              <span className="pulse-dot" style={{ width: 8, height: 8, borderRadius: 999, background: "var(--accent)", flexShrink: 0 }} />
+              <span style={{ display: "grid", gap: 2 }}>
+                <span style={{ fontSize: 17, fontWeight: 600, color: "#fff", letterSpacing: "-0.01em" }}>Matt DuBois</span>
+                <span className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.72)" }}>
+                  Founder &amp; CEO
+                </span>
+              </span>
+            </figcaption>
+          </figure>
         </ScrollReveal>
 
-        {/* Copy + beliefs */}
+        {/* What we stand for: the mission folded into one short intro, then the
+            principles. Kept tight so the section doesn't eat the scroll. */}
         <div>
           <ScrollReveal>
-            <div className="eyebrow" style={{ marginBottom: 26 }}>A real team, not a portal</div>
-            <h2 style={{ margin: 0, fontSize: "clamp(26px, 3.4vw, 42px)", lineHeight: 1.12, letterSpacing: "-0.02em", fontWeight: 500, maxWidth: 560 }}>
-              You&apos;ll deal with the team doing the work.
-            </h2>
-            <p style={{ marginTop: 20, maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)" }}>
-              Simpl isn&apos;t a call center reading from a script. It&apos;s a small, hands-on team that answers your emails and owns the outcome. Here&apos;s what we stand for, and what that means for you.
+            <div className="eyebrow" style={{ marginBottom: 20 }}>What we stand for</div>
+            <p style={{ margin: 0, maxWidth: 540, fontSize: 17, lineHeight: 1.6, color: "var(--muted)" }}>
+              Simpl was born inside the digital marketing industry, watching owners overpay for services they couldn&apos;t measure and agencies bill for busywork. We built the opposite: one team, one honest number, and an obsession with making it radically simpler. Plain and simpl.
             </p>
           </ScrollReveal>
-
-          <div className="mono" style={{ marginTop: 34, marginBottom: 4, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)" }}>
-            What we stand for
-          </div>
-          <StaggerReveal each={0.1} style={{ marginTop: 8, display: "grid", gap: 4 }}>
+          <StaggerReveal each={0.09} style={{ marginTop: 28, display: "grid", gap: 2 }}>
             {BELIEFS.map((b) => (
               <StaggerItem key={b.title}>
-                <div style={{ padding: "20px 0", borderTop: "1px solid var(--rule)" }}>
+                <div style={{ padding: "16px 0", borderTop: "1px solid var(--rule)" }}>
                   <h3 style={{ margin: "0 0 6px", fontSize: 17, fontWeight: 500, letterSpacing: "-0.01em" }}>{b.title}</h3>
                   <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "var(--muted)", maxWidth: 560 }}>{b.body}</p>
                 </div>

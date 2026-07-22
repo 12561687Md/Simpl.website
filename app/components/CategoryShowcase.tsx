@@ -7,21 +7,15 @@ import { RippleLink } from "@/components/ui/ripple-link";
 
 export type Category = {
   name: string;
-  grade: string;
+  /** Short outcome tag shown on the left card. */
+  tag: string;
   hook: string;
   detail: string;
-  fix: string;
-  /** Deep-dive or service page this category maps to. */
+  /** The concrete deliverable: proof this is a real service, not a vague retainer. */
+  deliverable: string;
+  /** Service page this maps to. */
   href: string;
   hrefLabel: string;
-};
-
-const GRADE_COLOR: Record<string, string> = {
-  A: "var(--ok)",
-  B: "var(--ok)",
-  C: "#E0A852",
-  D: "#E05252",
-  F: "#E05252",
 };
 
 function Arrow({ dir = "right" }: { dir?: "left" | "right" }) {
@@ -75,8 +69,8 @@ export default function CategoryShowcase({ categories }: { categories: Category[
                 </span>
                 <span style={{ fontSize: 15, fontWeight: on ? 500 : 400 }}>{c.name}</span>
               </span>
-              <span className="mono" style={{ fontSize: 10, letterSpacing: "0.08em", color: GRADE_COLOR[c.grade] || "var(--muted)", whiteSpace: "nowrap" }}>
-                Most sites: {c.grade}
+              <span className="mono" style={{ fontSize: 10, letterSpacing: "0.08em", color: on ? "var(--accent)" : "var(--muted)", whiteSpace: "nowrap" }}>
+                {c.tag}
               </span>
             </button>
           );
@@ -94,29 +88,36 @@ export default function CategoryShowcase({ categories }: { categories: Category[
             exit={reduce ? undefined : { opacity: 0, y: -6 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
           >
-            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--fg)", marginBottom: 14 }}>
+            <h3 className="mono" style={{ margin: "0 0 14px", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--fg)", fontWeight: 400 }}>
               {current.name}
-            </div>
+            </h3>
             <p style={{ margin: 0, fontSize: 20, lineHeight: 1.35, fontWeight: 500 }}>{current.hook}</p>
             <p style={{ margin: "10px 0 0", fontSize: 17, lineHeight: 1.5, color: "var(--fg)" }}>{current.detail}</p>
 
-            {/* Word-by-word reveal, ported from the 21st pattern. Short copy
-                only: one element per word, so this never runs on long text. */}
-            <p style={{ margin: "22px 0 0", fontSize: 15, lineHeight: 1.6, color: "var(--muted)" }}>
-              {reduce
-                ? current.fix
-                : current.fix.split(" ").map((word, i) => (
-                    <motion.span
-                      key={`${current.name}-${i}`}
-                      initial={{ filter: "blur(6px)", opacity: 0, y: 3 }}
-                      animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-                      transition={{ duration: 0.2, ease: "easeOut", delay: 0.012 * i }}
-                      style={{ display: "inline-block" }}
-                    >
-                      {word}&nbsp;
-                    </motion.span>
-                  ))}
-            </p>
+            {/* "What you get" = the concrete deliverable, our proof this is a
+                real service and not a vague retainer. Word-by-word reveal
+                (ported from the 21st pattern): one element per word, short copy
+                only, so this never runs on long text. */}
+            <div style={{ margin: "22px 0 0" }}>
+              <div className="mono" style={{ fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>
+                What you get
+              </div>
+              <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "var(--muted)" }}>
+                {reduce
+                  ? current.deliverable
+                  : current.deliverable.split(" ").map((word, i) => (
+                      <motion.span
+                        key={`${current.name}-${i}`}
+                        initial={{ filter: "blur(6px)", opacity: 0, y: 3 }}
+                        animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2, ease: "easeOut", delay: 0.012 * i }}
+                        style={{ display: "inline-block" }}
+                      >
+                        {word}&nbsp;
+                      </motion.span>
+                    ))}
+              </p>
+            </div>
           </motion.div>
         </AnimatePresence>
 

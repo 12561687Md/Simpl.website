@@ -78,6 +78,7 @@ export default function OutcomePillars() {
               <GlowCard glowColor="pink" className="h-full">
                 <div style={{ padding: "30px 26px 28px", display: "flex", flexDirection: "column", height: "100%" }}>
                   <WiggleIn
+                    loop
                     delay={0.25 + i * 0.14}
                     style={{
                       width: 46,

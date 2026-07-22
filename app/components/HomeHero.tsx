@@ -86,38 +86,8 @@ export default function HomeHero() {
             it's the root description of Simpl (see .agents/product-marketing.md)
             and needs a permanent home further down the page. */}
 
-        <div style={{ marginTop: 40 }}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: 14,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 12,
-            }}
-          >
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector("[data-section='simpl-score']")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              style={{
-                color: "var(--accent)",
-                textDecoration: "none",
-                borderBottom: "1px solid var(--accent)",
-                paddingBottom: 1,
-                fontSize: 11,
-              }}
-            >
-              How it works ↓
-            </a>
-          </div>
-
+        <div style={{ marginTop: 70 }}>{/* was 40 + ~30px reclaimed from the
+            removed "How it works" label, so the hero keeps its original height */}
           <div style={{ maxWidth: 660, margin: "0 auto", textAlign: "left", position: "relative" }}>
             <AnimatePresence mode="wait" initial={false}>
               {urlMode ? (
@@ -162,7 +132,7 @@ export default function HomeHero() {
                       assumes they know it; asking for their business name
                       assumes nothing, and the listing hands us the domain
                       anyway. */}
-                  <BusinessSearch onSelect={startAudit} autoFocus movingBorder />
+                  <BusinessSearch onSelect={startAudit} autoFocus />
 
                   {/* Reassurance sits directly under the input, where the
                       hesitation is. Worded to stay true after the email gate:
