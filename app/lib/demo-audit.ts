@@ -150,11 +150,43 @@ export const DEMO_BOARD: SerpBoard = {
         { title: "Wildgrove Landscaping", domain: "wildgrovelandscaping.com", rank: 14, is_you: true },
       ],
     },
+    {
+      keyword: "hardscaping raleigh nc",
+      your_maps_rank: 4,
+      your_organic_rank: 6,
+      maps: [
+        { title: "Larksfield Landscaping", rank: 1, rating: 4.8, reviews: 206, is_you: false },
+        { title: "Fernway Outdoor", rank: 2, rating: 4.6, reviews: 132, is_you: false },
+        { title: "Thornhill Lawn & Landscape", rank: 3, rating: 4.7, reviews: 171, is_you: false },
+        { title: "Wildgrove Landscaping", rank: 4, rating: 4.6, reviews: 38, is_you: true },
+      ],
+      organic: [
+        { title: "Hardscaping & Patios in Raleigh", domain: "fernwayoutdoor.com", rank: 1, is_you: false },
+        { title: "Retaining Walls & Pavers, Raleigh NC", domain: "larksfieldlandscaping.com", rank: 3, is_you: false },
+        { title: "Wildgrove Landscaping | Hardscaping", domain: "wildgrovelandscaping.com", rank: 6, is_you: true },
+      ],
+    },
+    {
+      keyword: "paver patio raleigh",
+      your_maps_rank: null,
+      your_organic_rank: 11,
+      maps: [
+        { title: "Thornhill Lawn & Landscape", rank: 1, rating: 4.7, reviews: 171, is_you: false },
+        { title: "Larksfield Landscaping", rank: 2, rating: 4.8, reviews: 206, is_you: false },
+        { title: "Fernway Outdoor", rank: 3, rating: 4.6, reviews: 132, is_you: false },
+      ],
+      organic: [
+        { title: "Paver Patio Installation, Raleigh", domain: "thornhilllawn.com", rank: 1, is_you: false },
+        { title: "Wildgrove Landscaping", domain: "wildgrovelandscaping.com", rank: 11, is_you: true },
+      ],
+    },
   ],
   keyword_ideas: [
     { keyword: "landscaping raleigh nc", search_volume: 720, competition: "HIGH" },
     { keyword: "lawn care service raleigh", search_volume: 480, competition: "MEDIUM" },
-    { keyword: "paver patio installation raleigh", search_volume: 160, competition: "MEDIUM" },
+    { keyword: "landscape design raleigh nc", search_volume: 260, competition: "MEDIUM" },
     { keyword: "backyard landscaping ideas raleigh", search_volume: 190, competition: "LOW" },
+    { keyword: "paver patio installation raleigh", search_volume: 160, competition: "MEDIUM" },
+    { keyword: "retaining wall installation raleigh", search_volume: 110, competition: "LOW" },
   ],
 };
