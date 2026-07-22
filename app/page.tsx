@@ -150,6 +150,7 @@ export default function Home() {
                 from="bottom"
                 distance={120}
                 duration={1.5}
+                className="score-copy-card"
                 style={{
                   padding: "36px 32px",
                   borderRadius: 22,
@@ -166,7 +167,7 @@ export default function Home() {
                   We grade your website, SEO, Google Business Profile, reviews, and social presence, the signals that decide whether you show up when someone searches for what you do.
                 </p>
                 <p style={{ margin: "14px 0 0", fontSize: 15.5, lineHeight: 1.65, color: "var(--muted)" }}>
-                  Every weak spot is a customer picking a competitor instead. The report on the left is a real sample. Scroll it to see exactly what we catch.
+                  Every weak spot is a customer picking a competitor instead. This is a real sample report, scroll through it to see exactly what we catch.
                 </p>
               </SlideIn>
             </div>

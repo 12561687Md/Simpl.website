@@ -44,14 +44,16 @@ export default function AuditDemo() {
       {/* Scroll viewport: real report inside a fixed window. */}
       <div style={{ position: "relative" }}>
         <div
+          className="audit-demo-scroll"
           onScroll={(e) => setScrolled((e.target as HTMLDivElement).scrollTop > 40)}
-          style={{ height: 620, overflowY: "auto", overflowX: "hidden", WebkitOverflowScrolling: "touch" }}
+          style={{ overflowY: "auto", overflowX: "hidden", WebkitOverflowScrolling: "touch" }}
         >
           {/* Horizontal padding so the report breathes, and a slight zoom-down
-              so it isn't squished in the narrow column (zoom keeps the scroll
-              intact, and the extra effective width stops the masthead wrapping,
-              which is what was isolating the logo at the top). */}
-          <div style={{ padding: "22px 28px 0", zoom: 0.85 }}>
+              so it isn't squished in the narrow desktop column (zoom keeps the
+              scroll intact, and the extra effective width stops the masthead
+              wrapping, which was isolating the logo at the top). On mobile the
+              zoom drops to 1 and padding tightens (see .audit-demo-report). */}
+          <div className="audit-demo-report">
             <ScanReport place={DEMO_PLACE} result={DEMO_RESULT} board={DEMO_BOARD} teaser={false} />
           </div>
         </div>

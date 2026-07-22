@@ -551,7 +551,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   font-weight: 600;
 }
 
+/* Audit demo report: scaled down + padded inside the narrow desktop column; on
+   mobile it fills the phone width at full scale with tighter padding. */
+.audit-demo-report { padding: 22px 28px 0; zoom: 0.85; }
+.audit-demo-scroll { height: 620px; }
+
 @media (max-width: 768px) {
+  .audit-demo-report { padding: 14px 12px 0 !important; zoom: 1 !important; }
+  .audit-demo-scroll { height: 460px !important; }
+  .score-copy-card { padding: 26px 22px !important; }
   .grid-categories { grid-template-columns: 1fr !important; }
   .grid-score { grid-template-columns: 1fr !important; gap: 32px !important; }
   .grid-tiers { grid-template-columns: repeat(2, 1fr) !important; }
