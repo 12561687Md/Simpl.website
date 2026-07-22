@@ -11,7 +11,7 @@ import type { Finding, PlaceDetails, ScanResult, SerpBoard, SerpSnapshot, Keywor
  * callout, each with a "how to fix / why it matters" dropdown at the close.
  *
  * Own type system (--font-report-display/body/mono, loaded in layout.tsx)
- * rather than the site's Inter/JetBrains pairing — the reference's Space
+ * rather than the site's Inter/JetBrains pairing, the reference's Space
  * Grotesk + IBM Plex trio, on purpose: this is a distinct deliverable
  * document, not another marketing page, same as the artifact was a
  * standalone file.
@@ -174,7 +174,7 @@ function Pill({ color, children }: { color: string; children: React.ReactNode })
 
 /** One keyword's live SERP: a collapsible row showing the real Google Maps
  *  pack and organic results a searcher sees, with the business highlighted.
- *  This is the Owner.com "how you're doing online" board — every row real,
+ *  This is the Owner.com "how you're doing online" board, every row real,
  *  location-accurate, pulled live at scan time. */
 function SerpBoardRow({ snap }: { snap: SerpSnapshot }) {
   const topMap = snap.maps.find((m) => !m.is_you && m.rank === Math.min(...snap.maps.filter((x) => x.rank != null).map((x) => x.rank as number)));
@@ -221,7 +221,7 @@ function SerpBoardRow({ snap }: { snap: SerpSnapshot }) {
         <span aria-hidden="true" style={{ ...rmono, fontSize: 14, color: "var(--accent)" }}>+</span>
       </summary>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, padding: "4px 16px 18px" }} className="grid-audit-serp">
-        {/* Maps pack — the results that get the clicks */}
+        {/* Maps pack, the results that get the clicks */}
         <div>
           <div style={{ ...rmono, fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 9 }}>
             Google Maps · top 3
@@ -236,7 +236,7 @@ function SerpBoardRow({ snap }: { snap: SerpSnapshot }) {
             )) : <div style={{ fontSize: 12.5, color: "var(--muted)" }}>No local pack for this term.</div>}
           </div>
         </div>
-        {/* Organic — the classic blue links */}
+        {/* Organic, the classic blue links */}
         <div>
           <div style={{ ...rmono, fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 9 }}>
             Google Search · {snap.your_organic_rank ? `you're #${snap.your_organic_rank}` : "you're unranked"}
@@ -285,7 +285,7 @@ function SerpBoard({
     return (
       <div style={{ border: "1px solid var(--rule)", borderRadius: 10, background: "var(--bg-soft)", padding: "20px 22px" }}>
         <p style={{ fontSize: 13.5, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>
-          No competitive search board yet — this business doesn&apos;t rank for enough non-branded local terms to build one.
+          No competitive search board yet, this business doesn&apos;t rank for enough non-branded local terms to build one.
           That&apos;s itself the finding: you&apos;re invisible for the searches that bring new customers, only findable if
           someone already knows your name.
         </p>
@@ -299,11 +299,11 @@ function SerpBoard({
       </div>
       {/* Reference-point transparency: local rankings genuinely shift with the
           searcher's exact location, so we say plainly where these were measured
-          from. Preempts "these don't match what I see" — a customer three towns
+          from. Preempts "these don't match what I see", a customer three towns
           over sees a different pack, and that's expected, not an error. */}
       <p style={{ ...rmono, fontSize: 10.5, color: "var(--faint, var(--muted))", letterSpacing: "0.02em", marginTop: 12, lineHeight: 1.6 }}>
         Live Google Maps + Search results{location ? `, as a customer searching from ${location} sees them` : ""}. Local
-        rankings shift with the searcher&apos;s exact location — your own view varies, this is the reference point.
+        rankings shift with the searcher&apos;s exact location, your own view varies, this is the reference point.
       </p>
       {opportunities.length > 0 && (
         <div style={{ marginTop: 22 }}>
@@ -415,7 +415,7 @@ export default function ScanReport({
   // The real local-pack competitors, aggregated across every keyword board:
   // the named businesses (with their star ratings) that outrank this business
   // in at least one local search. This is the Owner.com "you're ranking below
-  // N competitors" list — every name and rating is real off the live Maps
+  // N competitors" list, every name and rating is real off the live Maps
   // results, deduped, ranked by how high and how often they beat the business.
   const localCompetitors = (() => {
     const agg = new Map<string, { name: string; rating: number | null; bestRank: number | null; beats: boolean; count: number }>();
@@ -441,7 +441,7 @@ export default function ScanReport({
   // findings from this exact scan); the per-issue dollar value is a
   // documented, conservative estimate of a single missed/mishandled local-
   // service lead, used only to size the figure. It's never presented as a
-  // measurement of this business's actual traffic or revenue — hence "~"
+  // measurement of this business's actual traffic or revenue, hence "~"
   // and "estimated" in the copy around it, same honesty line the rest of
   // this report holds (real findings, escalated framing, never an invented
   // fact).
@@ -477,8 +477,8 @@ export default function ScanReport({
       <div style={{ borderBottom: "1px solid var(--rule)", paddingBottom: 30, marginBottom: 48 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 20, flexWrap: "wrap" }}>
           {/* The full wordmark, not inverted: `inverted` inks the pulse for
-              light surfaces, and on this dark page it vanished — leaving
-              just the dot, which read as ". Simpl". Sized up from 24 — this
+              light surfaces, and on this dark page it vanished, leaving
+              just the dot, which read as ". Simpl". Sized up from 24, this
               is the masthead of a document, the logo carries the page. */}
           <SimplWordmark size={34} />
           <div style={{ ...rmono, fontSize: 10.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)", textAlign: "right", lineHeight: 1.9 }}>
@@ -527,7 +527,7 @@ export default function ScanReport({
         </div>
       </div>
 
-      {/* Real photos off the listing, up front — color and proof before a
+      {/* Real photos off the listing, up front, color and proof before a
           single number shows up. Same treatment as the theater carousel
           (thin accent-blue frame, cover-fit, no gaps) so the report and the
           scan read as one system. */}
@@ -552,12 +552,12 @@ export default function ScanReport({
         </div>
       )}
 
-      {/* Hero impact — the first thing after the masthead, on purpose. The
+      {/* Hero impact, the first thing after the masthead, on purpose. The
           nine numbered sections below restate all of this in more depth,
           but urgency has to land in the first few seconds or it never
           lands at all. Both figures are grounded in real data from this
           scan: the dollar estimate is sized off the real critical+warning
-          count (never a source-less number — see the comment above
+          count (never a source-less number, see the comment above
           `estimatedMonthlyImpact`), and the market-position box names the real
           local-pack competitors (with their real star ratings) that outrank
           this business, aggregated live from the SERP board. Ungated on
@@ -590,7 +590,7 @@ export default function ScanReport({
             <>
               <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "var(--ok)", lineHeight: 1 }}>$0</div>
               <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 0", lineHeight: 1.5 }}>
-                Nothing critical found on this scan — that's rare. Most businesses we scan have at least one leak.
+                Nothing critical found on this scan, that's rare. Most businesses we scan have at least one leak.
               </p>
             </>
           )}
@@ -652,7 +652,7 @@ export default function ScanReport({
         </Box>
       </div>
 
-      {/* 01 — Executive summary */}
+      {/* 01, Executive summary */}
       <section style={{ marginBottom: 52 }}>
         <SectionHead n="01" title="Executive summary" />
         {result.total_checks != null && (
@@ -716,7 +716,7 @@ export default function ScanReport({
             <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 9, lineHeight: 1.4 }}>
               {criticalCount > 0
                 ? `critical issue${criticalCount === 1 ? "" : "s"} costing you leads right now`
-                : "critical issues — none, nothing is actively broken"}
+                : "critical issues, none, nothing is actively broken"}
             </div>
           </div>
           <div style={{ border: "1px solid var(--rule)", borderRadius: 9, background: "var(--bg-soft)", padding: "18px 18px" }}>
@@ -732,15 +732,15 @@ export default function ScanReport({
           title="How to fix this"
           points={[
             weak.length > 0
-              ? `Start with ${weak.map((g) => CATEGORY_SHORT[g.name] ?? g.name).join(", then ")} — that's your weak-to-strong order, and it's the order a customer runs into you in.`
-              : "Every category is holding — the work now is keeping it there, not fixing a hole.",
-            `You have ${result.critical_count} critical finding${result.critical_count === 1 ? "" : "s"} and ${result.warning_count} warning${result.warning_count === 1 ? "" : "s"}. A critical blocks a sale in progress; a warning slows one down — clear critical first, always.`,
-            `Your score is ${pct}. It moves as fast as the fixes ship — rescan after each change to watch it climb.`,
+              ? `Start with ${weak.map((g) => CATEGORY_SHORT[g.name] ?? g.name).join(", then ")}, that's your weak-to-strong order, and it's the order a customer runs into you in.`
+              : "Every category is holding, the work now is keeping it there, not fixing a hole.",
+            `You have ${result.critical_count} critical finding${result.critical_count === 1 ? "" : "s"} and ${result.warning_count} warning${result.warning_count === 1 ? "" : "s"}. A critical blocks a sale in progress; a warning slows one down, clear critical first, always.`,
+            `Your score is ${pct}. It moves as fast as the fixes ship, rescan after each change to watch it climb.`,
           ]}
         />
       </section>
 
-      {/* 02 — Presence assessment */}
+      {/* 02, Presence assessment */}
       <section style={{ marginBottom: 52 }}>
         <SectionHead
           n="02"
@@ -783,19 +783,19 @@ export default function ScanReport({
             strong.length > 0 && weak.length > 0
               ? `The gap between your best (${CATEGORY_SHORT[strong[0].name] ?? strong[0].name}, ${strong[0].pct}) and your worst (${CATEGORY_SHORT[weak[0].name] ?? weak[0].name}, ${weak[0].pct}) is exactly what a customer notices when they cross-check you across channels.`
               : "The gap between your best and worst channel is exactly what a customer notices when they cross-check you.",
-            "One strong channel doesn't cover for a weak one — a customer who lands on a good website then finds a dead Google profile hesitates anyway.",
+            "One strong channel doesn't cover for a weak one, a customer who lands on a good website then finds a dead Google profile hesitates anyway.",
             weak.length > 0
               ? `Aim for no channel below a C. Right now ${weak.length} ${weak.length === 1 ? "is" : "are"} dragging the whole score down disproportionately.`
-              : "Aim to keep every channel at a C or better — a single critical category drags the whole score down disproportionately.",
+              : "Aim to keep every channel at a C or better, a single critical category drags the whole score down disproportionately.",
           ]}
         />
       </section>
 
-      {/* 03 — Findings by channel. The single home for every finding: one per
+      {/* 03, Findings by channel. The single home for every finding: one per
           category, grouped, worst-first, each category collapsible so the
           section is short by default and deep on demand. This replaces the old
           thin diagnostics table AND the separate "findings in full" dump that
-          made the report twice as long — nothing is listed twice now. */}
+          made the report twice as long, nothing is listed twice now. */}
       <section style={{ marginBottom: 52 }}>
         <SectionHead
           n="03"
@@ -836,7 +836,7 @@ export default function ScanReport({
                     g.findings.map((f, i) => <FindingRow key={`${g.name}-${f.title}-${i}`} f={f} index={i} />)
                   ) : (
                     <div style={{ fontSize: 13.5, color: "var(--muted)", padding: "4px 0 6px" }}>
-                      Nothing wrong here — this channel is doing its job.
+                      Nothing wrong here, this channel is doing its job.
                     </div>
                   )}
                 </div>
@@ -853,15 +853,15 @@ export default function ScanReport({
           title="How to fix this"
           points={[
             weak.length > 0
-              ? `Start with ${weak[0].name} (${weak[0].grade}) — it's your lowest grade, and it's the channel actively costing you the most right now.`
-              : "No channel is critical — keep every one from slipping by monitoring, not just fixing once.",
-            `“Critical” findings are turning customers away today; “warning” findings slow them down. You have ${result.critical_count} critical and ${result.warning_count} warning — clear the critical ones first.`,
+              ? `Start with ${weak[0].name} (${weak[0].grade}), it's your lowest grade, and it's the channel actively costing you the most right now.`
+              : "No channel is critical, keep every one from slipping by monitoring, not just fixing once.",
+            `“Critical” findings are turning customers away today; “warning” findings slow them down. You have ${result.critical_count} critical and ${result.warning_count} warning, clear the critical ones first.`,
             "Presence decays quietly: a review goes unanswered, a page goes stale, hours drift out of date. Rescan after each fix to watch the grade move.",
           ]}
         />
       </section>
 
-      {/* 04 — Google Business Profile */}
+      {/* 04, Google Business Profile */}
       {gbp && (
         <section style={{ marginBottom: 52, ...gatedStyle }}>
           <SectionHead
@@ -869,8 +869,8 @@ export default function ScanReport({
             title="Google Business Profile"
             lead="The profile is the first thing a customer checks after a referral or a search. Right now it's either backing up what you actually do, or contradicting it."
           />
-          {/* Two boxes with matching scaffolding — headline stat, divider,
-              uppercase sublabel, content — so they read as a symmetric pair.
+          {/* Two boxes with matching scaffolding, headline stat, divider,
+              uppercase sublabel, content, so they read as a symmetric pair.
               LEFT = the completeness scorecard: review-count hero + the ✓/×
               signals in two columns (fills the box width). RIGHT = the real
               profile content Google shows a customer: listed category + status,
@@ -901,7 +901,7 @@ export default function ScanReport({
               {/* Mirrors the LEFT box's rhythm exactly: a headline (the listed
                   category, standing in for the review-count stat) + a one-line
                   status, then the same divider and uppercase sublabel, then the
-                  content. Real Places data throughout — the customer's-eye view
+                  content. Real Places data throughout, the customer's-eye view
                   of the listing. */}
               <div style={{ ...display, fontSize: "clamp(24px, 3.2vw, 34px)", fontWeight: 700, lineHeight: 1, letterSpacing: "-0.02em", color: profile?.primaryType ? "var(--fg)" : "#E0A852" }}>
                 {profile?.primaryType ?? "No category set"}
@@ -949,20 +949,20 @@ export default function ScanReport({
             title="How to fix this"
             points={[
               place.reviewCount != null && place.reviewCount < 25
-                ? `You have ${place.reviewCount} review${place.reviewCount === 1 ? "" : "s"}. A simple ask at the end of every job, done consistently, is the fastest way to close that gap — reviews are the single biggest local-pack ranking factor you control.`
-                : `${place.reviewCount ?? 0} reviews is real credibility — protect it by replying to every new one, good or bad. Google and customers both read the replies.`,
+                ? `You have ${place.reviewCount} review${place.reviewCount === 1 ? "" : "s"}. A simple ask at the end of every job, done consistently, is the fastest way to close that gap, reviews are the single biggest local-pack ranking factor you control.`
+                : `${place.reviewCount ?? 0} reviews is real credibility, protect it by replying to every new one, good or bad. Google and customers both read the replies.`,
               (profile?.hours?.length ?? 0) === 0
                 ? "Set your hours today. A profile with no hours reads as “maybe closed” and quietly loses walk-ins and calls before a customer ever reaches you."
                 : "Keep hours, photos, and posts current. An active-looking profile outranks a stale one, even at the same review count.",
               !place.website
-                ? "Link your website on the profile — right now there's no path from your Google listing to your site."
+                ? "Link your website on the profile, right now there's no path from your Google listing to your site."
                 : "Every attribute Google can show (services, price, options) is another reason a customer picks you from the pack. Fill in what's still blank.",
             ]}
           />
         </section>
       )}
 
-      {/* 05 — Search opportunity */}
+      {/* 05, Search opportunity */}
       <section style={{ marginBottom: 52, ...gatedStyle }}>
         <SectionHead
           n="05"
@@ -987,21 +987,21 @@ export default function ScanReport({
               ? (() => {
                   const unranked = boardSnapshots.find((s) => !s.your_maps_rank);
                   const behind = boardSnapshots.find((s) => s.your_maps_rank && s.your_maps_rank > 3);
-                  if (unranked) return `You don't appear at all for "${unranked.keyword}" — that's a search your customers are running right now, going straight to a competitor. A page built specifically for that term is where you start.`;
-                  if (behind) return `For "${behind.keyword}" you sit at #${behind.your_maps_rank} in the Maps pack — outside the top 3 that get almost every click. Closing that gap is the highest-value move on this page.`;
-                  return "You're in the top 3 on the terms that matter — defend it. These rankings erode the moment the page behind them or the profile goes stale.";
+                  if (unranked) return `You don't appear at all for "${unranked.keyword}", that's a search your customers are running right now, going straight to a competitor. A page built specifically for that term is where you start.`;
+                  if (behind) return `For "${behind.keyword}" you sit at #${behind.your_maps_rank} in the Maps pack, outside the top 3 that get almost every click. Closing that gap is the highest-value move on this page.`;
+                  return "You're in the top 3 on the terms that matter, defend it. These rankings erode the moment the page behind them or the profile goes stale.";
                 })()
               : "Google can't rank a page it can't understand. Missing titles, schema, and metadata decide whether you show up for the exact terms your customers type.",
             opportunityKeywords.length > 0
               ? `"${opportunityKeywords[0].keyword}" gets about ${(opportunityKeywords[0].search_volume ?? 0).toLocaleString()} searches a month and you're not competing for it. That's a page you don't have yet.`
-              : "Anything outside the top 3 is losing clicks to whoever's above you — the first result takes roughly a third of all clicks.",
-            "Local search compounds slowly and pays the longest. The businesses above you started this months ago — the only fix is to start now.",
+              : "Anything outside the top 3 is losing clicks to whoever's above you, the first result takes roughly a third of all clicks.",
+            "Local search compounds slowly and pays the longest. The businesses above you started this months ago, the only fix is to start now.",
           ]}
         />
       </section>
 
-      {/* 06 — Reputation. Only rendered when reviews are genuinely weak (few,
-          low-rated, or none) — that's the only case where it's a real problem.
+      {/* 06, Reputation. Only rendered when reviews are genuinely weak (few,
+          low-rated, or none), that's the only case where it's a real problem.
           A business with strong reviews doesn't get a section telling them
           their reviews are an issue while showing off two five-star quotes. */}
       {reviewsWeak && (
@@ -1023,7 +1023,7 @@ export default function ScanReport({
           ) : (
             <Box>
               <p style={{ fontSize: 14, color: "var(--muted)", margin: 0, lineHeight: 1.55 }}>
-                No published reviews to pull proof from yet — which is the finding. A customer with no visible reviews is
+                No published reviews to pull proof from yet, which is the finding. A customer with no visible reviews is
                 being asked to take the first risk, and most won&apos;t.
               </p>
             </Box>
@@ -1032,7 +1032,7 @@ export default function ScanReport({
             title="How to fix this"
             points={[
               place.reviewCount != null
-                ? `You have ${place.reviewCount} review${place.reviewCount === 1 ? "" : "s"}${place.rating != null ? ` at ${place.rating.toFixed(1)} stars` : ""}. In most local markets it takes 25+ recent reviews to look like the obvious choice — that gap is costing you clicks to competitors who have them.`
+                ? `You have ${place.reviewCount} review${place.reviewCount === 1 ? "" : "s"}${place.rating != null ? ` at ${place.rating.toFixed(1)} stars` : ""}. In most local markets it takes 25+ recent reviews to look like the obvious choice, that gap is costing you clicks to competitors who have them.`
                 : "Reviews are the cheapest, most trusted proof there is, and you have none visible. A five-star review outperforms a paragraph of your own marketing copy.",
               "This is a capture problem, not a quality problem. Ask at the moment of highest satisfaction, right after the job's done, and make it one tap.",
               "One detailed review beats five one-word ones. A short prompt (“what specifically made this easy?”) gets you the detail that actually persuades the next customer.",
@@ -1041,16 +1041,16 @@ export default function ScanReport({
         </section>
       )}
 
-      {/* 07 — Competitive positioning. STRICTLY local competitors (the real
+      {/* 07, Competitive positioning. STRICTLY local competitors (the real
           named businesses from the live Maps board), never organic citation
-          domains like homeadvisor.com or mapquest.com — those aren't
+          domains like homeadvisor.com or mapquest.com, those aren't
           competitors, they're directories, and listing them read as noise. */}
       {localCompetitors.length > 0 && (
         <section style={{ marginBottom: 52, ...gatedStyle }}>
           <SectionHead
             n="07"
             title="Who's beating you, and where"
-            lead="The real local businesses ranking above you when a customer searches — how strong their reputation is, and how many of your keywords they're taking."
+            lead="The real local businesses ranking above you when a customer searches, how strong their reputation is, and how many of your keywords they're taking."
           />
           <div style={{ border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
             <div style={{ ...rmono, display: "grid", gridTemplateColumns: "1.6fr 90px 1.2fr", gap: 12, padding: "12px 16px", fontSize: 9.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)", background: "var(--bg-soft)", borderBottom: "1px solid var(--rule)" }}>
@@ -1080,9 +1080,9 @@ export default function ScanReport({
           <SectionFix
             title="How to fix this"
             points={[
-              `${localCompetitors[0].name} isn't necessarily a better business than you — they're a more visible one at the moment someone searches. That's a fixable gap, not a permanent one.`,
+              `${localCompetitors[0].name} isn't necessarily a better business than you, they're a more visible one at the moment someone searches. That's a fixable gap, not a permanent one.`,
               localCompetitors[0].rating != null && place.rating != null && place.rating >= localCompetitors[0].rating
-                ? "You already match or beat them on reviews — the gap is visibility, not reputation. Close it with the search and profile fixes above and you take their spot."
+                ? "You already match or beat them on reviews, the gap is visibility, not reputation. Close it with the search and profile fixes above and you take their spot."
                 : "Close two gaps at once: get more recent reviews to match their reputation, and fix the search signals above so you rank where they do.",
             ]}
           />
