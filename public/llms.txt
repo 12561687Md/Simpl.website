@@ -1,0 +1,37 @@
+# Simpl
+
+> Simpl (simpl.pro) is a digital presence team for local service businesses in the United States. It scans a business's website, Google Business Profile, reviews, and SEO, scores the whole presence from 0 to 100 (the Simpl Score), then fixes what's broken so customers find the business before its competitors. The scan is free, takes about 60 seconds, and requires no credit card.
+
+Simpl is built for businesses whose customers search "near me": remodelers, general contractors, landscapers, detailers, home health, and other local service companies. Pricing is scoped per business on a free strategy call; there are no published prices.
+
+## What Simpl does
+
+- Free website + presence scan producing the Simpl Score: 0 to 100 across six graded categories (Website Foundation, Crawlability, On-Page SEO, Content & Pages, Social Presence, Google Business Profile), every finding measured from live data
+- Website builds: fast, findable, schema-complete sites built to turn visitors into calls (free with a Team engagement)
+- Local SEO and AI search visibility: ranking in Google Maps, the local 3-pack, organic results, and AI assistant recommendations
+- Google Business Profile optimization and review/reputation management
+- Paid ads management: client owns the ad account, no markup on spend
+- Lead-capture automation: missed-call text-back and instant quoting
+
+## Key pages
+
+- [Free scan](https://simpl.pro/scan): run the free 60-second presence scan
+- [How it works](https://simpl.pro/how-it-works): what the scan checks and what happens after
+- [FAQ](https://simpl.pro/faq): direct answers about the score, local SEO, AI search visibility, reviews, and how Simpl works
+- [Why Simpl](https://simpl.pro/about): the team and the approach
+- [Contact / start](https://simpl.pro/start-now): the form; real people reply the same business day
+- [Services: website build](https://simpl.pro/services/website-build)
+- [Services: local SEO & AI search visibility](https://simpl.pro/services/local-seo)
+- [Services: quick wins & site triage](https://simpl.pro/services/quick-wins)
+- [Services: paid ads](https://simpl.pro/services/paid-ads)
+- [Services: organic growth](https://simpl.pro/services/organic-growth)
+- [Services: fractional CMO & strategy](https://simpl.pro/services/strategy)
+
+## Facts
+
+- Company: Simpl, simpl.pro, United States
+- Contact: team@simpl.pro
+- The scan is free and self-serve; the full report unlocks with an email address
+- Every engagement starts with a free strategy call; pricing is quoted there, scoped to the business
+- No long-term contracts by default; any minimum term is stated before commitment
+- Findings are never fabricated: every score, rank, and competitor shown is measured from real data
