@@ -29,7 +29,7 @@ export default function ServicePage(p: ServicePageProps) {
           <p style={{ marginTop: 40, maxWidth: 680, fontSize: 19, lineHeight: 1.55 }}>{p.sub}</p>
           {p.subHook && <p style={{ marginTop: 16, maxWidth: 680, fontSize: 17, lineHeight: 1.55, color: "var(--muted)" }}>{p.subHook}</p>}
           <div style={{ marginTop: 47, display: "flex", flexWrap: "wrap", gap: 16 }}>
-            <Link href="/start" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "18px 28px", fontSize: 15, borderRadius: 2 }}>Start watching this surface →</Link>
+            <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "18px 28px", fontSize: 15, borderRadius: 2 }}>Start watching this surface →</Link>
             <Link href="/scan" style={{ color: "var(--fg)", textDecoration: "none", padding: "17px 26px", fontSize: 15, border: "1px solid var(--rule)", borderRadius: 2 }}>Free Audit</Link>
           </div>
         </section>

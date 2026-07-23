@@ -47,7 +47,7 @@ export default function SuccessStoriesPage() {
               See your own score first →
             </Link>
             <Link
-              href="/start"
+              href="/start-now"
               style={{ display: "inline-flex", alignItems: "center", color: "var(--fg)", padding: "14px 4px", fontSize: 14, fontWeight: 600, textDecoration: "none", borderBottom: "1px solid var(--rule)" }}
             >
               Be the first story →

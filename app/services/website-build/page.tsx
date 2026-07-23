@@ -7,7 +7,7 @@ import ScanTool from "../../components/ScanTool";
 export const metadata: Metadata = {
   title: "Custom Website Build",
   description:
-    "A fast, findable website built to turn visitors into calls. $997 to $2,997, or free when you start on Team.",
+    "A fast, findable website built to turn visitors into calls. Free when you start on Team.",
   openGraph: {
     title: "Custom Website Build | Simpl",
     description: "A fast, findable website built to turn visitors into calls. Free when you start on Team.",
@@ -93,15 +93,15 @@ export default function WebsiteBuild() {
               What it costs
             </div>
             <h2 style={{ margin: "0 0 20px", fontSize: "clamp(24px, 3.5vw, 40px)", lineHeight: 1.15, letterSpacing: "-0.02em", fontWeight: 400, maxWidth: 700 }}>
-              $997 to $2,997, scope-based. Or $0 on Team.
+              Free when you start on Team.
             </h2>
             <p style={{ maxWidth: 640, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 32 }}>
-              Start Simpl.team with a 3-month commitment and the build is free, we cover it because a client with a fast,
-              findable site is a client who sticks around. Leave before month three and the remaining minimum comes due,
-              or we invoice the build at its normal rate. Either way, you keep the site.
+              Start Simpl.team and the build is on us, we cover it because a client with a fast, findable site is a
+              client who sticks around. And the site is yours, you keep it no matter what. Standalone builds are scoped
+              to what your business actually needs, we&apos;ll quote yours on a free call, usually in under 20 minutes.
             </p>
-            <Link href="/start" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
-              See the full pricing breakdown<span>→</span>
+            <Link href="/start-now" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
+              Get your build quote, free<span>→</span>
             </Link>
           </div>
         </section>

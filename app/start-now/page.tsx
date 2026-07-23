@@ -112,10 +112,12 @@ export default function WhatAmIMissingPage() {
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "80px 32px 96px" }}>
           <div className="mono" style={{ ...label, marginBottom: 24 }}>Already know what you want?</div>
           <p style={{ margin: 0, maxWidth: 640, fontSize: 17, lineHeight: 1.6 }}>
-            Pricing is public and starts at $497 a month. Every engagement still starts with a conversation, because we won&apos;t take your money before we know we can help.
+            Tell us in the form above and say so, we&apos;ll skip the diagnosis and come back with a scoped plan and a
+            straight price for exactly what you need. Every engagement still starts with a conversation, because we
+            won&apos;t take your money before we know we can help.
           </p>
           <div style={{ marginTop: 28 }}>
-            <Link href="/start" className="tier-cta tier-cta-ghost">See pricing <span aria-hidden="true">→</span></Link>
+            <Link href="/scan" className="tier-cta tier-cta-ghost">Not sure yet? Run the free scan <span aria-hidden="true">→</span></Link>
           </div>
         </section>
       </main>

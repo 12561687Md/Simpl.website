@@ -34,7 +34,8 @@ const ALSO_AVAILABLE = [
 ];
 
 const RESOURCE_LINKS = [
-  { href: "/how-it-works", label: "How It Works" },
+  // "How It Works" lives as a top-level nav link; listing it here too made it
+  // appear twice in the header. Top-level wins.
   { href: "/blog", label: "Blog" },
   { href: "/faq", label: "FAQ" },
   { href: "/success-stories", label: "Success Stories" },

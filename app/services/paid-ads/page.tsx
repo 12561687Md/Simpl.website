@@ -63,7 +63,7 @@ export default function PaidAds() {
             {
               "@type": "Question",
               "name": "How much should I budget for Google Ads?",
-              "acceptedAnswer": { "@type": "Answer", "text": "It depends on your industry and market, but most local service businesses see strong results starting at $1,500-3,000 per month in ad spend. Simpl helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume." }
+              "acceptedAnswer": { "@type": "Answer", "text": "It depends on your industry and market, and we'll give you a straight number for yours on a free call before anything launches. Simpl helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume. You own the ad account either way, and every dollar of spend goes to the platform, not to us." }
             },
             {
               "@type": "Question",
@@ -156,7 +156,7 @@ export default function PaidAds() {
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>
               <h3 style={{ fontSize: 18, fontWeight: 500, margin: "0 0 12px" }}>How much should I budget for Google Ads?</h3>
               <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--muted)" }}>
-                It depends on your industry and market, but most local service businesses see strong results starting at $1,500-3,000 per month in ad spend. Simpl helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume.
+                It depends on your industry and market, and we'll give you a straight number for yours on a free call before anything launches. Simpl helps you avoid wasted spend from day one by building campaigns around the keywords that actually convert, not just the ones with the most volume. You own the ad account either way, and every dollar of spend goes to the platform, not to us.
               </p>
             </div>
             <div style={{ background: "var(--bg)", padding: "28px 32px" }}>

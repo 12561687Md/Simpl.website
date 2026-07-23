@@ -82,7 +82,7 @@ export default function WhyOwnersHireUs() {
               style={{ marginTop: 32 }}
             >
               <a
-                href="/start"
+                href="/start-now"
                 style={{ ...mono, fontSize: 13, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 3 }}
               >
                 See how we fit your business →

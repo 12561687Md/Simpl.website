@@ -8,10 +8,15 @@ import TierGrid from "./TierGrid";
 
 export const metadata: Metadata = {
   title: "Pricing | Simpl",
-  description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working. Local SEO from $497/mo, website build free on Team. No contracts you can't leave.",
+  description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working.",
+  // In reserve since 2026-07-23: pricing moved to the sales-call conversation.
+  // Page stays live for direct links but is hidden from nav, search, and the
+  // sitemap. Remove the robots block (and the sitemap exclusion in
+  // next-sitemap.config.js) to bring it back.
+  robots: { index: false, follow: true },
   openGraph: {
     title: "Pricing | Simpl",
-    description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working. Local SEO from $497/mo, website build free on Team.",
+    description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working.",
     url: "https://simpl.pro/start",
     siteName: "Simpl",
     type: "website",

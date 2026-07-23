@@ -28,7 +28,7 @@ const FAQS = [
   },
   {
     q: "What do the tiers actually include?",
-    a: "Core (from $497/mo) gets your Google listing, site SEO, and schema in order with tracking that shows what's working. Team (from $997/mo) adds a free website build plus content and local SEO. Pro (from $1,997/mo) adds paid ads management and monthly strategy. Every tier includes a free strategy call.",
+    a: "Core gets your Google listing, site SEO, and schema in order with tracking that shows what's working. Team adds a free website build plus content and local SEO. Pro adds paid ads management and monthly strategy. Every engagement starts with a free strategy call, that's where we scope what your business actually needs and exactly what it costs, so you never pay for anything you don't need.",
   },
   {
     q: "Do I need to sign a long contract?",
@@ -89,7 +89,7 @@ export default function FaqPage() {
           <div style={{ marginTop: 56, textAlign: "center" }}>
             <p style={{ fontSize: 15, color: "var(--muted)", marginBottom: 20 }}>Still have a question that's not here?</p>
             <Link
-              href="/start"
+              href="/start-now"
               className="cta-primary"
               style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "13px 24px", fontSize: 14, fontWeight: 700, borderRadius: 6, textDecoration: "none" }}
             >

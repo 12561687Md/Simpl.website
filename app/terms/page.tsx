@@ -244,13 +244,13 @@ export default function TermsPage() {
             <h2 style={sectionHeading}>6. Payment Terms</h2>
             <p style={paragraph}>
               Simpl offers a free website scan and report, plus paid services.
-              All published prices are starting prices. Your final price depends
-              on the scope you and Simpl agree to in writing before work begins:
+              All pricing is quoted individually. Your price is set by the
+              scope you and Simpl agree to in writing before work begins:
             </p>
             <ul style={list}>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
-                  Monthly retainers (Simpl.core starting at $497/mo).
+                  Monthly retainers.
                 </strong>{" "}
                 Retainer services are billed monthly at the start of each
                 billing period. Except where a minimum term applies, you may
@@ -277,7 +277,7 @@ export default function TermsPage() {
               </li>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
-                  Paid advertising management (starting at $500/mo).
+                  Paid advertising management.
                 </strong>{" "}
                 Quoted per account, plus a one-time setup fee equal to 50% of
                 the monthly management fee. Advertising spend is billed to you
