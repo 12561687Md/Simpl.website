@@ -31,7 +31,7 @@ export default function Footer() {
             <nav style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <Link href="/scan" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Free Scan</Link>
               <Link href="/about" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Why Simpl</Link>
-              <Link href="/start" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Pricing</Link>
+              {/* Pricing (/start) removed 2026-07-23, page kept live in reserve. */}
               <Link href="/results" style={{ color: "var(--fg)", textDecoration: "none", fontSize: 14 }}>Results</Link>
             </nav>
           </div>

@@ -178,7 +178,7 @@ export default function Header() {
                         {ALSO_AVAILABLE.map((s) => (
                           <Link
                             key={s.label}
-                            href="/start#a-la-carte"
+                            href="/start-now"
                             className="no-underline flex items-center justify-between gap-4 rounded-lg px-2.5 py-2.5 text-sm transition-colors hover:bg-[var(--bg-elev-2)]"
                             style={{ color: "var(--fg)" }}
                           >
@@ -199,9 +199,10 @@ export default function Header() {
             )}
           </div>
 
-          <Link href="/start" className={linkClass} style={{ color: linkColor(pathname === "/start") }}>
-            Pricing
-          </Link>
+          {/* Pricing (/start) intentionally removed from the nav 2026-07-23:
+              the page stays live "in reserve" but pricing is now a sales-call
+              conversation, not a self-serve browse. Re-add the link here to
+              restore it. */}
           <Link href="/how-it-works" className={linkClass} style={{ color: linkColor(pathname === "/how-it-works") }}>
             How it works
           </Link>
