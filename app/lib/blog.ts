@@ -972,6 +972,260 @@ export const BLOG_POSTS: BlogPost[] = [
       { label: "r/electricians on Reddit", href: "https://www.reddit.com/r/electricians/" },
     ],
   },
+
+  // ---- Strategy (cross-industry pillars) ----
+  {
+    slug: "how-much-should-a-service-business-spend-on-marketing",
+    title: "How much should a service business spend on marketing?",
+    metaTitle: "How Much Should a Service Business Spend on Marketing?",
+    description:
+      "A practical guide to setting a marketing budget for a local service business: the percentage-of-revenue rule of thumb, what to prioritize first, and how to measure return.",
+    question: "How much should a service business spend on marketing?",
+    category: "Strategy",
+    readMinutes: 5,
+    updated: "2026-07-23",
+    image: "/blog/how-much-should-a-service-business-spend-on-marketing.webp",
+    imageAlt: "A small business owner reviewing a budget at a desk",
+    imageCredit: "RDNE Stock project / Pexels",
+    keyTakeaways: [
+      "The common rule of thumb is 5-10% of revenue for established businesses and more for those in a growth push, but the right number depends on your margins and goals.",
+      "Spend is meaningless without measurement: track cost per lead and cost per booked job, not just clicks or impressions.",
+      "Fix the free foundations (Google Business Profile, reviews, a working website) before pouring money into ads, or you'll pay to send traffic to a leaky funnel.",
+    ],
+    intro:
+      "Every service business owner eventually asks the same question: how much of my revenue should go to marketing? There's a rule of thumb, but the honest answer is that the number matters far less than what you spend it on and whether you measure the return. Here's a practical framework.",
+    sections: [
+      {
+        heading: "Start with the rule of thumb, then adjust",
+        paragraphs: [
+          "The [U.S. Small Business Administration](https://www.sba.gov/) has long suggested small businesses budget around 7-8% of revenue for marketing, and a common working range is 5-10% for established businesses, higher when you're actively pushing for growth or entering a new market.",
+          "Treat that as a starting point, not a law. A business with high margins and ambitious growth goals can justify spending more; one with thin margins in a sleepy market should spend carefully and lean on the compounding, lower-cost channels like [organic growth](/services/organic-growth).",
+        ],
+      },
+      {
+        heading: "Fix the free foundation before you spend a dollar",
+        paragraphs: [
+          "The most expensive mistake is buying traffic before your basics work. If your [website is leaking leads](/blog/why-is-my-website-not-showing-up-on-google) or your [Google Business Profile](/blog/how-to-rank-higher-on-google-maps) is half-finished, ad spend just pays to expose the problem.",
+          "The free and near-free work, claiming and completing your profile, gathering [reviews](/blog/how-do-i-get-more-google-reviews), fixing site speed and forms, usually delivers the highest return of anything on your list. Do it first. Our free scan exists precisely to show you which of these is costing you the most.",
+        ],
+      },
+      {
+        heading: "Judge spend by booked jobs, not vanity metrics",
+        paragraphs: [
+          "A budget is only as good as your measurement. Clicks and impressions feel like progress but pay no bills. Track cost per lead and, more importantly, cost per booked job, so you can see which channels actually produce revenue and shift budget toward them.",
+          "This is where owners underspend on the boring parts: tracking, follow-up, and [fast lead response](/blog/what-happens-when-you-miss-a-customer-call). A cheaper lead you contact in two minutes beats an expensive one you call back tomorrow. Owners debate real numbers openly in [r/smallbusiness](https://www.reddit.com/r/smallbusiness/).",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "What percentage of revenue should go to marketing?",
+        a: "A common range is 5-10% of revenue for established service businesses, with the U.S. Small Business Administration historically suggesting around 7-8% for small businesses. Push toward the higher end when you're actively growing, and lower when margins are tight, but always judge the spend by the jobs it books.",
+      },
+      {
+        q: "Should I spend on ads or SEO first?",
+        a: "Fix the free foundation first (profile, reviews, a working website), then use ads to capture demand now while SEO compounds over months. Ads pointed at a weak site or slow follow-up waste money, so the sequence matters more than the split.",
+      },
+      {
+        q: "How do I know if my marketing is working?",
+        a: "Measure cost per lead and cost per booked job by channel, not clicks or impressions. If you can't tie spend to booked revenue, you can't tell a good channel from a bad one. Set up conversion tracking before scaling any budget.",
+      },
+    ],
+    sources: [
+      { label: "U.S. Small Business Administration", href: "https://www.sba.gov/" },
+      { label: "Google: Local Services Ads", href: "https://support.google.com/localservices/answer/6224841" },
+      { label: "r/smallbusiness on Reddit", href: "https://www.reddit.com/r/smallbusiness/" },
+    ],
+  },
+  {
+    slug: "local-services-ads-vs-google-ads",
+    title: "Local Services Ads vs Google Ads: which is right for your trade?",
+    metaTitle: "Local Services Ads vs Google Ads",
+    description:
+      "A plain-English comparison of Google's Local Services Ads and standard Google Ads for local service businesses: how each is priced, who should use which, and why most use both.",
+    question: "What's the difference between Local Services Ads and Google Ads?",
+    category: "Paid Ads",
+    readMinutes: 5,
+    updated: "2026-07-23",
+    image: "/blog/local-services-ads-vs-google-ads.webp",
+    imageAlt: "A laptop showing a Google advertising dashboard",
+    imageCredit: "cottonbro studio / Pexels",
+    keyTakeaways: [
+      "Local Services Ads (LSAs) sit at the very top, carry a Google Guaranteed badge, and charge per lead; standard Google Ads sit below them and charge per click.",
+      "LSAs require license and background verification, which keeps competition out but limits them to eligible service categories.",
+      "Most local service businesses use both: LSAs for the highest-intent calls, standard Search Ads for the keywords and services LSAs don't cover.",
+    ],
+    intro:
+      "Google offers local service businesses two very different ad products, and the names don't make the difference obvious. One charges you when someone calls; the other charges when someone clicks. Picking the right mix can cut your cost per job significantly. Here's how they compare.",
+    sections: [
+      {
+        heading: "How each one works",
+        paragraphs: [
+          "[Local Services Ads](https://support.google.com/localservices/answer/6224841) appear at the very top of the results, above the regular ads, with a “Google Guaranteed” badge. You pay per lead (a call or message), not per click, and you have to pass license and background verification to run them. That verification is a feature: it keeps low-effort competitors out.",
+          "Standard [Google Ads](https://support.google.com/google-ads/answer/6146252) (the Search campaigns) appear below LSAs and charge per click regardless of whether that click becomes a lead. They're available for essentially any keyword and give you far more control over messaging, landing pages, and targeting.",
+        ],
+      },
+      {
+        heading: "Which should your trade use?",
+        paragraphs: [
+          "For emergency and high-value home trades, plumbers, [HVAC](/blog/how-to-get-more-hvac-leads), electricians, [roofers](/blog/how-to-get-more-roofing-leads), LSAs are often the best single channel because paying per lead fits a business where one job is worth hundreds or thousands. If your category is eligible, start there.",
+          "Standard Search Ads shine when you need to target specific services or high-consideration work that LSAs don't cover well, like [remodeling project keywords](/blog/google-ads-for-remodelers), or when you want a click to land on a specific [landing page](/services/website-build) you control. They're also how you run branded-search defense.",
+        ],
+      },
+      {
+        heading: "Why most businesses run both",
+        paragraphs: [
+          "These aren't either/or. LSAs capture the top-of-page, ready-to-call demand at a predictable per-lead cost, while Search Ads capture the searches and services LSAs miss and defend your brand name. Together they cover the full results page.",
+          "Whichever you run, the fundamentals still decide whether the money works: a fast [website](/services/website-build), strong [reviews](/blog/how-do-i-get-more-google-reviews), and [instant follow-up](/blog/what-happens-when-you-miss-a-customer-call). Ads buy the click; those three turn it into a job. This is the core of our [paid ads service](/services/paid-ads).",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Are Local Services Ads cheaper than Google Ads?",
+        a: "Not necessarily cheaper, but often better value for high-ticket trades because you pay per lead instead of per click. If a click may never call, per-click billing can waste budget; per-lead billing ties cost directly to a contact. The right choice depends on your job value and category eligibility.",
+      },
+      {
+        q: "Do I need to be verified for Local Services Ads?",
+        a: "Yes. LSAs require license and insurance verification plus a background check for eligible categories. It's extra setup, but it earns the Google Guaranteed badge and keeps unverified competitors out of the format.",
+      },
+      {
+        q: "Can I run Local Services Ads and Google Ads at the same time?",
+        a: "Yes, and most local service businesses do. LSAs capture the top-of-page per-lead demand while standard Search Ads cover additional keywords, specific landing pages, and branded-search defense. Together they own more of the results page than either alone.",
+      },
+    ],
+    sources: [
+      { label: "Google: Local Services Ads", href: "https://support.google.com/localservices/answer/6224841" },
+      { label: "Google Ads: How Search campaigns work", href: "https://support.google.com/google-ads/answer/6146252" },
+      { label: "r/PPC on Reddit", href: "https://www.reddit.com/r/PPC/" },
+    ],
+  },
+  {
+    slug: "automated-lead-follow-up-for-service-businesses",
+    title: "How to set up automated lead follow-up for a service business",
+    metaTitle: "Automated Lead Follow-Up for Service Businesses",
+    description:
+      "A practical guide to automating lead follow-up: missed-call text-back, instant form replies, and reminder sequences that keep leads warm while you're on the job.",
+    question: "How do I automate lead follow-up for my service business?",
+    category: "Strategy",
+    readMinutes: 5,
+    updated: "2026-07-23",
+    image: "/blog/automated-lead-follow-up-for-service-businesses.webp",
+    imageAlt: "A hand holding a phone showing a text message notification",
+    imageCredit: "Tranmautritam / Pexels",
+    keyTakeaways: [
+      "Speed is the highest-leverage fix in local marketing: responding in minutes instead of hours dramatically raises the odds a lead becomes a job.",
+      "The three automations that matter most are missed-call text-back, instant replies to form leads, and a short follow-up sequence for leads that go quiet.",
+      "Automation keeps leads warm while you're on a job, it doesn't replace you, it buys you the minutes you don't have when the phone rings mid-task.",
+    ],
+    intro:
+      "Field service owners lose more revenue to slow follow-up than to almost anything else. You can't answer every call from under a sink or on a roof, and by the time you call back, the customer booked someone else. Automation solves this, not by replacing you, but by responding instantly on your behalf. Here's how to set it up.",
+    sections: [
+      {
+        heading: "Missed-call text-back: the first automation to build",
+        paragraphs: [
+          "When a call goes unanswered, an automatic text fires within seconds: “Sorry we missed you, we're on a job. What do you need? We'll call back shortly.” The customer feels handled instead of ignored, which is usually enough to stop them dialing the next business.",
+          "This one automation recovers a huge share of otherwise-lost leads. We break down the economics in [what a missed call actually costs](/blog/what-happens-when-you-miss-a-customer-call), the short version is that a missed call rarely becomes a voicemail, it becomes a competitor's job.",
+        ],
+      },
+      {
+        heading: "Instant replies and a follow-up sequence",
+        paragraphs: [
+          "Form leads deserve the same speed. Someone who submits a quote request at 9pm should get an immediate acknowledgment, not silence until Tuesday. An instant auto-reply confirms you got it and sets expectations, then a short sequence of follow-ups over the next few days catches the leads that go quiet without any manual chasing.",
+          "The [Harvard Business Review's research on lead response](https://hbr.org/2011/03/the-short-life-of-online-sales-leads) found that responding within an hour makes a lead far likelier to qualify, and most companies respond far too slowly. Automation is how a busy two-person shop hits that window every time.",
+        ],
+      },
+      {
+        heading: "Reminders and reviews close the loop",
+        paragraphs: [
+          "The same system that captures leads should keep customers coming back: appointment reminders that cut no-shows, and an automatic [review request](/blog/how-do-i-get-more-google-reviews) sent the moment a job is done, when satisfaction is highest. Both run without you touching them.",
+          "This is the [lead-capture layer](/services/quick-wins) that sits under everything else. Winning the [search ranking](/blog/how-to-rank-higher-on-google-maps) fills the top of the funnel; automated follow-up seals the bottom so the traffic you worked for actually turns into booked, repeat revenue.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "What is missed-call text-back?",
+        a: "It's an automation that instantly texts anyone whose call you didn't answer, so the lead gets a response in seconds instead of reaching voicemail. The customer feels handled and stays warm, and you reply when your hands are free. For field service trades, it's usually the single highest-ROI automation to set up.",
+      },
+      {
+        q: "How fast do I really need to respond to a lead?",
+        a: "Within minutes. Research from Harvard Business Review found the odds of qualifying a lead drop sharply after the first hour, and most businesses respond far too slowly. Automated instant replies let you hit that window even when you're on a job.",
+      },
+      {
+        q: "Will automating follow-up make my business feel impersonal?",
+        a: "Done right, it feels more responsive, not less. The automation buys time by acknowledging the customer instantly, then you follow up personally. The alternative, a call that goes to voicemail and a callback hours later, feels far worse to a customer who needs help now.",
+      },
+    ],
+    sources: [
+      { label: "Harvard Business Review: The Short Life of Online Sales Leads", href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
+      { label: "Google: Call history in Business Profile", href: "https://support.google.com/business/answer/9688285" },
+      { label: "r/sweatystartup on Reddit", href: "https://www.reddit.com/r/sweatystartup/" },
+    ],
+  },
+  {
+    slug: "website-checklist-for-service-businesses",
+    title: "The website checklist every service business needs to book more jobs",
+    metaTitle: "Website Checklist for Service Businesses",
+    description:
+      "A practical website checklist for local service businesses: the pages, trust signals, speed, mobile, schema, and conversion elements that turn visitors into booked jobs.",
+    question: "What should a service business website include?",
+    category: "Strategy",
+    readMinutes: 6,
+    updated: "2026-07-23",
+    image: "/blog/website-checklist-for-service-businesses.webp",
+    imageAlt: "A web designer working on a website layout on a laptop",
+    imageCredit: "Hanna Pad / Pexels",
+    keyTakeaways: [
+      "A service website has one job: turn a visitor into a call or form submission, so click-to-call, a quote form, and your service area must be obvious on every page.",
+      "Trust and speed decide conversion: reviews, licensing, real photos, and a page that loads in under three seconds on a phone.",
+      "One dedicated page per service and per city ranks far better than a single “services” page, and schema markup helps both Google and AI understand you.",
+    ],
+    intro:
+      "A service business website isn't a brochure, it's a lead machine, and most of them leak badly. Use this checklist to make sure yours does the one thing it exists for: turning the visitor who found you into a booked job. Work through it top to bottom.",
+    sections: [
+      {
+        heading: "The conversion essentials (get these first)",
+        paragraphs: [
+          "Every page needs an obvious way to contact you: a click-to-call phone number in the header (tappable on mobile), a short quote form, and your service area stated clearly. If a visitor has to hunt for how to reach you, you've lost them. Promise-based calls to action (“Get your free estimate”) beat generic ones (“Submit”).",
+          "Speed is a conversion factor, not just an SEO one: a page that takes more than about three seconds to load on a phone loses a large share of visitors before they see anything. Check yours with Google's [PageSpeed Insights](https://pagespeed.web.dev/), most service sites have room to improve, and it's a core part of our [quick wins service](/services/quick-wins).",
+        ],
+      },
+      {
+        heading: "Trust signals, because service is a trust purchase",
+        paragraphs: [
+          "Hiring a contractor is a leap of faith, so your site has to earn it fast. Display recent [reviews](/blog/how-do-i-get-more-google-reviews), your license and insurance details, real project photos (not stock), warranties, and any certifications. These are the things a nervous customer scans for before calling.",
+          "Real photos of your actual work matter more than polished stock imagery, they're proof, and for visual trades they're your strongest sales tool. This is also where a [custom-built website](/services/website-build) beats a template: it's built around your proof and your customers, not a generic layout.",
+        ],
+      },
+      {
+        heading: "Structure for Google and AI: pages and schema",
+        paragraphs: [
+          "One page can't rank for everything. Build a dedicated page for each service and each city you serve, targeting how customers actually search, this is the [organic growth](/services/organic-growth) foundation, and it's why a business [doesn't show up on Google](/blog/why-is-my-website-not-showing-up-on-google) when everything's crammed onto one page.",
+          "Add [structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) (schema markup) so machines understand your business, services, service area, hours, and reviews without guessing. It's what helps you appear in rich results and, increasingly, in [AI search recommendations](/blog/how-to-get-your-business-recommended-by-ai). Finish with a sitemap and clean indexing so Google can find every page.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "What pages does a service business website need?",
+        a: "At minimum: a homepage, a dedicated page for each core service, location pages for the main areas you serve, an about page with your credentials, a reviews or gallery page, and a contact page. Dedicated service and location pages rank far better than a single combined services page.",
+      },
+      {
+        q: "How fast should my website load?",
+        a: "Aim for under about three seconds on mobile. Beyond that you lose a large share of visitors before the page even renders, and speed is also a Google ranking factor. Test with Google's free PageSpeed Insights and fix the biggest offenders first, usually large images and unused scripts.",
+      },
+      {
+        q: "Do I need a custom website or is a template fine?",
+        a: "A template can work if it's fast, mobile-first, and built around conversion. Many aren't, they're slow, generic, and hard to rank. The deciding factor isn't custom vs template, it's whether the site loads fast, proves your credibility, and makes contacting you effortless on every page.",
+      },
+    ],
+    sources: [
+      { label: "Google: PageSpeed Insights", href: "https://pagespeed.web.dev/" },
+      { label: "Google: Intro to structured data", href: "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" },
+      { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
+    ],
+  },
 ];
 
 export function getPost(slug: string): BlogPost | undefined {
