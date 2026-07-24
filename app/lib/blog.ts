@@ -81,8 +81,8 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Reviews are prominence you can earn",
         paragraphs: [
-          "Review count and rating are among the strongest prominence signals, and unlike your address, you can improve them starting today. Ask every satisfied customer, make it a one-tap link, and reply to every review, good and bad. Replies signal an active, real business.",
-          "Consistency of your name, address, and phone number across the web (your “NAP”) also feeds prominence. If your address reads three different ways across your site, Facebook, and Yelp, that ambiguity costs you.",
+          "Review count and rating are among the strongest prominence signals, and unlike your address, you can improve them starting today. Ask every satisfied customer, make it a one-tap link, and reply to every review, good and bad. Replies signal an active, real business, and surveys like [BrightLocal's local consumer review survey](https://www.brightlocal.com/research/local-consumer-review-survey/) consistently show most customers read reviews before they call anyone.",
+          "Consistency of your name, address, and phone number across the web (your “NAP”) also feeds prominence. If your address reads three different ways across your site, [Facebook](https://www.facebook.com/business), and [Yelp](https://www.yelp.com), that ambiguity costs you. The industry's long-running reference on what moves local rankings is [Moz's Local Search Ranking Factors](https://moz.com/local-search-ranking-factors), worth a skim if you want the deeper mechanics.",
         ],
       },
     ],
@@ -104,6 +104,8 @@ export const BLOG_POSTS: BlogPost[] = [
       { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
       { label: "Google Business Profile", href: "https://www.google.com/business/" },
       { label: "Local search (Wikipedia)", href: "https://en.wikipedia.org/wiki/Local_search_(Internet)" },
+      { label: "Moz: Local Search Ranking Factors", href: "https://moz.com/local-search-ranking-factors" },
+      { label: "BrightLocal: Local Consumer Review Survey", href: "https://www.brightlocal.com/research/local-consumer-review-survey/" },
     ],
   },
   {
@@ -136,8 +138,8 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Ranking is different from being indexed",
         paragraphs: [
-          "Being in the index means Google knows you exist. Ranking on page one means Google thinks you're the best answer. If you're indexed but invisible, the issue is usually relevance and authority: thin content, no clear topic per page, missing title tags, or a brand-new domain with no track record.",
-          "Google's [SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) is the authoritative, jargon-light primer on fixing this.",
+          "Being in the index means Google knows you exist. Ranking on page one means Google thinks you're the best answer. If you're indexed but invisible, the issue is usually relevance and authority: thin content, no clear topic per page, missing title tags, or a brand-new domain with no track record. Google's own [How Search Works](https://www.google.com/search/howsearchworks/) explains the difference in plain language, and [search engine optimization](https://en.wikipedia.org/wiki/Search_engine_optimization) as a discipline is essentially the work of closing that gap.",
+          "Google's [SEO Starter Guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) is the authoritative, jargon-light primer on fixing this. Speed matters too: run your site through [PageSpeed Insights](https://pagespeed.web.dev/) (free, from Google) and you'll see the same performance data Google sees. And if you want to sanity-check advice against what practitioners actually argue about, the [r/SEO](https://www.reddit.com/r/SEO/) community on Reddit is where a lot of that conversation happens in public.",
         ],
       },
     ],
@@ -159,6 +161,9 @@ export const BLOG_POSTS: BlogPost[] = [
       { label: "Google Search Console", href: "https://search.google.com/search-console/about" },
       { label: "Google SEO Starter Guide", href: "https://developers.google.com/search/docs/fundamentals/seo-starter-guide" },
       { label: "robots.txt, explained by Google", href: "https://developers.google.com/search/docs/crawling-indexing/robots/intro" },
+      { label: "Google: How Search Works", href: "https://www.google.com/search/howsearchworks/" },
+      { label: "PageSpeed Insights", href: "https://pagespeed.web.dev/" },
+      { label: "SEO (Wikipedia)", href: "https://en.wikipedia.org/wiki/Search_engine_optimization" },
     ],
   },
   {
@@ -184,8 +189,8 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Never buy reviews or gate them",
         paragraphs: [
-          "Buying reviews, posting them yourself, or only asking happy customers while filtering out unhappy ones all violate [Google's review policies](https://support.google.com/contributionpolicy/answer/7400114) and can get your reviews removed or your profile suspended. It's not worth it, and it's detectable.",
-          "Reply to negative reviews calmly and publicly. A thoughtful reply to a one-star review often does more for the next reader than the review itself does damage.",
+          "Buying reviews, posting them yourself, or only asking happy customers while filtering out unhappy ones all violate [Google's review policies](https://support.google.com/contributionpolicy/answer/7400114) and can get your reviews removed or your profile suspended. It's not just Google: the [FTC's rule banning fake reviews](https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials) makes buying or fabricating them a federal matter with real fines. It's not worth it, and it's detectable.",
+          "Reply to negative reviews calmly and publicly. A thoughtful reply to a one-star review often does more for the next reader than the review itself does damage. Research roundups like [BrightLocal's consumer review survey](https://www.brightlocal.com/research/local-consumer-review-survey/) keep confirming the same pattern: customers read owner responses, and they judge the business by them.",
         ],
       },
     ],
@@ -206,6 +211,8 @@ export const BLOG_POSTS: BlogPost[] = [
     sources: [
       { label: "Google: Get your review link", href: "https://support.google.com/business/answer/7035772" },
       { label: "Google review content policy", href: "https://support.google.com/contributionpolicy/answer/7400114" },
+      { label: "FTC: Final rule banning fake reviews", href: "https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials" },
+      { label: "BrightLocal: Local Consumer Review Survey", href: "https://www.brightlocal.com/research/local-consumer-review-survey/" },
     ],
   },
   {
@@ -239,6 +246,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "Reviews are the trust layer AI leans on",
         paragraphs: [
           "When an assistant has to pick three names out of thirty, review count, rating, recency, and owner responses are the strongest public trust signals it can check. The same things that win the [local 3-pack](https://support.google.com/business/answer/7091) win AI recommendations, because AI reads the same evidence a careful customer would.",
+          "Community mentions count too. [Large language models](https://en.wikipedia.org/wiki/Large_language_model) are trained on and search across the open discussion web, which is why [Reddit](https://www.reddit.com/r/smallbusiness/) threads and [Nextdoor](https://nextdoor.com) recommendations increasingly show up inside AI answers. A business that neighbors genuinely vouch for in public is one an assistant can safely name.",
           "So the play isn't chasing a new algorithm. It's making your existing presence legible: complete profile, consistent name-address-phone everywhere, structured data on every page, and a steady stream of real reviews. Businesses that do that show up in both worlds, and the ones that don't quietly disappear from AI answers without ever knowing it.",
         ],
       },
@@ -266,6 +274,8 @@ export const BLOG_POSTS: BlogPost[] = [
       { label: "Google: AI features and your website", href: "https://developers.google.com/search/docs/appearance/ai-features" },
       { label: "Google: Intro to structured data", href: "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data" },
       { label: "llmstxt.org", href: "https://llmstxt.org" },
+      { label: "Large language model (Wikipedia)", href: "https://en.wikipedia.org/wiki/Large_language_model" },
+      { label: "r/smallbusiness on Reddit", href: "https://www.reddit.com/r/smallbusiness/" },
     ],
   },
   {
@@ -298,7 +308,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Months: content and authority compound",
         paragraphs: [
-          "Rankings for competitive service keywords are earned by content and authority, and Google itself tells business owners that most SEO needs [four months to a year](https://www.youtube.com/watch?v=piSvFxV_M04) before it helps. That's not a stall, it's how compounding works: service pages, location pages, and answers to real customer questions accumulate value instead of expiring like an ad.",
+          "Rankings for competitive service keywords are earned by content and authority, and Google itself tells business owners that most SEO needs [four months to a year](https://www.youtube.com/watch?v=piSvFxV_M04) before it helps. Independent research agrees: [Ahrefs' study of two million pages](https://ahrefs.com/blog/how-long-does-it-take-to-rank/) found the average top-10 page is years old, and only a small fraction of new pages crack the top 10 within a year. That's not a stall, it's how compounding works: service pages, location pages, and answers to real customer questions accumulate value instead of expiring like an ad.",
           "Track leading indicators while you wait. [Google Search Console](https://search.google.com/search-console/about) shows impressions climbing before clicks do, and clicks climb before calls. If impressions haven't moved in three months, ask why. If they're climbing, the compounding is on schedule.",
         ],
       },
@@ -321,6 +331,8 @@ export const BLOG_POSTS: BlogPost[] = [
       { label: "Google: How to hire an SEO (timeline quote)", href: "https://www.youtube.com/watch?v=piSvFxV_M04" },
       { label: "Google: Local ranking factors", href: "https://support.google.com/business/answer/7091" },
       { label: "Google Search Console", href: "https://search.google.com/search-console/about" },
+      { label: "Ahrefs: How long does it take to rank?", href: "https://ahrefs.com/blog/how-long-does-it-take-to-rank/" },
+      { label: "Moz: Local Search Ranking Factors", href: "https://moz.com/local-search-ranking-factors" },
     ],
   },
   {
@@ -354,7 +366,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "Find out how many calls you're actually missing",
         paragraphs: [
           "Most owners genuinely don't know their missed-call rate. Your phone system or [Google Business Profile call history](https://support.google.com/business/answer/9688285) can show how many calls came from your listing, compare that with what you remember answering and the gap is usually a surprise.",
-          "Fixing visibility fills the top of the funnel, fixing response seals the bottom. Doing the first without the second is how a business ends up busy on Google and quiet at the bank.",
+          "You don't have to take a marketer's word for any of this. Communities like [r/sweatystartup](https://www.reddit.com/r/sweatystartup/) and [r/smallbusiness](https://www.reddit.com/r/smallbusiness/), where local service owners compare notes in public, are full of the same story told firsthand: the jobs that got away were the calls nobody answered. Fixing visibility fills the top of the funnel, fixing response seals the bottom. Doing the first without the second is how a business ends up busy on Google and quiet at the bank.",
         ],
       },
     ],
@@ -375,6 +387,7 @@ export const BLOG_POSTS: BlogPost[] = [
     sources: [
       { label: "Harvard Business Review: The Short Life of Online Sales Leads", href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
       { label: "Google: Call history in Business Profile", href: "https://support.google.com/business/answer/9688285" },
+      { label: "r/sweatystartup on Reddit", href: "https://www.reddit.com/r/sweatystartup/" },
     ],
   },
 ];
