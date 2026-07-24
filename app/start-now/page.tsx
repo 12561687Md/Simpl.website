@@ -121,7 +121,7 @@ export default function WhatAmIMissingPage() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer showLeadForm={false} />
     </div>
   );
 }

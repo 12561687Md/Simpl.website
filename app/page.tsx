@@ -10,6 +10,7 @@ import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
 import ScrollReveal from "./components/ScrollReveal";
 import OutcomePillars from "./components/OutcomePillars";
+import ServiceBusinessSEO from "./components/ServiceBusinessSEO";
 import TeamSection from "./components/TeamSection";
 
 export const metadata: Metadata = {
@@ -131,10 +132,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* The audit sample used to live here in a browser frame. It now runs
-            inside the phone up in the "why owners hire us" section, splash ->
-            scan -> the real report, so the homepage shows the deliverable once,
-            as an app, instead of twice. */}
+        {/* The audit sample used to live here in a browser frame; it now runs
+            inside the phone above. This slot is now the service-business SEO
+            section: keyword-rich, names the niche (service-based businesses +
+            the specific trades) for Google and readers, and interlinks to the
+            industry blog guides and service pages. */}
+        <ServiceBusinessSEO />
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 

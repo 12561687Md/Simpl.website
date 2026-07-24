@@ -577,7 +577,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .grid-category-grades { grid-template-columns: repeat(3, 1fr) !important; }
   .grid-step1-preview { grid-template-columns: 1fr !important; justify-items: center; }
   .grid-how-tiers { grid-template-columns: 1fr !important; }
-  .grid-footer { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .grid-footer { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+  .grid-prefooter { grid-template-columns: 1fr !important; gap: 32px !important; }
   .floating-cta { box-shadow: none !important; }
   .hide-mobile { display: none !important; }
 
@@ -1023,3 +1024,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .service-chip:hover{border-color:var(--accent);color:var(--accent);}
 .blog-related{transition:border-color 180ms ease;}
 .blog-related:hover{border-color:var(--accent);}
+
+/* Footer links + slide-in pre-footer form */
+.footer-link, .footer-contact { transition: color 160ms ease; }
+.footer-link:hover, .footer-contact:hover { color: var(--fg); }
