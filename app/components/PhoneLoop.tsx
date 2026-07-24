@@ -1,23 +1,21 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { SimplMark } from "@/components/ui/simpl-brand";
-import ScanReport from "./ScanReport";
 import { DEMO_PLACE, DEMO_RESULT, DEMO_BOARD } from "../lib/demo-audit";
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
 /**
- * The phone runs the REAL Simpl audit, start to finish, exactly how a customer
- * experiences the app: a cold-start splash, the scan working through its
- * checks, then the actual ScanReport (the same component the live scan renders)
- * auto-scrolling inside the screen. This replaced the old four-tab mockup and
- * the separate browser-framed AuditDemo section, so the homepage shows one
- * honest thing: what you actually get.
+ * The phone runs the Simpl audit like the real app: a cold-start splash, the
+ * scan working through its checks, then the handful of highest-value insight
+ * cards, the score, your Google Maps position vs local competitors, the
+ * biggest problems, and the reputation gap. Not the full report (that would be
+ * unreadable at phone width); the sections a customer actually reacts to.
  *
- * Sample data is the clearly-fictional Wildgrove Landscaping set (see
- * lib/demo-audit.ts), never a claim about a real business.
+ * Every number is pulled from the clearly-fictional Wildgrove Landscaping
+ * sample (lib/demo-audit.ts), never a claim about a real business.
  */
 
 function StatusBar() {
@@ -116,64 +114,124 @@ function ScanPhase({ reduce }: { reduce: boolean }) {
   );
 }
 
-/**
- * The real report inside the phone, auto-scrolling top to bottom on a slow
- * loop so the "app" plays through the whole audit. Any user interaction
- * (wheel, touch, pointer) hands control over and stops the auto-scroll.
- */
-function ReportPhase({ reduce }: { reduce: boolean }) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const takenOver = useRef(false);
-
+/* Animated score ring: counts up from a low number to the real sample score. */
+function ScoreRing({ reduce }: { reduce: boolean }) {
+  const target = DEMO_RESULT.percentage; // 52
+  const [pct, setPct] = useState(reduce ? target : 8);
   useEffect(() => {
     if (reduce) return;
-    const el = ref.current;
-    if (!el) return;
-
-    const stop = () => { takenOver.current = true; };
-    el.addEventListener("wheel", stop, { passive: true });
-    el.addEventListener("touchstart", stop, { passive: true });
-    el.addEventListener("pointerdown", stop, { passive: true });
-
+    const start = performance.now();
     let raf = 0;
-    let waitUntil = performance.now() + 900; // brief pause on the score before moving
     const tick = (t: number) => {
-      if (!takenOver.current && el) {
-        if (t >= waitUntil) {
-          const max = el.scrollHeight - el.clientHeight;
-          if (el.scrollTop >= max - 1) {
-            // reached the bottom: hold, then loop back to the top
-            waitUntil = t + 2600;
-            el.scrollTo({ top: 0, behavior: "smooth" });
-          } else {
-            el.scrollTop += 0.5; // ~30px/sec, calm and legible
-          }
-        }
-      }
-      raf = requestAnimationFrame(tick);
+      const k = Math.min((t - start) / 1400, 1);
+      const eased = 1 - Math.pow(1 - k, 3);
+      setPct(Math.round(8 + (target - 8) * eased));
+      if (k < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => {
-      cancelAnimationFrame(raf);
-      el.removeEventListener("wheel", stop);
-      el.removeEventListener("touchstart", stop);
-      el.removeEventListener("pointerdown", stop);
-    };
-  }, [reduce]);
+    return () => cancelAnimationFrame(raf);
+  }, [target, reduce]);
+  const r = 34;
+  const c = 2 * Math.PI * r;
+  return (
+    <div style={{ position: "relative", width: 92, height: 92, flexShrink: 0 }}>
+      <svg width="92" height="92" viewBox="0 0 92 92" style={{ transform: "rotate(-90deg)" }}>
+        <circle cx="46" cy="46" r={r} fill="none" stroke="var(--rule)" strokeWidth="6" />
+        <circle cx="46" cy="46" r={r} fill="none" stroke="var(--accent)" strokeWidth="6" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - pct / 100)} style={{ transition: "stroke-dashoffset 120ms linear" }} />
+      </svg>
+      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ fontSize: 26, fontWeight: 300, color: "var(--accent)", lineHeight: 1 }}>{DEMO_RESULT.grade}</span>
+        <span style={{ ...mono, fontSize: 10, color: "var(--muted)" }}>{pct}%</span>
+      </div>
+    </div>
+  );
+}
+
+function InsightCard({ title, children, delay, reduce }: { title: string; children: React.ReactNode; delay: number; reduce: boolean }) {
+  return (
+    <motion.div
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, delay: reduce ? 0 : delay, ease: [0.16, 1, 0.3, 1] }}
+      style={{ border: "1px solid var(--rule)", borderRadius: 14, background: "var(--bg-soft)", padding: "14px 15px", marginBottom: 10 }}
+    >
+      <div className="mono" style={{ fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 11 }}>{title}</div>
+      {children}
+    </motion.div>
+  );
+}
+
+/**
+ * The curated insight cards, the sections a customer actually reacts to, built
+ * from the sample data: the score, Maps position vs local competitors, the
+ * biggest problems, and the reputation gap.
+ */
+function InsightPhase({ reduce }: { reduce: boolean }) {
+  const board = DEMO_BOARD.snapshots[0]; // "landscaping raleigh nc"
+  const mapsRank = board.your_maps_rank; // 6
+  const topReviews = Math.max(...board.maps.map((m) => m.reviews ?? 0)); // 206
+
+  // The three criticals, framed as wins to gain rather than problems to fear.
+  const WINS = [
+    "Get recommended by Google and AI with schema",
+    "Load fast on mobile and keep every visitor",
+    "Turn Instagram into a steady lead source",
+  ];
 
   return (
-    <div style={{ position: "relative" }}>
-      <div
-        ref={ref}
-        className="phone-report-scroll"
-        style={{ height: 392, overflowY: "auto", overflowX: "hidden", WebkitOverflowScrolling: "touch" }}
-      >
-        <div className="phone-report-body">
-          <ScanReport place={DEMO_PLACE} result={DEMO_RESULT} board={DEMO_BOARD} teaser={false} />
+    <div className="phone-insight-scroll" style={{ height: 392, overflowY: "auto", overflowX: "hidden", padding: "2px 12px 20px", WebkitOverflowScrolling: "touch" }}>
+      {/* 1. Simpl Score */}
+      <InsightCard title="Your Simpl Score" delay={0.05} reduce={reduce}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <ScoreRing reduce={reduce} />
+          <div>
+            <div style={{ fontSize: 13.5, fontWeight: 600, lineHeight: 1.3 }}>Big upside to win.</div>
+            <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 4, lineHeight: 1.4 }}>
+              The businesses ranking above you sit in the 80s. Closing that gap is your next {DEMO_RESULT.critical_count + DEMO_RESULT.warning_count} wins.
+            </div>
+          </div>
         </div>
+      </InsightCard>
+
+      {/* 2. Who's ranking above you (Google positioning) */}
+      <InsightCard title="Who's ranking above you" delay={0.14} reduce={reduce}>
+        <div className="mono" style={{ fontSize: 10, color: "var(--muted)", marginBottom: 9 }}>“{board.keyword}”</div>
+        {board.maps.slice(0, 4).map((m) => (
+          <div key={m.title} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 8px", marginBottom: 5, borderRadius: 8, border: m.is_you ? "1px solid var(--accent)" : "1px solid var(--rule)", background: m.is_you ? "rgba(137,207,240,0.08)" : "transparent" }}>
+            <span style={{ ...mono, fontSize: 10, color: "var(--muted)", width: 14 }}>{m.rank}</span>
+            <span style={{ fontSize: 11, fontWeight: m.is_you ? 700 : 500, color: m.is_you ? "var(--accent)" : "var(--fg)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{m.is_you ? "You" : m.title}</span>
+            <span style={{ ...mono, fontSize: 10, marginLeft: "auto", color: "var(--muted)" }}>★{m.rating}</span>
+          </div>
+        ))}
+        <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, lineHeight: 1.4 }}>
+          You&apos;re <span style={{ color: "var(--accent)", fontWeight: 600 }}>#{mapsRank}</span>. Climb into the top 3 and most of these calls become yours.
+        </div>
+      </InsightCard>
+
+      {/* 3. Fastest wins (criticals, gain-framed) */}
+      <InsightCard title="Your fastest wins" delay={0.22} reduce={reduce}>
+        {WINS.map((w) => (
+          <div key={w} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 9 }}>
+            <span aria-hidden="true" style={{ color: "var(--accent)", fontSize: 12, fontWeight: 700, lineHeight: 1.2, marginTop: 1 }}>→</span>
+            <span style={{ fontSize: 12, lineHeight: 1.4 }}>{w}</span>
+          </div>
+        ))}
+      </InsightCard>
+
+      {/* 4. Reviews vs the leaders (still "who's ranking better", gain-framed) */}
+      <InsightCard title="Reviews vs the leaders" delay={0.3} reduce={reduce}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+          <span style={{ fontSize: 22, fontWeight: 600, color: "var(--accent)" }}>{DEMO_PLACE.rating}★</span>
+          <span style={{ fontSize: 12, color: "var(--muted)" }}>{DEMO_PLACE.reviewCount} reviews</span>
+        </div>
+        <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, lineHeight: 1.4 }}>
+          The leaders are near <span style={{ color: "var(--fg)", fontWeight: 600 }}>{topReviews}</span>. Reviews are the #2 local ranking factor, so catching up moves you up the map.
+        </div>
+      </InsightCard>
+
+      <div style={{ textAlign: "center", padding: "6px 0 2px" }}>
+        <span className="mono" style={{ fontSize: 9.5, letterSpacing: "0.1em", color: "var(--fg-dim)", textTransform: "uppercase" }}>+ full report unlocks free</span>
       </div>
-      {/* Bottom fade so the report dissolves into the phone chrome. */}
-      <div aria-hidden="true" style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 46, pointerEvents: "none", background: "linear-gradient(180deg, transparent, var(--bg))" }} />
     </div>
   );
 }
@@ -218,7 +276,7 @@ export default function PhoneLoop() {
               >
                 {phase === "splash" && <SplashPhase />}
                 {phase === "scan" && <ScanPhase reduce={!!reduce} />}
-                {phase === "report" && <ReportPhase reduce={!!reduce} />}
+                {phase === "report" && <InsightPhase reduce={!!reduce} />}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -228,7 +286,7 @@ export default function PhoneLoop() {
       {phase === "report" && (
         <div className="mono" style={{ fontSize: 10.5, letterSpacing: "0.06em", color: "var(--fg-dim)", display: "flex", alignItems: "center", gap: 7 }}>
           <span className="pulse-dot" style={{ width: 5, height: 5, borderRadius: 99, background: "var(--accent)" }} />
-          The real report. Scroll it.
+          Your top insights, in seconds.
         </div>
       )}
     </div>

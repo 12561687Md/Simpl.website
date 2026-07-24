@@ -63,7 +63,7 @@ Fonts: Inter (default, `var(--font-inter)`), mono for labels/microcopy via `.mon
 3. **Promise-based CTAs:** "Find what's broken", "Get your build quote, free", "See what you're missing". Never "Submit", "Learn more", "Get started".
 4. **"win / winning" is the house verb.** Never dilute to improve/optimize where win fits.
 5. **"team" never "agents".** Never sell AI delivery; sell leads, calls, jobs, time back.
-6. **Cost-of-inaction framing** in every service pitch: what staying broken costs.
+6. **Gain-framing, not loss-framing** (2026-07-23, reverses the old cost-of-inaction rule): sell the upside in every pitch. "Win an extra $X/month," "wins waiting," "fastest wins", never "losing $X," "costing you," "biggest problems." Positive dollar figures in accent/green, never alarm-red.
 7. **Open/close loops:** every page teases one adjacent thing (related service, the scan, the blog answer).
 8. **Two-tone H1s:** first line the promise, muted second line the twist/qualifier.
 9. **Diagnosis before prescription:** we never pitch a fix without referencing what the scan finds.

@@ -31,7 +31,7 @@ const PILLARS: Pillar[] = [
   {
     label: "More sales",
     headline: "More of them turn into money.",
-    body: "Traffic that doesn't convert is a vanity metric. We tighten the path from click to booked job so the leads you already earn stop leaking away.",
+    body: "Traffic that doesn't convert is a vanity metric. We tighten the path from click to booked job so more of the leads you already earn turn into paying customers.",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" {...stroke}>
         <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" />

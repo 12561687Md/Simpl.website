@@ -23,7 +23,7 @@ const STEPS = [
   {
     n: "03",
     h: "We build a real plan, not a pitch.",
-    p: "The free breakdown maps every finding against what it's actually costing you and the order to fix it in. Same breakdown whether you sign with us or not, then a free strategy call if you want to talk it through.",
+    p: "The free breakdown maps every finding against the growth it could unlock and the order to win it in. Same breakdown whether you sign with us or not, then a free strategy call if you want to talk it through.",
   },
   {
     n: "04",

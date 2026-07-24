@@ -13,7 +13,7 @@ const SERVICE_GROUPS = [
     label: "Start here",
     items: [
       { href: "/services/website-build", label: "Custom Website", desc: "Free when you start on Team" },
-      { href: "/services/quick-wins", label: "Quick Wins & Site Triage", desc: "Fix the leaks first" },
+      { href: "/services/quick-wins", label: "Quick Wins & Site Triage", desc: "Fast wins first" },
       { href: "/services/local-seo", label: "Local SEO & AI Search Visibility", desc: "Own local search" },
     ],
   },

@@ -86,7 +86,7 @@ export default function AuditFlow() {
         // plainly rather than staging a nine-step examination of nothing.
         if (!details.website) {
           setError(
-            "Google has no website listed for this business. That's the single biggest thing costing you customers right now, and it's the first thing we'd fix."
+            "Google has no website listed for this business. Adding one is the single biggest win available to you right now, and it's the first thing we'd build."
           );
           setStage("error");
           return;

@@ -436,15 +436,14 @@ export default function ScanReport({
       .sort((a, b) => (a.bestRank ?? 99) - (b.bestRank ?? 99) || b.count - a.count);
   })();
 
-  // The "you could be losing $X/month" headline stat. Labeled and grounded,
-  // not fabricated: the count of issues is real (critical + warning
-  // findings from this exact scan); the per-issue dollar value is a
-  // documented, conservative estimate of a single missed/mishandled local-
-  // service lead, used only to size the figure. It's never presented as a
-  // measurement of this business's actual traffic or revenue, hence "~"
-  // and "estimated" in the copy around it, same honesty line the rest of
-  // this report holds (real findings, escalated framing, never an invented
-  // fact).
+  // The "you could be winning an extra ~$X/month" headline stat (gain-framed
+  // per the 2026-07-23 psychology reversal: sell the upside, not the loss).
+  // Labeled and grounded, not fabricated: the count of issues is real
+  // (critical + warning findings from this exact scan); the per-issue dollar
+  // value is a documented, conservative estimate of a single missed/mishandled
+  // local-service lead, used only to size the figure. It's never presented as a
+  // measurement of this business's actual traffic or revenue, hence "~" and
+  // "estimated" in the copy around it.
   const totalIssues = result.critical_count + result.warning_count;
   const ISSUE_IMPACT_ESTIMATE = 285;
   const estimatedMonthlyImpact = totalIssues > 0 ? Math.round((totalIssues * ISSUE_IMPACT_ESTIMATE) / 10) * 10 : 0;
@@ -566,21 +565,21 @@ export default function ScanReport({
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 52 }} className="grid-audit-hero">
         <Box hi>
           <div style={{ ...rmono, fontSize: 12.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 12 }}>
-            Estimated impact
+            Estimated upside
           </div>
           {totalIssues > 0 ? (
             <>
-              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "#E05252", lineHeight: 1 }}>
-                ~${estimatedMonthlyImpact.toLocaleString()}
+              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "var(--accent)", lineHeight: 1 }}>
+                +~${estimatedMonthlyImpact.toLocaleString()}
                 <span style={{ fontSize: "0.4em", color: "var(--muted)", fontWeight: 600 }}>/mo</span>
               </div>
               <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 16px", lineHeight: 1.5 }}>
-                You could be losing this due to {totalIssues} problem{totalIssues === 1 ? "" : "s"} found on this scan.
+                You could be winning an extra ~${estimatedMonthlyImpact.toLocaleString()} a month by turning {totalIssues} {totalIssues === 1 ? "opportunity" : "opportunities"} from this scan into wins.
               </p>
               <div style={{ display: "grid", gap: 8 }}>
                 {heroFindings.map((f, i) => (
                   <div key={`${f.title}-${i}`} style={{ display: "flex", alignItems: "flex-start", gap: 9, fontSize: 13, color: "var(--ink-2, var(--muted))" }}>
-                    <span aria-hidden="true" style={{ color: f.severity === "critical" ? "#E05252" : "#E0A852", flexShrink: 0, fontSize: 10, marginTop: 3 }}>▲</span>
+                    <span aria-hidden="true" style={{ color: "var(--accent)", flexShrink: 0, fontSize: 12, marginTop: 1, fontWeight: 700 }}>→</span>
                     <span>{f.title}</span>
                   </div>
                 ))}
@@ -588,9 +587,9 @@ export default function ScanReport({
             </>
           ) : (
             <>
-              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "var(--ok)", lineHeight: 1 }}>$0</div>
+              <div style={{ ...display, fontSize: "clamp(30px, 4.2vw, 42px)", fontWeight: 700, color: "var(--ok)", lineHeight: 1 }}>Ahead of the pack</div>
               <p style={{ fontSize: 13.5, color: "var(--ink-2, var(--muted))", margin: "10px 0 0", lineHeight: 1.5 }}>
-                Nothing critical found on this scan, that's rare. Most businesses we scan have at least one leak.
+                Nothing critical found on this scan, that&apos;s rare. You&apos;re already ahead of most businesses we scan.
               </p>
             </>
           )}
@@ -715,7 +714,7 @@ export default function ScanReport({
             <div style={{ ...display, fontSize: "clamp(24px, 3.4vw, 32px)", fontWeight: 700, color: criticalCount > 0 ? "#E05252" : "var(--ok)", lineHeight: 1 }}>{criticalCount}</div>
             <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 9, lineHeight: 1.4 }}>
               {criticalCount > 0
-                ? `critical issue${criticalCount === 1 ? "" : "s"} costing you leads right now`
+                ? `critical fix${criticalCount === 1 ? "" : "es"} that would win you leads right now`
                 : "critical issues, none, nothing is actively broken"}
             </div>
           </div>
@@ -987,14 +986,14 @@ export default function ScanReport({
               ? (() => {
                   const unranked = boardSnapshots.find((s) => !s.your_maps_rank);
                   const behind = boardSnapshots.find((s) => s.your_maps_rank && s.your_maps_rank > 3);
-                  if (unranked) return `You don't appear at all for "${unranked.keyword}", that's a search your customers are running right now, going straight to a competitor. A page built specifically for that term is where you start.`;
-                  if (behind) return `For "${behind.keyword}" you sit at #${behind.your_maps_rank} in the Maps pack, outside the top 3 that get almost every click. Closing that gap is the highest-value move on this page.`;
-                  return "You're in the top 3 on the terms that matter, defend it. These rankings erode the moment the page behind them or the profile goes stale.";
+                  if (unranked) return `There's an open lane for "${unranked.keyword}", a search your customers are running right now. Build a page for that term and it's yours to win.`;
+                  if (behind) return `For "${behind.keyword}" you sit at #${behind.your_maps_rank} in the Maps pack, just outside the top 3 that get almost every click. Climbing into it is the highest-value win on this page.`;
+                  return "You're in the top 3 on the terms that matter, keep it. Stay active and those rankings keep sending you the calls.";
                 })()
-              : "Google can't rank a page it can't understand. Missing titles, schema, and metadata decide whether you show up for the exact terms your customers type.",
+              : "Google ranks a page it can understand. Adding titles, schema, and metadata is what earns you the exact terms your customers type.",
             opportunityKeywords.length > 0
-              ? `"${opportunityKeywords[0].keyword}" gets about ${(opportunityKeywords[0].search_volume ?? 0).toLocaleString()} searches a month and you're not competing for it. That's a page you don't have yet.`
-              : "Anything outside the top 3 is losing clicks to whoever's above you, the first result takes roughly a third of all clicks.",
+              ? `"${opportunityKeywords[0].keyword}" gets about ${(opportunityKeywords[0].search_volume ?? 0).toLocaleString()} searches a month and it's open for the taking. That's a page waiting to win you traffic.`
+              : "Claim the top 3 and the clicks come to you, the first result takes roughly a third of all clicks.",
             "Local search compounds slowly and pays the longest. The businesses above you started this months ago, the only fix is to start now.",
           ]}
         />
@@ -1112,10 +1111,10 @@ export default function ScanReport({
           }}
         >
           <div style={{ ...rmono, fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>
-            {totalIssues > 0 ? `${totalIssues} issue${totalIssues === 1 ? "" : "s"} costing you leads right now` : "Your next move"}
+            {totalIssues > 0 ? `${totalIssues} win${totalIssues === 1 ? "" : "s"} waiting for ${businessName}` : "Your next move"}
           </div>
           <h2 style={{ ...display, margin: "0 auto", maxWidth: "20ch", fontSize: "clamp(24px, 3.6vw, 38px)", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.08 }}>
-            Let&apos;s fix what&apos;s costing {businessName} leads.
+            Let&apos;s turn these into wins for {businessName}.
           </h2>
           <p style={{ color: "var(--muted)", fontSize: "clamp(15px, 1.6vw, 17px)", lineHeight: 1.6, margin: "18px auto 0", maxWidth: "58ch" }}>
             We&apos;ll take this exact report, fix the issues on it in priority order, and get you ranking where your
