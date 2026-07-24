@@ -210,7 +210,7 @@ function CompetitorsTab({ reduce }: { reduce: boolean }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, delay: reduce ? 0 : 0.7 }}
         onClick={() => {
-          window.location.href = "/start";
+          window.location.href = "/start-now";
         }}
         className="cta-primary"
         style={{
@@ -261,17 +261,118 @@ function FixedTab({ reduce }: { reduce: boolean }) {
   );
 }
 
+/* ---- Boot phases: splash (app launch) -> scan (live audit running) -> tabs ---- */
+
+function SplashPhase() {
+  return (
+    <div style={{ minHeight: 372, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18 }}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: [0.85, 1.04, 1] }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <SimplMark size={52} inverted />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.4 }}
+        style={{ ...mono, fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--muted)" }}
+      >
+        Simpl
+      </motion.div>
+      {/* Indeterminate loader bar, like a real app cold start. */}
+      <div style={{ width: 92, height: 3, borderRadius: 99, background: "var(--rule)", overflow: "hidden", marginTop: 4 }}>
+        <motion.div
+          initial={{ x: -40 }}
+          animate={{ x: 96 }}
+          transition={{ duration: 0.9, repeat: Infinity, ease: "easeInOut" }}
+          style={{ width: 40, height: "100%", borderRadius: 99, background: "var(--accent)" }}
+        />
+      </div>
+    </div>
+  );
+}
+
+const SCAN_CHECKS = [
+  "Finding your business on Google",
+  "Reading your website",
+  "Checking your reviews",
+  "Comparing local competitors",
+  "Scoring 6 categories",
+];
+
+function ScanPhase({ reduce }: { reduce: boolean }) {
+  return (
+    <div style={{ minHeight: 372, paddingTop: 26 }}>
+      <div style={{ textAlign: "center", marginBottom: 22 }}>
+        <div style={{ fontSize: 14.5, fontWeight: 600 }}>Scanning your presence…</div>
+        <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 3 }}>The same audit we run for real clients.</div>
+      </div>
+      {SCAN_CHECKS.map((c, i) => (
+        <motion.div
+          key={c}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: reduce ? 0 : 0.2 + i * 0.55 }}
+          className="phone-note"
+          style={{ display: "flex", alignItems: "center", gap: 8 }}
+        >
+          {/* Check flips from spinner-dot to accent tick as its line "completes". */}
+          <motion.span
+            aria-hidden="true"
+            initial={{ background: "var(--rule-strong)" }}
+            animate={{ background: "var(--accent)" }}
+            transition={{ delay: reduce ? 0 : 0.2 + i * 0.55 + 0.4, duration: 0.2 }}
+            style={{ width: 6, height: 6, borderRadius: 99, flexShrink: 0 }}
+          />
+          <span style={{ fontSize: 12.5, fontWeight: 500, lineHeight: 1.35 }}>{c}</span>
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: reduce ? 0 : 0.2 + i * 0.55 + 0.45 }}
+            className="mono"
+            style={{ fontSize: 9, color: "var(--accent)", marginLeft: "auto" }}
+          >
+            ✓
+          </motion.span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+type Phase = "splash" | "scan" | "tabs";
+
 export default function PhoneLoop({ optimized = false }: { optimized?: boolean }) {
   const [idx, setIdx] = useState(0);
+  const [phase, setPhase] = useState<Phase>(optimized ? "tabs" : "splash");
   const reduce = useReducedMotion();
 
+  // Boot sequence: splash (1.4s) -> scan (3.8s) -> tab loop. Reduced motion
+  // (or the frozen optimized panel) skips straight to the content.
   useEffect(() => {
-    if (reduce || optimized) return;
-    const t = setInterval(() => setIdx((i) => (i + 1) % TABS.length), 4500);
-    return () => clearInterval(t);
+    if (optimized) return;
+    if (reduce) {
+      setPhase("tabs");
+      return;
+    }
+    const t1 = setTimeout(() => setPhase("scan"), 1400);
+    const t2 = setTimeout(() => setPhase("tabs"), 1400 + 3800);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, [reduce, optimized]);
 
+  useEffect(() => {
+    if (reduce || optimized || phase !== "tabs") return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % TABS.length), 4500);
+    return () => clearInterval(t);
+  }, [reduce, optimized, phase]);
+
   const tab: Tab = optimized ? "overview" : TABS[idx];
+  const booting = phase !== "tabs";
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}>
@@ -279,29 +380,32 @@ export default function PhoneLoop({ optimized = false }: { optimized?: boolean }
         <div className="phone-screen">
           <div className="phone-island" aria-hidden="true" />
           <StatusBar />
-          <AppHeader tab={tab} optimized={optimized} />
+          {/* Header hides during splash, exactly like a native cold start. */}
+          {phase !== "splash" && <AppHeader tab={phase === "scan" ? "overview" : tab} optimized={optimized} />}
 
           <div style={{ padding: "4px 12px 16px", minHeight: 372 }}>
             <AnimatePresence mode="wait">
               <motion.div
-                key={tab + (optimized ? "-opt" : "")}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, x: 24 }}
+                key={phase === "tabs" ? tab + (optimized ? "-opt" : "") : phase}
+                initial={reduce ? { opacity: 0 } : { opacity: 0, x: phase === "tabs" ? 24 : 0 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={reduce ? { opacity: 0 } : { opacity: 0, x: -24 }}
+                exit={reduce ? { opacity: 0 } : { opacity: 0, x: phase === "tabs" ? -24 : 0 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
-                {tab === "overview" && <OverviewTab optimized={optimized} reduce={!!reduce} />}
-                {tab === "rankings" && <RankingsTab reduce={!!reduce} />}
-                {tab === "competitors" && <CompetitorsTab reduce={!!reduce} />}
-                {tab === "fixed" && <FixedTab reduce={!!reduce} />}
+                {phase === "splash" && <SplashPhase />}
+                {phase === "scan" && <ScanPhase reduce={!!reduce} />}
+                {phase === "tabs" && tab === "overview" && <OverviewTab optimized={optimized} reduce={!!reduce} />}
+                {phase === "tabs" && tab === "rankings" && <RankingsTab reduce={!!reduce} />}
+                {phase === "tabs" && tab === "competitors" && <CompetitorsTab reduce={!!reduce} />}
+                {phase === "tabs" && tab === "fixed" && <FixedTab reduce={!!reduce} />}
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
       </div>
 
-      {/* Progress dots (hidden in the frozen optimized view). */}
-      {!optimized && (
+      {/* Progress dots (hidden while booting and in the frozen optimized view). */}
+      {!optimized && !booting && (
         <div style={{ display: "flex", gap: 7 }} aria-hidden="true">
           {TABS.map((t, i) => (
             <span
