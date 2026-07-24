@@ -944,8 +944,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 .blog-card {
   border: 1px solid var(--rule);
-  border-radius: 12px;
-  padding: 26px 24px;
+  border-radius: 14px;
+  padding: 16px 16px 22px;
   background: var(--bg-soft);
   transition: border-color 180ms ease, transform 180ms ease;
 }
@@ -953,9 +953,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   border-color: var(--accent);
   transform: translateY(-3px);
 }
+.blog-card-img { transition: transform 400ms ease; }
+.blog-card:hover .blog-card-img,
+.blog-featured:hover .blog-card-img { transform: scale(1.045); }
+.blog-featured { transition: border-color 200ms ease; }
+.blog-featured:hover { border-color: var(--accent); }
+@media (max-width: 760px) { .blog-featured { grid-template-columns: 1fr !important; } }
 @media (prefers-reduced-motion: reduce) {
   .blog-card { transition: border-color 180ms ease; }
   .blog-card:hover { transform: none; }
+  .blog-card-img { transition: none; }
+  .blog-card:hover .blog-card-img,
+  .blog-featured:hover .blog-card-img { transform: none; }
 }
 
 /* /what-am-i-missing: scanner and form side by side, stacked on mobile. */
@@ -1000,3 +1009,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .service-include:hover{border-color:var(--rule-strong);background:var(--bg-elev-2);}
 .service-chip{transition:border-color 200ms ease,color 200ms ease;}
 .service-chip:hover{border-color:var(--accent);color:var(--accent);}
+.blog-related{transition:border-color 180ms ease;}
+.blog-related:hover{border-color:var(--accent);}

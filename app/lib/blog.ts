@@ -44,10 +44,34 @@ export interface BlogPost {
   category: string;
   readMinutes: number;
   updated: string; // ISO date
+  /** Real (photographed, not AI) hero image in /public/blog, 16:9 WebP. */
+  image: string;
+  imageAlt: string;
+  /** Pexels photographer credit (license: free, attribution appreciated). */
+  imageCredit: string;
+  /** Answer-first "Key takeaways" box, 2-4 bullets an LLM can lift whole. */
+  keyTakeaways: string[];
+  /** The pillar/cornerstone post gets the hero slot on the hub. */
+  featured?: boolean;
   intro: string;
   sections: BlogSection[];
   faqs: BlogFAQ[];
   sources: BlogLink[];
+}
+
+/**
+ * Content pillars (the cluster model). Order controls the hub's category
+ * shelves and the filter bar. Every post's `category` must match a label here.
+ */
+export const BLOG_CATEGORIES: { label: string; slug: string; blurb: string }[] = [
+  { label: "Local SEO", slug: "local-seo", blurb: "Rank in Google Maps and the local 3-pack." },
+  { label: "AI Search", slug: "ai-search", blurb: "Get recommended by ChatGPT, Gemini, and AI Overviews." },
+  { label: "Reputation", slug: "reputation", blurb: "Reviews, ratings, and the trust that ranks you." },
+  { label: "Lead Capture", slug: "lead-capture", blurb: "Turn the traffic you already have into booked jobs." },
+];
+
+export function categorySlug(label: string): string {
+  return BLOG_CATEGORIES.find((c) => c.label === label)?.slug ?? "local-seo";
 }
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -61,6 +85,15 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Local SEO",
     readMinutes: 6,
     updated: "2026-07-17",
+    image: "/blog/how-to-rank-higher-on-google-maps.webp",
+    imageAlt: "A person holding a phone open to Google Maps on a city street",
+    imageCredit: "Theo Decker / Pexels",
+    featured: true,
+    keyTakeaways: [
+      "Google ranks the local 3-pack on three things: relevance, distance, and prominence.",
+      "Distance is mostly fixed, so a complete Google Business Profile and a steady stream of recent reviews are the two levers you actually control.",
+      "Keyword-stuffing your business name is against the rules and reportable; consistent name, address, and phone across the web matters more.",
+    ],
     intro:
       "When someone searches “plumber near me,” Google shows three businesses in a map at the top. That's the local 3-pack, and for a local service business it's the single most valuable piece of real estate online. Here's what actually decides who lands there, in order of how much it matters.",
     sections: [
@@ -115,9 +148,17 @@ export const BLOG_POSTS: BlogPost[] = [
     description:
       "If you can't find your own business on Google, one of a handful of things is usually wrong. Here's how to diagnose it, in order.",
     question: "Why is my website not showing up on Google?",
-    category: "SEO",
+    category: "Local SEO",
     readMinutes: 5,
     updated: "2026-07-17",
+    image: "/blog/why-is-my-website-not-showing-up-on-google.webp",
+    imageAlt: "A laptop on a desk showing a search engine, hands typing",
+    imageCredit: "cottonbro studio / Pexels",
+    keyTakeaways: [
+      "Search site:yourdomain.com first: no results means Google has not indexed you yet, not that you rank poorly.",
+      "The usual culprits are a leftover noindex tag or robots.txt block from development, a brand-new domain, or thin content with no clear topic per page.",
+      "Google Search Console is free and tells you exactly whether Google has crawled a page and why it is or is not indexed.",
+    ],
     intro:
       "You built a website and you can't find it on Google. That's frustrating, and it's almost always one of a small number of fixable problems. Work through these in order.",
     sections: [
@@ -176,6 +217,14 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Reputation",
     readMinutes: 4,
     updated: "2026-07-17",
+    image: "/blog/how-do-i-get-more-google-reviews.webp",
+    imageAlt: "A hand holding a phone showing a five-star rating",
+    imageCredit: "Towfiqu barbhuiya / Pexels",
+    keyTakeaways: [
+      "Make the ask one tap: use your Google review link and send it right after the job, when satisfaction is highest.",
+      "Never buy, gate, or fake reviews. It violates Google policy and the FTC's fake-review rule, and it is detectable.",
+      "Reply to every review, good and bad. Owner responses are a ranking signal and reassure the next reader.",
+    ],
     intro:
       "Reviews do two jobs at once: they convince the next customer to call, and they push you up in local search. The good news is that earning them is mostly about making it easy and asking at the right moment. The bad news is that a few tempting shortcuts will get you penalized.",
     sections: [
@@ -225,6 +274,14 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "AI Search",
     readMinutes: 5,
     updated: "2026-07-23",
+    image: "/blog/how-to-get-your-business-recommended-by-ai.webp",
+    imageAlt: "A person using an AI assistant on a laptop",
+    imageCredit: "Matheus Bertelli / Pexels",
+    keyTakeaways: [
+      "AI assistants recommend businesses they can read: structured data, complete listings, consistent details, and real reviews.",
+      "You cannot pay for placement in AI answers. They pull from the open web, so machine-readability is the whole game.",
+      "The same work that wins the Google local 3-pack wins AI recommendations, plus an llms.txt file and schema markup on every page.",
+    ],
     intro:
       "A growing share of customers don't scroll results anymore, they ask ChatGPT, Gemini, or Google's AI Overviews \"who's the best remodeler near me\" and call whoever gets named. AI assistants don't take ads and don't have a submission form. They recommend the businesses they can read, verify, and trust. That part is within your control.",
     sections: [
@@ -288,6 +345,14 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Local SEO",
     readMinutes: 4,
     updated: "2026-07-23",
+    image: "/blog/how-long-does-local-seo-take.webp",
+    imageAlt: "A laptop showing a rising analytics chart on a desk",
+    imageCredit: "RDNE Stock project / Pexels",
+    keyTakeaways: [
+      "Local SEO is several clocks at once: broken technical issues fix in days, profile and review gains land in weeks, competitive rankings compound over months.",
+      "Google itself says most SEO takes four months to a year, and independent studies of millions of pages agree.",
+      "Track Search Console impressions as your leading indicator: they climb before clicks, and clicks climb before calls.",
+    ],
     intro:
       "Anyone who promises a #1 ranking in two weeks is lying to you, and anyone who says \"SEO takes a year\" is hiding the fast wins. The honest answer is that local SEO is several different clocks running at once. Here's what actually happens in days, weeks, and months, so you know whether the work is working.",
     sections: [
@@ -345,6 +410,14 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Lead Capture",
     readMinutes: 4,
     updated: "2026-07-23",
+    image: "/blog/what-happens-when-you-miss-a-customer-call.webp",
+    imageAlt: "A tradesperson working on a job while a phone goes unanswered",
+    imageCredit: "RDNE Stock project / Pexels",
+    keyTakeaways: [
+      "A missed call rarely becomes a voicemail. The customer just dials the next business on the list.",
+      "Harvard Business Review found responding within an hour makes a lead nearly seven times likelier to qualify, and most companies respond far too slowly.",
+      "The fix is a missed-call text-back: an instant automatic text keeps the lead warm so you can reply when your hands are free.",
+    ],
     intro:
       "You paid for the website, the listing, and maybe the ads. The phone rings while you're on a ladder, in a crawlspace, or mid-quote with another customer. It goes to voicemail. Most of the time, that lead is gone: not because your work isn't good, but because a competitor answered and you didn't. This is the most expensive leak in local business marketing, and the least talked about.",
     sections: [
