@@ -1,27 +1,22 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
+import { TextHoverEffect, FooterBackgroundGradient } from "@/components/ui/hover-footer";
 import PreFooterCTA from "./PreFooterCTA";
 
 /**
- * Site footer. Structure adapted from the mvpblocks 4-column reference
- * (app/components/ui/footer-column.tsx) but rebuilt on the Simpl theme with
- * real links, contact, and the brand mark, inline styles + CSS vars to match
- * the rest of the site.
+ * Site footer: real Simpl links + contact, with the big "Simpl" TextHoverEffect
+ * behind it (cursor-follow reveal) and a soft accent gradient. Dead-end links
+ * (/scan, a bare duplicate of the hero tool; /results, an empty report with no
+ * scan data) were removed, every link here is a real destination.
  *
- * `showLeadForm` (default true) renders the slide-in <PreFooterCTA> above the
- * footer on key pages; pages that ARE a form (start-now) or don't want it
- * (legal) pass showLeadForm={false}.
+ * `showLeadForm` (default true) renders the slide-in <PreFooterCTA> above;
+ * pages that ARE a form (start-now) or don't want it (legal) pass false.
  */
 
 const linkStyle: React.CSSProperties = { color: "var(--muted)", textDecoration: "none", fontSize: 14, lineHeight: 1.5 };
 const colLabel: React.CSSProperties = { fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--fg-dim)", marginBottom: 18 };
 
-const PRODUCT = [
-  { label: "Free Scan", href: "/scan" },
-  { label: "Why Simpl", href: "/about" },
-  { label: "Results", href: "/results" },
-];
 const SERVICES = [
   { label: "Custom Website", href: "/services/website-build" },
   { label: "Quick Wins", href: "/services/quick-wins" },
@@ -30,11 +25,11 @@ const SERVICES = [
   { label: "Organic Growth", href: "/services/organic-growth" },
   { label: "Fractional CMO", href: "/services/strategy" },
 ];
-const RESOURCES = [
+const COMPANY = [
+  { label: "Why Simpl", href: "/about" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
-  { label: "Success Stories", href: "/success-stories" },
 ];
 
 function Column({ label, links }: { label: string; links: { label: string; href: string }[] }) {
@@ -54,9 +49,10 @@ export default function Footer({ showLeadForm = true, sourcePage }: { showLeadFo
   return (
     <>
       {showLeadForm && <PreFooterCTA sourcePage={sourcePage} />}
-      <footer style={{ borderTop: "1px solid var(--rule)", background: "var(--bg-soft)" }}>
-        <div style={{ maxWidth: 1120, margin: "0 auto", padding: "72px 32px 40px" }}>
-          <div className="grid-footer" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr 1fr", gap: 48, marginBottom: 56 }}>
+      <footer style={{ position: "relative", borderTop: "1px solid var(--rule)", background: "var(--bg-soft)", overflow: "hidden" }}>
+        <FooterBackgroundGradient />
+        <div style={{ position: "relative", zIndex: 2, maxWidth: 1120, margin: "0 auto", padding: "72px 32px 24px" }}>
+          <div className="grid-footer" style={{ display: "grid", gridTemplateColumns: "1.7fr 1fr 1fr", gap: 48, marginBottom: 44 }}>
             {/* Brand + contact */}
             <div>
               <Link href="/" aria-label="Simpl home" style={{ textDecoration: "none", display: "inline-flex" }}>
@@ -83,13 +79,12 @@ export default function Footer({ showLeadForm = true, sourcePage }: { showLeadFo
               </ul>
             </div>
 
-            <Column label="Product" links={PRODUCT} />
             <Column label="Services" links={SERVICES} />
-            <Column label="Resources" links={RESOURCES} />
+            <Column label="Company" links={COMPANY} />
           </div>
 
           {/* Bottom bar */}
-          <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+          <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 22, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
             <div className="mono" style={{ fontSize: 11, color: "var(--fg-dim)", letterSpacing: "0.04em" }}>
               &copy; {new Date().getFullYear()} Simpl. All rights reserved.
             </div>
@@ -98,6 +93,11 @@ export default function Footer({ showLeadForm = true, sourcePage }: { showLeadFo
               <Link href="/terms" className="footer-link" style={{ ...linkStyle, fontSize: 12.5 }}>Terms</Link>
             </div>
           </div>
+        </div>
+
+        {/* Big brand wordmark behind everything, cursor-reveal on hover. */}
+        <div aria-hidden="true" className="footer-wordmark" style={{ position: "relative", zIndex: 1, height: 150, marginTop: -30, opacity: 0.9, pointerEvents: "auto" }}>
+          <TextHoverEffect text="Simpl" duration={0.25} />
         </div>
       </footer>
     </>
