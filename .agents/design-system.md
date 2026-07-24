@@ -101,4 +101,6 @@ Fonts: Inter (default, `var(--font-inter)`), mono for labels/microcopy via `.mon
 | `/privacy`, `/terms` | ✅ legal | de-priced 2026-07-23; style light-touch only |
 | `/audit` | 🔶 flow-critical | the live scan flow; any styling pass must not break ScanGate/report |
 
-**Known cross-page debts:** "Trusted by experts" claim still live (not literally true); FAQ answer "the whole reason the pricing looks the way it does" reads odd post-de-pricing.
+**The phone (PhoneLoop) is deliberately a LIGHT app screen** (2026-07-23 redesign to Owner.com quality): the rest of the site is dark, but the in-phone "app" is light/white on a baby-blue glow so it pops, big score gauge, category grades, "who's ranking above you." It opens with the vital-sign pulse-logo loading animation. Don't "fix" it to match the dark theme; the contrast is the point.
+
+**Known cross-page debts:** FAQ answer "the whole reason the pricing looks the way it does" reads odd post-de-pricing. (The "Trusted by experts" claim was retired.)
