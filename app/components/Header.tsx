@@ -28,9 +28,10 @@ const SERVICE_GROUPS = [
 ];
 
 const ALSO_AVAILABLE = [
-  { label: "Google Business Profile", desc: "Own the local map" },
-  { label: "AI Response/Quoting Agent", desc: "Never miss a lead" },
-  { label: "Free Strategy Call", desc: "Free, once you've unlocked your scan" },
+  { label: "Google Business Profile", desc: "Own the local map", href: "/services/google-business-profile" },
+  { label: "AI Response/Quoting Agent", desc: "Never miss a lead", href: "/services/ai-quoting-agent" },
+  // The strategy call's real home IS the booking page, so this one stays.
+  { label: "Free Strategy Call", desc: "Free, once you've unlocked your scan", href: "/start-now" },
 ];
 
 const RESOURCE_LINKS = [
@@ -179,7 +180,7 @@ export default function Header() {
                         {ALSO_AVAILABLE.map((s) => (
                           <Link
                             key={s.label}
-                            href="/start-now"
+                            href={s.href}
                             className="no-underline flex items-center justify-between gap-4 rounded-lg px-2.5 py-2.5 text-sm transition-colors hover:bg-[var(--bg-elev-2)]"
                             style={{ color: "var(--fg)" }}
                           >
