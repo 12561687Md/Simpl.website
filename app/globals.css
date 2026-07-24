@@ -996,3 +996,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .grid-audit-bar { grid-template-columns: 84px 1fr 34px !important; gap: 10px !important; }
   .grid-audit-diag-row { grid-template-columns: 1fr !important; gap: 4px !important; }
 }
+.service-include{transition:border-color 200ms ease,background 200ms ease;}
+.service-include:hover{border-color:var(--rule-strong);background:var(--bg-elev-2);}
+.service-chip{transition:border-color 200ms ease,color 200ms ease;}
+.service-chip:hover{border-color:var(--accent);color:var(--accent);}
