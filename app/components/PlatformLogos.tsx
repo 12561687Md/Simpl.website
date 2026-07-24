@@ -60,10 +60,10 @@ export default function PlatformLogos() {
 
   return (
     <>
-      {/* NOTE: "Trusted by experts" over platform logos is not literally true
-          yet (these are integrations, not client/expert endorsements, and there
-          are 0 signed clients). Kept per explicit request for local preview.
-          Change or remove before this homepage is committed + deployed. */}
+      {/* These are the platforms we work across (integrations/tooling), so the
+          line says exactly that. The old "Trusted by experts" implied
+          endorsements we don't have yet; swap in real client proof here when
+          it exists. */}
       <p
         style={{
           textAlign: "center",
@@ -74,7 +74,7 @@ export default function PlatformLogos() {
           color: "var(--muted)",
         }}
       >
-        Trusted by <span style={{ color: "var(--fg)" }}>experts</span>
+        Every platform your business <span style={{ color: "var(--fg)" }}>wins on</span>
       </p>
       <div
       style={{

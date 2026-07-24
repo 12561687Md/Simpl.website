@@ -61,7 +61,7 @@ const FAQS = [
   },
   {
     q: "How is Simpl different from a traditional marketing agency?",
-    a: "You're not paying for an account manager, a sales team, or an office. The team that diagnoses your presence is the team that fixes it, and every recommendation traces back to a measured finding in your scan, not a package someone needs to sell you.",
+    a: "You're not paying for an account manager, a sales team, or an office, which is why Simpl costs less than the agencies quoting you monthly retainers. The team that diagnoses your presence is the team that fixes it, and every recommendation traces back to a measured finding in your scan, not a package someone needs to sell you.",
   },
   {
     q: "How much does Simpl cost?",
