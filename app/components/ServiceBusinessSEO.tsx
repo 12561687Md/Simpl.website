@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import ScrollReveal, { StaggerReveal, StaggerItem } from "./ScrollReveal";
+import ScrollReveal from "./ScrollReveal";
+import ProcessTimeline from "@/components/ui/process-timeline";
 
 /**
  * Homepage section for the ICP: SERVICE-BASED BUSINESSES. Instead of a wall of
@@ -51,20 +52,10 @@ export default function ServiceBusinessSEO() {
           </p>
         </ScrollReveal>
 
-        {/* The 4-step process */}
-        <StaggerReveal style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }} className="grid-process">
-          {STEPS.map((s) => (
-            <StaggerItem key={s.n}>
-              <div className="process-card" style={{ position: "relative", height: "100%", background: "var(--bg-elev)", border: "1px solid var(--rule)", borderRadius: 16, padding: "26px 24px 28px", overflow: "hidden" }}>
-                <div className="mono" style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)", letterSpacing: "0.06em", marginBottom: 16 }}>{s.n}</div>
-                <h3 style={{ margin: "0 0 12px", fontSize: 19, fontWeight: 600, letterSpacing: "-0.01em" }}>{s.title}</h3>
-                <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: "var(--muted)" }}>{s.body}</p>
-                {/* Oversized ghost number in the corner, like the reference layout. */}
-                <span aria-hidden="true" style={{ position: "absolute", right: 14, bottom: -14, fontSize: 84, fontWeight: 800, lineHeight: 1, color: "var(--rule)", opacity: 0.6, letterSpacing: "-0.04em" }}>{s.n[1]}</span>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerReveal>
+        {/* The 4-step process as a horizontal timeline: an animated dashed
+            line weaves left-to-right through the steps with a traveling
+            pulse dot (the vital-sign motif in motion). */}
+        <ProcessTimeline steps={STEPS} />
 
         {/* CTA */}
         <ScrollReveal>

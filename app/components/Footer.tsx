@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
-import { TextHoverEffect, FooterBackgroundGradient } from "@/components/ui/hover-footer";
+import { FooterBackgroundGradient } from "@/components/ui/hover-footer";
 import PreFooterCTA from "./PreFooterCTA";
 
 /**
- * Site footer: real Simpl links + contact, with the big "Simpl" TextHoverEffect
- * behind it (cursor-follow reveal) and a soft accent gradient. Dead-end links
+ * Site footer: real Simpl links + contact, with the FULL brand wordmark (the
+ * vitalsign-I and the identity dot) spread across the entire footer as a
+ * ghosted background watermark, plus a soft accent gradient. Dead-end links
  * (/scan, a bare duplicate of the hero tool; /results, an empty report with no
  * scan data) were removed, every link here is a real destination.
  *
@@ -51,6 +52,13 @@ export default function Footer({ showLeadForm = true, sourcePage }: { showLeadFo
       {showLeadForm && <PreFooterCTA sourcePage={sourcePage} />}
       <footer style={{ position: "relative", borderTop: "1px solid var(--rule)", background: "var(--bg-soft)", overflow: "hidden" }}>
         <FooterBackgroundGradient />
+        {/* The full Simpl wordmark (vitalsign-I + dot) spread edge to edge
+            behind everything, a ghosted brand watermark. CSS width beats the
+            SVG's width attribute, so it stretches to fill while keeping its
+            aspect via height:auto. */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 1, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
+          <SimplWordmark size={430} style={{ width: "108%", height: "auto", opacity: 0.05, minWidth: 900 }} />
+        </div>
         <div style={{ position: "relative", zIndex: 2, maxWidth: 1120, margin: "0 auto", padding: "72px 32px 24px" }}>
           <div className="grid-footer" style={{ display: "grid", gridTemplateColumns: "1.7fr 1fr 1fr", gap: 48, marginBottom: 44 }}>
             {/* Brand + contact */}
@@ -95,10 +103,6 @@ export default function Footer({ showLeadForm = true, sourcePage }: { showLeadFo
           </div>
         </div>
 
-        {/* Big brand wordmark behind everything, cursor-reveal on hover. */}
-        <div aria-hidden="true" className="footer-wordmark" style={{ position: "relative", zIndex: 1, height: 150, marginTop: -30, opacity: 0.9, pointerEvents: "auto" }}>
-          <TextHoverEffect text="Simpl" duration={0.25} />
-        </div>
       </footer>
     </>
   );

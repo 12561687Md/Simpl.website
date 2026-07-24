@@ -824,17 +824,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   min-height: 452px;
 }
 
-/* The real ScanReport rendered inside the phone. It's laid out at a slightly
-   wider virtual width so its mobile breakpoints have room, then zoomed down to
-   the screen width, same trick the old browser-framed AuditDemo used. The
-   inner scrollbar is hidden so it reads as an app surface, not a webpage. */
-.phone-report-scroll { scrollbar-width: none; }
-.phone-report-scroll::-webkit-scrollbar { display: none; }
-.phone-report-body {
-  width: 340px;
-  zoom: 0.74;
-  padding: 4px 12px 20px;
-}
+
 /* Diagonal glass glare sweeping across the top-left of the screen — the tell
    that sells "real device" more than any bezel detail. Non-interactive so it
    never blocks the CTA inside the mock. */
@@ -1029,7 +1019,11 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .footer-link, .footer-contact { transition: color 160ms ease; }
 .footer-link:hover, .footer-contact:hover { color: var(--fg); }
 
-/* Service-business process cards */
-.process-card { transition: border-color 200ms ease, transform 200ms ease; }
-.process-card:hover { border-color: var(--accent-line); transform: translateY(-4px); }
-@media (prefers-reduced-motion: reduce) { .process-card:hover { transform: none; } }
+/* Horizontal process timeline (components/ui/process-timeline.tsx):
+   desktop is an absolute-positioned stage with the SVG connector; mobile
+   stacks the cards on a dashed accent spine. */
+@media (max-width: 900px) {
+  .pt-wrap { height: auto !important; display: grid; gap: 30px; padding-left: 20px; border-left: 2px dashed var(--accent-line); }
+  .pt-svg { display: none !important; }
+  .pt-card { position: static !important; width: 100% !important; min-width: 0 !important; transform: none !important; }
+}

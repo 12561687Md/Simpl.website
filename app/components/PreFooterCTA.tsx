@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { motion, useReducedMotion } from "framer-motion";
 import ContactForm from "./ContactForm";
-import { SlideIn } from "./ScrollReveal";
 
 /**
  * The lead form that slides up into view as a visitor reaches the bottom of a
@@ -14,13 +14,19 @@ import { SlideIn } from "./ScrollReveal";
 export default function PreFooterCTA({ sourcePage }: { sourcePage?: string }) {
   const pathname = usePathname();
   const src = sourcePage ?? pathname ?? "/";
+  const reduce = useReducedMotion();
   return (
     <section style={{ borderTop: "1px solid var(--rule)", background: "var(--bg)" }}>
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "clamp(64px, 9vw, 112px) 32px" }}>
-        <SlideIn
-          from="bottom"
-          distance={120}
-          duration={1.1}
+        {/* Own reveal instead of SlideIn: SlideIn's -80px viewport margin can
+            never fully fire for the last element on a page (the form sat at
+            opacity 0 / flickered at the bottom). amount-based trigger with a
+            small rise is bottom-safe. */}
+        <motion.div
+          initial={reduce ? { opacity: 1 } : { opacity: 0, y: 56 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           style={{
             borderRadius: 24,
             border: "1px solid var(--accent-line)",
@@ -44,7 +50,7 @@ export default function PreFooterCTA({ sourcePage }: { sourcePage?: string }) {
             </div>
             <ContactForm ctaLabel="Send it over" sourcePage={src} />
           </div>
-        </SlideIn>
+        </motion.div>
       </div>
     </section>
   );
