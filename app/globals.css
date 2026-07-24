@@ -822,6 +822,18 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   background: var(--bg);
   min-height: 452px;
 }
+
+/* The real ScanReport rendered inside the phone. It's laid out at a slightly
+   wider virtual width so its mobile breakpoints have room, then zoomed down to
+   the screen width, same trick the old browser-framed AuditDemo used. The
+   inner scrollbar is hidden so it reads as an app surface, not a webpage. */
+.phone-report-scroll { scrollbar-width: none; }
+.phone-report-scroll::-webkit-scrollbar { display: none; }
+.phone-report-body {
+  width: 340px;
+  zoom: 0.74;
+  padding: 4px 12px 20px;
+}
 /* Diagonal glass glare sweeping across the top-left of the screen — the tell
    that sells "real device" more than any bezel detail. Non-interactive so it
    never blocks the CTA inside the mock. */

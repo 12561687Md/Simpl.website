@@ -4,12 +4,11 @@ import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
 import SpaceField from "./components/SpaceField";
 import FloatingCTA from "./components/FloatingCTA";
-import AuditDemo from "./components/AuditDemo";
 import CategoryShowcase from "./components/CategoryShowcase";
 import WhyOwnersHireUs from "./components/WhyOwnersHireUs";
 import TrustStats from "./components/TrustStats";
 import ScanTool from "./components/ScanTool";
-import ScrollReveal, { SlideIn } from "./components/ScrollReveal";
+import ScrollReveal from "./components/ScrollReveal";
 import OutcomePillars from "./components/OutcomePillars";
 import TeamSection from "./components/TeamSection";
 
@@ -132,47 +131,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Simpl Score + a scrollable live sample of the real audit */}
-        <section data-section="simpl-score" style={{ position: "relative", padding: "96px 0", overflow: "hidden" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px" }}>
-            {/* Audit sample on the left (wider), copy on the right, so the two
-                sit side by side instead of stacking. grid-score stacks them on
-                mobile. */}
-            <div className="grid-score" style={{ gridTemplateColumns: "minmax(0, 1.25fr) minmax(0, 0.75fr)" }}>
-              <ScrollReveal direction="left">
-                <AuditDemo />
-              </ScrollReveal>
-              {/* Accent-tinted card (its own colorful style, not the neutral
-                  boxes), sliding up from far below and slow. SEO-weighted (names
-                  the graded signals) and conversion-framed, pointing at the live
-                  sample instead of a button. */}
-              <SlideIn
-                from="bottom"
-                distance={120}
-                duration={1.5}
-                className="score-copy-card"
-                style={{
-                  padding: "36px 32px",
-                  borderRadius: 22,
-                  border: "1px solid rgba(137,207,240,0.32)",
-                  background: "linear-gradient(155deg, rgba(137,207,240,0.14), rgba(137,207,240,0.02) 62%)",
-                  boxShadow: "0 34px 90px -44px rgba(137,207,240,0.5), inset 0 1px 0 rgba(255,255,255,0.04)",
-                }}
-              >
-                <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 16 }}>The Simpl Score</div>
-                <h2 style={{ margin: "0 0 16px", fontSize: "clamp(24px, 2.6vw, 32px)", lineHeight: 1.15, letterSpacing: "-0.02em", fontWeight: 400 }}>
-                  One score for everything that decides whether customers <span style={{ color: "var(--accent)" }}>find you</span>.
-                </h2>
-                <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "var(--muted)" }}>
-                  We grade your website, SEO, Google Business Profile, reviews, and social presence, the signals that decide whether you show up when someone searches for what you do.
-                </p>
-                <p style={{ margin: "14px 0 0", fontSize: 15.5, lineHeight: 1.65, color: "var(--muted)" }}>
-                  Every weak spot is a customer picking a competitor instead. This is a real sample report, scroll through it to see exactly what we catch.
-                </p>
-              </SlideIn>
-            </div>
-          </div>
-        </section>
+        {/* The audit sample used to live here in a browser frame. It now runs
+            inside the phone up in the "why owners hire us" section, splash ->
+            scan -> the real report, so the homepage shows the deliverable once,
+            as an app, instead of twice. */}
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
