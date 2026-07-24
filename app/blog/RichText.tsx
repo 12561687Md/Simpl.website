@@ -11,7 +11,8 @@ import React from "react";
  */
 export function RichText({ text }: { text: string }) {
   const nodes: React.ReactNode[] = [];
-  const pattern = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)|`([^`]+)`/g;
+  // Matches [label](https://external), [label](/internal), or `code`.
+  const pattern = /\[([^\]]+)\]\(((?:https?:\/\/|\/)[^)]+)\)|`([^`]+)`/g;
   let last = 0;
   let m: RegExpExecArray | null;
   let k = 0;
@@ -19,12 +20,14 @@ export function RichText({ text }: { text: string }) {
   while ((m = pattern.exec(text)) !== null) {
     if (m.index > last) nodes.push(text.slice(last, m.index));
     if (m[1] && m[2]) {
+      const internal = m[2].startsWith("/");
       nodes.push(
         <a
           key={k++}
           href={m[2]}
-          target="_blank"
-          rel="noopener noreferrer"
+          // Internal links (our own /blog and /services pages) stay in-tab and
+          // are followed by crawlers; external citations open in a new tab.
+          {...(internal ? {} : { target: "_blank", rel: "noopener noreferrer" })}
           style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)" }}
         >
           {m[1]}

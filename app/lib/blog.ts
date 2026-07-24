@@ -64,10 +64,13 @@ export interface BlogPost {
  * shelves and the filter bar. Every post's `category` must match a label here.
  */
 export const BLOG_CATEGORIES: { label: string; slug: string; blurb: string }[] = [
+  { label: "Industry Guides", slug: "industry-guides", blurb: "Marketing playbooks written for your trade, not for everyone." },
   { label: "Local SEO", slug: "local-seo", blurb: "Rank in Google Maps and the local 3-pack." },
+  { label: "Paid Ads", slug: "paid-ads", blurb: "Google Ads, Local Services Ads, and what actually books jobs." },
   { label: "AI Search", slug: "ai-search", blurb: "Get recommended by ChatGPT, Gemini, and AI Overviews." },
   { label: "Reputation", slug: "reputation", blurb: "Reviews, ratings, and the trust that ranks you." },
   { label: "Lead Capture", slug: "lead-capture", blurb: "Turn the traffic you already have into booked jobs." },
+  { label: "Strategy", slug: "strategy", blurb: "Budgets, follow-up systems, and how to grow on purpose." },
 ];
 
 export function categorySlug(label: string): string {
@@ -461,6 +464,512 @@ export const BLOG_POSTS: BlogPost[] = [
       { label: "Harvard Business Review: The Short Life of Online Sales Leads", href: "https://hbr.org/2011/03/the-short-life-of-online-sales-leads" },
       { label: "Google: Call history in Business Profile", href: "https://support.google.com/business/answer/9688285" },
       { label: "r/sweatystartup on Reddit", href: "https://www.reddit.com/r/sweatystartup/" },
+    ],
+  },
+
+  // ---- Industry Guides (trade-specific playbooks) ----
+  {
+    slug: "how-to-get-more-plumbing-leads",
+    title: "How to get more plumbing leads (without buying them from lead resellers)",
+    metaTitle: "How to Get More Plumbing Leads",
+    description:
+      "A plumber's guide to generating your own leads online: local SEO, Google's Local Services Ads, reviews, and answering the phone so emergency calls become booked jobs.",
+    question: "How do I get more plumbing leads?",
+    category: "Industry Guides",
+    readMinutes: 6,
+    updated: "2026-07-23",
+    image: "/blog/how-to-get-more-plumbing-leads.webp",
+    imageAlt: "A plumber working on pipes under a sink",
+    imageCredit: "Anıl Karakaya / Pexels",
+    keyTakeaways: [
+      "Plumbing is emergency-driven, so the businesses that win the Google Maps 3-pack and answer the phone fastest get the job, not the ones with the prettiest website.",
+      "Google's Local Services Ads put you above the regular ads with a “Google Guaranteed” badge and you pay per lead, not per click, which fits plumbing's high job value.",
+      "Reviews and speed-to-lead beat ad budget: a missed emergency call is a customer already dialing the next plumber.",
+    ],
+    intro:
+      "Buying shared leads from a reseller means paying for a customer who also just got sold to three of your competitors. The plumbers who stop renting leads and start generating their own win on two things: showing up first when someone's water heater fails, and answering when that person calls. Here's how to build that.",
+    sections: [
+      {
+        heading: "Win the map pack, because plumbing is “near me” by default",
+        paragraphs: [
+          "Almost nobody plans a plumber in advance. They search “plumber near me” or “emergency plumber [city]” with water on the floor, and they call one of the three businesses in the [Google Maps 3-pack](/blog/how-to-rank-higher-on-google-maps). If you're not in it, you're invisible for the searches that matter most.",
+          "The levers are the same ones Google names for [local ranking](https://support.google.com/business/answer/7091): a complete Google Business Profile with the right primary category (Plumber), your real service area, and a steady flow of recent reviews. Our [local SEO service](/services/local-seo) exists to win exactly this, but the profile work you can start today.",
+        ],
+      },
+      {
+        heading: "Use Local Services Ads, they fit plumbing's economics",
+        paragraphs: [
+          "[Google's Local Services Ads](https://support.google.com/localservices/answer/6224841) (LSAs) sit at the very top of the results with a “Google Guaranteed” badge, and you're charged per lead, not per click. For a trade where a single job can be worth hundreds or thousands of dollars, paying per qualified call is far better math than paying for clicks that may never phone.",
+          "LSAs require a background check and license verification, which is a moat: it keeps the low-effort competition out. Pair them with a small branded-search campaign so a competitor can't buy an ad on your own company name. That's the core of our [paid ads service](/services/paid-ads).",
+        ],
+      },
+      {
+        heading: "Answer the phone, or the lead is already gone",
+        paragraphs: [
+          "This is the one most plumbers lose on. You're under a house or on a roof when the phone rings, it goes to voicemail, and that customer never leaves one, they just call the next result. We wrote a whole piece on [what a missed call actually costs](/blog/what-happens-when-you-miss-a-customer-call), and for emergency trades it's brutal.",
+          "The fix is not hiring a receptionist, it's a missed-call text-back that instantly replies “Sorry we missed you, we're on a job, what's going on?” so the lead stays warm. Plumbers compare notes on this constantly over in [r/Plumbing](https://www.reddit.com/r/Plumbing/); the ones booking out weeks ahead almost always have fast follow-up wired in.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Are Local Services Ads worth it for plumbers?",
+        a: "For most plumbers, yes. You pay per lead instead of per click, you appear above the regular ads with a Google Guaranteed badge, and the license and background check requirements keep low-quality competitors out. Given plumbing's high job value, one booked job usually covers many leads.",
+      },
+      {
+        q: "How do I get more plumbing reviews?",
+        a: "Text every customer your Google review link the moment the job is done and the water is running again. Recency and volume both matter for ranking, and plumbing customers are often relieved and happy to leave one if you make it a single tap. Never buy reviews, it violates Google policy and is detectable.",
+      },
+      {
+        q: "Do I still need a website if I have a Google Business Profile?",
+        a: "Yes. Your profile gets you found, but your website is where you convert the click, show your service area and pricing approach, and rank for service pages like water heater or drain cleaning. A profile without a fast, findable site leaves the higher-intent searches to competitors.",
+      },
+    ],
+    sources: [
+      { label: "Google: Local Services Ads", href: "https://support.google.com/localservices/answer/6224841" },
+      { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
+      { label: "r/Plumbing on Reddit", href: "https://www.reddit.com/r/Plumbing/" },
+    ],
+  },
+  {
+    slug: "seo-for-landscapers",
+    title: "SEO for landscapers: how to rank for local lawn care and design searches",
+    metaTitle: "SEO for Landscapers",
+    description:
+      "A landscaper's guide to ranking on Google: service pages for lawn care, hardscaping, and design, a strong Google Business Profile, seasonal content, and before/after proof.",
+    question: "How do I do SEO for a landscaping business?",
+    category: "Industry Guides",
+    readMinutes: 6,
+    updated: "2026-07-23",
+    image: "/blog/seo-for-landscapers.webp",
+    imageAlt: "A landscaper mowing a healthy green lawn",
+    imageCredit: "Makesavanh Oudthalith / Pexels",
+    keyTakeaways: [
+      "Landscaping searches split into distinct services (lawn care, hardscaping, design, irrigation), so one page per service beats a single “services” page for ranking.",
+      "Before/after photos are the strongest proof a landscaper has, and they double as fresh content Google and customers both reward.",
+      "Seasonality is an SEO advantage: publish for spring cleanups, fall leaf removal, and winter planning before the searches spike, not during.",
+    ],
+    intro:
+      "Landscaping is a visual, seasonal, high-ticket business, and its search demand is bigger and more varied than most owners realize. Someone searching “paver patio installer” is a different customer with a different budget than someone searching “weekly lawn mowing.” Ranking well means building a site that speaks to each of them, and a profile that proves you're local and real.",
+    sections: [
+      {
+        heading: "Build a page per service, not one “services” page",
+        paragraphs: [
+          "Google ranks pages, not businesses. A single page listing “lawn care, landscaping, hardscaping, irrigation” ranks for none of them well. A dedicated page for each, targeting how customers actually search (“paver patio [city],” “lawn fertilization program [city]”), is how you show up across the full range of jobs, including the high-margin design and hardscape work.",
+          "This is the compounding side of [long-term organic growth](/services/organic-growth): each service and location page you publish keeps earning traffic for years. Interlink them so a lawn-care visitor discovers you also do drainage and lighting.",
+        ],
+      },
+      {
+        heading: "Your Google Business Profile is half the battle",
+        paragraphs: [
+          "For local service searches, your [Google Business Profile](https://support.google.com/business/answer/7091) often outranks your website in the map pack, which is prime real estate. Set the primary category correctly (Landscaper, Lawn care service), define your service area, and post recent project photos regularly, Google favors active listings.",
+          "Reviews are a top ranking factor and landscaping customers love to brag about a transformed yard. Make [asking for reviews](/blog/how-do-i-get-more-google-reviews) part of closing every job. Owners trade what's working in [r/landscaping](https://www.reddit.com/r/landscaping/), and consistent review-getting comes up every time.",
+        ],
+      },
+      {
+        heading: "Turn before/after photos into ranking fuel",
+        paragraphs: [
+          "A gallery of finished projects is the single strongest thing a landscaper can show, and it's also content. Real photos with descriptive alt text and captions (“retaining wall and paver patio in [neighborhood]”) feed both customers and search engines, and increasingly [AI search](/blog/how-to-get-your-business-recommended-by-ai), which leans on visual and structured signals.",
+          "Plan content around the calendar. Publish spring-cleanup and lawn-program pages in late winter, fall-cleanup pages in late summer. Ranking takes time (here's [how long local SEO actually takes](/blog/how-long-does-local-seo-take)), so the content needs to be live before the seasonal search spike, not during it.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How do I market a landscaping business in the off-season?",
+        a: "Use winter to publish and rank the content that pays off in spring: service pages, seasonal guides, and project galleries. Run a light retargeting or email campaign to past customers for early-bird spring bookings, and get your Google Business Profile and reviews in order before demand returns.",
+      },
+      {
+        q: "What's the most important service page for a landscaper?",
+        a: "It depends on your margins, but recurring-revenue services like lawn care and fertilization programs, plus high-ticket hardscaping and design, usually deserve their own dedicated, well-optimized pages first. Lead with whatever combination of recurring revenue and high margin fits your business.",
+      },
+      {
+        q: "Do landscapers need Google Ads or just SEO?",
+        a: "SEO builds compounding, lower-cost leads over months; ads turn demand on instantly. Most landscapers benefit from SEO as the long-term foundation and seasonal ads to capture spring and fall spikes. The two feed each other: ad data shows which services to build content around.",
+      },
+    ],
+    sources: [
+      { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
+      { label: "Google: How Search Works", href: "https://www.google.com/search/howsearchworks/" },
+      { label: "r/landscaping on Reddit", href: "https://www.reddit.com/r/landscaping/" },
+    ],
+  },
+  {
+    slug: "google-ads-for-remodelers",
+    title: "Google Ads for remodelers: what actually books kitchen and bath jobs",
+    metaTitle: "Google Ads for Remodelers",
+    description:
+      "A remodeling contractor's guide to Google Ads: high-intent keywords, why landing pages matter more than the ad, tracking real jobs not clicks, and defending your brand.",
+    question: "How do remodelers use Google Ads to get more jobs?",
+    category: "Industry Guides",
+    readMinutes: 6,
+    updated: "2026-07-23",
+    image: "/blog/google-ads-for-remodelers.webp",
+    imageAlt: "A kitchen renovation in progress with contractor tools",
+    imageCredit: "Francesco Ungaro / Pexels",
+    keyTakeaways: [
+      "Remodeling has long sales cycles and high job values, so a single booked kitchen or bath can pay for months of ad spend, which changes the math on what a lead is worth.",
+      "The landing page books the job, not the ad: send clicks to a dedicated service page with real project photos and a quote form, never your homepage.",
+      "Track booked consultations and jobs, not clicks, or you'll optimize for cheap traffic that never converts.",
+    ],
+    intro:
+      "Remodeling is the opposite of an emergency trade. Nobody rebuilds a kitchen on impulse, so your ads compete for people early in a long, expensive decision. That means the goal isn't a click, it's a booked in-home consultation. Here's how remodelers run Google Ads that actually fill the calendar.",
+    sections: [
+      {
+        heading: "Bid on high-intent keywords, skip the browsers",
+        paragraphs: [
+          "“Kitchen remodel contractor [city]” and “bathroom renovation near me” are buying searches. “Kitchen design ideas” is a browser who may be years out. Remodelers waste budget bidding on inspiration terms; the money is in the service-plus-location phrases from people ready to hire.",
+          "Because remodeling job values are high, you can afford a higher cost per lead than most trades, which is exactly why competitors are aggressive here. A branded-search campaign that defends your own company name is cheap insurance, we cover why in our [paid ads service](/services/paid-ads).",
+        ],
+      },
+      {
+        heading: "The landing page does the selling",
+        paragraphs: [
+          "The most common remodeler mistake is pointing ads at the homepage. A click on a “bathroom remodel” ad should land on a bathroom-remodel page with real before/after photos, your license and reviews, and one clear quote form. Every extra step or unanswered question is a lost consultation.",
+          "This is where your [website](/services/website-build) and your ads have to work as one system. A great ad pointed at a weak page just pays Google to prove your site can't convert. Fix the [technical leaks](/blog/why-is-my-website-not-showing-up-on-google) first, then send paid traffic to it.",
+        ],
+      },
+      {
+        heading: "Measure jobs, not clicks",
+        paragraphs: [
+          "With a long sales cycle, vanity metrics lie. A campaign with cheap clicks and zero booked consultations is a failure that looks fine on a dashboard. Set up conversion tracking for form submissions and calls, then judge the campaign on booked consultations and signed jobs.",
+          "Speed still matters even here: a remodeling lead who fills out a form at 9pm and hears nothing until Tuesday has already called two competitors. Pair ads with [fast lead follow-up](/blog/what-happens-when-you-miss-a-customer-call). Contractors debate ad ROI constantly in [r/Construction](https://www.reddit.com/r/Construction/); the winners all track to revenue, not clicks.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How much should a remodeler spend on Google Ads?",
+        a: "There's no universal number, it depends on your market and margins, and it's exactly what a first strategy call is for. Because a single kitchen or bath job is worth thousands, remodelers can usually justify a higher cost per lead than most trades, but only if you track spend to booked jobs, not clicks.",
+      },
+      {
+        q: "Should remodelers use Google Ads or SEO?",
+        a: "Both, in sequence. Ads book jobs now while your SEO is still maturing, and the ad data reveals which services and keywords to build content around. Over time, organic rankings lower your blended cost per lead so you rely less on paid.",
+      },
+      {
+        q: "Why are my remodeling ads getting clicks but no calls?",
+        a: "Almost always the landing page or the follow-up. If ads point at your homepage instead of a specific service page, or if form leads aren't contacted within minutes, you'll get traffic that never converts. Fix the page and the speed-to-lead before increasing budget.",
+      },
+    ],
+    sources: [
+      { label: "Google: Local Services Ads", href: "https://support.google.com/localservices/answer/6224841" },
+      { label: "Google Search Console", href: "https://search.google.com/search-console/about" },
+      { label: "r/Construction on Reddit", href: "https://www.reddit.com/r/Construction/" },
+    ],
+  },
+  {
+    slug: "how-to-market-a-car-detailing-business",
+    title: "How to market a car detailing business and stay booked out",
+    metaTitle: "How to Market a Car Detailing Business",
+    description:
+      "A detailer's marketing guide: winning local search, using before/after photos and short video, getting reviews, and turning one-time washes into recurring plans.",
+    question: "How do I market my car detailing business?",
+    category: "Industry Guides",
+    readMinutes: 5,
+    updated: "2026-07-23",
+    image: "/blog/how-to-market-a-car-detailing-business.webp",
+    imageAlt: "A detailer polishing a car to a high shine",
+    imageCredit: "Luke Miller / Pexels",
+    keyTakeaways: [
+      "Detailing is intensely visual, so before/after photos and short video are your best-performing marketing on every channel, including Google and social.",
+      "Most detailers compete locally on Google Maps and Instagram, so a strong Google Business Profile plus a steady review flow beats a fancy website.",
+      "The real profit is recurring: turning one-time details into monthly maintenance plans lifts lifetime value far more than chasing new one-off jobs.",
+    ],
+    intro:
+      "Car detailing sells on transformation, a filthy interior made showroom-clean, swirl marks erased from paint. That makes it one of the easiest trades to market visually and one of the easiest to under-price if all you ever sell is the one-time job. Here's how to get found locally and build recurring revenue.",
+    sections: [
+      {
+        heading: "Get found where people search: Maps and Instagram",
+        paragraphs: [
+          "Detailing customers search “car detailing near me” and “mobile detailing [city],” then judge you on photos and reviews. A complete [Google Business Profile](https://support.google.com/business/answer/7091) with the right category, service area, and fresh photos gets you into the [local 3-pack](/blog/how-to-rank-higher-on-google-maps) where those searches land.",
+          "Instagram and TikTok are effectively a second search engine for detailing, short before/after clips travel. But social proof only converts if the booking path is frictionless, so wire a clear “book now” into your [website](/services/website-build) and profile.",
+        ],
+      },
+      {
+        heading: "Let the work sell itself, then ask for the review",
+        paragraphs: [
+          "Every job is content. Shoot a consistent before/after of each car and post it. This feeds your profile, your social, and increasingly [AI-driven recommendations](/blog/how-to-get-your-business-recommended-by-ai), which lean on real reviews and consistent listings.",
+          "Then ask for the review while the customer is standing next to their transformed car, that's peak satisfaction. Make it one tap with your Google review link. Our full method is in [how to get more Google reviews](/blog/how-do-i-get-more-google-reviews), and detailers swap tactics daily in [r/AutoDetailing](https://www.reddit.com/r/AutoDetailing/).",
+        ],
+      },
+      {
+        heading: "Sell plans, not just washes",
+        paragraphs: [
+          "A one-time detail is a transaction; a monthly maintenance plan is a business. Packaging recurring interior/exterior upkeep, ceramic-coating maintenance, or fleet accounts turns unpredictable one-off jobs into predictable monthly revenue and raises each customer's lifetime value.",
+          "Recurring customers also need fast, reliable communication for scheduling. A simple [automated follow-up and reminder system](/blog/automated-lead-follow-up-for-service-businesses) keeps the calendar full without you chasing every booking by hand.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Is Instagram or Google better for a detailing business?",
+        a: "You need both, and they do different jobs. Google captures high-intent “near me” searches from people ready to book, while Instagram and TikTok build brand and show off transformations that drive discovery and referrals. Feed both with the same before/after content.",
+      },
+      {
+        q: "How do detailers get more repeat customers?",
+        a: "Sell maintenance plans and stay in touch. Package recurring upkeep into a monthly membership, then use automated reminders so cars come back on a schedule. Recurring revenue smooths out the seasonality and is worth far more than a stream of one-time jobs.",
+      },
+      {
+        q: "Do mobile detailers need a website?",
+        a: "Yes. Even if most bookings start on Google or Instagram, a fast site with your service area, packages, and an easy booking form converts higher and helps you rank for local searches your profile alone can't reach.",
+      },
+    ],
+    sources: [
+      { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
+      { label: "Google Business Profile", href: "https://www.google.com/business/" },
+      { label: "r/AutoDetailing on Reddit", href: "https://www.reddit.com/r/AutoDetailing/" },
+    ],
+  },
+  {
+    slug: "local-seo-for-auto-body-shops",
+    title: "Local SEO for auto body shops: how to get found after a collision",
+    metaTitle: "Local SEO for Auto Body Shops",
+    description:
+      "An auto body shop's guide to local SEO: ranking for collision and repair searches, managing reviews and insurance trust signals, and building service and location pages.",
+    question: "How do auto body shops improve local SEO?",
+    category: "Industry Guides",
+    readMinutes: 5,
+    updated: "2026-07-23",
+    image: "/blog/local-seo-for-auto-body-shops.webp",
+    imageAlt: "A technician working in an auto body repair shop",
+    imageCredit: "Jose Ricardo Barraza Morachis / Pexels",
+    keyTakeaways: [
+      "After a collision, people search “auto body shop near me” under stress and pick from the map pack, so ranking there is the whole game.",
+      "Trust signals matter more here than in most trades: reviews, certifications, and “works with your insurance” language reassure an anxious customer.",
+      "Dedicated pages for collision repair, dent removal, paint, and each city you serve beat one generic services page.",
+    ],
+    intro:
+      "Auto body is a distress-purchase business. A customer just had an accident, they're dealing with insurance, and they want a shop they can trust, fast. That means your job is to show up in local search at that moment and immediately look credible. Here's how to do both.",
+    sections: [
+      {
+        heading: "Own the map pack for collision searches",
+        paragraphs: [
+          "The searches that matter, “auto body shop near me,” “collision repair [city],” “bumper repair,” are resolved in the [Google Maps 3-pack](/blog/how-to-rank-higher-on-google-maps). Google weighs [relevance, distance, and prominence](https://support.google.com/business/answer/7091), so a complete profile with the right category (Auto body shop), accurate hours, and steady recent reviews is the foundation.",
+          "If you're not showing up at all, work through [why a business doesn't appear on Google](/blog/why-is-my-website-not-showing-up-on-google) first, an unclaimed profile or a site blocking crawlers will sink you before rankings even matter.",
+        ],
+      },
+      {
+        heading: "Lead with trust, because the customer is stressed",
+        paragraphs: [
+          "Body shops win on reassurance. Reviews are the biggest lever, a shop with 150 recent four- and five-star reviews reads as safe. Make [review-gathering](/blog/how-do-i-get-more-google-reviews) routine at pickup, and reply to every one, especially the tough ones.",
+          "Beyond reviews, display manufacturer certifications, warranties, and clear “we work directly with your insurance” language. These are trust signals a nervous customer scans for, and they belong on your [website](/services/website-build) and profile both.",
+        ],
+      },
+      {
+        heading: "Build pages for services and the towns you serve",
+        paragraphs: [
+          "One “services” page can't rank for everything. Separate pages for collision repair, dent and scratch repair, auto painting, and frame work, each targeting how customers search, capture far more traffic. Add a page per city or town in your service area with genuinely local content.",
+          "This service-times-location grid is a core [organic growth](/services/organic-growth) play and it compounds. Shop owners compare local-marketing notes in [r/AutoBodyRepair](https://www.reddit.com/r/AutoBodyRepair/); the recurring theme is that reviews plus a real website beat any lead-buying service.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How do auto body shops get more Google reviews?",
+        a: "Ask at pickup, when the customer is relieved to have their car back, and hand them a one-tap Google review link by text. Recency and volume both drive ranking, and for a trust-heavy purchase like collision repair, a steady stream of recent reviews is your strongest marketing asset.",
+      },
+      {
+        q: "Should auto body shops buy leads from third-party services?",
+        a: "Owning your own local search presence is almost always cheaper and higher-quality long term. Bought leads are often shared with competitors and dry up when you stop paying. Ranking your profile and website builds an asset that keeps producing.",
+      },
+      {
+        q: "Does my shop need separate pages for each service?",
+        a: "Yes. Google ranks individual pages, so a dedicated collision-repair page and a dedicated auto-painting page can each rank for their own searches, while one combined services page ranks weakly for all of them.",
+      },
+    ],
+    sources: [
+      { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
+      { label: "Google: How Search Works", href: "https://www.google.com/search/howsearchworks/" },
+      { label: "r/AutoBodyRepair on Reddit", href: "https://www.reddit.com/r/AutoBodyRepair/" },
+    ],
+  },
+  {
+    slug: "how-to-get-more-hvac-leads",
+    title: "How to get more HVAC leads online, in season and out",
+    metaTitle: "How to Get More HVAC Leads",
+    description:
+      "An HVAC contractor's guide to generating leads: Local Services Ads for emergency calls, local SEO, maintenance-plan marketing, and fast follow-up that beats the competition.",
+    question: "How do HVAC companies get more leads?",
+    category: "Industry Guides",
+    readMinutes: 6,
+    updated: "2026-07-23",
+    image: "/blog/how-to-get-more-hvac-leads.webp",
+    imageAlt: "An HVAC technician servicing an air conditioning unit",
+    imageCredit: "Richard Low Hong / Pexels",
+    keyTakeaways: [
+      "HVAC demand spikes with the weather, so Local Services Ads and map-pack visibility capture the emergency “no heat / no AC” calls that convert instantly.",
+      "Maintenance plans are the antidote to seasonality: they smooth revenue across the year and create a base of loyal, recurring customers.",
+      "Speed wins: an HVAC lead that isn't contacted within minutes during a heat wave has already booked a competitor.",
+    ],
+    intro:
+      "HVAC lives and dies by the weather. The first cold snap or heat wave sends “furnace not working” and “AC repair near me” searches through the roof, and the contractors who show up first and answer fastest book solid for weeks. The rest fight over scraps. Here's how to be the first group.",
+    sections: [
+      {
+        heading: "Capture emergency demand with LSAs and the map pack",
+        paragraphs: [
+          "When someone's heat dies in January, they call one of the first businesses they see. [Google's Local Services Ads](https://support.google.com/localservices/answer/6224841) put you at the very top with a Google Guaranteed badge and charge per lead, ideal for high-value HVAC calls. Below them, the [Maps 3-pack](/blog/how-to-rank-higher-on-google-maps) captures the rest.",
+          "Both reward a complete Google Business Profile and strong reviews. Getting your [local SEO](/services/local-seo) and LSAs running before the season turns is critical, ranking takes time, so you can't start when the heat wave hits.",
+        ],
+      },
+      {
+        heading: "Sell maintenance plans to beat seasonality",
+        paragraphs: [
+          "The smartest HVAC marketing isn't a lead source at all, it's the maintenance plan. Twice-a-year tune-up agreements smooth your revenue across the slow shoulder seasons, create priority customers who don't shop around, and generate the replacement jobs that are your highest-margin work.",
+          "Market plans to your existing customer list with simple [automated follow-up and reminders](/blog/automated-lead-follow-up-for-service-businesses), and pitch them on every service call. It's far cheaper to convert an existing customer to a plan than to buy a new lead.",
+        ],
+      },
+      {
+        heading: "Answer fast or lose the job",
+        paragraphs: [
+          "During a weather spike, every HVAC company is slammed and the customer is calling down the list. Whoever answers or texts back first usually wins. A [missed call](/blog/what-happens-when-you-miss-a-customer-call) during peak season is pure lost revenue.",
+          "A missed-call text-back and instant scheduling keep leads warm when your techs are all on jobs and your phone is ringing off the hook. HVAC owners hash out lead-gen and pricing in [r/hvacadvice](https://www.reddit.com/r/hvacadvice/); fast follow-up and maintenance plans come up as the real winners every time.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Are Local Services Ads good for HVAC contractors?",
+        a: "Yes, they're one of the best channels for HVAC. You pay per lead rather than per click, appear above regular ads with a Google Guaranteed badge, and the format suits high-value emergency calls. They pair well with strong local SEO so you capture both paid and organic demand.",
+      },
+      {
+        q: "How do HVAC companies get leads in the slow season?",
+        a: "Maintenance plans and your existing customer list. Market tune-up agreements before peak seasons, run reminder campaigns to past customers, and use the slow months to build the SEO and content that pays off when demand returns.",
+      },
+      {
+        q: "Why am I getting HVAC leads but not booking them?",
+        a: "Usually speed and follow-up. During busy periods leads go cold in minutes, so if calls hit voicemail or form leads wait hours for a reply, they book a competitor. Automated instant response and easy scheduling fix most of this.",
+      },
+    ],
+    sources: [
+      { label: "Google: Local Services Ads", href: "https://support.google.com/localservices/answer/6224841" },
+      { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
+      { label: "r/hvacadvice on Reddit", href: "https://www.reddit.com/r/hvacadvice/" },
+    ],
+  },
+  {
+    slug: "how-to-get-more-roofing-leads",
+    title: "How to get more roofing leads that turn into signed jobs",
+    metaTitle: "How to Get More Roofing Leads",
+    description:
+      "A roofer's guide to generating quality leads: local SEO, Local Services Ads, storm-season readiness, reviews and trust, and following up before the competition does.",
+    question: "How do roofers get more leads?",
+    category: "Industry Guides",
+    readMinutes: 6,
+    updated: "2026-07-23",
+    image: "/blog/how-to-get-more-roofing-leads.webp",
+    imageAlt: "A roofer working on roof shingles",
+    imageCredit: "Ryan Stephens / Pexels",
+    keyTakeaways: [
+      "Roofing is high-ticket and trust-heavy, so reviews, licensing, and a credible website matter as much as visibility.",
+      "Storm season creates demand surges, so ranking and ad campaigns need to be ready before the weather hits, not scrambled together after.",
+      "Shared lead-reseller leads are sold to several roofers at once, so owning your own local search presence produces higher-quality, exclusive leads.",
+    ],
+    intro:
+      "A new roof is one of the largest home purchases a homeowner makes, so roofing leads are valuable, expensive, and fiercely contested. Lead resellers will happily sell you the same lead they sold three competitors. The roofers who win consistently generate their own exclusive leads through search and referral. Here's the playbook.",
+    sections: [
+      {
+        heading: "Rank locally and back it with proof",
+        paragraphs: [
+          "Homeowners search “roofer near me,” “roof replacement [city],” and “roof leak repair.” Winning the [Maps 3-pack](/blog/how-to-rank-higher-on-google-maps) and ranking service pages for each of those is the foundation of exclusive lead flow, and it's what our [local SEO service](/services/local-seo) is built to do.",
+          "But roofing is a trust purchase. Back your visibility with a credible [website](/services/website-build): license and insurance details, real project photos, warranties, and a wall of recent [reviews](/blog/how-do-i-get-more-google-reviews). A homeowner spending five figures reads all of it before calling.",
+        ],
+      },
+      {
+        heading: "Be ready before the storm, not after",
+        paragraphs: [
+          "Roofing demand spikes after hail and wind events. The problem is that rankings and ad quality take time to build, so scrambling to market after a storm means missing the surge. The roofers who clean up are the ones whose [local SEO](/blog/how-long-does-local-seo-take) and [Local Services Ads](https://support.google.com/localservices/answer/6224841) were already strong when the weather hit.",
+          "Keep a standing presence year-round so you're the default result when demand jumps. LSAs' per-lead pricing and Google Guaranteed badge fit roofing's high job values especially well.",
+        ],
+      },
+      {
+        heading: "Follow up faster than the reseller-fed competition",
+        paragraphs: [
+          "Because roofing leads are so valuable, speed is a weapon. A homeowner who requests a quote and hears nothing for a day assumes you're too busy and calls the next roofer. [Fast, automated follow-up](/blog/what-happens-when-you-miss-a-customer-call) keeps your exclusive leads from leaking to competitors who bought the shared version of that same lead.",
+          "Roofers compare lead sources and close rates in [r/roofing](https://www.reddit.com/r/roofing/); the consistent lesson is that self-generated leads plus fast follow-up beat any pay-per-lead service on both cost and quality.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Are shared roofing leads worth buying?",
+        a: "They can fill gaps, but shared leads are sold to multiple roofers at once, so close rates are low and you're competing on speed and price. Building your own local search presence produces exclusive, higher-intent leads that don't disappear when you stop paying a reseller.",
+      },
+      {
+        q: "How do roofers market for storm season?",
+        a: "Prepare before the storm. Keep your rankings, reviews, and ad campaigns strong year-round so you're already the visible, credible option when a hail or wind event drives a demand spike. Marketing built after the storm arrives usually misses the surge.",
+      },
+      {
+        q: "What matters most on a roofing website?",
+        a: "Trust and clarity. Prominent license and insurance details, real project photos, warranty information, recent reviews, and one obvious way to request a quote. A five-figure purchase means homeowners scrutinize your credibility before they ever call.",
+      },
+    ],
+    sources: [
+      { label: "Google: Local Services Ads", href: "https://support.google.com/localservices/answer/6224841" },
+      { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
+      { label: "r/roofing on Reddit", href: "https://www.reddit.com/r/roofing/" },
+    ],
+  },
+  {
+    slug: "marketing-for-electricians",
+    title: "Marketing for electricians: how to keep your schedule full",
+    metaTitle: "Marketing for Electricians",
+    description:
+      "An electrician's marketing guide: local SEO, Local Services Ads, reviews and licensing trust, residential vs commercial targeting, and fast follow-up on service calls.",
+    question: "How do electricians get more customers?",
+    category: "Industry Guides",
+    readMinutes: 5,
+    updated: "2026-07-23",
+    image: "/blog/marketing-for-electricians.webp",
+    imageAlt: "An electrician working on an electrical panel",
+    imageCredit: "Florida Solar Fix / Pexels",
+    keyTakeaways: [
+      "Electrical work ranges from small residential service calls to large commercial contracts, and each needs its own pages and its own message.",
+      "Licensing and safety are the trust signals customers look for, so make them prominent everywhere.",
+      "Most electricians win locally on Google, so a strong profile, reviews, and Local Services Ads outperform any generic advertising.",
+    ],
+    intro:
+      "Electricians serve two very different customers: the homeowner who needs a panel upgrade or a fixed outlet, and the general contractor or property manager awarding recurring commercial work. Good marketing speaks to each distinctly. Here's how to stay booked across both.",
+    sections: [
+      {
+        heading: "Win local search for residential service calls",
+        paragraphs: [
+          "Homeowners search “electrician near me,” “panel upgrade [city],” and “EV charger installation.” These resolve in the [Maps 3-pack](/blog/how-to-rank-higher-on-google-maps), so a complete Google Business Profile with the right category and steady [reviews](/blog/how-do-i-get-more-google-reviews) is your highest-return work.",
+          "[Local Services Ads](https://support.google.com/localservices/answer/6224841) sit above everything with a Google Guaranteed badge and charge per lead, a strong fit for residential electrical calls. This local visibility is exactly what our [local SEO service](/services/local-seo) builds.",
+        ],
+      },
+      {
+        heading: "Separate your residential and commercial message",
+        paragraphs: [
+          "A homeowner and a general contractor want different things. Residential pages should emphasize speed, safety, licensing, and clear pricing; commercial pages should emphasize capacity, scheduling reliability, code compliance, and past project scale. Trying to serve both on one page dilutes both.",
+          "This is a straightforward [organic growth](/services/organic-growth) play: dedicated service and audience pages rank for their own searches and speak to the right buyer. For commercial work especially, referrals and relationships matter, so make your credibility easy to verify online.",
+        ],
+      },
+      {
+        heading: "Lead with licensing, and follow up fast",
+        paragraphs: [
+          "Electrical is a safety trade, so licensing and insurance are the trust signals customers scan for. Display your license number, certifications, and insurance prominently on your [website](/services/website-build) and profile.",
+          "Then answer quickly. A homeowner with a partial outage or a contractor coordinating a build won't wait, [slow follow-up loses the job](/blog/what-happens-when-you-miss-a-customer-call). Electricians trade marketing and pricing notes in [r/electricians](https://www.reddit.com/r/electricians/); reviews and responsiveness come up as the real differentiators.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "How do electricians get more commercial work?",
+        a: "Commercial work runs on relationships and credibility. Build dedicated commercial pages that emphasize capacity, reliability, and code compliance, keep your licensing and past projects easy to verify online, and nurture relationships with general contractors and property managers. Referrals close most commercial jobs, but a strong online presence backs them up.",
+      },
+      {
+        q: "Should electricians use Local Services Ads?",
+        a: "For residential service calls, yes. The per-lead pricing, Google Guaranteed badge, and top placement fit electrical work well. Combine them with strong local SEO so you capture both the paid and the organic searches.",
+      },
+      {
+        q: "What's the fastest way for an electrician to get more customers?",
+        a: "Fix and optimize your Google Business Profile, start collecting reviews on every job, and turn on Local Services Ads. Those three move the needle fastest, while the website and content work compound over the following months.",
+      },
+    ],
+    sources: [
+      { label: "Google: Local Services Ads", href: "https://support.google.com/localservices/answer/6224841" },
+      { label: "Google: Improve your local ranking", href: "https://support.google.com/business/answer/7091" },
+      { label: "r/electricians on Reddit", href: "https://www.reddit.com/r/electricians/" },
     ],
   },
 ];
