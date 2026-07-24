@@ -4,34 +4,35 @@ import Link from "next/link";
 import ScrollReveal, { StaggerReveal, StaggerItem } from "./ScrollReveal";
 
 /**
- * Homepage SEO section aimed squarely at the ICP: SERVICE-BASED BUSINESSES.
- * It names the niche and the specific trades in real text (entity signals for
- * Google and AI search), states the work in the exact terms owners search
- * ("local SEO," "Google Business Profile," "Google Ads," "AI search"), and
- * interlinks to the industry blog guides + service pages so crawlers can map
- * intent. Keyword-dense but written for a human first.
+ * Homepage section for the ICP: SERVICE-BASED BUSINESSES. Instead of a wall of
+ * blog links, it explains the Simpl process, the same audit -> strategy ->
+ * build -> grow motion from our funnel + onboarding SOP, framed so it obviously
+ * applies to any trade. Keyword-rich (names the niche + the real work: audit,
+ * Simpl Score, strategy, website, Google Business Profile, local SEO, Google
+ * Ads, CRM, reviews) for Google and AI, but written for an owner first.
  */
 
-// Each trade links to its dedicated blog guide (the industry-cluster posts),
-// which is the strongest entity signal: trade + marketing, connected on-site.
-const INDUSTRIES = [
-  { label: "Landscapers & lawn care", href: "/blog/seo-for-landscapers" },
-  { label: "Plumbers", href: "/blog/how-to-get-more-plumbing-leads" },
-  { label: "HVAC companies", href: "/blog/how-to-get-more-hvac-leads" },
-  { label: "Remodelers & contractors", href: "/blog/google-ads-for-remodelers" },
-  { label: "Roofers", href: "/blog/how-to-get-more-roofing-leads" },
-  { label: "Electricians", href: "/blog/marketing-for-electricians" },
-  { label: "Car detailers", href: "/blog/how-to-market-a-car-detailing-business" },
-  { label: "Auto body shops", href: "/blog/local-seo-for-auto-body-shops" },
-];
-
-const CAPABILITIES = [
-  { label: "Local SEO & the Google Maps 3-pack", href: "/services/local-seo" },
-  { label: "Google Business Profile optimization", href: "/services/local-seo" },
-  { label: "Websites that turn visitors into calls", href: "/services/website-build" },
-  { label: "Reviews & reputation management", href: "/services/local-seo" },
-  { label: "Google Ads & Local Services Ads", href: "/services/paid-ads" },
-  { label: "AI search visibility (ChatGPT, Gemini)", href: "/blog/how-to-get-your-business-recommended-by-ai" },
+const STEPS = [
+  {
+    n: "01",
+    title: "Free audit",
+    body: "We scan your website, Google Business Profile, reviews, and local rankings and hand you a Simpl Score, so you see exactly where you stand and the biggest wins waiting.",
+  },
+  {
+    n: "02",
+    title: "Strategy call & plan",
+    body: "A real conversation, no pitch. We map the fastest path to more customers for your business and hand you a prioritized plan, whether you hire us or not.",
+  },
+  {
+    n: "03",
+    title: "Build & optimize",
+    body: "We build or fix the foundation: a fast, findable website and a fully optimized Google Business Profile, with the schema, reviews, and technical fixes that get you found.",
+  },
+  {
+    n: "04",
+    title: "Grow & convert",
+    body: "Then we drive it: local SEO, Google Ads, and lead capture like missed-call text-back and instant quoting, so more of the people who find you become booked jobs.",
+  },
 ];
 
 export default function ServiceBusinessSEO() {
@@ -40,59 +41,45 @@ export default function ServiceBusinessSEO() {
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
         <ScrollReveal>
           <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 20 }}>
-            Built for service-based businesses
+            Supporting service-based business growth
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 500, maxWidth: 900 }}>
-            Digital marketing built for service-based businesses, not everyone.
+            One proven process. <span style={{ color: "var(--muted)" }}>Every service-based business.</span>
           </h2>
           <p style={{ marginTop: 22, maxWidth: 720, fontSize: 17.5, lineHeight: 1.6, color: "var(--muted)" }}>
-            Simpl helps local service businesses win more customers online. We do the work that actually moves the phone for the trades, <strong style={{ color: "var(--fg)", fontWeight: 500 }}>local SEO</strong>, <strong style={{ color: "var(--fg)", fontWeight: 500 }}>Google Business Profile optimization</strong>, fast <strong style={{ color: "var(--fg)", fontWeight: 500 }}>websites</strong>, <strong style={{ color: "var(--fg)", fontWeight: 500 }}>reviews</strong>, <strong style={{ color: "var(--fg)", fontWeight: 500 }}>Google Ads</strong>, and <strong style={{ color: "var(--fg)", fontWeight: 500 }}>AI search visibility</strong>, so you show up first when someone nearby searches for what you do.
+            Landscapers, plumbers, HVAC companies, remodelers, roofers, electricians, detailers, whatever the trade, getting more customers online comes down to the same four steps. We run all four for you, so you can stay on the job.
           </p>
         </ScrollReveal>
 
-        {/* Industries we serve, each a keyword-rich internal link to its guide. */}
-        <div style={{ marginTop: 44 }}>
-          <ScrollReveal>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--fg-dim)", marginBottom: 18 }}>
-              Who we work with
-            </div>
-          </ScrollReveal>
-          <StaggerReveal style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-            {INDUSTRIES.map((it) => (
-              <StaggerItem key={it.href}>
-                <Link href={it.href} className="service-include" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, padding: "15px 18px", background: "var(--bg-elev)", border: "1px solid var(--rule)", borderRadius: 10, textDecoration: "none", color: "var(--fg)", fontSize: 14.5, height: "100%" }}>
-                  {it.label}
-                  <span aria-hidden="true" style={{ color: "var(--accent)" }}>→</span>
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerReveal>
-          <ScrollReveal>
-            <p style={{ marginTop: 16, fontSize: 14.5, color: "var(--muted)" }}>
-              Don&apos;t see your trade? If your customers search &quot;near me,&quot; Simpl was built for you.{" "}
-              <Link href="/scan" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 1 }}>Run your free scan</Link>.
-            </p>
-          </ScrollReveal>
-        </div>
+        {/* The 4-step process */}
+        <StaggerReveal style={{ marginTop: 48, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }} className="grid-process">
+          {STEPS.map((s) => (
+            <StaggerItem key={s.n}>
+              <div className="process-card" style={{ position: "relative", height: "100%", background: "var(--bg-elev)", border: "1px solid var(--rule)", borderRadius: 16, padding: "26px 24px 28px", overflow: "hidden" }}>
+                <div className="mono" style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)", letterSpacing: "0.06em", marginBottom: 16 }}>{s.n}</div>
+                <h3 style={{ margin: "0 0 12px", fontSize: 19, fontWeight: 600, letterSpacing: "-0.01em" }}>{s.title}</h3>
+                <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: "var(--muted)" }}>{s.body}</p>
+                {/* Oversized ghost number in the corner, like the reference layout. */}
+                <span aria-hidden="true" style={{ position: "absolute", right: 14, bottom: -14, fontSize: 84, fontWeight: 800, lineHeight: 1, color: "var(--rule)", opacity: 0.6, letterSpacing: "-0.04em" }}>{s.n[1]}</span>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerReveal>
 
-        {/* What we do, the capability keywords, linked to services. */}
-        <div style={{ marginTop: 48 }}>
-          <ScrollReveal>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--fg-dim)", marginBottom: 18 }}>
-              What we handle for you
-            </div>
-          </ScrollReveal>
-          <StaggerReveal style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 12 }}>
-            {CAPABILITIES.map((c) => (
-              <StaggerItem key={c.label}>
-                <Link href={c.href} className="service-include" style={{ display: "flex", alignItems: "center", gap: 11, padding: "15px 18px", background: "var(--bg-elev)", border: "1px solid var(--rule)", borderRadius: 10, textDecoration: "none", color: "var(--fg)", fontSize: 14.5, height: "100%" }}>
-                  <span aria-hidden="true" style={{ color: "var(--accent)", fontWeight: 700 }}>+</span>
-                  {c.label}
-                </Link>
-              </StaggerItem>
-            ))}
-          </StaggerReveal>
-        </div>
+        {/* CTA */}
+        <ScrollReveal>
+          <div style={{ marginTop: 44, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16 }}>
+            <Link href="/scan" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "14px 26px", fontSize: 15, fontWeight: 600, borderRadius: 999 }}>
+              Start with your free audit →
+            </Link>
+            <Link href="/start-now" style={{ color: "var(--fg)", textDecoration: "none", padding: "13px 24px", fontSize: 15, border: "1px solid var(--rule-strong)", borderRadius: 999 }}>
+              Book a strategy call
+            </Link>
+            <span style={{ fontSize: 14, color: "var(--muted)" }}>
+              Not sure it fits your trade? <Link href="/blog" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 1 }}>See the playbook for yours</Link>.
+            </span>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

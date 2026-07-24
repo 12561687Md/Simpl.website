@@ -1028,3 +1028,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 /* Footer links + slide-in pre-footer form */
 .footer-link, .footer-contact { transition: color 160ms ease; }
 .footer-link:hover, .footer-contact:hover { color: var(--fg); }
+
+/* Service-business process cards */
+.process-card { transition: border-color 200ms ease, transform 200ms ease; }
+.process-card:hover { border-color: var(--accent-line); transform: translateY(-4px); }
+@media (prefers-reduced-motion: reduce) { .process-card:hover { transform: none; } }
