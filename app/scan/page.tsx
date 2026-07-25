@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ScanTool from "../components/ScanTool";
+import ScrollReveal, { StaggerReveal, StaggerItem } from "../components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Free Website Scan | Simpl",
@@ -64,56 +65,65 @@ export default function ScanPage() {
           ]
         }) }} />
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 96px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>The Simpl Scan</div>
-          <h1 style={{ margin: 0, fontSize: "clamp(40px, 6.4vw, 81px)", lineHeight: 1.04, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 1000 }}>
-            Type your domain.<br /><span style={{ color: "var(--muted)" }}>See what nobody told you.</span>
-          </h1>
-          <p style={{ marginTop: 40, maxWidth: 680, fontSize: 19, lineHeight: 1.55 }}>
-            One scan. No signup. No email. Simpl checks your entire digital presence and gives you a score from 0 to 100. Most businesses score lower than they expect.
-          </p>
-          <div style={{ marginTop: 56 }}><ScanTool /></div>
+          <ScrollReveal>
+            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>The Simpl Scan</div>
+            <h1 style={{ margin: 0, fontSize: "clamp(40px, 6.4vw, 81px)", lineHeight: 1.04, letterSpacing: "-0.025em", fontWeight: 500, maxWidth: 1000 }}>
+              Type your domain.<br /><span style={{ color: "var(--muted)" }}>See what nobody told you.</span>
+            </h1>
+            <p style={{ marginTop: 40, maxWidth: 680, fontSize: 19, lineHeight: 1.55 }}>
+              One scan. No signup. No email. Simpl checks your entire digital presence and gives you a score from 0 to 100. Most businesses score lower than they expect.
+            </p>
+            <div style={{ marginTop: 56 }}><ScanTool /></div>
+          </ScrollReveal>
         </section>
 
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "159px 32px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>How the scan works</div>
-          <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>Five steps. Thirty seconds. Here&apos;s what happens.</h2>
-          <div style={{ marginTop: 72, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "128px 32px" }}>
+          <ScrollReveal>
+            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>How the scan works</div>
+            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>Five steps. Thirty seconds. Here&apos;s what happens.</h2>
+          </ScrollReveal>
+          <StaggerReveal style={{ marginTop: 72, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {STEPS.map((s) => (
-              <div key={s.n} style={{ background: "var(--bg)", padding: "32px 36px", display: "grid", gridTemplateColumns: "60px minmax(220px, 1fr) minmax(0, 2fr)", gap: 28, alignItems: "baseline" }}>
+              <StaggerItem key={s.n} style={{ background: "var(--bg)", padding: "32px 36px", display: "grid", gridTemplateColumns: "60px minmax(220px, 1fr) minmax(0, 2fr)", gap: 28, alignItems: "baseline" }}>
                 <div className="mono" style={{ color: "var(--fg)", fontSize: 13 }}>{s.n}</div>
                 <h3 style={{ fontSize: 22, fontWeight: 400, margin: 0 }}>{s.h}</h3>
                 <div style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.55 }}>{s.p}</div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerReveal>
           <p style={{ marginTop: 40, fontSize: 17, lineHeight: 1.55, color: "var(--muted)", maxWidth: 680 }}>That&apos;s the process. But what exactly are those 50+ signals? Here&apos;s where it gets interesting.</p>
         </section>
 
         <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "159px 32px" }}>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>What gets checked</div>
-            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>Four surfaces. 50+ signals. Most tools only check one.</h2>
-            <div style={{ marginTop: 72, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
+          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "128px 32px" }}>
+            <ScrollReveal>
+              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>What gets checked</div>
+              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>Four surfaces. 50+ signals. Most tools only check one.</h2>
+            </ScrollReveal>
+            <StaggerReveal style={{ marginTop: 72, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
               {SURFACES.map((s) => (
-                <div key={s.code} style={{ background: "var(--bg)", padding: "44px 36px 40px", minHeight: 360, display: "flex", flexDirection: "column", gap: 24 }}>
+                <StaggerItem key={s.code} style={{ background: "var(--bg)", padding: "44px 36px 40px", minHeight: 360, display: "flex", flexDirection: "column", gap: 24 }}>
                   <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--fg)", textTransform: "uppercase" }}>{s.code}</div>
                   <h3 style={{ fontSize: 24, fontWeight: 400, margin: 0 }}>{s.title}</h3>
                   <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 12, color: "var(--muted)", fontSize: 15 }}>
                     {s.items.map((it) => <li key={it}>{it}</li>)}
                   </ul>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerReveal>
           </div>
         </section>
 
-        <section style={{ borderTop: "1px solid var(--rule)", padding: "140px 0", textAlign: "center" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "0 32px" }}>
-            <h2 style={{ margin: 0, fontSize: "clamp(36px, 5.2vw, 64px)", lineHeight: 1.05, letterSpacing: "-0.025em", fontWeight: 400, maxWidth: 880, marginInline: "auto" }}>
-              Your competitors have already been scanned.<br /><span style={{ color: "var(--muted)" }}>Your turn takes thirty seconds.</span>
-            </h2>
-            <div style={{ marginTop: 56, maxWidth: 760, marginInline: "auto", textAlign: "left" }}><ScanTool compact /></div>
-          </div>
+        {/* Closing CTA — the page's one accent moment */}
+        <section style={{ borderTop: "1px solid var(--rule)", padding: "120px 32px" }}>
+          <ScrollReveal scale>
+            <div style={{ maxWidth: 1120, margin: "0 auto", borderRadius: 24, border: "1px solid var(--accent-line)", background: "linear-gradient(155deg, rgba(137,207,240,0.12), rgba(137,207,240,0.02) 60%)", boxShadow: "0 40px 100px -50px rgba(137,207,240,0.45), inset 0 1px 0 rgba(255,255,255,0.04)", padding: "clamp(36px, 5vw, 64px)" }}>
+              <h2 style={{ margin: 0, fontSize: "clamp(32px, 4.6vw, 56px)", lineHeight: 1.05, letterSpacing: "-0.025em", fontWeight: 500, maxWidth: 820 }}>
+                Your competitors have already been scanned.<br /><span style={{ color: "var(--muted)" }}>Your turn takes thirty seconds.</span>
+              </h2>
+              <div style={{ marginTop: 48, maxWidth: 760 }}><ScanTool compact /></div>
+            </div>
+          </ScrollReveal>
         </section>
       </main>
       <Footer />
