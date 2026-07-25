@@ -92,11 +92,11 @@ Fonts: Inter (default, `var(--font-inter)`), mono for labels/microcopy via `.mon
 | `/blog` + posts | ✅ content compliant | 6 AEO posts, sources verified; check index page styling against §6 |
 | `/start-now` | 🔶 near | de-priced; verify hero/eyebrow/CTA band match §6 |
 | `/services/*` (6) | 🔶 shell-level pass needed | all render via `ServicePage.tsx`: verify template order, accent moment, closing CTA band, per-service FAQ+schema |
-| `/about` | 🔶 needs pass | founder/mission moved to homepage; page must not duplicate it stale |
+| `/about` | ✅ compliant | lifted 2026-07-25: two-tone H1, hero + belief-grid reveals, accent-moment closing CTA |
 | `/how-it-works` | 🔶 needs pass | must mirror the real scan → report → call → fix flow and current report design |
-| `/scan` | 🔶 needs pass | align copy with hero scan promise, no stale claims |
-| `/results` | 🔶 needs pass | check post-scan CTAs, styling vs §6 |
-| `/success-stories` | ⚠️ trust risk | zero signed clients: page must not imply results we don't have (launch-gate rule); consider "first story" framing only |
+| `/scan` | ✅ compliant | lifted 2026-07-25: reveals, staggered grids, accent-moment closing CTA, padding normalized |
+| `/results` | ✅ intentionally light | live data report, NOT a marketing page: keep dense/functional, do not force accent-card theme. Open QC: bottom stat claims (24/7, <1h, 30+) need Matt's verification; loss-framing kept (honest stakes) |
+| `/success-stories` | ✅ honest empty state | verified 2026-07-25: noindexed, no invented numbers, "be the first story" framing. Replace with real case study when one exists |
 | `/start` | 🅿 in reserve | noindexed, unlinked; do not restyle until pricing returns |
 | `/privacy`, `/terms` | ✅ legal | de-priced 2026-07-23; style light-touch only |
 | `/audit` | 🔶 flow-critical | the live scan flow; any styling pass must not break ScanGate/report |
