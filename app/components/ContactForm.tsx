@@ -38,7 +38,6 @@ const inputStyle: React.CSSProperties = {
   borderBottom: "1px solid var(--rule-strong)",
   padding: "16px 0",
   fontSize: 17,
-  outline: "none",
   fontFamily: "inherit",
 };
 
@@ -114,11 +113,11 @@ export default function ContactForm({
 
   // Fields reveal as a single coherent motion, not six competing ones.
   const fields = [
-    { id: "cf-name", label: "Name", el: <input id="cf-name" type="text" autoComplete="name" {...register("name")} placeholder="Your name" style={inputStyle} aria-invalid={!!errors.name} aria-describedby={errors.name ? "cf-name-err" : undefined} />, err: errors.name, errId: "cf-name-err" },
-    { id: "cf-email", label: "Email", el: <input id="cf-email" type="email" autoComplete="email" {...register("email")} placeholder="you@company.com" style={inputStyle} aria-invalid={!!errors.email} aria-describedby={errors.email ? "cf-email-err" : undefined} />, err: errors.email, errId: "cf-email-err" },
-    { id: "cf-phone", label: "Phone (optional)", el: <input id="cf-phone" type="tel" autoComplete="tel" {...register("phone")} placeholder="(555) 555-5555" style={inputStyle} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "cf-phone-err" : undefined} />, err: errors.phone, errId: "cf-phone-err" },
-    { id: "cf-website", label: "Your website (optional)", el: <input id="cf-website" type="text" autoComplete="url" {...register("website")} placeholder="yourbusiness.com" style={inputStyle} />, err: undefined, errId: "" },
-    { id: "cf-message", label: "What's going on?", el: <textarea id="cf-message" {...register("message")} placeholder="Phone's not ringing like it used to. Not sure why." style={{ ...inputStyle, resize: "vertical", minHeight: 110 }} />, err: undefined, errId: "" },
+    { id: "cf-name", label: "Name", el: <input id="cf-name" className="lead-input" type="text" autoComplete="name" {...register("name")} placeholder="Your name" style={inputStyle} aria-invalid={!!errors.name} aria-describedby={errors.name ? "cf-name-err" : undefined} />, err: errors.name, errId: "cf-name-err" },
+    { id: "cf-email", label: "Email", el: <input id="cf-email" className="lead-input" type="email" autoComplete="email" {...register("email")} placeholder="you@company.com" style={inputStyle} aria-invalid={!!errors.email} aria-describedby={errors.email ? "cf-email-err" : undefined} />, err: errors.email, errId: "cf-email-err" },
+    { id: "cf-phone", label: "Phone (optional)", el: <input id="cf-phone" className="lead-input" type="tel" autoComplete="tel" {...register("phone")} placeholder="(555) 555-5555" style={inputStyle} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "cf-phone-err" : undefined} />, err: errors.phone, errId: "cf-phone-err" },
+    { id: "cf-website", label: "Your website (optional)", el: <input id="cf-website" className="lead-input" type="text" autoComplete="url" {...register("website")} placeholder="yourbusiness.com" style={inputStyle} />, err: undefined, errId: "" },
+    { id: "cf-message", label: "What's going on?", el: <textarea id="cf-message" className="lead-input" {...register("message")} placeholder="Phone's not ringing like it used to. Not sure why." style={{ ...inputStyle, resize: "vertical", minHeight: 110 }} />, err: undefined, errId: "" },
   ];
 
   return (

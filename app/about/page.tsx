@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ScanTool from "../components/ScanTool";
+import ScrollReveal, { StaggerReveal, StaggerItem } from "../components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Why Simpl | Built for businesses tired of guessing",
@@ -64,41 +65,45 @@ export default function AboutPage() {
           ]
         }) }} />
         {/* Hero */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "120px 32px 64px" }}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: 40,
-            }}
-          >
-            Why Simpl
-          </div>
-          <h1
-            style={{
-              margin: 0,
-              fontSize: "clamp(32px, 5vw, 56px)",
-              lineHeight: 1.08,
-              letterSpacing: "-0.025em",
-              fontWeight: 400,
-              maxWidth: 900,
-            }}
-          >
-            Nobody told you your Google listing was broken. That&apos;s why we built Simpl.
-          </h1>
-          <p
-            style={{
-              marginTop: 28,
-              maxWidth: 680,
-              fontSize: 19,
-              lineHeight: 1.55,
-            }}
-          >
-            Most small businesses are paying for marketing they can&apos;t measure, websites they can&apos;t audit, and listings they don&apos;t know are broken. We got tired of watching it happen.
-          </p>
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 64px" }}>
+          <ScrollReveal>
+            <div
+              className="mono"
+              style={{
+                fontSize: 11,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: "var(--muted)",
+                marginBottom: 40,
+              }}
+            >
+              Why Simpl
+            </div>
+            <h1
+              style={{
+                margin: 0,
+                fontSize: "clamp(34px, 5.5vw, 56px)",
+                lineHeight: 1.08,
+                letterSpacing: "-0.025em",
+                fontWeight: 500,
+                maxWidth: 900,
+              }}
+            >
+              Nobody told you your Google listing was broken.
+              <br />
+              <span style={{ color: "var(--muted)" }}>That&apos;s why we built Simpl.</span>
+            </h1>
+            <p
+              style={{
+                marginTop: 28,
+                maxWidth: 680,
+                fontSize: 19,
+                lineHeight: 1.55,
+              }}
+            >
+              Most small businesses are paying for marketing they can&apos;t measure, websites they can&apos;t audit, and listings they don&apos;t know are broken. We got tired of watching it happen.
+            </p>
+          </ScrollReveal>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
@@ -285,7 +290,7 @@ export default function AboutPage() {
           >
             What we believe
           </div>
-          <div
+          <StaggerReveal
             className="grid-beliefs"
             style={{
               display: "grid",
@@ -296,7 +301,7 @@ export default function AboutPage() {
             }}
           >
             {BELIEFS.map((b) => (
-              <div
+              <StaggerItem
                 key={b.headline}
                 style={{
                   background: "var(--bg)",
@@ -324,30 +329,45 @@ export default function AboutPage() {
                 >
                   {b.body}
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerReveal>
         </section>
 
         <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
 
-        {/* Bottom CTA */}
+        {/* Bottom CTA — the page's one accent moment */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <h2
-            style={{
-              margin: 0,
-              fontSize: "clamp(28px, 4.5vw, 52px)",
-              lineHeight: 1.08,
-              letterSpacing: "-0.025em",
-              fontWeight: 400,
-              maxWidth: 800,
-            }}
-          >
-            Find out in 30 seconds what most agencies take 3 weeks to tell you.
-          </h2>
-          <div style={{ marginTop: 48 }}>
-            <ScanTool compact />
-          </div>
+          <ScrollReveal scale>
+            <div
+              style={{
+                borderRadius: 24,
+                border: "1px solid var(--accent-line)",
+                background: "linear-gradient(155deg, rgba(137,207,240,0.12), rgba(137,207,240,0.02) 60%)",
+                boxShadow: "0 40px 100px -50px rgba(137,207,240,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
+                padding: "clamp(32px, 5vw, 56px)",
+              }}
+            >
+              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 18 }}>
+                See it for yourself
+              </div>
+              <h2
+                style={{
+                  margin: 0,
+                  fontSize: "clamp(28px, 4.5vw, 52px)",
+                  lineHeight: 1.08,
+                  letterSpacing: "-0.025em",
+                  fontWeight: 500,
+                  maxWidth: 800,
+                }}
+              >
+                Find out in 30 seconds what most agencies take 3 weeks to tell you.
+              </h2>
+              <div style={{ marginTop: 40 }}>
+                <ScanTool compact />
+              </div>
+            </div>
+          </ScrollReveal>
         </section>
       </main>
       <Footer />
