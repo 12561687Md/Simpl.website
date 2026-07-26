@@ -284,6 +284,10 @@ export default function BusinessSearch({
               borderRadius: 8,
               boxShadow: "0 24px 60px -20px rgba(0,0,0,0.7)",
               backdropFilter: "blur(12px)",
+              // Scroll when there are more matches than fit, so a business
+              // ranked lower is still reachable instead of being clipped.
+              maxHeight: 328,
+              overflowY: "auto",
             }}
           >
             {predictions.map((p, i) => (

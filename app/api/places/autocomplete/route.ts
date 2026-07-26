@@ -197,16 +197,16 @@ export async function GET(req: Request) {
       body.locationBias = {
         circle: {
           center: { latitude: Number(lat), longitude: Number(lng) },
-          // Wide enough to cover a metro area (a searcher in Raleigh scanning
-          // a business in Apex is common), narrow enough to still separate
-          // "nearby" from "a different state." A bias, not a restriction —
-          // a real match further out still surfaces, just ranked lower.
-          // 50,000 is a hard ceiling: the Places API rejects anything above
-          // it with INVALID_ARGUMENT, which was silently 502-ing every
-          // production autocomplete request (dev has no x-vercel-ip-* headers,
-          // so locationBias never activated there, and the bug never
-          // reproduced locally). Verified against the live API error text.
-          radius: 50000,
+          // Tightened to the searcher's own area so nearby businesses rank
+          // above same-named ones elsewhere. This is a BIAS, not a restriction:
+          // a match further out still surfaces, just ranked lower, so a searcher
+          // in Raleigh scanning a business a town over is unaffected while a
+          // local listing (e.g. Stone Creek in Apex) gets pulled to the top
+          // instead of being buried under the river/street/out-of-state matches
+          // that were pushing it past the result cap. 50,000 is the hard ceiling
+          // the Places API rejects anything above (INVALID_ARGUMENT); 25,000
+          // stays well under it.
+          radius: 25000,
         },
       };
     }
@@ -234,15 +234,18 @@ export async function GET(req: Request) {
 
     const predictions = (data.suggestions ?? [])
       // Filter before slicing, or one excluded entry pushes a real business off
-      // the list of five. Type exclusion first, then the institutional-name guard
-      // for campus clinics that type as ordinary practices.
+      // the list. Type exclusion first, then the institutional-name guard for
+      // campus clinics that type as ordinary practices.
       .filter((s: Suggestion) => {
         const p = s.placePrediction;
         if (isExcluded(p?.types ?? [])) return false;
         const name = p?.structuredFormat?.mainText?.text ?? p?.text?.text ?? "";
         return !looksInstitutional(name);
       })
-      .slice(0, 5)
+      // Return the full set Google gives us (it caps autocomplete at ~5-10) so
+      // a real business is never dropped by our own cap; the dropdown scrolls if
+      // there are many. Was hard-capped at 5, which could hide a valid match.
+      .slice(0, 15)
       .map((s: Suggestion) => {
         const p = s.placePrediction;
         return {
