@@ -17,7 +17,7 @@ export default function StartLeadCard() {
       transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
       style={{
         width: "100%",
-        maxWidth: 540,
+        maxWidth: 620,
         borderRadius: 24,
         border: "1px solid var(--accent-line)",
         background: "linear-gradient(155deg, rgba(137,207,240,0.13), rgba(137,207,240,0.02) 60%)",
