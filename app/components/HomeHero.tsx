@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import BusinessSearch, { type Prediction } from "./BusinessSearch";
 import UrlFallbackScanner from "./UrlFallbackScanner";
+import PhoneLoop from "./PhoneLoop";
 import TextMorph from "@/components/ui/text-morph";
 import { StarsCanvas } from "@/components/ui/stars-canvas";
 import HeroCurvedBottom from "./HeroCurvedBottom";
@@ -86,100 +87,98 @@ export default function HomeHero() {
             it's the root description of Simpl (see .agents/product-marketing.md)
             and needs a permanent home further down the page. */}
 
-        <div style={{ marginTop: 70 }}>{/* was 40 + ~30px reclaimed from the
-            removed "How it works" label, so the hero keeps its original height */}
-          <div style={{ maxWidth: 660, margin: "0 auto", textAlign: "left", position: "relative" }}>
-            <AnimatePresence mode="wait" initial={false}>
-              {urlMode ? (
-                <motion.div
-                  key="url"
-                  initial={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
-                  transition={{ duration: 0.22 }}
-                >
-                  <UrlFallbackScanner />
-                  <button
-                    type="button"
-                    onClick={() => setUrlMode(false)}
-                    className="mono"
-                    style={{
-                      marginTop: 14,
-                      color: "var(--muted)",
-                      background: "transparent",
-                      border: 0,
-                      padding: 0,
-                      font: "inherit",
-                      fontSize: 11,
-                      letterSpacing: "0.06em",
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                      textUnderlineOffset: 3,
-                    }}
-                  >
-                    ← Search by business name instead
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="business"
-                  initial={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
-                  transition={{ duration: 0.22 }}
-                >
-                  {/* Name-first search. Asking a contractor for their domain
-                      assumes they know it; asking for their business name
-                      assumes nothing, and the listing hands us the domain
-                      anyway. */}
-                  <BusinessSearch onSelect={startAudit} autoFocus />
+        {/* Owner-style hero unit: the mini scrolling iPhone (a live Simpl audit
+            cycling its tabs) boxed in a card, with the search bar pinned at the
+            bottom of the card. The privacy reassurance line was removed. */}
+        <div style={{ marginTop: 44 }}>
+          <div
+            className="hero-audit-card"
+            style={{
+              maxWidth: 372,
+              margin: "0 auto",
+              border: "1px solid var(--rule-strong)",
+              borderRadius: 28,
+              background: "linear-gradient(180deg, rgba(137,207,240,0.07), rgba(19,21,23,0.55))",
+              boxShadow: "0 44px 120px -54px rgba(137,207,240,0.45), inset 0 1px 0 rgba(255,255,255,0.05)",
+              padding: "26px 18px 18px",
+            }}
+          >
+            <PhoneLoop />
 
-                  {/* Reassurance sits directly under the input, where the
-                      hesitation is. Worded to stay true after the email gate:
-                      we do store an address now, so the promise is about
-                      credentials and selling, not storage in general. */}
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 11,
-                      color: "var(--muted)",
-                      marginTop: 12,
-                      letterSpacing: "0.06em",
-                      display: "flex",
-                      gap: 14,
-                      flexWrap: "wrap",
-                      alignItems: "center",
-                    }}
+            {/* Search bar at the bottom of the card. */}
+            <div style={{ marginTop: 22, textAlign: "left", position: "relative" }}>
+              <AnimatePresence mode="wait" initial={false}>
+                {urlMode ? (
+                  <motion.div
+                    key="url"
+                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                    transition={{ duration: 0.22 }}
                   >
-                    <span style={{ opacity: 0.75 }}>Your data stays private. We never store credentials or sell your details.</span>
-                    {/* Escape hatch for businesses without a strong Google
-                        listing (no address, brand-new, or ecommerce like home
-                        health). Swaps ScanTool in over the search rather than
-                        navigating away. */}
+                    <UrlFallbackScanner />
                     <button
                       type="button"
-                      onClick={() => setUrlMode(true)}
+                      onClick={() => setUrlMode(false)}
+                      className="mono"
                       style={{
-                        color: "var(--accent)",
+                        marginTop: 14,
+                        color: "var(--muted)",
                         background: "transparent",
                         border: 0,
                         padding: 0,
                         font: "inherit",
                         fontSize: 11,
+                        letterSpacing: "0.06em",
                         cursor: "pointer",
-                        textDecoration: "none",
-                        borderBottom: "1px solid var(--accent)",
-                        paddingBottom: 1,
+                        textDecoration: "underline",
+                        textUnderlineOffset: 3,
                       }}
                     >
-                      Can&apos;t find your business? Scan by URL →
+                      ← Search by business name instead
                     </button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="business"
+                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
+                    transition={{ duration: 0.22 }}
+                  >
+                    {/* Name-first search. Asking a contractor for their domain
+                        assumes they know it; asking for their business name
+                        assumes nothing, and the listing hands us the domain
+                        anyway. */}
+                    <BusinessSearch onSelect={startAudit} autoFocus />
 
+                    {/* Escape hatch for businesses without a strong Google
+                        listing. Swaps ScanTool in over the search. */}
+                    <div style={{ marginTop: 12, textAlign: "center" }}>
+                      <button
+                        type="button"
+                        onClick={() => setUrlMode(true)}
+                        style={{
+                          color: "var(--accent)",
+                          background: "transparent",
+                          border: 0,
+                          padding: 0,
+                          font: "inherit",
+                          fontSize: 11.5,
+                          cursor: "pointer",
+                          textDecoration: "none",
+                          borderBottom: "1px solid var(--accent)",
+                          paddingBottom: 1,
+                        }}
+                      >
+                        Can&apos;t find your business? Scan by URL →
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </section>
 
