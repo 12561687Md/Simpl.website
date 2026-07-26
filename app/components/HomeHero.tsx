@@ -87,26 +87,17 @@ export default function HomeHero() {
             it's the root description of Simpl (see .agents/product-marketing.md)
             and needs a permanent home further down the page. */}
 
-        {/* Owner-style hero unit: the mini scrolling iPhone (a live Simpl audit
-            cycling its tabs) boxed in a card, with the search bar pinned at the
-            bottom of the card. The privacy reassurance line was removed. */}
+        {/* Hero unit. MOBILE: the app phone boxed in a card (Owner-style) with
+            the search bar at the bottom. DESKTOP: the original search-only hero,
+            no phone card (.hero-unit strips the card styling at md+, and the
+            phone is md:hidden). */}
         <div style={{ marginTop: 44 }}>
-          <div
-            className="hero-audit-card"
-            style={{
-              maxWidth: 372,
-              margin: "0 auto",
-              border: "1px solid var(--rule-strong)",
-              borderRadius: 28,
-              background: "linear-gradient(180deg, rgba(137,207,240,0.07), rgba(19,21,23,0.55))",
-              boxShadow: "0 44px 120px -54px rgba(137,207,240,0.45), inset 0 1px 0 rgba(255,255,255,0.05)",
-              padding: "26px 18px 18px",
-            }}
-          >
-            <PhoneLoop />
+          <div className="hero-unit">
+            <div className="md:hidden" style={{ marginBottom: 22 }}>
+              <PhoneLoop />
+            </div>
 
-            {/* Search bar at the bottom of the card. */}
-            <div style={{ marginTop: 22, textAlign: "left", position: "relative" }}>
+            <div style={{ textAlign: "left", position: "relative" }}>
               <AnimatePresence mode="wait" initial={false}>
                 {urlMode ? (
                   <motion.div

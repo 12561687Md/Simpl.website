@@ -927,6 +927,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .business-search-cta { padding: 0 14px !important; }
 }
 
+/* Hero unit: on mobile it's the boxed app-phone card (with the search at the
+   bottom); at md+ the card styling is stripped so desktop keeps the original
+   search-only hero. The phone itself is md:hidden in the markup. */
+.hero-unit {
+  max-width: 372px;
+  margin: 0 auto;
+  border: 1px solid var(--rule-strong);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(137,207,240,0.07), rgba(19,21,23,0.55));
+  box-shadow: 0 44px 120px -54px rgba(137,207,240,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+  padding: 26px 18px 18px;
+}
+@media (min-width: 768px) {
+  .hero-unit { max-width: 660px; border: 0; border-radius: 0; background: none; box-shadow: none; padding: 0; }
+}
+
 /* Service-page hero: copy left, relevant image right. Stacks on mobile with
    the image on top so the photo lands first on a phone. */
 .service-hero-grid {
