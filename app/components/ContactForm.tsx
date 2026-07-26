@@ -120,43 +120,34 @@ export default function ContactForm({
     { id: "cf-message", label: "What's going on?", el: <textarea id="cf-message" className="lead-input" {...register("message")} placeholder="Phone's not ringing like it used to. Not sure why." style={{ ...inputStyle, resize: "vertical", minHeight: 110 }} />, err: undefined, errId: "" },
   ];
 
+  // No reveal animation on the form itself. A lead form must never have
+  // opacity:0 as a resting state: if the client animation is interrupted
+  // (HMR, reduced-motion edge cases, smooth-scroll, a stale tab) it would be
+  // stranded invisible. This renders fully opaque in the raw HTML, visible
+  // even with JS disabled.
   return (
-    <motion.form
+    <form
       onSubmit={handleSubmit(onSubmit)}
-      initial={reduce ? false : { opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
       style={{ display: "grid", gap: 26, border: "1px solid var(--rule)", padding: "40px 36px", background: "var(--bg-soft)" }}
     >
-      {fields.map((f, i) => (
-        <motion.div
-          key={f.id}
-          initial={reduce ? false : { opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.32, ease: "easeOut", delay: reduce ? 0 : 0.06 * i }}
-        >
+      {fields.map((f) => (
+        <div key={f.id}>
           <label htmlFor={f.id} style={labelStyle}>{f.label}</label>
           {f.el}
           {f.err && <div id={f.errId} role="alert" style={errStyle}>{f.err.message}</div>}
-        </motion.div>
+        </div>
       ))}
 
       {errors.root && <div role="alert" style={{ ...errStyle, marginTop: 0, fontSize: 14 }}>{errors.root.message}</div>}
 
-      <motion.button
+      <button
         type="submit"
         disabled={isSubmitting}
-        initial={reduce ? false : { opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.32, ease: "easeOut", delay: reduce ? 0 : 0.06 * fields.length }}
         className="cta-primary"
         style={{ border: 0, color: "var(--accent-ink)", padding: "18px 28px", fontSize: 15, fontWeight: 600, borderRadius: 2, cursor: isSubmitting ? "wait" : "pointer", justifySelf: "start", opacity: isSubmitting ? 0.7 : 1, minHeight: 44 }}
       >
         {isSubmitting ? "Sending..." : `${ctaLabel} →`}
-      </motion.button>
-    </motion.form>
+      </button>
+    </form>
   );
 }

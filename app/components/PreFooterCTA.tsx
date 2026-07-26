@@ -1,32 +1,27 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
 import ContactForm from "./ContactForm";
 
 /**
- * The lead form that slides up into view as a visitor reaches the bottom of a
- * key page. Rendered by <Footer showLeadForm> so it appears site-wide without
- * editing every page, and opted out on pages that ARE a form (start-now) or
- * where it doesn't belong (legal). SlideIn from the bottom does the "slides
- * into the page on scroll" motion; reduced-motion just renders it in place.
+ * The lead form block at the bottom of key pages. Rendered by
+ * <Footer showLeadForm> so it appears site-wide without editing every page, and
+ * opted out on pages that ARE a form (start-now) or where it doesn't belong
+ * (legal).
+ *
+ * No reveal animation. This lives at the very bottom of the page and was
+ * repeatedly stranded invisible when its reveal was gated on opacity 0 (first a
+ * scroll trigger that never fired, then a mount animation that could still be
+ * interrupted). It now renders fully opaque in the raw HTML: the form can never
+ * be invisible, JS or no JS.
  */
 export default function PreFooterCTA({ sourcePage }: { sourcePage?: string }) {
   const pathname = usePathname();
   const src = sourcePage ?? pathname ?? "/";
-  const reduce = useReducedMotion();
   return (
     <section style={{ borderTop: "1px solid var(--rule)", background: "var(--bg)" }}>
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "clamp(64px, 9vw, 112px) 32px" }}>
-        {/* Own reveal instead of SlideIn: SlideIn's -80px viewport margin can
-            never fully fire for the last element on a page (the form sat at
-            opacity 0 / flickered at the bottom). amount-based trigger with a
-            small rise is bottom-safe. */}
-        <motion.div
-          initial={reduce ? { opacity: 1 } : { opacity: 0, y: 56 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        <div
           style={{
             borderRadius: 24,
             border: "1px solid var(--accent-line)",
@@ -50,7 +45,7 @@ export default function PreFooterCTA({ sourcePage }: { sourcePage?: string }) {
             </div>
             <ContactForm ctaLabel="Send it over" sourcePage={src} />
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
