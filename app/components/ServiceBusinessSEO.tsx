@@ -45,7 +45,7 @@ export default function ServiceBusinessSEO() {
             Supporting service-based business growth
           </div>
           <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 500, maxWidth: 900 }}>
-            One proven process. <span style={{ color: "var(--muted)" }}>Every service-based business.</span>
+            One proven process. <span style={{ color: "var(--muted)" }}>Custom built for your business, no matter the service.</span>
           </h2>
           <p style={{ marginTop: 22, maxWidth: 720, fontSize: 17.5, lineHeight: 1.6, color: "var(--muted)" }}>
             Landscapers, plumbers, HVAC companies, remodelers, roofers, electricians, detailers, whatever the trade, getting more customers online comes down to the same four steps. We run all four for you, so you can stay on the job.

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MoveRight } from "lucide-react";
+import { MoveRight, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
 import { RippleLink } from "@/components/ui/ripple-link";
@@ -78,7 +78,11 @@ export default function Header() {
   const pathname = usePathname();
   const [servicesOpen, setServicesOpen] = React.useState(false);
   const [resourcesOpen, setResourcesOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   const navRef = React.useRef<HTMLDivElement>(null);
+
+  // Close the mobile menu whenever the route changes (a link was tapped).
+  React.useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   // Touch has no mouseleave: close any open menu on a tap outside the nav.
   React.useEffect(() => {
@@ -257,8 +261,8 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Right zone: primary CTA. */}
-        <div className="flex flex-shrink-0 items-center">
+        {/* Right zone: primary CTA + mobile hamburger. */}
+        <div className="flex flex-shrink-0 items-center gap-2">
           <RippleLink
             href="/start-now"
             className="cta-primary no-underline whitespace-nowrap inline-flex"
@@ -266,8 +270,74 @@ export default function Header() {
           >
             Start Now
           </RippleLink>
+          <button
+            type="button"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+            className="md:hidden inline-flex items-center justify-center"
+            style={{ width: 42, height: 42, borderRadius: 10, border: "1px solid var(--rule-strong)", background: "transparent", color: "var(--fg)", cursor: "pointer" }}
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile nav panel. Hidden on md+ (the centered mega-menu takes over
+          there). Solid, scrollable, closes on route change via the effect. */}
+      {mobileOpen && (
+        <div
+          className="md:hidden"
+          style={{
+            background: "rgba(11,12,13,0.97)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            borderTop: "1px solid var(--rule)",
+            borderBottom: "1px solid var(--rule)",
+            maxHeight: "calc(100vh - 92px)",
+            overflowY: "auto",
+          }}
+        >
+          <nav style={{ padding: "20px 20px 28px", display: "flex", flexDirection: "column", gap: 4 }}>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", margin: "6px 0 8px" }}>Services</div>
+            {SERVICE_GROUPS.flatMap((g) => g.items).concat(ALSO_AVAILABLE).map((s) => (
+              <Link
+                key={s.href + s.label}
+                href={s.href}
+                className="no-underline"
+                style={{ display: "block", padding: "11px 8px", fontSize: 16, color: pathname === s.href ? "var(--accent)" : "var(--fg)", borderRadius: 8 }}
+              >
+                {s.label}
+              </Link>
+            ))}
+
+            <div style={{ height: 1, background: "var(--rule)", margin: "12px 0" }} />
+
+            <Link href="/how-it-works" className="no-underline" style={{ display: "block", padding: "11px 8px", fontSize: 16, color: pathname === "/how-it-works" ? "var(--accent)" : "var(--fg)" }}>How it works</Link>
+            <Link href="/about" className="no-underline" style={{ display: "block", padding: "11px 8px", fontSize: 16, color: pathname === "/about" ? "var(--accent)" : "var(--fg)" }}>Why Simpl</Link>
+
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", margin: "16px 0 8px" }}>Resources</div>
+            {RESOURCE_LINKS.map((r) => (
+              <Link
+                key={r.href}
+                href={r.href}
+                className="no-underline"
+                style={{ display: "block", padding: "11px 8px", fontSize: 16, color: pathname === r.href ? "var(--accent)" : "var(--fg)" }}
+              >
+                {r.label}
+              </Link>
+            ))}
+
+            <Link
+              href="/start-now"
+              className="cta-primary no-underline"
+              style={{ marginTop: 18, textAlign: "center", color: "var(--accent-ink)", padding: "14px 20px", fontSize: 16, fontWeight: 600, borderRadius: 999, textDecoration: "none" }}
+            >
+              Start Now
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
