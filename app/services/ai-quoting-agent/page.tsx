@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import ServiceLayout, { type ServiceData } from "../../components/ServiceLayout";
 
 export const metadata: Metadata = {
-  title: "AI Response & Quoting Agent",
+  title: "CRM & AI Automation",
   description:
-    "Never miss another lead. Missed-call text-back, instant quote estimates, 24/7 response, and follow-up sequences that keep every lead warm while you're on the job.",
+    "Capture every lead in one system, answer instantly, and follow up automatically. Missed-call text-back, instant quotes, 24/7 response, pipeline tracking, and review requests for local service businesses.",
   openGraph: {
-    title: "AI Response & Quoting Agent | Simpl",
-    description: "Never miss another lead. Missed-call text-back, instant quotes, 24/7 response, and follow-up that keeps every lead warm while you're on the job.",
+    title: "CRM & AI Automation | Simpl",
+    description: "Every lead captured, answered, and followed up. Missed-call text-back, instant quotes, pipeline tracking, and follow-up that keeps every lead warm.",
     url: "https://simpl.pro/services/ai-quoting-agent",
     siteName: "Simpl",
     type: "website",
@@ -16,30 +16,35 @@ export const metadata: Metadata = {
 };
 
 const DATA: ServiceData = {
-  code: "07 / AI Response & Quoting Agent",
-  title: "AI Response & Quoting Agent",
-  titleTail: "Every call answered. Every lead followed up. Even mid-job.",
+  code: "07 / CRM & AI Automation",
+  title: "CRM & AI Automation",
+  titleTail: "Every lead captured, answered, and followed up.",
+  // To add the hero photo once supplied: drop the file at
+  // /public/services/crm-automation.jpg (see public/services/README.md for the
+  // spec) and uncomment the line below.
+  // heroImage: { src: "/services/crm-automation.jpg", alt: "A contractor answering a customer on the job" },
   heroSub:
-    "You can't answer the phone from a roof or a crawlspace, and a customer who hits voicemail is already dialing the next business. This answers for you in seconds, so the lead stays yours.",
-  includesHeading: "The response layer that never clocks out.",
+    "Leads come in from calls, forms, and messages at every hour, and the ones that slip through are jobs you never even hear about. This captures every one in a single system, answers in seconds, and keeps following up until they book.",
+  includesHeading: "Your whole lead engine, in one place.",
   includes: [
-    "Missed-call text-back in seconds, not hours",
-    "Instant ballpark quotes for your common jobs",
+    "Missed-call text-back in seconds, so no caller hits a dead end",
+    "Every call, form, and message in one shared inbox",
+    "Contacts and pipeline tracked from first touch to booked job",
+    "Instant quotes for your common jobs",
     "24/7 response to calls, forms, and messages",
     "Appointment booking straight onto your calendar",
     "Automatic follow-up sequences for leads that go quiet",
     "Review requests sent the moment a job closes",
-    "Every conversation logged so nothing slips",
-    "Tuned to your services, prices, and voice on setup",
+    "Every conversation logged, so nothing slips",
   ],
-  compoundingHeading: "Speed is the cheapest competitive advantage in local business.",
+  compoundingHeading: "Speed and follow-up win the jobs your competitors let slip.",
   compoundingBody:
-    "Research on lead response is blunt: reply within minutes and a lead is dramatically more likely to become a job; wait an hour and it's probably gone. Most of your competitors respond slowly or not at all. Answering every inquiry instantly, around the clock, wins you the jobs their voicemail is losing, every single week.",
+    "Research on lead response is blunt: reply within minutes and a lead is dramatically more likely to become a job; wait an hour and it's probably gone. Most competitors answer slowly, forget to follow up, or lose the lead in a notebook. When every inquiry is answered instantly and chased automatically until it books, you win the work their voicemail and their memory are losing, every single week.",
   next: {
     eyebrow: "What comes next",
-    heading: "Response seals the bottom of the funnel. Visibility fills the top.",
+    heading: "This seals the bottom of the funnel. Visibility fills the top.",
     body:
-      "Once no lead leaks, every visibility dollar works harder. Local SEO and your Google listing send the calls; the agent makes sure every one becomes a conversation.",
+      "Once no lead leaks and every one gets followed up, every visibility dollar works harder. Local SEO and your Google listing send the calls; this makes sure every one becomes a booked job.",
     link: { href: "/services/local-seo", label: "Local SEO & AI Search Visibility" },
   },
   faqHeading: "Questions we hear before every setup.",
@@ -49,12 +54,16 @@ const DATA: ServiceData = {
       a: "When a call goes unanswered, the caller instantly gets a text: sorry we missed you, we're on a job, what do you need? The customer feels handled instead of ignored, and you reply when your hands are free. For field trades it's usually the single highest-return automation there is.",
     },
     {
-      q: "Will it feel impersonal to my customers?",
+      q: "Do I need a CRM if I already have a phone and a notebook?",
+      a: "A CRM is just one place where every lead, conversation, and job lives instead of scattered across your phone, your inbox, and a notepad. The leads that fall through the cracks are almost always the ones nobody wrote down or followed up on. This closes those cracks without changing how you work.",
+    },
+    {
+      q: "Will the automation feel impersonal to my customers?",
       a: "The opposite. It's tuned to your services and your voice, and its job is buying you time by responding instantly, then you take over personally. A voicemail and a callback four hours later feels far worse to someone who needs help now.",
     },
     {
       q: "How are the instant quotes accurate?",
-      a: "On setup we load your services and real price ranges, and the agent only quotes ballparks you've approved, with anything unusual handed straight to you. Customers get a fast honest range, you get a warm lead instead of a missed call.",
+      a: "On setup we load your services and real price ranges, and it only quotes ballparks you've approved, with anything unusual handed straight to you. Customers get a fast honest range, you get a warm lead instead of a missed call.",
     },
   ],
   ctaHeading: "Find out how many leads you're missing.",
@@ -65,8 +74,8 @@ const DATA: ServiceData = {
 const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "AI Response & Quoting Agent",
-  description: "Missed-call text-back, instant quote estimates, 24/7 response, booking, and follow-up sequences for local service businesses.",
+  name: "CRM & AI Automation",
+  description: "CRM, missed-call text-back, instant quotes, 24/7 response, pipeline tracking, booking, and follow-up sequences for local service businesses.",
   provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
   url: "https://simpl.pro/services/ai-quoting-agent",
@@ -78,7 +87,7 @@ const BREADCRUMB_SCHEMA = {
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
     { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "AI Response & Quoting Agent", item: "https://simpl.pro/services/ai-quoting-agent" },
+    { "@type": "ListItem", position: 3, name: "CRM & AI Automation", item: "https://simpl.pro/services/ai-quoting-agent" },
   ],
 };
 
@@ -88,7 +97,7 @@ const FAQ_SCHEMA = {
   mainEntity: DATA.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
 };
 
-export default function AiQuotingAgent() {
+export default function CrmAiAutomation() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([SERVICE_SCHEMA, BREADCRUMB_SCHEMA, FAQ_SCHEMA]) }} />

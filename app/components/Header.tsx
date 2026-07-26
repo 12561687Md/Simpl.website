@@ -29,7 +29,7 @@ const SERVICE_GROUPS = [
 
 const ALSO_AVAILABLE = [
   { label: "Google Business Profile", desc: "Own the local map", href: "/services/google-business-profile" },
-  { label: "AI Response/Quoting Agent", desc: "Never miss a lead", href: "/services/ai-quoting-agent" },
+  { label: "CRM & AI Automation", desc: "Never miss a lead", href: "/services/ai-quoting-agent" },
   // The strategy call's real home IS the booking page, so this one stays.
   { label: "Free Strategy Call", desc: "Free, once you've unlocked your scan", href: "/start-now" },
 ];
