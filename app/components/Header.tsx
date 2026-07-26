@@ -265,10 +265,11 @@ export default function Header() {
         <div className="flex flex-shrink-0 items-center gap-2">
           <RippleLink
             href="/start-now"
+            trigger="hover"
             className="cta-primary no-underline whitespace-nowrap inline-flex"
             style={{ color: "var(--accent-ink)", padding: "11px 20px", fontSize: 15, fontWeight: 600, borderRadius: 999, textDecoration: "none" }}
           >
-            Start Now
+            Fix Your Business
           </RippleLink>
           <button
             type="button"
@@ -333,7 +334,7 @@ export default function Header() {
               className="cta-primary no-underline"
               style={{ marginTop: 18, textAlign: "center", color: "var(--accent-ink)", padding: "14px 20px", fontSize: 16, fontWeight: 600, borderRadius: 999, textDecoration: "none" }}
             >
-              Start Now
+              Fix Your Business
             </Link>
           </nav>
         </div>

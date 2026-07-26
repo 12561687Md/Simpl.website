@@ -15,6 +15,9 @@ interface RippleLinkProps {
    *  this bright a green). */
   rippleColor?: string;
   duration?: number;
+  /** What spawns the ripple. "click" (default) keeps the original press
+   *  behavior; "hover" fires it on pointer-enter instead. */
+  trigger?: "click" | "hover";
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 
@@ -30,6 +33,7 @@ export function RippleLink({
   style,
   rippleColor = "#0A140D",
   duration = 600,
+  trigger = "click",
   onClick,
 }: RippleLinkProps) {
   const { ripples, create } = useRipple(duration);
@@ -39,8 +43,9 @@ export function RippleLink({
       href={href}
       className={cn("relative overflow-hidden", className)}
       style={style}
+      onMouseEnter={trigger === "hover" ? (e) => create(e) : undefined}
       onClick={(e) => {
-        create(e);
+        if (trigger === "click") create(e);
         onClick?.(e);
       }}
     >
