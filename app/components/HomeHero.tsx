@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import BusinessSearch, { type Prediction } from "./BusinessSearch";
 import UrlFallbackScanner from "./UrlFallbackScanner";
-import PhoneLoop from "./PhoneLoop";
 import TextMorph from "@/components/ui/text-morph";
 import { StarsCanvas } from "@/components/ui/stars-canvas";
 import HeroCurvedBottom from "./HeroCurvedBottom";
@@ -91,12 +90,8 @@ export default function HomeHero() {
             the search bar at the bottom. DESKTOP: the original search-only hero,
             no phone card (.hero-unit strips the card styling at md+, and the
             phone is md:hidden). */}
-        <div style={{ marginTop: 44 }}>
+        <div className="hero-scroll-zone" style={{ marginTop: 44 }}>
           <div className="hero-unit">
-            <div className="md:hidden" style={{ marginBottom: 22 }}>
-              <PhoneLoop />
-            </div>
-
             <div style={{ textAlign: "left", position: "relative" }}>
               <AnimatePresence mode="wait" initial={false}>
                 {urlMode ? (
@@ -143,9 +138,14 @@ export default function HomeHero() {
                         anyway. */}
                     <BusinessSearch onSelect={startAudit} autoFocus />
 
+                    {/* Privacy reassurance, desktop only. */}
+                    <div className="mono hidden md:block" style={{ marginTop: 12, fontSize: 11, letterSpacing: "0.06em", color: "var(--muted)", opacity: 0.8 }}>
+                      Your info stays private. We never store or sell your details.
+                    </div>
+
                     {/* Escape hatch for businesses without a strong Google
                         listing. Swaps ScanTool in over the search. */}
-                    <div style={{ marginTop: 12, textAlign: "center" }}>
+                    <div style={{ marginTop: 10, textAlign: "center" }}>
                       <button
                         type="button"
                         onClick={() => setUrlMode(true)}
