@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 
 const DATA: ServiceData = {
   code: "07 / CRM & AI Automation",
-  title: "CRM & AI Automation",
-  titleTail: "Every lead captured, answered, and followed up.",
+  title: "The power of automation built into your business,",
+  titleTail: "so smarter decisions happen faster.",
   // To add the hero photo once supplied: drop the file at
   // /public/services/crm-automation.jpg (see public/services/README.md for the
   // spec) and uncomment the line below.
