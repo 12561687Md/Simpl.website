@@ -150,6 +150,9 @@ export default function BusinessSearch({
   return (
     <div ref={wrapRef} style={{ position: "relative", maxWidth: 660, minWidth: 0 }}>
       <div
+        // Slow blue border pulse while idle. Dropped the moment results are open
+        // so the solid focus ring (below) takes over instead of fighting it.
+        className={open ? undefined : "hero-search-pulse"}
         style={{
           display: "flex",
           alignItems: "stretch",
@@ -181,7 +184,7 @@ export default function BusinessSearch({
           }}
           onKeyDown={onKeyDown}
           onFocus={() => predictions.length > 0 && setOpen(true)}
-          placeholder="Start typing your business name"
+          placeholder="Find your business"
           autoComplete="off"
           autoCorrect="off"
           spellCheck={false}
