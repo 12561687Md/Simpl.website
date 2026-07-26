@@ -15,25 +15,27 @@ import { SimplWordmark } from "@/components/ui/simpl-brand";
  * failed image degrades to the gradient instead of a broken tile.
  */
 
-/* ---- Business identity (NAP) ---- */
+/* ---- Business identity (NAP) ----
+   Fictional demo business. No real street address, phone (555 is the reserved
+   fiction prefix), email, or domain, so nothing maps to a real business. */
 const NAP = {
   name: "Wildgrove Landscaping",
-  street: "210 Kildaire Farm Rd, Suite 4",
   city: "Cary",
   state: "NC",
-  zip: "27511",
+  area: "Cary, NC · Serving the Triangle",
   phone: "(919) 555-0142",
   phoneHref: "tel:+19195550142",
-  email: "hello@wildgrovelandscaping.com",
   hours: "Mon–Sat, 7am–6pm",
   since: "2011",
   reviews: 84,
   rating: "4.9",
 };
 
+/* Landscaping stock (Unsplash). The mountains/scenery shot was removed, a
+   landscaper doesn't do that; these are yard/garden work. onError degrades to
+   the green gradient behind each image. */
 const HERO_IMAGES = [
   "https://images.unsplash.com/photo-1558904541-efa843a96f01?w=1600&q=80&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=80&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1523419409543-a5e549c1faa8?w=1600&q=80&auto=format&fit=crop",
 ];
 const GALLERY = [
@@ -292,7 +294,7 @@ function NewSite() {
             <h2 style={{ margin: 0, fontSize: "clamp(26px, 3.6vw, 40px)", fontWeight: 800, letterSpacing: "-0.02em" }}>Ready for the best yard on the block?</h2>
             <p style={{ margin: "14px 0 0", maxWidth: 440, fontSize: 16, color: "rgba(255,255,255,0.9)" }}>Free estimate, same-week scheduling. Serving {NAP.city}, {NAP.state} and the greater Triangle.</p>
             <div style={{ marginTop: 20, fontSize: 14.5, lineHeight: 1.9 }}>
-              <div>📍 {NAP.street}, {NAP.city}, {NAP.state} {NAP.zip}</div>
+              <div>📍 {NAP.area}</div>
               <div>📞 <a href={NAP.phoneHref} style={{ color: "#fff" }}>{NAP.phone}</a></div>
               <div>🕑 {NAP.hours}</div>
             </div>
@@ -307,9 +309,9 @@ function NewSite() {
           <div>
             <div style={{ color: "#fff", fontWeight: 800, fontSize: 16, marginBottom: 10 }}>{NAP.name}</div>
             <div style={{ fontSize: 13, lineHeight: 1.7 }}>
-              {NAP.street}<br />{NAP.city}, {NAP.state} {NAP.zip}<br />
+              {NAP.area}<br />
               <a href={NAP.phoneHref} style={{ color: "#c8ecca" }}>{NAP.phone}</a><br />
-              {NAP.email}<br />{NAP.hours}
+              {NAP.hours}
             </div>
           </div>
           <div>
