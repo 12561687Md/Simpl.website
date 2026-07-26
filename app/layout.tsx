@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
+import ServiceWorkerRegister from "./components/ServiceWorkerRegister";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -60,6 +61,23 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
   },
+  // Installable-app identity. app/manifest.ts auto-injects the manifest link;
+  // these give iOS/Safari its home-screen icon and standalone behavior.
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Simpl" },
+  icons: {
+    icon: [
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0B0C0D",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -69,10 +87,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-      </head>
       <body>
+        <ServiceWorkerRegister />
         <ScrollToTop />
         {children}
         <Analytics />
