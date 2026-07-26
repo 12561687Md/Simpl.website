@@ -970,7 +970,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* Phone in the split section: enlarged on desktop, natural size on mobile so it
    doesn't overflow its column and reserve odd empty space. */
-.phone-scale { transform: scale(1.3); transform-origin: center; }
+.phone-scale { transform: scale(1.12); transform-origin: center; }
 @media (max-width: 900px) { .phone-scale { transform: none; } }
 
 /* Footer ghosted wordmark: big on desktop, but capped to the viewport on mobile

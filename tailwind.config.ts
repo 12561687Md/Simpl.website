@@ -45,6 +45,7 @@ const config: Config = {
         // come out on-theme instead of default slate.
         background: "var(--bg)",
         foreground: "var(--fg)",
+        "muted-foreground": "var(--muted)",
         primary: "var(--accent)",
         "primary-foreground": "var(--accent-ink)",
         secondary: "var(--bg-soft)",
