@@ -927,6 +927,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .business-search-cta { padding: 0 14px !important; }
 }
 
+/* Wildgrove demo: nav links collapse and the quote grid stacks on mobile. */
+@media (max-width: 760px) {
+  .wg-nav a:not(:last-child):not(:nth-last-child(2)) { display: none; }
+  .wg-quote { grid-template-columns: 1fr !important; }
+}
+
 /* Fix-your-business (/start-now): Owner-style full-screen two-panel. Left = the
    pitch + dashboard + business search; right = the diagnosis/contact form. No
    global header/footer on this page, nowhere to go but start. */
