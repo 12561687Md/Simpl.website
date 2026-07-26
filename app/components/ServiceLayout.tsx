@@ -36,6 +36,11 @@ export interface ServiceData {
   /** Second, muted line of the two-tone H1. */
   titleTail?: string;
   heroSub: string;
+  /** Optional relevant hero photo/screenshot. When present the hero becomes a
+   *  two-column layout (copy left, image right) for the "I can relate to this"
+   *  trust that a text-only hero can't build. Source is source-agnostic: a
+   *  /public path or a remote URL both work. */
+  heroImage?: { src: string; alt: string };
   includesHeading: string;
   includes: string[];
   compoundingHeading: string;
@@ -72,22 +77,50 @@ export default function ServiceLayout({ data }: { data: ServiceData }) {
     <div>
       <Header />
       <main>
-        {/* Hero */}
+        {/* Hero. Two-column (copy + relevant image) when data.heroImage is set,
+            otherwise the original single-column copy hero. */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 64px" }}>
           <ScrollReveal>
-            <div className="mono" style={{ ...eyebrow, marginBottom: 24 }}>{data.code}</div>
-            <h1 style={{ margin: 0, fontSize: "clamp(34px, 5.2vw, 56px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 500, maxWidth: 860 }}>
-              {data.title}
-              {data.titleTail && <><br /><span style={{ color: "var(--muted)" }}>{data.titleTail}</span></>}
-            </h1>
-            <p style={{ marginTop: 28, maxWidth: 660, fontSize: 19, lineHeight: 1.55, color: "var(--muted)" }}>{data.heroSub}</p>
-            <div style={{ marginTop: 40, display: "flex", flexWrap: "wrap", gap: 16 }}>
-              <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "14px 26px", fontSize: 15, fontWeight: 600, borderRadius: 999 }}>
-                Get your free strategy call →
-              </Link>
-              <Link href="/scan" style={{ color: "var(--fg)", textDecoration: "none", padding: "13px 24px", fontSize: 15, border: "1px solid var(--rule-strong)", borderRadius: 999 }}>
-                Run the free scan
-              </Link>
+            <div className={data.heroImage ? "service-hero-grid" : undefined}>
+              <div>
+                <div className="mono" style={{ ...eyebrow, marginBottom: 24 }}>{data.code}</div>
+                <h1 style={{ margin: 0, fontSize: "clamp(34px, 5.2vw, 56px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 500, maxWidth: 860 }}>
+                  {data.title}
+                  {data.titleTail && <><br /><span style={{ color: "var(--muted)" }}>{data.titleTail}</span></>}
+                </h1>
+                <p style={{ marginTop: 28, maxWidth: 660, fontSize: 19, lineHeight: 1.55, color: "var(--muted)" }}>{data.heroSub}</p>
+                <div style={{ marginTop: 40, display: "flex", flexWrap: "wrap", gap: 16 }}>
+                  <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "14px 26px", fontSize: 15, fontWeight: 600, borderRadius: 999 }}>
+                    Get your free strategy call →
+                  </Link>
+                  <Link href="/scan" style={{ color: "var(--fg)", textDecoration: "none", padding: "13px 24px", fontSize: 15, border: "1px solid var(--rule-strong)", borderRadius: 999 }}>
+                    Run the free scan
+                  </Link>
+                </div>
+              </div>
+
+              {data.heroImage && (
+                <div
+                  style={{
+                    position: "relative",
+                    borderRadius: 20,
+                    overflow: "hidden",
+                    border: "1px solid var(--rule-strong)",
+                    boxShadow: "0 44px 120px -54px rgba(137,207,240,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+                    aspectRatio: "4 / 3",
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={data.heroImage.src}
+                    alt={data.heroImage.alt}
+                    loading="eager"
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                  {/* Subtle brand-tinted scrim so the photo sits in the dark theme. */}
+                  <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(11,12,13,0) 55%, rgba(11,12,13,0.35))", pointerEvents: "none" }} />
+                </div>
+              )}
             </div>
           </ScrollReveal>
         </section>

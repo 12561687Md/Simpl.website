@@ -927,6 +927,19 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .business-search-cta { padding: 0 14px !important; }
 }
 
+/* Service-page hero: copy left, relevant image right. Stacks on mobile with
+   the image on top so the photo lands first on a phone. */
+.service-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 56px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .service-hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .service-hero-grid > div:last-child { order: -1; }
+}
+
 /* Two-column section that pairs copy with a phone. Shared by the 2nd section
    and the beliefs/about blocks. */
 .split-phone-grid {
