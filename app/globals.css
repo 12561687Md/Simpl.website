@@ -936,11 +936,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   margin: 0 auto;
   padding: 0;
 }
-/* Desktop: the scanner sticks below the header and travels down through the
-   hero scroll-zone, then releases (position: sticky, bounded by .hero-scroll-zone). */
 @media (min-width: 768px) {
-  .hero-unit { max-width: 660px; position: sticky; top: 104px; z-index: 5; }
-  .hero-scroll-zone { min-height: 58vh; }
+  .hero-unit { max-width: 660px; }
 }
 
 /* Service-page hero: copy left, relevant image right. Stacks on mobile with
