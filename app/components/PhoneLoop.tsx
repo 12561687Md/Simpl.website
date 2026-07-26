@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { SimplMark } from "@/components/ui/simpl-brand";
+import { SimplMark, SimplWordmark } from "@/components/ui/simpl-brand";
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
@@ -42,12 +42,33 @@ function StatusBar() {
 
 function AppHeader() {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 20px 14px", borderBottom: `1px solid ${LINE}` }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-        <SimplMark size={22} />
-        <span style={{ fontSize: 17, fontWeight: 700, letterSpacing: "-0.02em" }}>Simpl</span>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 18px 14px", borderBottom: `1px solid ${LINE}` }}>
+      {/* The real Simpl wordmark (logo), not the bare glyph. */}
+      <SimplWordmark size={19} />
+      {/* Subtle menu dots (replaces the stray green avatar). */}
+      <span aria-hidden="true" style={{ display: "flex", gap: 3 }}>
+        {[0, 1, 2].map((k) => (
+          <span key={k} style={{ width: 3, height: 3, borderRadius: 99, background: "var(--fg-dim)" }} />
+        ))}
+      </span>
+    </div>
+  );
+}
+
+/** Loading splash: the vital-sign (favicon) pulsing in the middle before the app. */
+function LoadingSplash({ reduce }: { reduce: boolean }) {
+  return (
+    <div style={{ height: 470, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 20 }}>
+      <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <motion.div
+          aria-hidden="true"
+          style={{ position: "absolute", width: 104, height: 104, borderRadius: "50%", background: "radial-gradient(circle, rgba(137,207,240,0.24), transparent 70%)" }}
+          animate={reduce ? {} : { scale: [1, 1.35, 1], opacity: [0.7, 0.2, 0.7] }}
+          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <SimplMark size={52} />
       </div>
-      <span style={{ width: 26, height: 26, borderRadius: "50%", background: "linear-gradient(135deg, #2f6d3f, #79b34a)", flexShrink: 0 }} aria-hidden="true" />
+      <div className="mono" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: SUB }}>Reading your business</div>
     </div>
   );
 }
@@ -179,14 +200,21 @@ const SCREENS = [
 ];
 
 export default function PhoneLoop() {
+  const [phase, setPhase] = useState<"loading" | "app">("loading");
   const [i, setI] = useState(0);
   const reduce = useReducedMotion();
 
   useEffect(() => {
-    if (reduce) return;
+    if (reduce) { setPhase("app"); return; }
+    const t = setTimeout(() => setPhase("app"), 1900);
+    return () => clearTimeout(t);
+  }, [reduce]);
+
+  useEffect(() => {
+    if (phase !== "app" || reduce) return;
     const t = setInterval(() => setI((v) => (v + 1) % SCREENS.length), 3000);
     return () => clearInterval(t);
-  }, [reduce]);
+  }, [phase, reduce]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18, position: "relative" }}>
@@ -196,27 +224,33 @@ export default function PhoneLoop() {
         <div className="phone-screen">
           <div className="phone-island" aria-hidden="true" style={{ background: "#08090a" }} />
           <StatusBar />
-          <AppHeader />
-          <div style={{ height: 400, position: "relative" }}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={SCREENS[i].key}
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
-              >
-                {SCREENS[i].el}
-              </motion.div>
-            </AnimatePresence>
-          </div>
+          {phase === "loading" ? (
+            <LoadingSplash reduce={!!reduce} />
+          ) : (
+            <>
+              <AppHeader />
+              <div style={{ height: 400, position: "relative" }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={SCREENS[i].key}
+                    initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                  >
+                    {SCREENS[i].el}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
 
-          {/* Progress dots */}
-          <div style={{ display: "flex", justifyContent: "center", gap: 7, padding: "6px 0 14px" }} aria-hidden="true">
-            {SCREENS.map((s, idx) => (
-              <span key={s.key} style={{ width: idx === i ? 20 : 6, height: 6, borderRadius: 99, background: idx === i ? BLUE : LINE, transition: "width 300ms ease, background 300ms ease" }} />
-            ))}
-          </div>
+              {/* Progress dots */}
+              <div style={{ display: "flex", justifyContent: "center", gap: 7, padding: "6px 0 14px" }} aria-hidden="true">
+                {SCREENS.map((s, idx) => (
+                  <span key={s.key} style={{ width: idx === i ? 20 : 6, height: 6, borderRadius: 99, background: idx === i ? BLUE : LINE, transition: "width 300ms ease, background 300ms ease" }} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
 
