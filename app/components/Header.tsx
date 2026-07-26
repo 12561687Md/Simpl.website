@@ -261,16 +261,9 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Right zone: primary CTA + mobile hamburger. */}
+        {/* Right zone: mobile hamburger + primary CTA. On mobile the hamburger
+            sits to the LEFT of the CTA; on desktop the hamburger is hidden. */}
         <div className="flex flex-shrink-0 items-center gap-2">
-          <RippleLink
-            href="/start-now"
-            trigger="hover"
-            className="cta-primary no-underline whitespace-nowrap inline-flex"
-            style={{ color: "var(--accent-ink)", padding: "11px 20px", fontSize: 15, fontWeight: 600, borderRadius: 999, textDecoration: "none" }}
-          >
-            Fix Your Business
-          </RippleLink>
           <button
             type="button"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -281,6 +274,14 @@ export default function Header() {
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
+          <RippleLink
+            href="/start-now"
+            trigger="hover"
+            className="cta-primary no-underline whitespace-nowrap inline-flex"
+            style={{ color: "var(--accent-ink)", padding: "11px 20px", fontSize: 15, fontWeight: 600, borderRadius: 999, textDecoration: "none" }}
+          >
+            Fix Your Business
+          </RippleLink>
         </div>
       </div>
 
