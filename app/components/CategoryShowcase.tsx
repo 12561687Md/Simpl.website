@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { RippleLink } from "@/components/ui/ripple-link";
+import ServiceReveal, { REVEAL_HREFS } from "./ServiceReveal";
 
 export type Category = {
   name: string;
@@ -92,32 +93,41 @@ export default function CategoryShowcase({ categories }: { categories: Category[
               {current.name}
             </h3>
             <p style={{ margin: 0, fontSize: 20, lineHeight: 1.35, fontWeight: 500 }}>{current.hook}</p>
-            <p style={{ margin: "10px 0 0", fontSize: 17, lineHeight: 1.5, color: "var(--fg)" }}>{current.detail}</p>
 
-            {/* "What you get" = the concrete deliverable, our proof this is a
-                real service and not a vague retainer. Word-by-word reveal
-                (ported from the 21st pattern): one element per word, short copy
-                only, so this never runs on long text. */}
-            <div style={{ margin: "22px 0 0" }}>
-              <div className="mono" style={{ fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>
-                What you get
+            {REVEAL_HREFS.has(current.href) ? (
+              /* Interactive before/after replaces the description box. Drag to
+                 wipe between the dated version and the Simpl version. */
+              <div style={{ margin: "18px 0 0" }}>
+                <ServiceReveal href={current.href} />
               </div>
-              <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "var(--muted)" }}>
-                {reduce
-                  ? current.deliverable
-                  : current.deliverable.split(" ").map((word, i) => (
-                      <motion.span
-                        key={`${current.name}-${i}`}
-                        initial={{ filter: "blur(6px)", opacity: 0, y: 3 }}
-                        animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-                        transition={{ duration: 0.2, ease: "easeOut", delay: 0.012 * i }}
-                        style={{ display: "inline-block" }}
-                      >
-                        {word}&nbsp;
-                      </motion.span>
-                    ))}
-              </p>
-            </div>
+            ) : (
+              <>
+                <p style={{ margin: "10px 0 0", fontSize: 17, lineHeight: 1.5, color: "var(--fg)" }}>{current.detail}</p>
+
+                {/* "What you get" = the concrete deliverable, our proof this is a
+                    real service and not a vague retainer. Word-by-word reveal. */}
+                <div style={{ margin: "22px 0 0" }}>
+                  <div className="mono" style={{ fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>
+                    What you get
+                  </div>
+                  <p style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: "var(--muted)" }}>
+                    {reduce
+                      ? current.deliverable
+                      : current.deliverable.split(" ").map((word, i) => (
+                          <motion.span
+                            key={`${current.name}-${i}`}
+                            initial={{ filter: "blur(6px)", opacity: 0, y: 3 }}
+                            animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2, ease: "easeOut", delay: 0.012 * i }}
+                            style={{ display: "inline-block" }}
+                          >
+                            {word}&nbsp;
+                          </motion.span>
+                        ))}
+                  </p>
+                </div>
+              </>
+            )}
           </motion.div>
         </AnimatePresence>
 
