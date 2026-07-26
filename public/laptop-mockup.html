@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simpl · Laptop Mockup</title>
+<style>
+  :root{
+    --bg:#0B0C0D; --bg-soft:#131517; --bg-elev:#1B1E21; --bg-elev2:#24282C;
+    --fg:#F3F2ED; --muted:#ADACA7; --fg-dim:#78766F;
+    --rule:#262829; --rule-strong:#3A3E41;
+    --accent:#89CFF0; --accent-dim:#5AB4DE; --accent-soft:rgba(137,207,240,0.14);
+    --accent-line:rgba(137,207,240,0.34); --accent-ink:#081420;
+    --ok:#34A853; --warn:#E0A852; --crit:#E05252;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(120% 90% at 50% 0%, rgba(137,207,240,0.10), rgba(11,12,13,0) 55%),
+      var(--bg);
+    color:var(--fg); font-family:var(--sans);
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:48px 24px; -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Laptop shell ---------- */
+  .stage{width:100%; max-width:1180px}
+  .laptop{width:100%}
+  .lid{
+    position:relative; border-radius:22px; padding:14px;
+    background:linear-gradient(180deg,#2a2d30,#141517);
+    box-shadow:0 40px 120px -40px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .bezel{
+    position:relative; border-radius:12px; overflow:hidden;
+    background:#050506; border:1px solid #000;
+    aspect-ratio:16/10;
+  }
+  .cam{position:absolute; top:8px; left:50%; transform:translateX(-50%); width:6px; height:6px; border-radius:50%; background:#1c1f22; box-shadow:inset 0 0 0 1px #000; z-index:5}
+  .screen{position:absolute; inset:0; display:grid; grid-template-columns:1fr 0.92fr; background:var(--bg)}
+  .divider{position:absolute; top:6%; bottom:6%; left:52%; width:1px; background:linear-gradient(180deg,transparent,var(--rule) 20%,var(--rule) 80%,transparent)}
+
+  /* laptop base */
+  .base{
+    position:relative; height:26px; margin:0 auto; width:118%; max-width:none; left:-9%;
+    background:linear-gradient(180deg,#c8ccd0,#8b9095 60%,#6f7479);
+    border-radius:0 0 16px 16px;
+    box-shadow:0 30px 40px -20px rgba(0,0,0,0.7);
+  }
+  .base::before{content:""; position:absolute; top:0; left:50%; transform:translateX(-50%); width:16%; height:9px; background:linear-gradient(180deg,#6f7479,#8b9095); border-radius:0 0 10px 10px}
+  .hinge{height:8px; margin:0 auto; width:100%; background:linear-gradient(180deg,#0c0d0e,#3a3d40); border-radius:2px}
+
+  /* ---------- screen panels ---------- */
+  .panel{padding:26px 26px 22px; overflow:hidden}
+  .panel-left{background:var(--bg)}
+  .panel-right{background:var(--bg-soft)}
+  .eyebrow{font-family:var(--mono); font-size:9.5px; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted)}
+  .topbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px}
+  .topbar .url{font-family:var(--mono); font-size:9.5px; color:var(--fg-dim); letter-spacing:0.04em}
+
+  /* score */
+  .score-wrap{display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:20px}
+  .gauge{position:relative; width:118px; height:118px; border-radius:50%;
+    background:conic-gradient(var(--accent) 0turn 0.68turn, var(--rule) 0.68turn 1turn);}
+  .gauge::after{content:""; position:absolute; inset:9px; border-radius:50%; background:var(--bg)}
+  .gauge .val{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:2}
+  .gauge .grade{font-size:44px; font-weight:300; line-height:1; color:var(--accent); letter-spacing:-0.03em}
+  .gauge .pct{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:3px}
+  .score-label{margin-top:12px}
+  .score-label .biz{font-size:15px; font-weight:600; letter-spacing:-0.01em}
+  .score-label .meta{font-family:var(--mono); font-size:9.5px; color:var(--muted); margin-top:3px}
+
+  /* category grades */
+  .cats{display:grid; grid-template-columns:repeat(5,1fr); border:1px solid var(--rule); border-radius:7px; overflow:hidden; margin-bottom:18px}
+  .cat{padding:9px 4px; text-align:center; background:var(--bg-soft); border-right:1px solid var(--rule)}
+  .cat:last-child{border-right:0}
+  .cat .n{font-family:var(--mono); font-size:8px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted)}
+  .cat .g{font-size:17px; font-weight:300; margin-top:3px}
+
+  /* findings */
+  .findings-h{font-family:var(--mono); font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); margin-bottom:9px}
+  .finding{display:flex; justify-content:space-between; align-items:center; gap:10px; background:var(--bg-soft); border-left:3px solid var(--rule); padding:9px 12px; margin-bottom:4px; border-radius:0 4px 4px 0}
+  .finding .t{font-size:11.5px; line-height:1.35}
+  .finding .tag{font-family:var(--mono); font-size:7.5px; letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap; flex-shrink:0}
+  .sev-crit{border-left-color:var(--crit)} .sev-crit .tag{color:var(--crit)}
+  .sev-warn{border-left-color:var(--warn)} .sev-warn .tag{color:var(--warn)}
+  .sev-ok{border-left-color:var(--ok)} .sev-ok .tag{color:var(--ok)}
+
+  .g-ok{color:var(--ok)} .g-warn{color:var(--warn)} .g-crit{color:var(--crit)}
+
+  /* ---------- lead form ---------- */
+  .form-head h3{font-size:19px; font-weight:600; letter-spacing:-0.02em; line-height:1.15}
+  .form-head p{font-size:11.5px; color:var(--muted); line-height:1.5; margin-top:8px; max-width:300px}
+  .form{margin-top:18px; display:grid; gap:15px}
+  .field label{display:block; font-family:var(--mono); font-size:9px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
+  .field .inp{height:1px; border-bottom:1px solid var(--rule-strong)}
+  .field .inp.filled{border-bottom:1px solid var(--accent)}
+  .field .ph{font-size:12px; color:var(--fg-dim); padding-bottom:9px}
+  .field .ph.typed{color:var(--fg)}
+  .submit{margin-top:4px; display:inline-flex; align-items:center; gap:8px; align-self:start;
+    background:var(--accent); color:var(--accent-ink); font-weight:600; font-size:12.5px;
+    padding:12px 20px; border-radius:2px; border:0; box-shadow:0 10px 30px -14px var(--accent)}
+  .reassure{font-family:var(--mono); font-size:9px; color:var(--fg-dim); letter-spacing:0.04em; margin-top:2px}
+
+  .caption{text-align:center; margin-top:26px; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg-dim)}
+
+  @media (max-width:720px){
+    .gauge{width:96px;height:96px}.gauge .grade{font-size:34px}
+    .panel{padding:18px}
+    .form-head h3{font-size:16px}
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <div class="laptop">
+      <div class="lid">
+        <div class="bezel">
+          <span class="cam"></span>
+          <div class="screen">
+
+            <!-- LEFT: Simpl Audit -->
+            <section class="panel panel-left">
+              <div class="topbar">
+                <span class="eyebrow">Simpl Audit</span>
+                <span class="url">yourbusiness.com</span>
+              </div>
+
+              <div class="score-wrap">
+                <div class="gauge">
+                  <div class="val">
+                    <span class="grade">B</span>
+                    <span class="pct">68%</span>
+                  </div>
+                </div>
+                <div class="score-label">
+                  <div class="biz">Your Business, LLC</div>
+                  <div class="meta">Local service &middot; 14 findings &middot; <span class="g-crit">3 critical</span></div>
+                </div>
+              </div>
+
+              <div class="cats">
+                <div class="cat"><div class="n">Website</div><div class="g g-ok">A</div></div>
+                <div class="cat"><div class="n">SEO</div><div class="g g-warn">C</div></div>
+                <div class="cat"><div class="n">Content</div><div class="g g-ok">B</div></div>
+                <div class="cat"><div class="n">Social</div><div class="g g-crit">D</div></div>
+                <div class="cat"><div class="n">GBP</div><div class="g g-crit">F</div></div>
+              </div>
+
+              <div class="findings-h">Top findings</div>
+              <div class="finding sev-crit"><span class="t">Google Business Profile not verified</span><span class="tag">Fix now</span></div>
+              <div class="finding sev-crit"><span class="t">Contact form not delivering leads</span><span class="tag">Fix now</span></div>
+              <div class="finding sev-warn"><span class="t">Missing title tags on 6 pages</span><span class="tag">Should fix</span></div>
+              <div class="finding sev-warn"><span class="t">Slow mobile load (4.1s)</span><span class="tag">Should fix</span></div>
+              <div class="finding sev-ok"><span class="t">SSL valid &middot; site is secure</span><span class="tag">Good</span></div>
+            </section>
+
+            <!-- RIGHT: Lead form -->
+            <section class="panel panel-right">
+              <div class="form-head">
+                <h3>See the wins waiting.</h3>
+                <p>Tell us where to send your full breakdown. Real people reply the same business day.</p>
+              </div>
+              <div class="form">
+                <div class="field"><label>Name</label><div class="ph typed">Jordan Smith</div><div class="inp filled"></div></div>
+                <div class="field"><label>Email</label><div class="ph typed">jordan@yourbusiness.com</div><div class="inp filled"></div></div>
+                <div class="field"><label>Phone</label><div class="ph typed">(919) 555&ndash;0148</div><div class="inp filled"></div></div>
+                <div class="field"><label>Your website</label><div class="ph">yourbusiness.com</div><div class="inp"></div></div>
+                <button class="submit">Get my plan &rarr;</button>
+                <div class="reassure">No credit card &middot; free breakdown</div>
+              </div>
+            </section>
+
+          </div>
+          <div class="divider"></div>
+        </div>
+      </div>
+      <div class="hinge"></div>
+      <div class="base"></div>
+    </div>
+    <div class="caption">Simpl &middot; scan, score, and win more customers</div>
+  </div>
+</body>
+</html>
