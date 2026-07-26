@@ -44,7 +44,7 @@ const inputStyle: React.CSSProperties = {
 const errStyle: React.CSSProperties = { color: "#E05252", fontSize: 13, marginTop: 6 };
 
 export default function ContactForm({
-  ctaLabel = "Get my plan",
+  ctaLabel = "Fix my business",
   sourcePage = "/start",
 }: {
   ctaLabel?: string;

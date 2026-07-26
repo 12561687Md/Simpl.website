@@ -86,7 +86,7 @@ export default function WhatAmIMissingPage() {
               </div>
               <div>
                 <div className="mono" style={{ ...label, marginBottom: 16 }}>Skip straight to a person</div>
-                <ContactForm ctaLabel="Tell me what's broken" sourcePage="/start-now" />
+                <ContactForm ctaLabel="Fix my business" sourcePage="/start-now" />
               </div>
             </div>
 

@@ -43,7 +43,7 @@ export default function PreFooterCTA({ sourcePage }: { sourcePage?: string }) {
                 Real people read every message and reply the same business day, usually within four hours. No pitch attached to a first reply, just a straight answer on where you stand and what we&apos;d do first.
               </p>
             </div>
-            <ContactForm ctaLabel="Send it over" sourcePage={src} />
+            <ContactForm ctaLabel="Fix my business" sourcePage={src} />
           </div>
         </div>
       </div>

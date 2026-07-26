@@ -283,7 +283,7 @@ export default function ResultsPage() {
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "12px 24px", fontSize: 14, borderRadius: 3, fontWeight: 600 }}>
-                  Start fixing this →
+                  Fix these issues →
                 </Link>
                 <Link href="/" style={{ color: "var(--fg)", textDecoration: "none", padding: "12px 24px", fontSize: 14, border: "1px solid var(--rule)", borderRadius: 3 }}>
                   Try another site
