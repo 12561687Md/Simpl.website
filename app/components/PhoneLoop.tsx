@@ -45,10 +45,10 @@ function AppHeader() {
     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 18px 14px", borderBottom: `1px solid ${LINE}` }}>
       {/* The real Simpl wordmark (logo), not the bare glyph. */}
       <SimplWordmark size={19} />
-      {/* Subtle menu dots (replaces the stray green avatar). */}
-      <span aria-hidden="true" style={{ display: "flex", gap: 3 }}>
+      {/* Hamburger menu (replaces the stray green avatar). */}
+      <span aria-hidden="true" style={{ display: "flex", flexDirection: "column", gap: 3.5 }}>
         {[0, 1, 2].map((k) => (
-          <span key={k} style={{ width: 3, height: 3, borderRadius: 99, background: "var(--fg-dim)" }} />
+          <span key={k} style={{ width: 17, height: 2, borderRadius: 2, background: "var(--muted)" }} />
         ))}
       </span>
     </div>

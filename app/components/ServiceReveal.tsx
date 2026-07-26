@@ -14,17 +14,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 /** Which service hrefs currently have a before/after mockup built. */
 export const REVEAL_HREFS = new Set<string>(["/services/website-build"]);
 
-function Compare({
-  before,
-  after,
-  beforeLabel = "Before",
-  afterLabel = "After",
-}: {
-  before: ReactNode;
-  after: ReactNode;
-  beforeLabel?: string;
-  afterLabel?: string;
-}) {
+function Compare({ before, after }: { before: ReactNode; after: ReactNode }) {
   const [pos, setPos] = useState(50);
   const [drag, setDrag] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -51,11 +41,6 @@ function Compare({
       document.removeEventListener("touchend", end);
     };
   }, [drag, move]);
-
-  const label: React.CSSProperties = {
-    position: "absolute", top: 12, zIndex: 20, padding: "4px 10px", borderRadius: 999,
-    background: "rgba(0,0,0,0.62)", color: "#fff", fontSize: 11, fontWeight: 600, backdropFilter: "blur(4px)",
-  };
 
   return (
     <div
@@ -91,8 +76,6 @@ function Compare({
         </div>
       </div>
 
-      <div style={{ ...label, left: 12 }}>{beforeLabel}</div>
-      <div style={{ ...label, right: 12 }}>{afterLabel}</div>
     </div>
   );
 }
@@ -174,17 +157,30 @@ function SimplSiteMock() {
   );
 }
 
-const MOCKS: Record<string, { before: ReactNode; after: ReactNode; beforeLabel: string; afterLabel: string }> = {
+const MOCKS: Record<string, { before: ReactNode; after: ReactNode; beforeLabel: string; afterLabel: string; kpis: string }> = {
   "/services/website-build": {
     before: <OldSiteMock />,
     after: <SimplSiteMock />,
     beforeLabel: "Their old site",
     afterLabel: "Your Simpl site",
+    kpis: "Page speed, mobile score, and the calls-to-action that turn visitors into booked jobs.",
   },
 };
 
 export default function ServiceReveal({ href }: { href: string }) {
   const m = MOCKS[href];
   if (!m) return null;
-  return <Compare before={m.before} after={m.after} beforeLabel={m.beforeLabel} afterLabel={m.afterLabel} />;
+  return (
+    <div>
+      {/* Labels above the box, not inside it. */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 9 }}>
+        <span className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)" }}>{m.beforeLabel}</span>
+        <span className="mono" style={{ fontSize: 9.5, letterSpacing: "0.08em", color: "var(--fg-dim)" }}>drag to compare</span>
+        <span className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)" }}>{m.afterLabel}</span>
+      </div>
+      <Compare before={m.before} after={m.after} />
+      {/* KPI description below the box. */}
+      <p style={{ margin: "12px 0 0", fontSize: 13.5, lineHeight: 1.5, color: "var(--muted)" }}>{m.kpis}</p>
+    </div>
+  );
 }
