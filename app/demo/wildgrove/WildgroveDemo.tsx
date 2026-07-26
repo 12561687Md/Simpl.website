@@ -63,9 +63,9 @@ const REVIEWS = [
 ];
 
 const POSTS = [
-  { t: "How much does landscaping cost in Cary, NC?", d: "A plain-English breakdown of what lawn care, hardscaping, and design actually cost in the Triangle in 2026." },
-  { t: "The best time to aerate and seed your lawn in North Carolina", d: "Timing is everything for fescue. Here's the window that gives you a thick lawn by spring." },
-  { t: "5 hardscaping ideas that boost your home's value", d: "Patios, walls, and walkways that pay you back when it's time to sell." },
+  { t: "How much does landscaping cost in Cary, NC?", d: "A plain-English breakdown of what lawn care, hardscaping, and design actually cost in the Triangle in 2026.", img: GALLERY[1] },
+  { t: "The best time to aerate and seed your lawn in North Carolina", d: "Timing is everything for fescue. Here's the window that gives you a thick lawn by spring.", img: GALLERY[3] },
+  { t: "5 hardscaping ideas that boost your home's value", d: "Patios, walls, and walkways that pay you back when it's time to sell.", img: GALLERY[2] },
 ];
 
 const FAQS = [
@@ -129,9 +129,29 @@ function LeadForm() {
 }
 const inp: React.CSSProperties = { border: `1px solid ${G.line}`, borderRadius: 9, padding: "11px 12px", fontSize: 14, color: G.ink, background: "#fff", outline: "none", width: "100%" };
 
+/* ---------------- Wildgrove logo (leaf mark + wordmark) ---------------- */
+function WildgroveLogo({ light = false }: { light?: boolean }) {
+  const word = light ? "#fff" : G.greenDark;
+  const tag = light ? "rgba(255,255,255,0.8)" : G.green;
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="16" fill={light ? "rgba(255,255,255,0.14)" : "#e7f3e9"} />
+        <path d="M16 26C9.5 22.5 8 14.5 16 6.5C24 14.5 22.5 22.5 16 26Z" fill={G.green} />
+        <path d="M16 25.5V11.5" stroke={light ? "#0f2a15" : G.greenDark} strokeWidth="1.3" strokeLinecap="round" opacity="0.7" />
+      </svg>
+      <div style={{ lineHeight: 1 }}>
+        <div style={{ fontSize: 16.5, fontWeight: 800, color: word, letterSpacing: "-0.01em" }}>Wildgrove</div>
+        <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", color: tag, marginTop: 2 }}>LANDSCAPING</div>
+      </div>
+    </div>
+  );
+}
+
 /* ---------------- The new Simpl site ---------------- */
 function NewSite() {
   const [idx, setIdx] = useState(0);
+  const [resOpen, setResOpen] = useState(false);
   useEffect(() => {
     const t = setInterval(() => setIdx((v) => (v + 1) % HERO_IMAGES.length), 4200);
     return () => clearInterval(t);
@@ -142,11 +162,23 @@ function NewSite() {
       {/* Nav with NAP + service tabs */}
       <div style={{ position: "sticky", top: 57, zIndex: 40, background: "rgba(255,255,255,0.96)", backdropFilter: "blur(8px)", borderBottom: `1px solid ${G.line}` }}>
         <div style={{ ...wrap, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 24px" }}>
-          <span style={{ fontWeight: 800, letterSpacing: "0.02em", fontSize: 17, color: G.greenDark }}>{NAP.name.toUpperCase()}</span>
-          <div className="wg-nav" style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            {[["Services", "#services"], ["Service Areas", "#areas"], ["Reviews", "#reviews"], ["Blog", "#blog"], ["FAQ", "#faq"]].map(([t, h]) => (
-              <a key={t} href={h} style={{ fontSize: 13.5, color: G.muted, textDecoration: "none" }}>{t}</a>
-            ))}
+          <WildgroveLogo />
+          <div className="wg-nav" style={{ display: "flex", alignItems: "center", gap: 22 }}>
+            <a href="#services" style={{ fontSize: 13.5, color: G.muted, textDecoration: "none" }}>Services</a>
+            {/* Minimalist Resources dropdown: everything else lives here. */}
+            <div style={{ position: "relative" }} onMouseEnter={() => setResOpen(true)} onMouseLeave={() => setResOpen(false)}>
+              <span style={{ fontSize: 13.5, color: G.muted, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 5 }}>
+                Resources
+                <svg width="9" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </span>
+              {resOpen && (
+                <div style={{ position: "absolute", top: "100%", left: 0, marginTop: 6, background: "#fff", border: `1px solid ${G.line}`, borderRadius: 10, boxShadow: "0 22px 44px -18px rgba(0,0,0,0.25)", padding: 8, minWidth: 190, display: "grid", gap: 2, zIndex: 50 }}>
+                  {[["Service Areas", "#areas"], ["Reviews", "#reviews"], ["Blog", "#blog"], ["FAQ", "#faq"]].map(([t, h]) => (
+                    <a key={t} href={h} style={{ display: "block", padding: "9px 11px", borderRadius: 7, fontSize: 13.5, color: G.ink, textDecoration: "none" }}>{t}</a>
+                  ))}
+                </div>
+              )}
+            </div>
             <a href={NAP.phoneHref} style={{ fontSize: 13.5, fontWeight: 700, color: G.greenDark, textDecoration: "none" }}>{NAP.phone}</a>
             <a href="#quote" style={{ background: G.green, color: "#fff", fontSize: 13, fontWeight: 700, padding: "9px 15px", borderRadius: 8, textDecoration: "none" }}>Free quote</a>
           </div>
@@ -260,7 +292,10 @@ function NewSite() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
           {POSTS.map((p) => (
             <div key={p.t} style={{ border: `1px solid ${G.line}`, borderRadius: 14, overflow: "hidden", background: "#fff" }}>
-              <div style={{ height: 120, background: `linear-gradient(135deg, ${G.greenDark}, #8fbc8f)` }} />
+              <div style={{ height: 120, background: `linear-gradient(135deg, ${G.greenDark}, #8fbc8f)`, overflow: "hidden" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.img} alt="" onError={hideOnError} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              </div>
               <div style={{ padding: "16px 18px 20px" }}>
                 <div style={{ fontSize: 15.5, fontWeight: 800, lineHeight: 1.3, marginBottom: 8 }}>{p.t}</div>
                 <p style={{ margin: "0 0 10px", fontSize: 13, lineHeight: 1.55, color: G.muted }}>{p.d}</p>
