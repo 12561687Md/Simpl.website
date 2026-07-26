@@ -1,5 +1,4 @@
 import PhoneLoop from "./PhoneLoop";
-import ScanReviewsMobile from "./ScanReviewsMobile";
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
@@ -63,14 +62,10 @@ export default function WhyOwnersHireUs() {
             </div>
           </div>
 
-          {/* Phone column. Desktop: the app carousel. Mobile: the cleaner
-              scan animation (reviews cascade, then photos pop in). */}
+          {/* Phone column */}
           <div className="split-phone-visual" style={{ display: "flex", justifyContent: "center" }}>
-            <div className="phone-scale hidden md:block">
+            <div className="phone-scale">
               <PhoneLoop />
-            </div>
-            <div className="md:hidden">
-              <ScanReviewsMobile />
             </div>
           </div>
         </div>
