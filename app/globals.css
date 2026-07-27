@@ -408,6 +408,7 @@ body { overflow-x: hidden; position: relative; }
   .blog-layout { grid-template-columns: 1fr !important; }
   .blog-rail { display: none; }
 }
+.blog-svc-link:hover { background: var(--accent-soft); }
 
 /* Before/after compare panels: hide scrollbars (still scrollable). */
 .reveal-panel { scrollbar-width: none; -ms-overflow-style: none; }
@@ -534,7 +535,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 /* Category showcase: cards left, active detail right */
 .grid-showcase {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  /* Tabs stay a compact left rail; the detail/compare panel takes most of the
+     section so the interactive Custom Website slider reads big. */
+  grid-template-columns: minmax(210px, 0.62fr) minmax(0, 1.38fr);
   gap: 24px;
   align-items: start;
 }

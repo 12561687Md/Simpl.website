@@ -228,12 +228,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             mobile (the article's own CTAs + the pre-footer form cover it). */}
         <aside className="blog-rail">
           <div style={{ position: "sticky", top: 108, display: "grid", gap: 16 }}>
-            <div style={{ border: "1px solid var(--accent-line)", background: "var(--accent-soft)", borderRadius: 14, padding: "18px 18px" }}>
-              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>Free scan</div>
-              <div style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.25, marginBottom: 14 }}>See how your business scores in 60 seconds.</div>
-              <Link href="/scan" className="cta-primary" style={{ display: "inline-flex", color: "var(--accent-ink)", padding: "10px 18px", fontSize: 13.5, fontWeight: 700, borderRadius: 999, textDecoration: "none" }}>
-                Run the free scan →
-              </Link>
+            <div style={{ border: "1px solid var(--rule)", background: "var(--bg-soft)", borderRadius: 14, padding: "16px 16px" }}>
+              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>Related services</div>
+              <div style={{ display: "grid", gap: 1 }}>
+                {[
+                  { label: "Custom Website", href: "/services/website-build" },
+                  { label: "Quick Wins & Site Triage", href: "/services/quick-wins" },
+                  { label: "Local SEO & AI Visibility", href: "/services/local-seo" },
+                  { label: "Google Business Profile", href: "/services/google-business-profile" },
+                  { label: "CRM & AI Automation", href: "/services/ai-quoting-agent" },
+                  { label: "Paid Performance Marketing", href: "/services/paid-ads" },
+                  { label: "Long-Term Organic Growth", href: "/services/organic-growth" },
+                  { label: "Fractional CMO & Strategy", href: "/services/strategy" },
+                ].map((s) => (
+                  <Link key={s.href} href={s.href} className="blog-svc-link" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, padding: "8px 6px", borderRadius: 8, textDecoration: "none", color: "var(--fg)", fontSize: 13.5, lineHeight: 1.3 }}>
+                    <span>{s.label}</span>
+                    <span aria-hidden="true" style={{ color: "var(--accent)" }}>→</span>
+                  </Link>
+                ))}
+              </div>
             </div>
             <div>
               <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 10, color: "var(--muted)" }}>Or tell us what&apos;s going on</div>

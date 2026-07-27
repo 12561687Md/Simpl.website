@@ -224,7 +224,7 @@ function WebsiteCompare() {
     <div
       ref={wrapRef}
       onMouseMove={(e) => move(e.clientX)}
-      style={{ position: "relative", width: "100%", height: 348, borderRadius: 12, overflow: "hidden", border: "1px solid var(--rule)", boxShadow: "0 30px 80px -40px rgba(0,0,0,0.8)", userSelect: drag ? "none" : "auto" }}
+      style={{ position: "relative", width: "100%", height: "clamp(420px, 62vh, 560px)", borderRadius: 12, overflow: "hidden", border: "1px solid var(--rule)", boxShadow: "0 30px 80px -40px rgba(0,0,0,0.8)", userSelect: drag ? "none" : "auto" }}
     >
       {/* After (underneath, full width). Interactive tabs live here. */}
       <div ref={afterRef} className="reveal-panel" onScroll={sync("after")} style={panel}>
