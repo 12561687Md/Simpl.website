@@ -25,17 +25,17 @@ export default function StartLeadCard() {
         padding: "clamp(28px, 4vw, 44px)",
       }}
     >
-      <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>
+      <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 12 }}>
         Ready when you are
       </div>
-      <h2 style={{ margin: "0 0 10px", fontSize: "clamp(24px, 2.6vw, 34px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.12 }}>
+      <h2 style={{ margin: "0 0 8px", fontSize: "clamp(23px, 2.4vw, 32px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.12 }}>
         Tell us what&apos;s going on.<br />
         <span style={{ color: "var(--muted)" }}>We&apos;ll find what it&apos;s costing you.</span>
       </h2>
-      <p style={{ margin: "0 0 22px", fontSize: 15.5, lineHeight: 1.6, color: "var(--muted)", maxWidth: 420 }}>
-        The phone&apos;s quieter than it was, you&apos;re not showing up on Google, the site looks dated. Whatever the symptom, real people read every message and reply the same business day.
+      <p style={{ margin: "0 0 18px", fontSize: 14.5, lineHeight: 1.55, color: "var(--muted)", maxWidth: 440 }}>
+        Real people read every message and reply the same business day.
       </p>
-      <ContactForm ctaLabel="Fix my business" sourcePage="/start-now" />
+      <ContactForm ctaLabel="Fix my business" sourcePage="/start-now" compact />
     </motion.div>
   );
 }

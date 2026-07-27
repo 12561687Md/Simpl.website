@@ -46,10 +46,13 @@ const errStyle: React.CSSProperties = { color: "#E05252", fontSize: 13, marginTo
 export default function ContactForm({
   ctaLabel = "Fix my business",
   sourcePage = "/start",
+  compact = false,
 }: {
   ctaLabel?: string;
   /** Which page this form sits on. Sent so leads are attributable. */
   sourcePage?: string;
+  /** Tighter spacing + shorter textarea, for fitting in a no-scroll frame. */
+  compact?: boolean;
 }) {
   const reduce = useReducedMotion();
   // Own success state rather than RHF's isSubmitSuccessful. RHF marks a submit
@@ -117,7 +120,7 @@ export default function ContactForm({
     { id: "cf-email", label: "Email", el: <input id="cf-email" className="lead-input" type="email" autoComplete="email" {...register("email")} placeholder="you@company.com" style={inputStyle} aria-invalid={!!errors.email} aria-describedby={errors.email ? "cf-email-err" : undefined} />, err: errors.email, errId: "cf-email-err" },
     { id: "cf-phone", label: "Phone (optional)", el: <input id="cf-phone" className="lead-input" type="tel" autoComplete="tel" {...register("phone")} placeholder="(555) 555-5555" style={inputStyle} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "cf-phone-err" : undefined} />, err: errors.phone, errId: "cf-phone-err" },
     { id: "cf-website", label: "Your website (optional)", el: <input id="cf-website" className="lead-input" type="text" autoComplete="url" {...register("website")} placeholder="yourbusiness.com" style={inputStyle} />, err: undefined, errId: "" },
-    { id: "cf-message", label: "What's going on?", el: <textarea id="cf-message" className="lead-input" {...register("message")} placeholder="Phone's not ringing like it used to. Not sure why." style={{ ...inputStyle, resize: "vertical", minHeight: 110 }} />, err: undefined, errId: "" },
+    { id: "cf-message", label: "What's going on?", el: <textarea id="cf-message" className="lead-input" {...register("message")} placeholder="Phone's not ringing like it used to. Not sure why." style={{ ...inputStyle, resize: "vertical", minHeight: compact ? 56 : 110 }} />, err: undefined, errId: "" },
   ];
 
   // No reveal animation on the form itself. A lead form must never have
@@ -128,7 +131,7 @@ export default function ContactForm({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      style={{ display: "grid", gap: 26, border: "1px solid var(--rule)", padding: "40px 36px", background: "var(--bg-soft)" }}
+      style={{ display: "grid", gap: compact ? 14 : 26, border: "1px solid var(--rule)", padding: compact ? "22px 22px" : "40px 36px", background: "var(--bg-soft)" }}
     >
       {fields.map((f) => (
         <div key={f.id}>
