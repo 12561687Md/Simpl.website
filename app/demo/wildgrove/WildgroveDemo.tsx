@@ -150,7 +150,7 @@ function WildgroveLogo({ light = false }: { light?: boolean }) {
 }
 
 /* ---------------- The new Simpl site ---------------- */
-function NewSite() {
+function NewSite({ embed = false }: { embed?: boolean }) {
   const [idx, setIdx] = useState(0);
   const [resOpen, setResOpen] = useState(false);
   useEffect(() => {
@@ -160,11 +160,12 @@ function NewSite() {
 
   return (
     <div style={{ background: "#fff", color: G.ink, fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
-      {/* Nav with NAP + service tabs */}
-      <div style={{ position: "sticky", top: 57, zIndex: 40, background: "rgba(255,255,255,0.96)", backdropFilter: "blur(8px)", borderBottom: `1px solid ${G.line}` }}>
-        <div style={{ ...wrap, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 24px" }}>
+      {/* Nav with NAP + service tabs. In embed mode there's no Simpl toggle bar
+          above it, so it sticks to the very top and never collapses to mobile. */}
+      <div style={{ position: "sticky", top: embed ? 0 : 57, zIndex: 40, background: "rgba(255,255,255,0.96)", backdropFilter: "blur(8px)", borderBottom: `1px solid ${G.line}` }}>
+        <div style={{ ...wrap, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 24px", gap: 14 }}>
           <WildgroveLogo />
-          <div className="wg-nav" style={{ display: "flex", alignItems: "center", gap: 22 }}>
+          <div className={embed ? "wg-nav wg-nav-embed" : "wg-nav"} style={{ display: "flex", alignItems: "center", gap: 22 }}>
             <a href="#services" style={{ fontSize: 13.5, color: G.muted, textDecoration: "none" }}>Services</a>
             <a href="#about" style={{ fontSize: 13.5, color: G.muted, textDecoration: "none" }}>About Us</a>
             <a href="#gallery" style={{ fontSize: 13.5, color: G.muted, textDecoration: "none" }}>See Our Work</a>
@@ -423,7 +424,7 @@ export default function WildgroveDemo({ embed = false }: { embed?: boolean }) {
   // Embed mode (iframed on the homepage showcase): just the real site, no
   // Simpl Before/After bar.
   if (embed) {
-    return <div style={{ minHeight: "100vh", background: "#fff" }}><NewSite /></div>;
+    return <div style={{ minHeight: "100vh", background: "#fff" }}><NewSite embed /></div>;
   }
   return (
     <div style={{ minHeight: "100vh", background: "#0B0C0D" }}>

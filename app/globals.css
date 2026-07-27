@@ -947,6 +947,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .wg-quote { grid-template-columns: 1fr !important; }
 }
 
+/* The Custom Website showcase embeds the demo in a sub-760px iframe, which would
+   otherwise trigger the mobile collapse above and hide every tab. In embed mode
+   keep all tabs visible, tightened, and allowed to wrap onto a second line. */
+.wg-nav-embed { gap: 15px !important; flex-wrap: wrap; justify-content: flex-end; row-gap: 6px !important; }
+.wg-nav-embed a:not(:last-child):not(:nth-last-child(2)) { display: inline-flex !important; }
+.wg-nav-embed a { font-size: 13px !important; }
+
 /* Fix-your-business (/start-now): Owner-style full-screen two-panel. Left = the
    pitch + dashboard + business search; right = the diagnosis/contact form. No
    global header/footer on this page, nowhere to go but start. */
