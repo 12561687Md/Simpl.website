@@ -937,8 +937,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
    pitch + dashboard + business search; right = the diagnosis/contact form. No
    global header/footer on this page, nowhere to go but start. */
 .start-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
-/* Desktop: one frame, no scrollbar. */
-@media (min-width: 881px) { .start-split { height: 100vh; overflow: hidden; } }
 .start-panel { padding: 28px 44px; display: flex; flex-direction: column; justify-content: center; }
 .start-left {
   background:
