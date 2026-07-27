@@ -3,25 +3,19 @@
 import { useEffect } from "react";
 
 /**
- * Registers /sw.js after load so it never competes with first paint. The
- * service worker is what makes the site installable (desktop/home screen) and
- * gives an offline fallback. Registration failures are swallowed: a missing SW
- * must never break the page.
+ * PWA is disabled for now. The earlier service worker cached pages and hid
+ * edits, so this component no longer registers one; instead it unregisters any
+ * existing worker and clears caches, on every environment, so nobody keeps
+ * getting served stale content. public/sw.js is a self-destructing stub that
+ * finishes the job browser-side. Re-enable registration when the app phase is
+ * ready.
  */
 export default function ServiceWorkerRegister() {
   useEffect(() => {
-    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
-    // Never run the SW in local dev: it caches pages and hides your edits.
-    // Also actively unregister any that already installed on localhost.
-    if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
-      navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister())).catch(() => {});
-      return;
-    }
-    const register = () => navigator.serviceWorker.register("/sw.js").catch(() => {});
-    if (document.readyState === "complete") register();
-    else {
-      window.addEventListener("load", register, { once: true });
-      return () => window.removeEventListener("load", register);
+    if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
+    navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister())).catch(() => {});
+    if (typeof caches !== "undefined") {
+      caches.keys().then((ks) => ks.forEach((k) => caches.delete(k))).catch(() => {});
     }
   }, []);
   return null;
