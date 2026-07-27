@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
 import ServiceWorkerRegister from "./components/ServiceWorkerRegister";
+import GoogleTags from "./components/GoogleTags";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -88,6 +89,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <body>
+        <GoogleTags />
         <ServiceWorkerRegister />
         <ScrollToTop />
         {children}
