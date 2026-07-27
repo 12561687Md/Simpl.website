@@ -1,6 +1,11 @@
 import Image from "next/image";
+import { Caveat } from "next/font/google";
 import ScrollReveal from "./ScrollReveal";
 import { StaggerReveal, StaggerItem } from "./ScrollReveal";
+import { SimplAppIcon } from "@/components/ui/simpl-brand";
+
+// Readable signature script for the founder's name in the photo caption.
+const signature = Caveat({ subsets: ["latin"], weight: "700", display: "swap" });
 
 // The combined "what we stand for" set (this section absorbed the standalone
 // beliefs block, so this is now the single place Simpl states its principles).
@@ -78,9 +83,9 @@ export default function TeamSection() {
                 gap: 11,
               }}
             >
-              <span className="pulse-dot" style={{ width: 8, height: 8, borderRadius: 999, background: "var(--accent)", flexShrink: 0 }} />
-              <span style={{ display: "grid", gap: 2 }}>
-                <span style={{ fontSize: 17, fontWeight: 600, color: "#fff", letterSpacing: "-0.01em" }}>Matt DuBois</span>
+              <SimplAppIcon size={32} style={{ flexShrink: 0 }} />
+              <span style={{ display: "grid", gap: 3 }}>
+                <span className={signature.className} style={{ fontSize: 30, color: "#fff", lineHeight: 0.95 }}>Matt DuBois</span>
                 <span className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.72)" }}>
                   Founder &amp; CEO
                 </span>

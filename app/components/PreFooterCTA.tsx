@@ -9,17 +9,17 @@ import ContactForm from "./ContactForm";
  * opted out on pages that ARE a form (start-now) or where it doesn't belong
  * (legal).
  *
- * No reveal animation. This lives at the very bottom of the page and was
- * repeatedly stranded invisible when its reveal was gated on opacity 0 (first a
- * scroll trigger that never fired, then a mount animation that could still be
- * interrupted). It now renders fully opaque in the raw HTML: the form can never
- * be invisible, JS or no JS.
+ * No reveal animation, and it must sit ABOVE the page-wide starfield. The real
+ * cause of the "form disappears at the bottom" bug: <SpaceField> is a fixed,
+ * opaque layer at z-index:0. <main> and <footer> are positioned, so they paint
+ * over it, but this plain <section> was static and painted UNDER it, invisible.
+ * position:relative + zIndex:1 lifts it above the starfield like everything else.
  */
 export default function PreFooterCTA({ sourcePage }: { sourcePage?: string }) {
   const pathname = usePathname();
   const src = sourcePage ?? pathname ?? "/";
   return (
-    <section style={{ borderTop: "1px solid var(--rule)", background: "var(--bg)" }}>
+    <section style={{ position: "relative", zIndex: 1, borderTop: "1px solid var(--rule)", background: "var(--bg)" }}>
       <div style={{ maxWidth: 1120, margin: "0 auto", padding: "clamp(64px, 9vw, 112px) 32px" }}>
         <div
           style={{

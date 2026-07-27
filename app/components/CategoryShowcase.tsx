@@ -137,7 +137,7 @@ export default function CategoryShowcase({ categories }: { categories: Category[
               {current.hrefLabel} <Arrow />
             </Link>
             <RippleLink href="/start-now" className="tier-cta tier-cta-solid">
-              What am I missing? <Arrow />
+              Fix yours now <Arrow />
             </RippleLink>
           </div>
           <div style={{ display: "flex", gap: 8 }}>

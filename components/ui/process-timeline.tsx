@@ -87,12 +87,14 @@ export default function ProcessTimeline({ steps }: { steps: TimelineStep[] }) {
               top: pos.top,
               width: "20.5%",
               minWidth: 218,
+              // Inverted: baby-blue surface with black text, so the steps pop
+              // off the dark page instead of blending into it.
               background:
-                "linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 34%), var(--bg-elev)",
-              border: "1px solid var(--rule)",
+                "linear-gradient(180deg, rgba(255,255,255,0.35) 0%, transparent 45%), var(--accent)",
+              border: "1px solid rgba(14,15,16,0.22)",
               borderRadius: 16,
               padding: "20px 20px 22px",
-              boxShadow: "0 24px 50px -30px rgba(0,0,0,0.7)",
+              boxShadow: "0 24px 50px -26px rgba(0,0,0,0.7)",
             }}
           >
             {/* Number chip, sits like a pin on the line. */}
@@ -110,15 +112,15 @@ export default function ProcessTimeline({ steps }: { steps: TimelineStep[] }) {
                 justifyContent: "center",
                 fontSize: 12.5,
                 fontWeight: 700,
-                color: "var(--accent-ink)",
-                background: "var(--accent)",
-                boxShadow: "0 6px 18px -6px var(--accent)",
+                color: "#fff",
+                background: "#0E0F10",
+                boxShadow: "0 6px 18px -6px rgba(0,0,0,0.6)",
               }}
             >
               {s.n}
             </div>
-            <h3 style={{ margin: "14px 0 10px", fontSize: 18, fontWeight: 600, letterSpacing: "-0.01em" }}>{s.title}</h3>
-            <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.55, color: "var(--muted)" }}>{s.body}</p>
+            <h3 style={{ margin: "14px 0 10px", fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em", color: "#0E0F10" }}>{s.title}</h3>
+            <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.55, color: "rgba(14,15,16,0.74)" }}>{s.body}</p>
           </motion.div>
         );
       })}
