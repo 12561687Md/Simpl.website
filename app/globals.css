@@ -402,6 +402,10 @@ body { overflow-x: hidden; position: relative; }
 }
 .scan-form:focus-within .scan-glow { transform: scaleX(1); }
 
+/* Before/after compare panels: hide scrollbars (still scrollable). */
+.reveal-panel { scrollbar-width: none; -ms-overflow-style: none; }
+.reveal-panel::-webkit-scrollbar { display: none; }
+
 /* Hero business-search bar: a very slow blue border pulse while idle, so the
    input quietly draws the eye without flashing. Runs only when results are
    closed (the class is dropped on open). */
