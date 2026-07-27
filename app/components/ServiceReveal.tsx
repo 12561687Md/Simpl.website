@@ -8,10 +8,10 @@ import ImageCoverflow, { type CoverflowImage } from "@/components/ui/image-cover
  * result badge; Paid Ads and Organic Growth show real coded charts of
  * week-over-week / month-over-month progress and profit.
  *
- * Photos are stock stand-ins (verified Unsplash) until custom Simpl brand images
- * are generated; the charts stay coded SVG so the numbers are crisp and honest,
- * not AI-garbled. Mostly server markup; the coverflow is the only client child.
- * Every showcase uses SHOW_H so the box is the same height and never jumps.
+ * Photos are hand-picked, verified public-domain Unsplash shots (each 200-checked
+ * and eyeballed for subject); the charts stay coded SVG so the numbers are crisp
+ * and honest, not AI-garbled. Mostly server markup; the coverflow is the only
+ * client child. Every showcase uses SHOW_H so the box is the same height.
  */
 export const REVEAL_HREFS = new Set<string>([
   "/services/website-build",
@@ -51,23 +51,31 @@ function Caption({ children }: { children: React.ReactNode }) {
 const tile: React.CSSProperties = { background: "var(--bg)", border: "1px solid var(--rule)", borderRadius: 10, padding: "12px 13px" };
 const chip = (color: string): React.CSSProperties => ({ fontSize: 10.5, fontWeight: 700, color, background: `color-mix(in srgb, ${color} 16%, transparent)`, padding: "2px 8px", borderRadius: 999, whiteSpace: "nowrap" });
 
-/* Real project photography (verified Unsplash stand-ins for custom Simpl brand
-   images, generated once credits are on the Higgsfield account). */
+/* Real project photography: verified, hand-picked Unsplash landscaping shots
+   (each URL was 200-checked and eyeballed for subject). Each tab gets a distinct
+   set so the coverflows don't repeat the same lead image. */
 const P = (id: string, alt: string, caption: string): CoverflowImage => ({
   src: `https://images.unsplash.com/photo-${id}?w=1200&q=80&auto=format&fit=crop`,
   alt,
   caption,
 });
-const PHOTOS: CoverflowImage[] = [
+const QUICK_PHOTOS: CoverflowImage[] = [
   P("1729058015948-592a8e4a1772", "Freshly renewed backyard lawn", "Full lawn renewal"),
   P("1722881445875-bdd5f4d9e6fa", "New backyard deck and patio", "Deck & patio build"),
-  P("1749803915455-a7642520d0d3", "Garden in full bloom", "Garden design & install"),
-  P("1694885186013-5aa7d91ae5d5", "Pond and gazebo landscaping", "Water feature & hardscape"),
-  P("1681853108586-f29b4ef5c0fb", "Manicured green yard", "Weekly maintenance"),
+  P("1719324924230-63781a3f18b9", "Tidy backyard patio with seating", "Backyard patio & seating"),
   P("1772040942277-b194d9d0b648", "Lush garden with hot tub", "Backyard transformation"),
 ];
-/* Rotate the start image so each tab's coverflow doesn't open on the same shot. */
-const rot = (k: number): CoverflowImage[] => [...PHOTOS.slice(k), ...PHOTOS.slice(0, k)];
+const LOCAL_PHOTOS: CoverflowImage[] = [
+  P("1681853108586-f29b4ef5c0fb", "Manicured green yard", "Weekly maintenance"),
+  P("1777539638731-162153332dc5", "Trimmed hedges and green lawn", "Hedge & lawn care"),
+  P("1750762286053-28632f48e717", "Tropical garden with stone path", "Garden design & install"),
+  P("1694885186013-5aa7d91ae5d5", "Pond and gazebo landscaping", "Water feature & hardscape"),
+];
+const STRATEGY_PHOTOS: CoverflowImage[] = [
+  P("1749803915455-a7642520d0d3", "Garden in full bloom", "Seasonal garden design"),
+  P("1530297333184-26b347aaa2a2", "Outdoor living space in a lush garden", "Outdoor living space"),
+  P("1549448046-b89e7214060d", "Flower bed with stone border", "Flower beds & borders"),
+];
 
 /* Frosted glass badge that floats over the active photo, carrying the tab's proof. */
 function GlassBadge({ children }: { children: React.ReactNode }) {
@@ -108,7 +116,7 @@ function QuickWins() {
       <Labels left="Quick wins & site triage" right="week one" />
       <Frame>
         <ImageCoverflow
-          images={rot(0)}
+          images={QUICK_PHOTOS}
           overlay={
             <GlassBadge>
               <div className="mono" style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 5 }}>Site health</div>
@@ -136,7 +144,7 @@ function LocalSeo() {
       <Labels left="Local SEO & AI search" right="Google · Maps · AI" />
       <Frame>
         <ImageCoverflow
-          images={rot(2)}
+          images={LOCAL_PHOTOS}
           overlay={
             <GlassBadge>
               <div className="mono" style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 5 }}>Google local pack</div>
@@ -247,7 +255,7 @@ function Strategy() {
       <Labels left="Fractional CMO & strategy" right="quarterly plan" />
       <Frame>
         <ImageCoverflow
-          images={rot(4)}
+          images={STRATEGY_PHOTOS}
           overlay={
             <GlassBadge>
               <div className="mono" style={{ fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 5 }}>North-star metric</div>
