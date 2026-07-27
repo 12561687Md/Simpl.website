@@ -84,27 +84,25 @@ function Compare({ before, after }: { before: ReactNode; after: ReactNode }) {
 
 function OldSiteMock() {
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#fbfbf4", fontFamily: "Arial, Helvetica, sans-serif", overflow: "hidden" }}>
-      {/* Dated header + clashing nav */}
-      <div style={{ background: "linear-gradient(#3a6b2a,#284d1c)", color: "#fff", padding: "7px 10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontFamily: "Georgia, serif", fontSize: 13, fontWeight: 700 }}>Green Lawns Landscaping</span>
-        <span style={{ fontSize: 8, opacity: 0.9 }}>Call: (919) 555-0100</span>
+    <div style={{ position: "absolute", inset: 0, background: "#eef0ea", fontFamily: "Arial, Helvetica, sans-serif", overflow: "hidden" }}>
+      {/* Plain, dated header + gray nav (mediocre, not ancient) */}
+      <div style={{ background: "#3f6b34", color: "#fff", padding: "8px 12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <span style={{ fontSize: 13, fontWeight: 700 }}>Wildgrove Landscaping</span>
+        <span style={{ fontSize: 8.5, opacity: 0.9 }}>Call: (919) 555-0142</span>
       </div>
-      <div style={{ background: "#cbb63a", color: "#3a2f00", fontSize: 7.5, padding: "3px 10px", display: "flex", gap: 9, fontWeight: 700 }}>
-        <span>HOME</span><span>ABOUT US</span><span>SERVICES</span><span>GALLERY</span><span>CONTACT</span>
+      <div style={{ background: "#e7e9e1", color: "#4a5540", fontSize: 8, padding: "5px 12px", display: "flex", gap: 12, fontWeight: 700, borderBottom: "1px solid #cfd3c6" }}>
+        <span>Home</span><span>About</span><span>Services</span><span>Gallery</span><span>Contact</span>
       </div>
-      <div style={{ padding: "11px 12px" }}>
-        <div style={{ color: "#a11", fontSize: 14, fontWeight: 700, marginBottom: 7, fontFamily: "Georgia, serif" }}>Welcome to our website!</div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <div style={{ width: "52%", background: "#dcdcd0", border: "1px solid #b9b9a8", height: 66, display: "flex", alignItems: "center", justifyContent: "center", color: "#8a8a78", fontSize: 8.5, textAlign: "center", lineHeight: 1.3 }}>
-            image<br />not found
-          </div>
-          <div style={{ flex: 1, fontSize: 8.5, color: "#444", lineHeight: 1.45 }}>
-            Family owned lawn care serving the area since 1998. Best prices in town!!
-            <div style={{ marginTop: 7, background: "linear-gradient(#f0d000,#d4a000)", border: "1px solid #a80", color: "#3a2f00", padding: "3px 8px", fontSize: 9, fontWeight: 700, display: "inline-block" }}>CLICK HERE!!!</div>
-          </div>
-        </div>
-        <div style={{ marginTop: 9, fontSize: 7.5, color: "#999", fontStyle: "italic" }}>© 2011 &middot; Best viewed in Internet Explorer 8</div>
+      {/* Flat, generic hero */}
+      <div style={{ background: "linear-gradient(#6f9e58, #567f43)", padding: "22px 14px", textAlign: "center" }}>
+        <div style={{ color: "#fff", fontSize: 16, fontWeight: 700, textShadow: "0 1px 2px rgba(0,0,0,0.2)" }}>Quality Landscaping You Can Trust</div>
+        <div style={{ color: "rgba(255,255,255,0.9)", fontSize: 9.5, marginTop: 6 }}>Serving the local area for over 10 years.</div>
+        <div style={{ marginTop: 13, display: "inline-block", background: "#e8b500", color: "#3a2f00", padding: "7px 15px", fontSize: 10, fontWeight: 700, borderRadius: 3 }}>Get a Free Quote</div>
+      </div>
+      <div style={{ padding: "12px", display: "flex", gap: 8 }}>
+        {["Lawn Care", "Mulching", "Cleanups"].map((s) => (
+          <div key={s} style={{ flex: 1, background: "#dfe2d8", border: "1px solid #cfd3c6", borderRadius: 3, padding: "12px 6px", textAlign: "center", fontSize: 8.5, color: "#4a5540", fontWeight: 700 }}>{s}</div>
+        ))}
       </div>
     </div>
   );
@@ -118,11 +116,20 @@ function SimplSiteMock() {
         inset: 0,
         overflow: "hidden",
         fontFamily: "var(--font-inter), system-ui, sans-serif",
-        // Manicured-lawn hero: mowing stripes under a dark scrim so text pops.
-        background:
-          "linear-gradient(180deg, rgba(6,18,9,0.35), rgba(6,18,9,0.72)), repeating-linear-gradient(102deg, #2f6d3f 0 15px, #357a46 15px 30px)",
+        // Fallback if the photo fails: mowing-stripe lawn.
+        background: "repeating-linear-gradient(102deg, #2f6d3f 0 15px, #357a46 15px 30px)",
       }}
     >
+      {/* Real landscaping photo hero (matches the /demo/wildgrove site). */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="https://images.unsplash.com/photo-1722881445875-bdd5f4d9e6fa?w=1200&q=80&auto=format&fit=crop"
+        alt=""
+        onError={(e) => { e.currentTarget.style.display = "none"; }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+      />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(6,18,9,0.35), rgba(6,18,9,0.78))" }} />
+
       {/* Nav */}
       <div style={{ position: "relative", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 15px" }}>
         <span style={{ color: "#fff", fontSize: 12.5, fontWeight: 800, letterSpacing: "0.02em" }}>WILDGROVE</span>
@@ -161,8 +168,8 @@ const MOCKS: Record<string, { before: ReactNode; after: ReactNode; beforeLabel: 
   "/services/website-build": {
     before: <OldSiteMock />,
     after: <SimplSiteMock />,
-    beforeLabel: "Their old site",
-    afterLabel: "Your Simpl site",
+    beforeLabel: "The old site",
+    afterLabel: "Built by Simpl",
     kpis: "Page speed, mobile score, and the calls-to-action that turn visitors into booked jobs.",
   },
 };
