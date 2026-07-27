@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { BLOG_POSTS, getPost } from "../../lib/blog";
 import { RichText } from "../RichText";
+import ContactForm from "../../components/ContactForm";
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
@@ -87,7 +88,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           }}
         />
 
-        <article style={{ maxWidth: 760, margin: "0 auto", padding: "112px 32px 40px" }}>
+        <div className="blog-layout" style={{ maxWidth: 1140, margin: "0 auto", padding: "112px 32px 40px", display: "grid", gridTemplateColumns: "minmax(0, 1fr) 320px", gap: 48, alignItems: "start" }}>
+        <article style={{ maxWidth: 760, margin: 0, padding: 0, minWidth: 0 }}>
           <div style={{ ...mono, fontSize: 12, marginBottom: 22 }}>
             <Link href="/blog" style={{ color: "var(--muted)", textDecoration: "none" }}>
               ← All answers
@@ -221,6 +223,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </section>
           )}
         </article>
+
+        {/* Sticky contact rail: rides the scroll the whole way down. Hidden on
+            mobile (the article's own CTAs + the pre-footer form cover it). */}
+        <aside className="blog-rail">
+          <div style={{ position: "sticky", top: 108, display: "grid", gap: 16 }}>
+            <div style={{ border: "1px solid var(--accent-line)", background: "var(--accent-soft)", borderRadius: 14, padding: "18px 18px" }}>
+              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>Free scan</div>
+              <div style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.25, marginBottom: 14 }}>See how your business scores in 60 seconds.</div>
+              <Link href="/scan" className="cta-primary" style={{ display: "inline-flex", color: "var(--accent-ink)", padding: "10px 18px", fontSize: 13.5, fontWeight: 700, borderRadius: 999, textDecoration: "none" }}>
+                Run the free scan →
+              </Link>
+            </div>
+            <div>
+              <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 10, color: "var(--muted)" }}>Or tell us what&apos;s going on</div>
+              <ContactForm compact ctaLabel="Fix my business" sourcePage={`/blog/${post.slug}`} />
+            </div>
+          </div>
+        </aside>
+        </div>
       </main>
       <Footer />
     </div>

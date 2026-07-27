@@ -402,6 +402,13 @@ body { overflow-x: hidden; position: relative; }
 }
 .scan-form:focus-within .scan-glow { transform: scaleX(1); }
 
+/* Blog: sticky contact rail beside the article on desktop; single column on
+   mobile with the rail hidden (article CTAs + pre-footer form cover it). */
+@media (max-width: 980px) {
+  .blog-layout { grid-template-columns: 1fr !important; }
+  .blog-rail { display: none; }
+}
+
 /* Before/after compare panels: hide scrollbars (still scrollable). */
 .reveal-panel { scrollbar-width: none; -ms-overflow-style: none; }
 .reveal-panel::-webkit-scrollbar { display: none; }
