@@ -248,8 +248,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 ))}
               </div>
             </div>
-            <div>
-              <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 10, color: "var(--muted)" }}>Or tell us what&apos;s going on</div>
+            <div style={{ border: "1px solid var(--accent-line)", borderRadius: 14, background: "linear-gradient(180deg, rgba(137,207,240,0.09), rgba(137,207,240,0.02))", boxShadow: "0 30px 70px -42px rgba(137,207,240,0.55)", padding: "16px" }}>
+              <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 10 }}>Tell us what&apos;s going on</div>
               <ContactForm compact ctaLabel="Fix my business" sourcePage={`/blog/${post.slug}`} />
             </div>
           </div>

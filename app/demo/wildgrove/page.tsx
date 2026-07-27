@@ -25,11 +25,13 @@ const LOCAL_BUSINESS_SCHEMA = {
   openingHours: "Mo-Sa 07:00-18:00",
 };
 
-export default function WildgroveDemoPage() {
+export default async function WildgroveDemoPage({ searchParams }: { searchParams: Promise<{ embed?: string }> }) {
+  const sp = await searchParams;
+  const embed = sp?.embed === "1";
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_SCHEMA) }} />
-      <WildgroveDemo />
+      <WildgroveDemo embed={embed} />
     </>
   );
 }

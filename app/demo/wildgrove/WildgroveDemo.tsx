@@ -418,8 +418,13 @@ function OldSite() {
   );
 }
 
-export default function WildgroveDemo() {
+export default function WildgroveDemo({ embed = false }: { embed?: boolean }) {
   const [view, setView] = useState<"after" | "before">("after");
+  // Embed mode (iframed on the homepage showcase): just the real site, no
+  // Simpl Before/After bar.
+  if (embed) {
+    return <div style={{ minHeight: "100vh", background: "#fff" }}><NewSite /></div>;
+  }
   return (
     <div style={{ minHeight: "100vh", background: "#0B0C0D" }}>
       <ToggleHeader view={view} setView={setView} />
