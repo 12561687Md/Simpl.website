@@ -35,14 +35,15 @@ const NAP = {
    landscaper doesn't do that; these are yard/garden work. onError degrades to
    the green gradient behind each image. */
 const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1558904541-efa843a96f01?w=1600&q=80&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1523419409543-a5e549c1faa8?w=1600&q=80&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1729058015948-592a8e4a1772?w=1600&q=80&auto=format&fit=crop", // grassy backyard
+  "https://images.unsplash.com/photo-1722881445875-bdd5f4d9e6fa?w=1600&q=80&auto=format&fit=crop", // backyard deck
+  "https://images.unsplash.com/photo-1694885186013-5aa7d91ae5d5?w=1600&q=80&auto=format&fit=crop", // pond + gazebo (park-like)
 ];
 const GALLERY = [
-  "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?w=800&q=80&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1558904541-efa843a96f01?w=800&q=80&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1600240644455-3edc55c375fe?w=800&q=80&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1749803915455-a7642520d0d3?w=800&q=80&auto=format&fit=crop", // garden in bloom
+  "https://images.unsplash.com/photo-1681853108586-f29b4ef5c0fb?w=800&q=80&auto=format&fit=crop", // grassy yard
+  "https://images.unsplash.com/photo-1722881445875-bdd5f4d9e6fa?w=800&q=80&auto=format&fit=crop", // backyard deck
+  "https://images.unsplash.com/photo-1772040942277-b194d9d0b648?w=800&q=80&auto=format&fit=crop", // hot tub + lush garden
 ];
 
 const SERVICES = [
@@ -165,6 +166,8 @@ function NewSite() {
           <WildgroveLogo />
           <div className="wg-nav" style={{ display: "flex", alignItems: "center", gap: 22 }}>
             <a href="#services" style={{ fontSize: 13.5, color: G.muted, textDecoration: "none" }}>Services</a>
+            <a href="#about" style={{ fontSize: 13.5, color: G.muted, textDecoration: "none" }}>About Us</a>
+            <a href="#gallery" style={{ fontSize: 13.5, color: G.muted, textDecoration: "none" }}>See Our Work</a>
             {/* Minimalist Resources dropdown: everything else lives here. */}
             <div style={{ position: "relative" }} onMouseEnter={() => setResOpen(true)} onMouseLeave={() => setResOpen(false)}>
               <span style={{ fontSize: 13.5, color: G.muted, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 5 }}>
@@ -179,7 +182,6 @@ function NewSite() {
                 </div>
               )}
             </div>
-            <a href={NAP.phoneHref} style={{ fontSize: 13.5, fontWeight: 700, color: G.greenDark, textDecoration: "none" }}>{NAP.phone}</a>
             <a href="#quote" style={{ background: G.green, color: "#fff", fontSize: 13, fontWeight: 700, padding: "9px 15px", borderRadius: 8, textDecoration: "none" }}>Free quote</a>
           </div>
         </div>
@@ -211,8 +213,8 @@ function NewSite() {
         </div>
       </section>
 
-      {/* Trust bar */}
-      <div style={{ background: G.soft, borderBottom: `1px solid ${G.line}` }}>
+      {/* Trust bar / about */}
+      <div id="about" style={{ background: G.soft, borderBottom: `1px solid ${G.line}` }}>
         <div style={{ ...wrap, display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "space-between", padding: "16px 24px", fontSize: 13, fontWeight: 600, color: G.ink }}>
           <span>★ {NAP.rating} ({NAP.reviews} reviews)</span>
           <span>Licensed &amp; insured</span>
@@ -255,8 +257,8 @@ function NewSite() {
         </div>
       </section>
 
-      {/* Gallery */}
-      <section style={{ ...wrap, padding: "64px 24px" }}>
+      {/* Gallery / see our work */}
+      <section id="gallery" style={{ ...wrap, padding: "64px 24px" }}>
         <h2 style={{ margin: "0 0 24px", fontSize: "clamp(24px, 3.2vw, 34px)", fontWeight: 800, letterSpacing: "-0.02em" }}>Recent work</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 14 }}>
           {GALLERY.map((src, i) => (

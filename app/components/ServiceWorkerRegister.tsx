@@ -11,6 +11,12 @@ import { useEffect } from "react";
 export default function ServiceWorkerRegister() {
   useEffect(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+    // Never run the SW in local dev: it caches pages and hides your edits.
+    // Also actively unregister any that already installed on localhost.
+    if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+      navigator.serviceWorker.getRegistrations().then((rs) => rs.forEach((r) => r.unregister())).catch(() => {});
+      return;
+    }
     const register = () => navigator.serviceWorker.register("/sw.js").catch(() => {});
     if (document.readyState === "complete") register();
     else {
