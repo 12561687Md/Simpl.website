@@ -223,6 +223,18 @@ function NewSite() {
         </div>
       </div>
 
+      {/* Credentials / licensed row */}
+      <div style={{ background: "#fff", borderBottom: `1px solid ${G.line}` }}>
+        <div style={{ ...wrap, padding: "18px 24px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "12px 22px" }}>
+          {["NC Licensed Landscape Contractor", "Licensed & Insured", "Bonded", "EPA WaterSense Partner", "NC Nursery & Landscape Assn. Member"].map((c) => (
+            <span key={c} style={{ display: "inline-flex", alignItems: "center", gap: 7, fontSize: 12.5, fontWeight: 600, color: G.ink }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={G.green} strokeWidth="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M8 12l3 3 5-6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              {c}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* Services */}
       <section id="services" style={{ ...wrap, padding: "72px 24px" }}>
         <div style={eyebrow}>Our services</div>
