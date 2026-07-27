@@ -22,6 +22,37 @@ function GoogleMapsMark() {
   );
 }
 
+function GoogleAnalyticsMark() {
+  return (
+    <svg viewBox="0 0 48 48" width="32" height="32" style={{ display: "block" }} role="img" aria-label="Google Analytics">
+      <rect x="31" y="5" width="12" height="38" rx="6" fill="#F9AB00" />
+      <rect x="18" y="17" width="12" height="26" rx="6" fill="#E37400" />
+      <circle cx="11" cy="37" r="6" fill="#E37400" />
+    </svg>
+  );
+}
+
+function SemrushMark() {
+  return (
+    <svg viewBox="0 0 48 48" width="32" height="32" style={{ display: "block" }} role="img" aria-label="Semrush">
+      <circle cx="31" cy="24" r="13" fill="#FF642D" />
+      <path d="M25 24a6 6 0 0 1 6-6" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" />
+      <circle cx="31" cy="24" r="2.4" fill="#fff" />
+      <path d="M17 17H4M15 24H7M17 31H4" stroke="#FF642D" strokeWidth="3.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function GoogleTagManagerMark() {
+  return (
+    <svg viewBox="0 0 48 48" width="32" height="32" style={{ display: "block" }} role="img" aria-label="Google Tag Manager">
+      <rect x="11" y="11" width="26" height="26" rx="5" transform="rotate(45 24 24)" fill="#8AB4F8" />
+      <rect x="15" y="15" width="18" height="18" rx="4" transform="rotate(45 24 24)" fill="#4285F4" />
+      <rect x="19.5" y="19.5" width="9" height="9" rx="2" transform="rotate(45 24 24)" fill="#fff" />
+    </svg>
+  );
+}
+
 type Platform =
   | { name: string; src: string; text?: string }
   | { name: string; node: React.ReactNode; text: string };
@@ -32,6 +63,9 @@ const PLATFORMS: Platform[] = [
   { name: "HighLevel", src: "/logos/highlevel.png" },
   { name: "Shopify", src: "/logos/shopify.svg", text: "Shopify" },
   { name: "Google Maps", node: <GoogleMapsMark />, text: "Google Maps" },
+  { name: "Google Analytics", node: <GoogleAnalyticsMark />, text: "Google Analytics" },
+  { name: "Semrush", node: <SemrushMark />, text: "Semrush" },
+  { name: "Google Tag Manager", node: <GoogleTagManagerMark />, text: "Google Tag Manager" },
 ];
 
 function LogoChip({ p }: { p: Platform }) {
