@@ -1,11 +1,19 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 /**
- * The left-side render for /start-now: the Wildgrove hero we build, with the
- * Simpl audit going from bad (week 1) to 90+ a few weeks later. Client
- * component because the hero <img> uses an onError fallback (event handlers
- * can't live in a server component).
+ * The left-side render for /start-now: the actual Wildgrove site we build (same
+ * hero as /demo/wildgrove, rotating photos and all), with the Simpl audit going
+ * from bad (week 1) to 90+ a few weeks later. Client component because of the
+ * rotation + the img onError fallback.
  */
+
+const HERO_IMAGES = [
+  "https://images.unsplash.com/photo-1729058015948-592a8e4a1772?w=1200&q=80&auto=format&fit=crop", // grassy backyard
+  "https://images.unsplash.com/photo-1722881445875-bdd5f4d9e6fa?w=1200&q=80&auto=format&fit=crop", // backyard deck
+  "https://images.unsplash.com/photo-1694885186013-5aa7d91ae5d5?w=1200&q=80&auto=format&fit=crop", // pond + gazebo
+];
 
 const hideImg = (e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.style.display = "none"; };
 
@@ -25,17 +33,25 @@ function ScoreCard({ label, score, word, wordColor, ring, sub, style }: { label:
 }
 
 export default function WildgroveShot() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx((v) => (v + 1) % HERO_IMAGES.length), 3600);
+    return () => clearInterval(t);
+  }, []);
+
   return (
     <div style={{ position: "relative", width: "100%", maxWidth: 470, margin: "0 auto" }}>
-      {/* Browser window with the Wildgrove hero */}
+      {/* Browser window with the rotating Wildgrove hero */}
       <div style={{ borderRadius: 14, overflow: "hidden", border: "1px solid rgba(255,255,255,0.16)", background: "#0e1519", boxShadow: "0 40px 90px -40px rgba(0,0,0,0.85)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "9px 12px", background: "rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           {["#ff5f57", "#febc2e", "#28c840"].map((c) => <span key={c} style={{ width: 9, height: 9, borderRadius: 99, background: c }} />)}
           <span style={{ marginLeft: 8, fontSize: 10, color: "rgba(255,255,255,0.5)" }}>wildgrovelandscaping.com</span>
         </div>
         <div style={{ position: "relative", height: 236, background: "repeating-linear-gradient(102deg, #2f6d3f 0 15px, #357a46 15px 30px)", fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://images.unsplash.com/photo-1722881445875-bdd5f4d9e6fa?w=1200&q=80&auto=format&fit=crop" alt="" onError={hideImg} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+          {HERO_IMAGES.map((src, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} src={src} alt="" onError={hideImg} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: i === idx ? 1 : 0, transition: "opacity 1s ease" }} />
+          ))}
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(6,18,9,0.35), rgba(6,18,9,0.8))" }} />
           <div style={{ position: "relative", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px" }}>
             <span style={{ color: "#fff", fontSize: 12, fontWeight: 800, letterSpacing: "0.02em" }}>WILDGROVE</span>

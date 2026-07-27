@@ -86,6 +86,43 @@ function AfterSiteFull({ tab, setTab }: { tab: string; setTab: (t: string) => vo
             <div style={{ fontSize: 15, fontWeight: 800, marginTop: 6, letterSpacing: "-0.01em" }}>On-time crews, fair prices, a yard you're proud of.</div>
             <p style={{ margin: "8px 0 0", fontSize: 11, lineHeight: 1.6, color: G.muted }}>Full-service lawn care, hardscaping, and design across Cary, Apex, and the Triangle. Licensed, insured, and 4.9 stars from 84 reviews.</p>
           </div>
+
+          {/* Services preview */}
+          <div style={{ background: G.soft, borderTop: `1px solid ${G.line}`, borderBottom: `1px solid ${G.line}`, padding: "16px 16px" }}>
+            <div style={eyebrow}>What we do</div>
+            <div style={{ marginTop: 8, display: "grid", gap: 7 }}>
+              {[["Lawn Care", "Mowing, edging, fertilization."], ["Hardscaping", "Patios, walls, walkways."], ["Design & Install", "Full landscape transformations."]].map(([t, b]) => (
+                <div key={t} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "#fff", border: `1px solid ${G.line}`, borderRadius: 9, padding: "10px 12px" }}>
+                  <div><div style={{ fontSize: 12, fontWeight: 800 }}>{t}</div><div style={{ fontSize: 9.5, color: G.muted, marginTop: 1 }}>{b}</div></div>
+                  <span style={{ color: G.green, fontSize: 13, fontWeight: 800 }}>→</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Gallery strip */}
+          <div style={{ padding: "16px 16px" }}>
+            <div style={eyebrow}>Recent work</div>
+            <div style={{ marginTop: 8, display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 7 }}>
+              {["linear-gradient(135deg,#2f6d3f,#6ba84f)", "linear-gradient(135deg,#3a5a40,#a3b18a)", "linear-gradient(135deg,#4a7c59,#8fbc8f)"].map((bg, i) => (
+                <div key={i} style={{ aspectRatio: "1/1", borderRadius: 8, background: bg }} />
+              ))}
+            </div>
+          </div>
+
+          {/* Reviews preview */}
+          <div style={{ background: G.soft, borderTop: `1px solid ${G.line}`, padding: "16px 16px" }}>
+            <div style={eyebrow}>Reviews</div>
+            <div style={{ marginTop: 8, display: "grid", gap: 7 }}>
+              {[["Best lawn on the block now. Fair price, on time.", "Dana R."], ["Fixed our drainage in a day. Booked monthly.", "Mike T."]].map(([q, n]) => (
+                <div key={n} style={{ background: "#fff", border: `1px solid ${G.line}`, borderRadius: 9, padding: "10px 12px" }}>
+                  <div style={{ color: G.gold, fontSize: 10 }}>★★★★★</div>
+                  <p style={{ margin: "5px 0 5px", fontSize: 10.5, lineHeight: 1.45 }}>{q}</p>
+                  <div style={{ fontSize: 9, fontWeight: 700, color: G.muted }}>{n}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </>
       )}
 
@@ -186,6 +223,7 @@ function WebsiteCompare() {
   return (
     <div
       ref={wrapRef}
+      onMouseMove={(e) => move(e.clientX)}
       style={{ position: "relative", width: "100%", height: 348, borderRadius: 12, overflow: "hidden", border: "1px solid var(--rule)", boxShadow: "0 30px 80px -40px rgba(0,0,0,0.8)", userSelect: drag ? "none" : "auto" }}
     >
       {/* After (underneath, full width). Interactive tabs live here. */}
