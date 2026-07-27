@@ -54,7 +54,6 @@ const chip = (color: string): React.CSSProperties => ({ fontSize: 10.5, fontWeig
 function WebsiteBuild() {
   return (
     <div>
-      <Labels left="A real Simpl-built site" right="scroll it · it's live" />
       <Frame pad={false}>
         <iframe
           src="/demo/wildgrove?embed=1"
@@ -64,7 +63,7 @@ function WebsiteBuild() {
         />
       </Frame>
       <Caption>
-        This is a real, complete site we built, scroll through it. <Link href="/demo/wildgrove" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)" }}>Open the full demo →</Link>
+        <Link href="/demo/wildgrove" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)" }}>Open the full demo →</Link>
       </Caption>
     </div>
   );
