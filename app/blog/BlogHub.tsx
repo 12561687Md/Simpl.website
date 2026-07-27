@@ -196,12 +196,12 @@ export default function BlogHub({ posts }: { posts: BlogPost[] }) {
               The free Simpl scan grades your whole online presence in about 60 seconds. No credit card, no call required.
             </p>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="/scan" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "14px 28px", fontSize: 15, fontWeight: 600, borderRadius: 999 }}>
+              <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "14px 28px", fontSize: 15, fontWeight: 600, borderRadius: 999 }}>
                 Run my free scan →
               </Link>
-              <Link href="/start-now" style={{ color: "var(--fg)", textDecoration: "none", padding: "13px 26px", fontSize: 15, border: "1px solid var(--rule-strong)", borderRadius: 999 }}>
-                Talk to a human
-              </Link>
+              <a href="tel:+19194289452" style={{ color: "var(--fg)", textDecoration: "none", padding: "13px 26px", fontSize: 15, border: "1px solid var(--rule-strong)", borderRadius: 999 }}>
+                (919) 428-9452
+              </a>
             </div>
           </div>
         </ScrollReveal>

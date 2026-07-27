@@ -93,7 +93,7 @@ export default function ServiceLayout({ data }: { data: ServiceData }) {
                   <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "14px 26px", fontSize: 15, fontWeight: 600, borderRadius: 999 }}>
                     Fix your business →
                   </Link>
-                  <Link href="/scan" style={{ color: "var(--fg)", textDecoration: "none", padding: "13px 24px", fontSize: 15, border: "1px solid var(--rule-strong)", borderRadius: 999 }}>
+                  <Link href="/start-now" style={{ color: "var(--fg)", textDecoration: "none", padding: "13px 24px", fontSize: 15, border: "1px solid var(--rule-strong)", borderRadius: 999 }}>
                     Run the free scan
                   </Link>
                 </div>

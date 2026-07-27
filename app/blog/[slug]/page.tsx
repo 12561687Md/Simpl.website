@@ -145,7 +145,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   <span style={{ fontSize: 15.5, lineHeight: 1.5, maxWidth: 420 }}>
                     Want this checked on your own site? The free Simpl scan finds exactly which of these is holding you back.
                   </span>
-                  <Link href="/scan" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "11px 20px", fontSize: 14, fontWeight: 600, borderRadius: 999, whiteSpace: "nowrap" }}>
+                  <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "11px 20px", fontSize: 14, fontWeight: 600, borderRadius: 999, whiteSpace: "nowrap" }}>
                     Run the free scan →
                   </Link>
                 </div>
@@ -193,12 +193,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               The free scan shows exactly where you stand on everything above, in about 60 seconds. No credit card, no call required.
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/scan" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "13px 24px", fontSize: 14, fontWeight: 700, borderRadius: 999, textDecoration: "none" }}>
+              <Link href="/start-now" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "13px 24px", fontSize: 14, fontWeight: 700, borderRadius: 999, textDecoration: "none" }}>
                 Run my free scan →
               </Link>
-              <Link href="/start-now" style={{ display: "inline-flex", alignItems: "center", color: "var(--fg)", padding: "12px 22px", fontSize: 14, border: "1px solid var(--rule-strong)", borderRadius: 999, textDecoration: "none" }}>
-                Talk to a human
-              </Link>
+              <a href="tel:+19194289452" style={{ display: "inline-flex", alignItems: "center", color: "var(--fg)", padding: "12px 22px", fontSize: 14, border: "1px solid var(--rule-strong)", borderRadius: 999, textDecoration: "none" }}>
+                (919) 428-9452
+              </a>
             </div>
           </section>
 
