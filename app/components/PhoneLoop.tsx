@@ -11,7 +11,7 @@ const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace"
  * static audit card. It auto-cycles three app screens, no user scrolling:
  *   1. Home  — logged in: vital-sign, notifications, the always-on AI ask box,
  *              and the primary "Fix your business" action.
- *   2. Fix   — a few first-grade-simple actions, each priced $ / $$ / $$$.
+ *   2. Fix   — a few first-grade-simple actions, each with its projected KPI lift.
  *   3. Report— this period's progress and a one-tap "fix everything" payment.
  * First-grade simple: what, why, how, at a glance.
  */
@@ -118,9 +118,9 @@ function HomeScreen() {
 
 /* ---- Screen 2: Fix your business ---- */
 const FIXES = [
-  { t: "Find customers looking for landscaping", price: "$$" },
-  { t: "Publish a new fall cleanup offer", price: "$" },
-  { t: "See this week's progress report", price: "›" },
+  { t: "Find customers searching for you", kpi: "+23%" },
+  { t: "Publish a new seasonal offer", kpi: "+14%" },
+  { t: "See this week's progress report", kpi: "›" },
 ];
 
 function FixScreen() {
@@ -138,21 +138,21 @@ function FixScreen() {
             <span
               className="mono"
               style={{
-                flexShrink: 0, fontSize: f.price === "›" ? 15 : 12, fontWeight: 700,
-                color: f.price === "›" ? SUB : INKON,
-                background: f.price === "›" ? "transparent" : BLUE,
-                borderRadius: 7, padding: f.price === "›" ? "0 4px" : "4px 9px",
-                minWidth: f.price === "›" ? 0 : 30, textAlign: "center",
+                flexShrink: 0, fontSize: f.kpi === "›" ? 15 : 11.5, fontWeight: 700,
+                color: f.kpi === "›" ? SUB : "#06210f",
+                background: f.kpi === "›" ? "transparent" : GREEN,
+                borderRadius: 7, padding: f.kpi === "›" ? "0 4px" : "4px 9px",
+                minWidth: f.kpi === "›" ? 0 : 30, textAlign: "center",
               }}
             >
-              {f.price}
+              {f.kpi}
             </span>
           </div>
         ))}
       </div>
 
       <div className="mono" style={{ fontSize: 10, color: DIM, letterSpacing: "0.04em", textAlign: "center", marginTop: 2 }}>
-        Pay once. It&apos;s done today.
+        Every win, tracked and measured.
       </div>
     </div>
   );
@@ -165,8 +165,8 @@ function ReportScreen() {
       <div>
         <div className="mono" style={{ fontSize: 10, letterSpacing: "0.1em", color: SUB, textTransform: "uppercase" }}>This week</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginTop: 4 }}>
-          <span style={{ fontSize: 34, fontWeight: 700, color: GREEN, letterSpacing: "-0.03em", lineHeight: 1 }}>+4%</span>
-          <span style={{ fontSize: 14, color: SUB }}>better than last week</span>
+          <span style={{ fontSize: 34, fontWeight: 700, color: GREEN, letterSpacing: "-0.03em", lineHeight: 1 }}>+23%</span>
+          <span style={{ fontSize: 14, color: SUB }}>more calls than last week</span>
         </div>
       </div>
 
@@ -187,7 +187,7 @@ function ReportScreen() {
 
       <div style={{ background: BLUE, color: INKON, borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", fontWeight: 700, fontSize: 14.5 }}>
         <span>Fix everything</span>
-        <span className="mono" style={{ fontSize: 13 }}>$$</span>
+        <span aria-hidden="true" style={{ fontSize: 16 }}>→</span>
       </div>
     </div>
   );
