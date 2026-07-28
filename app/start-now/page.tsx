@@ -29,7 +29,7 @@ export default function FixYourBusinessPage() {
 
         {/* SEO / conversion copy under the search. */}
         <div style={{ maxWidth: 480, margin: "22px auto 0", width: "100%", textAlign: "left" }}>
-          <div className="mono" style={{ fontSize: 19, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", fontWeight: 700 }}>
+          <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#fff", fontWeight: 700 }}>
             Growth platform for service businesses
           </div>
           <h1 style={{ margin: "12px 0 0", color: "#fff", fontSize: "clamp(26px, 3vw, 36px)", fontWeight: 800, lineHeight: 1.12, letterSpacing: "-0.02em" }}>
