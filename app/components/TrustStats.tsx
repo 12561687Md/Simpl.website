@@ -49,7 +49,7 @@ export default function TrustStats() {
 
   const duration = 1800;
   const seconds = useCountUp(30, duration, visible);
-  const categories = useCountUp(6, duration, visible);
+  const owned = useCountUp(100, duration, visible);
   const scans = useCountUp(scanCount ?? 0, duration, visible && scanCount !== null);
 
   return (
@@ -61,10 +61,10 @@ export default function TrustStats() {
         <div style={{ fontSize: 15, lineHeight: 1.5 }}>Average scan time. Type your URL, get your score before your coffee gets cold.</div>
       </div>
       <div>
-        <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--fg)", marginBottom: 8 }}>
-          {visible ? categories : 0}
+        <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>
+          50-80%
         </div>
-        <div style={{ fontSize: 15, lineHeight: 1.5 }}>Categories scored. Website, SEO, content, social, crawlability, and Google Business Profile.</div>
+        <div style={{ fontSize: 15, lineHeight: 1.5 }}>Below typical agency rates. You&apos;re not paying for an account manager, a sales floor, or an office.</div>
       </div>
       {/* Real count only, no fallback number pretending to be real: if the
           count hasn't loaded yet or is genuinely zero, it just says zero. */}
@@ -75,8 +75,8 @@ export default function TrustStats() {
         <div style={{ fontSize: 15, lineHeight: 1.5 }}>Sites scanned. Businesses just like yours finding out what&apos;s broken.</div>
       </div>
       <div>
-        <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>0</div>
-        <div style={{ fontSize: 15, lineHeight: 1.5 }}>Data sold. Your scan results are yours. We don&apos;t spam, store credentials, or share your info.</div>
+        <div className="mono" style={{ fontSize: 36, fontWeight: 300, color: "var(--accent)", marginBottom: 8 }}>{visible ? owned : 0}%</div>
+        <div style={{ fontSize: 15, lineHeight: 1.5 }}>Yours to keep. Your website and every account we set up stay in your name, even if you ever leave.</div>
       </div>
     </div>
   );
