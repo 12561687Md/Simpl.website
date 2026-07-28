@@ -25,10 +25,13 @@ const jetbrainsMono = JetBrains_Mono({
 // reference Noovis audit exactly rather than reusing the site's Inter/
 // JetBrains pairing, since the report is a distinct deliverable document,
 // not another marketing page.
+// Report-only trio (ScanReport). preload:false so they don't block first paint
+// on every route, only fetched when the report actually renders. Core Web Vitals.
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
   display: "swap",
+  preload: false,
   variable: "--font-report-display",
 });
 
@@ -36,6 +39,7 @@ const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
+  preload: false,
   variable: "--font-report-body",
 });
 
@@ -43,6 +47,7 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
+  preload: false,
   variable: "--font-report-mono",
 });
 
@@ -58,9 +63,11 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Simpl",
     url: "https://simpl.pro",
+    images: [{ url: "/brand/simpl-cover-1200x675.png", width: 1200, height: 675, alt: "Simpl, your digital presence handled" }],
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/brand/simpl-cover-1200x675.png"],
   },
   // Installable-app identity. app/manifest.ts auto-injects the manifest link;
   // these give iOS/Safari its home-screen icon and standalone behavior.
