@@ -15,9 +15,9 @@ export default function FixYourBusinessPage() {
   return (
     <main className="start-split">
       {/* LEFT: logo pinned to the top (centered, big) -> render -> search -> copy */}
-      <section className="start-panel start-left" style={{ textAlign: "center", justifyContent: "flex-start", paddingTop: 40 }}>
-        <Link href="/" aria-label="Simpl home" style={{ display: "inline-flex", justifyContent: "center", marginBottom: 34 }}>
-          <SimplWordmark size={58} />
+      <section className="start-panel start-left" style={{ textAlign: "center", justifyContent: "flex-start", paddingTop: 28 }}>
+        <Link href="/" aria-label="Simpl home" style={{ display: "inline-flex", justifyContent: "center", marginBottom: 22 }}>
+          <SimplWordmark size={52} />
         </Link>
 
         <WildgroveShot />
@@ -43,7 +43,7 @@ export default function FixYourBusinessPage() {
             ].map((x) => (
               <div key={x.h} style={{ display: "flex", gap: 9 }}>
                 <span aria-hidden="true" style={{ color: "#fff", flexShrink: 0, marginTop: 1 }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10" opacity="0.45" /><path d="M8 12l3 3 5-6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="12" cy="12" r="10" opacity="0.45" /><path d="M8 12l3 3 5-6" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </span>
                 <span style={{ fontSize: 12.5, lineHeight: 1.4, color: "rgba(255,255,255,0.92)" }}>
                   <span style={{ fontWeight: 700, color: "#fff" }}>{x.h}</span> {x.b}
