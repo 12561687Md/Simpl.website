@@ -277,22 +277,27 @@ function RoadmapCard() {
   );
 }
 
-/* ===== Blog reference ===== */
-function BlogCard({ slug, tag, title, read }: { slug: string; tag: string; title: string; read: string }) {
+/* ===== "From the blog" box: several related guides, each a link ===== */
+type BLink = { slug: string; tag: string; label: string };
+function BlogLinksCard({ links }: { links: BLink[] }) {
   return (
-    <Link href={`/blog/${slug}`} style={{ textDecoration: "none", display: "block", width: "100%", height: "100%" }}>
-      <div style={{ width: "100%", height: "100%", background: "var(--bg-elev)", border: "1px solid var(--rule)", borderRadius: 14, padding: 20, display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 24px 60px -30px rgba(0,0,0,0.75)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10" strokeLinecap="round" /></svg>
-          <span className="mono" style={{ fontSize: 9.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)" }}>From the blog · {tag}</span>
-        </div>
-        <div style={{ fontSize: 20, fontWeight: 600, lineHeight: 1.22, letterSpacing: "-0.01em", color: "var(--fg)" }}>{title}</div>
-        <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 16 }}>
-          <span style={{ fontSize: 12.5, color: "var(--accent)", borderBottom: "1px solid var(--accent)", paddingBottom: 2 }}>Read the guide →</span>
-          <span className="mono" style={{ fontSize: 10.5, color: "var(--fg-dim)" }}>{read}</span>
-        </div>
+    <div style={{ width: "100%", height: "100%", background: "var(--bg-elev)", border: "1px solid var(--rule)", borderRadius: 14, padding: 16, display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 24px 60px -30px rgba(0,0,0,0.75)" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10" strokeLinecap="round" /></svg>
+        <span className="mono" style={{ fontSize: 9.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)" }}>From the blog</span>
       </div>
-    </Link>
+      <div style={{ display: "grid", gap: 8, flex: 1, minHeight: 0 }}>
+        {links.map((l) => (
+          <Link key={l.slug} href={`/blog/${l.slug}`} className="blog-mini-link" style={{ ...tileS, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+            <span style={{ display: "grid", gap: 2, minWidth: 0 }}>
+              <span style={{ fontSize: 12.5, fontWeight: 600, color: "var(--fg)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{l.label}</span>
+              <span className="mono" style={{ fontSize: 8.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--fg-dim)" }}>{l.tag}</span>
+            </span>
+            <span style={{ color: "var(--accent)", fontSize: 14, flexShrink: 0 }}>→</span>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -302,32 +307,52 @@ const S = (key: string, node: React.ReactNode): CoverflowSlide => ({ key, node }
 const QUICK_SLIDES: CoverflowSlide[] = [
   S("health", <HealthCard />),
   S("speed", <TrendCard title="Page speed" right="mobile" metric="Load time" from="6.1s" to="1.8s" climbing={false} sub="Faster pages keep the visitors you already paid to earn." />),
-  S("b1", <BlogCard slug="why-is-my-website-not-showing-up-on-google" tag="Local SEO" title="Why isn't my website showing up on Google?" read="5 min" />),
-  S("b2", <BlogCard slug="what-happens-when-you-miss-a-customer-call" tag="Lead Capture" title="What a missed call actually costs a service business" read="4 min" />),
+  S("blog", <BlogLinksCard links={[
+    { slug: "why-is-my-website-not-showing-up-on-google", tag: "Local SEO", label: "Why isn't my website on Google?" },
+    { slug: "what-happens-when-you-miss-a-customer-call", tag: "Lead Capture", label: "What a missed call really costs" },
+    { slug: "website-checklist-for-service-businesses", tag: "Strategy", label: "The service-business website checklist" },
+    { slug: "how-long-does-local-seo-take", tag: "Local SEO", label: "How long does local SEO take?" },
+  ]} />),
 ];
 const LOCAL_SLIDES: CoverflowSlide[] = [
   S("pack", <LocalPackCard />),
   S("ai", <AIOverviewCard />),
-  S("b1", <BlogCard slug="how-to-rank-higher-on-google-maps" tag="Local SEO" title="How to rank higher on Google Maps (the local 3-pack)" read="6 min" />),
-  S("b2", <BlogCard slug="how-long-does-local-seo-take" tag="Local SEO" title="How long does local SEO take to work? An honest timeline" read="4 min" />),
+  S("blog", <BlogLinksCard links={[
+    { slug: "how-to-rank-higher-on-google-maps", tag: "Local SEO", label: "How to rank in the Google 3-pack" },
+    { slug: "how-long-does-local-seo-take", tag: "Local SEO", label: "How long does local SEO take?" },
+    { slug: "how-do-i-get-more-google-reviews", tag: "Reputation", label: "How to get more Google reviews" },
+    { slug: "how-to-get-your-business-recommended-by-ai", tag: "AI Search", label: "Get recommended by AI search" },
+  ]} />),
 ];
 const ADS_SLIDES: CoverflowSlide[] = [
   S("ads", <AdsCard />),
   S("cpl", <TrendCard title="Cost per lead" right="90 days" metric="Per booked lead" from="$96" to="$41" climbing={false} sub="Every dollar tracked to a booked job, not a click." />),
-  S("b1", <BlogCard slug="google-ads-for-remodelers" tag="Paid Ads" title="Google Ads that actually book kitchen and bath jobs" read="6 min" />),
-  S("b2", <BlogCard slug="local-services-ads-vs-google-ads" tag="Paid Ads" title="Local Services Ads vs Google Ads: which books more jobs?" read="5 min" />),
+  S("blog", <BlogLinksCard links={[
+    { slug: "google-ads-for-remodelers", tag: "Paid Ads", label: "Google Ads that book jobs" },
+    { slug: "local-services-ads-vs-google-ads", tag: "Paid Ads", label: "Local Services Ads vs Google Ads" },
+    { slug: "how-to-get-more-plumbing-leads", tag: "Industry Guides", label: "How to get more plumbing leads" },
+    { slug: "what-happens-when-you-miss-a-customer-call", tag: "Lead Capture", label: "What a missed call really costs" },
+  ]} />),
 ];
 const ORGANIC_SLIDES: CoverflowSlide[] = [
   S("org", <OrganicCard />),
   S("visits", <TrendCard title="Organic traffic" right="12 months" metric="Monthly visits" from="0" to="+180%" climbing={true} sub="Content that compounds into traffic you don't pay per click for." />),
-  S("b1", <BlogCard slug="seo-for-landscapers" tag="Industry Guides" title="SEO for landscapers: rank for local lawn care and design" read="6 min" />),
-  S("b2", <BlogCard slug="how-to-get-your-business-recommended-by-ai" tag="AI Search" title="How to get your business recommended by ChatGPT & AI" read="5 min" />),
+  S("blog", <BlogLinksCard links={[
+    { slug: "seo-for-landscapers", tag: "Industry Guides", label: "SEO for landscapers" },
+    { slug: "how-to-get-your-business-recommended-by-ai", tag: "AI Search", label: "Get recommended by AI search" },
+    { slug: "how-long-does-local-seo-take", tag: "Local SEO", label: "How long does local SEO take?" },
+    { slug: "website-checklist-for-service-businesses", tag: "Strategy", label: "The service-business website checklist" },
+  ]} />),
 ];
 const STRATEGY_SLIDES: CoverflowSlide[] = [
   S("north", <NorthStarCard />),
   S("road", <RoadmapCard />),
-  S("b1", <BlogCard slug="how-much-should-a-service-business-spend-on-marketing" tag="Strategy" title="How much should a service business spend on marketing?" read="5 min" />),
-  S("b2", <BlogCard slug="automated-lead-follow-up-for-service-businesses" tag="Lead Capture" title="Automated lead follow-up that turns traffic into booked jobs" read="5 min" />),
+  S("blog", <BlogLinksCard links={[
+    { slug: "how-much-should-a-service-business-spend-on-marketing", tag: "Strategy", label: "What to spend on marketing" },
+    { slug: "automated-lead-follow-up-for-service-businesses", tag: "Lead Capture", label: "Automate your lead follow-up" },
+    { slug: "local-services-ads-vs-google-ads", tag: "Paid Ads", label: "Local Services Ads vs Google Ads" },
+    { slug: "what-happens-when-you-miss-a-customer-call", tag: "Lead Capture", label: "What a missed call really costs" },
+  ]} />),
 ];
 
 /* ---------- tab showcases ---------- */

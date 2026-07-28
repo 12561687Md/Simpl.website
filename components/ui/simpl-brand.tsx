@@ -139,11 +139,14 @@ export function SimplAppIcon({
  * The Simpl wordmark. The "I" is the vitalsign and the dot beneath it is the
  * green identity dot: the mark is built into the word, never set beside it.
  */
-export function SimplWordmark({ size = 28, inverted = false, className, style, title = "Simpl", outline = false, outlineColor }: MarkProps & { outline?: boolean; outlineColor?: string }) {
-  const fg = inverted ? INK : FG;
+export function SimplWordmark({ size = 28, inverted = false, className, style, title = "Simpl", outline = false, outlineColor, fillColor }: MarkProps & { outline?: boolean; outlineColor?: string; fillColor?: string }) {
+  // fillColor tints the solid letters (used for the footer watermark, a faint
+  // blue "Simpl"). Filled, not stroked: outlining the thin vitalsign "l" draws
+  // double lines inside it, which reads as a broken letter.
+  const fg = fillColor ?? (inverted ? INK : FG);
   const dot = inverted ? ACCENT_ON_LIGHT : ACCENT;
   // Outline mode: draw the letters as a thin border (no fill) instead of a solid
-  // glyph. Used for the ghosted footer watermark, a faint blue outline of "Simpl".
+  // glyph. (Not used for the watermark anymore, see fillColor above.)
   const letterFill = outline ? "none" : fg;
   const letterStroke = outline ? outlineColor ?? ACCENT : "none";
   const letterStrokeW = outline ? 2 : 0;

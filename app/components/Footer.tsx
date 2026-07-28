@@ -57,7 +57,7 @@ export default function Footer({ showLeadForm = true, sourcePage }: { showLeadFo
             SVG's width attribute, so it stretches to fill while keeping its
             aspect via height:auto. */}
         <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 1, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
-          <SimplWordmark size={430} outline outlineColor="rgba(137,207,240,0.55)" className="footer-watermark" style={{ width: "99%", height: "auto", opacity: 0.5, minWidth: 820 }} />
+          <SimplWordmark size={430} fillColor="rgba(137,207,240,0.5)" className="footer-watermark" style={{ width: "99%", height: "auto", opacity: 0.5, minWidth: 820 }} />
         </div>
         <div style={{ position: "relative", zIndex: 2, maxWidth: 1120, margin: "0 auto", padding: "72px 32px 24px" }}>
           <div className="grid-footer" style={{ display: "grid", gridTemplateColumns: "1.7fr 1fr 1fr", gap: 48, marginBottom: 44 }}>

@@ -539,12 +539,15 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
      section so the interactive Custom Website slider reads big. */
   grid-template-columns: minmax(210px, 0.62fr) minmax(0, 1.38fr);
   gap: 24px;
-  align-items: start;
+  /* stretch so the tab rail matches the showcase panel's height */
+  align-items: stretch;
 }
 .category-card {
   transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
 }
-.category-card:hover { border-color: var(--accent) !important; transform: translateX(2px); }
+.category-card:hover { border-color: var(--accent) !important; background: color-mix(in srgb, var(--accent) 20%, transparent) !important; transform: translateX(2px); box-shadow: 0 12px 34px -20px var(--accent); }
+.blog-mini-link { transition: border-color 160ms ease, background 160ms ease; }
+.blog-mini-link:hover { border-color: var(--accent) !important; background: color-mix(in srgb, var(--accent) 12%, transparent) !important; }
 .showcase-nav {
   height: 44px; width: 44px;
   display: inline-flex; align-items: center; justify-content: center;

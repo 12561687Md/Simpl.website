@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Caveat } from "next/font/google";
 import ScrollReveal from "./ScrollReveal";
 import { StaggerReveal, StaggerItem } from "./ScrollReveal";
-import { SimplAppIcon } from "@/components/ui/simpl-brand";
+import { SimplMark } from "@/components/ui/simpl-brand";
 
 // Readable signature script for the founder's name in the photo caption.
 const signature = Caveat({ subsets: ["latin"], weight: "700", display: "swap" });
@@ -83,7 +83,7 @@ export default function TeamSection() {
                 gap: 11,
               }}
             >
-              <SimplAppIcon size={32} style={{ flexShrink: 0 }} />
+              <SimplMark size={38} style={{ flexShrink: 0 }} />
               <span style={{ display: "grid", gap: 3 }}>
                 <span className={signature.className} style={{ fontSize: 30, color: "#fff", lineHeight: 0.95 }}>Matt DuBois</span>
                 <span className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.72)" }}>

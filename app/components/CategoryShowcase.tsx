@@ -41,7 +41,7 @@ export default function CategoryShowcase({ categories }: { categories: Category[
       {/* LEFT: the six category cards. Always rendered and always visible so
           crawlers and no-JS visitors get the full copy. Only the active
           highlight moves. */}
-      <div style={{ display: "grid", gap: 8, alignContent: "start" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, height: "100%" }}>
         {categories.map((c, i) => {
           const on = i === active;
           return (
@@ -52,8 +52,8 @@ export default function CategoryShowcase({ categories }: { categories: Category[
               className="category-card"
               style={{
                 textAlign: "left",
-                background: on ? "var(--accent-soft)" : "var(--bg)",
-                border: `1px solid ${on ? "var(--accent)" : "var(--rule)"}`,
+                background: on ? "color-mix(in srgb, var(--accent) 24%, transparent)" : "var(--accent-soft)",
+                border: `1px solid ${on ? "var(--accent)" : "var(--accent-line)"}`,
                 padding: "16px 18px",
                 cursor: "pointer",
                 display: "grid",
@@ -61,7 +61,8 @@ export default function CategoryShowcase({ categories }: { categories: Category[
                 gap: 12,
                 alignItems: "center",
                 color: "var(--fg)",
-                minHeight: 44,
+                flex: 1,
+                minHeight: 56,
               }}
             >
               <span style={{ display: "grid", gap: 3 }}>
@@ -80,7 +81,7 @@ export default function CategoryShowcase({ categories }: { categories: Category[
 
       {/* RIGHT: detail for the active category. The animation lives here
           because it's driven by interaction, not by first paint. */}
-      <div style={{ border: "1px solid var(--rule)", background: "var(--bg)", padding: "32px 30px", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 400 }}>
+      <div style={{ border: "1px solid var(--accent-line)", background: "var(--accent-soft)", padding: "32px 30px", display: "flex", flexDirection: "column", justifyContent: "space-between", minHeight: 400 }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={current.name}
