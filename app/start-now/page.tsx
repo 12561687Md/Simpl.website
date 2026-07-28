@@ -29,10 +29,10 @@ export default function FixYourBusinessPage() {
 
         {/* SEO / conversion copy under the search. */}
         <div style={{ maxWidth: 480, margin: "22px auto 0", width: "100%", textAlign: "left" }}>
-          <div className="mono" style={{ fontSize: 14, letterSpacing: "0.14em", textTransform: "uppercase", color: "#fff", fontWeight: 700 }}>
+          <div className="mono" style={{ fontSize: 19, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", fontWeight: 700 }}>
             Growth platform for service businesses
           </div>
-          <h1 style={{ margin: "9px 0 0", color: "#fff", fontSize: "clamp(20px, 2vw, 26px)", fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+          <h1 style={{ margin: "12px 0 0", color: "#fff", fontSize: "clamp(26px, 3vw, 36px)", fontWeight: 800, lineHeight: 1.12, letterSpacing: "-0.02em" }}>
             See how service businesses win more customers online.
           </h1>
           <div style={{ marginTop: 14, display: "grid", gap: 9 }}>
@@ -42,10 +42,10 @@ export default function FixYourBusinessPage() {
               { h: "Get your time back.", b: "One team runs it all. You get the calls, the jobs, and your evenings." },
             ].map((x) => (
               <div key={x.h} style={{ display: "flex", gap: 9 }}>
-                <span aria-hidden="true" style={{ color: "#fff", flexShrink: 0, marginTop: 1 }}>
-                  <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="12" cy="12" r="10" opacity="0.45" /><path d="M8 12l3 3 5-6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <span aria-hidden="true" style={{ color: "#fff", flexShrink: 0, marginTop: 2 }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10" opacity="0.45" /><path d="M8 12l3 3 5-6" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </span>
-                <span style={{ fontSize: 12.5, lineHeight: 1.4, color: "rgba(255,255,255,0.92)" }}>
+                <span style={{ fontSize: 15, lineHeight: 1.45, color: "rgba(255,255,255,0.92)" }}>
                   <span style={{ fontWeight: 700, color: "#fff" }}>{x.h}</span> {x.b}
                 </span>
               </div>
