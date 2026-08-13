@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, useReducedMotion } from "framer-motion";
+import { track } from "../lib/analytics";
 
 const PHONE_REGEX = /^[+]?[\d\s().-]{7,20}$/;
 
@@ -92,6 +93,7 @@ export default function ContactForm({
       setError("root", { message: data.error || "Could not send your message. Try again." });
       return;
     }
+    track("generate_lead", { source: sourcePage });
     setSent(true);
   }
 

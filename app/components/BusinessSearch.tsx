@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, useId } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { track } from "../lib/analytics";
 
 /**
  * Business typeahead. Type a name, pick your business, go.
@@ -120,6 +121,7 @@ export default function BusinessSearch({
       setQuery(p.name);
       setOpen(false);
       setPredictions([]);
+      track("select_business");
       onSelect(p, sessionToken.current);
       // The session is spent once Details is called against it; the next search
       // must start a fresh one or Google bills per keystroke.
