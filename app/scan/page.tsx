@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ScanTool from "../components/ScanTool";
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: "Free Website Scan | Simpl",
   description: "See exactly what Simpl checks: discoverability, performance, reputation, and spend. Type your domain, get your Simpl Score in 30 seconds.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Free Website Scan | Simpl",
     description: "Type your domain, get your Simpl Score in 30 seconds. No signup, no email required.",
     url: "https://simpl.pro/scan",

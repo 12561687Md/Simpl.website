@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../../lib/og";
 import Link from "next/link";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "A fast, findable website built to turn visitors into calls. Free when you start on Team.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Custom Website Build | Simpl",
     description: "A fast, findable website built to turn visitors into calls. Free when you start on Team.",
     url: "https://simpl.pro/services/website-build",

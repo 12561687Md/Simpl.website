@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -7,6 +8,7 @@ export const metadata: Metadata = {
   description:
     "Terms and conditions for using Simpl, the digital presence scanning and agency platform.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Terms of Service | Simpl",
     description: "Terms and conditions for using Simpl, the digital presence scanning and agency platform.",
     url: "https://simpl.pro/terms",

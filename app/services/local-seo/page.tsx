@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../../lib/og";
 import ServiceLayout, { type ServiceData } from "../../components/ServiceLayout";
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
   description:
     "Dominate the local 3-pack and show up when someone asks AI who to call. GBP optimization, citation building, review strategy, local keyword targeting, and AI-search visibility.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Local SEO & AI Search Visibility | Simpl",
     description: "Dominate the local 3-pack and show up when someone asks AI who to call. GBP optimization, citation building, review strategy, and AI-search visibility.",
     url: "https://simpl.pro/services/local-seo",

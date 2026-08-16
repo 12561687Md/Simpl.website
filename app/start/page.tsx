@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FloatingCTA from "../components/FloatingCTA";
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
   // next-sitemap.config.js) to bring it back.
   robots: { index: false, follow: true },
   openGraph: {
+    images: OG_IMAGE,
     title: "Pricing | Simpl",
     description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working.",
     url: "https://simpl.pro/start",

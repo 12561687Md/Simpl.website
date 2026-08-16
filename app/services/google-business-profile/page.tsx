@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../../lib/og";
 import ServiceLayout, { type ServiceData } from "../../components/ServiceLayout";
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
   description:
     "Your Google Business Profile is where most local calls start. Claiming, optimization, photo and post cadence, review velocity, and suspension protection, handled monthly.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Google Business Profile Optimization | Simpl",
     description: "Your Google Business Profile is where most local calls start. Optimization, review velocity, and suspension protection, handled monthly.",
     url: "https://simpl.pro/services/google-business-profile",

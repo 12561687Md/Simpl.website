@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../../lib/og";
 import ServiceLayout, { type ServiceData } from "../../components/ServiceLayout";
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
   description:
     "Stop leaking leads from broken elements you don't know are failing. Simpl fixes core web vitals, mobile issues, crawler errors, and more.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Quick Wins & Site Triage | Simpl",
     description: "Stop leaking leads from broken elements you don't know are failing. Simpl fixes core web vitals, mobile issues, crawler errors, and more.",
     url: "https://simpl.pro/services/quick-wins",

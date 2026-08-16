@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../../lib/og";
 import ServiceLayout, { type ServiceData } from "../../components/ServiceLayout";
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
   description:
     "Scale traffic instantly with campaigns that actually convert. Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Paid Performance Marketing | Simpl",
     description: "Scale traffic instantly with campaigns that actually convert. Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking.",
     url: "https://simpl.pro/services/paid-ads",

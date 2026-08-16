@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../../lib/og";
 import ServiceLayout, { type ServiceData } from "../../components/ServiceLayout";
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
   description:
     "Capture every lead in one system, answer instantly, and follow up automatically. Missed-call text-back, instant quotes, 24/7 response, pipeline tracking, and review requests for local service businesses.",
   openGraph: {
+    images: OG_IMAGE,
     title: "CRM & AI Automation | Simpl",
     description: "Every lead captured, answered, and followed up. Missed-call text-back, instant quotes, pipeline tracking, and follow-up that keeps every lead warm.",
     url: "https://simpl.pro/services/ai-quoting-agent",

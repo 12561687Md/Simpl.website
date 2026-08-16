@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "./lib/og";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeHero from "./components/HomeHero";
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   description:
     "Simpl monitors your website, Google Business Profile, SEO, and online presence 24/7. Type your URL and get your free Simpl Score in seconds.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Simpl | Your Digital Presence, Handled",
     description:
       "Find out what's broken with your online presence. Free scan, real results, in seconds.",

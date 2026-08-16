@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { OG_IMAGE } from "../../lib/og";
 import ServiceLayout, { type ServiceData } from "../../components/ServiceLayout";
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
   description:
     "Build compounding search authority that outlasts any ad budget. Content architecture, essential page builds, domain authority, and backlink acquisition.",
   openGraph: {
+    images: OG_IMAGE,
     title: "Long-Term Organic Growth | Simpl",
     description: "Build compounding search authority that outlasts any ad budget. Content architecture, essential page builds, domain authority, and backlink acquisition.",
     url: "https://simpl.pro/services/organic-growth",

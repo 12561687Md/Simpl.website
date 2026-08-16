@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import ScanGate from "../components/ScanGate";
 import ScanTheater from "../components/ScanTheater";
 import ScanReport from "../components/ScanReport";
+import { track } from "../lib/analytics";
 import type { PlaceDetails, ScanResult, Relationship, SerpBoard } from "../lib/scan-types";
 
 // Prod backend by default; NEXT_PUBLIC_SIMPL_API points local dev at a local
@@ -134,6 +135,9 @@ export default function AuditFlow() {
 
         scanPromise.current = p;
         setStage("scanning");
+        // Funnel step 1 of 3. No personal data here: the business is a public
+        // Google listing, and the visitor has not told us who they are yet.
+        track("scan_started", { business_has_website: true });
       } catch (e) {
         setError(e instanceof Error ? e.message : "Could not start your scan. Try again.");
         setStage("error");
@@ -146,6 +150,10 @@ export default function AuditFlow() {
       // The theatre only hands off once the promise settled. Settled as a
       // rejection means there is no report to show.
       setStage(r ? "gated" : "error");
+      // Funnel step 2 of 3: the report exists and the visitor is looking at it
+      // behind the gate. The score is the useful dimension here, since it tells
+      // us whether low scorers convert better than high ones.
+      if (r) track("scan_completed", { score: r.percentage ?? r.score, grade: r.grade });
       return r;
     });
   }, []);
@@ -177,6 +185,15 @@ export default function AuditFlow() {
       if (!res.ok || !data.success) {
         throw new Error(data.error || "Could not unlock your report. Try again.");
       }
+
+      // Funnel step 3 of 3, and the one that matters: this is the conversion.
+      // Mark it as a key event in GA4. Never pass the email or name, GA4
+      // prohibits personal data and it would be a real liability.
+      track("email_submitted", {
+        relationship,
+        opt_in: optIn,
+        score: result.percentage ?? result.score,
+      });
 
       setStage("unlocked");
     },
