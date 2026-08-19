@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -66,12 +66,31 @@ export default function ContactForm({
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
+    setValue,
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     // Validate on blur, not only on submit, so people fix errors as they go.
     mode: "onBlur",
     defaultValues: { name: "", email: "", phone: "", website: "", message: "" },
   });
+
+  // Prefill from the query string, so a link from the scan report email arrives
+  // with everything we already know about them already filled in. Read from
+  // window rather than useSearchParams: the hook forces a Suspense boundary on
+  // every page that renders this form, and this is a progressive enhancement
+  // that must never block first paint.
+  //
+  // Only ever prefills. It cannot overwrite something the person has typed,
+  // because it runs once on mount, before any input exists.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const fields = ["name", "email", "phone", "website", "message"] as const;
+    for (const f of fields) {
+      const v = q.get(f);
+      // Cap the length so a crafted link cannot stuff the form or the payload.
+      if (v && v.trim()) setValue(f, v.trim().slice(0, 1000), { shouldValidate: false });
+    }
+  }, [setValue]);
 
   async function onSubmit(values: ContactFormValues) {
     let res: Response;
