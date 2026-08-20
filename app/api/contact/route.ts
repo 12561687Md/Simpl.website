@@ -3,6 +3,8 @@ import { z } from "zod";
 import { getPool } from "../../../lib/db";
 import { resend } from "../../../lib/resend";
 import { isRateLimited, getClientIp } from "../../../lib/rate-limit";
+import { esc } from "../../lib/email-brand";
+import { confirmationEmailHtml } from "../../lib/emails/contact-confirmation";
 
 const PHONE_REGEX = /^[+]?[\d\s().-]{7,20}$/;
 
@@ -26,38 +28,6 @@ const ALLOWED_SOURCE_PAGES = new Set(["/start", "/start-now"]);
 
 const RATE_LIMIT_MAX = 5;
 const TEAM_INBOX = "team@simpl.pro";
-
-function confirmationEmailHtml() {
-  return `
-  <div style="background:#f5f5f3;padding:32px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
-    <div style="max-width:520px;margin:0 auto;background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid #e5e5e5;">
-      <div style="padding:36px 32px 8px;">
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#888;margin-bottom:20px;">Simpl</div>
-        <div style="font-size:20px;font-weight:600;color:#111;margin-bottom:12px;">We got your message</div>
-        <p style="font-size:15px;line-height:1.6;color:#333;margin:0 0 16px;">
-          Thanks for reaching out. We&rsquo;ll get back to you within 4 hours.
-        </p>
-        <p style="font-size:15px;line-height:1.6;color:#333;margin:0 0 24px;">
-          Haven&rsquo;t run your free scan yet? See exactly what&rsquo;s broken on your site in under a minute.
-        </p>
-      </div>
-      <div style="padding:0 32px 36px;">
-        <a href="https://simpl.pro/scan" style="display:inline-block;background:#89CFF0;color:#0A140D;text-decoration:none;font-weight:600;font-size:14px;padding:14px 28px;border-radius:4px;">
-          Run my free scan &rarr;
-        </a>
-      </div>
-      <div style="background:#fafafa;border-top:1px solid #e5e5e5;padding:20px 32px;text-align:center;">
-        <div style="font-size:12px;color:#999;">Plain and simpl.</div>
-        <div style="font-size:12px;color:#999;margin-top:4px;">Simpl &middot; simpl.pro</div>
-      </div>
-    </div>
-  </div>`;
-}
-
-/** Escape user input before it goes into an HTML email. */
-function esc(s: string) {
-  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
-}
 
 function notificationEmailHtml(params: { name: string; email: string; phone?: string; message?: string; service?: string; website?: string; sourcePage?: string }) {
   const { name, email, phone, message, service, website, sourcePage } = params;
@@ -134,7 +104,8 @@ export async function POST(req: Request) {
         from: "Simpl <team@simpl.pro>",
         to: email,
         subject: "We got your message",
-        html: confirmationEmailHtml(),
+        replyTo: TEAM_INBOX,
+        html: confirmationEmailHtml({ name, email, phone, service, website, message }),
       });
     } catch (emailError) {
       console.error("contact: failed to send confirmation email via Resend", emailError);
