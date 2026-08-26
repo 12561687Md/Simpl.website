@@ -115,7 +115,6 @@ ${opts.body}
 
         <tr>
           <td align="center" style="padding:24px 0 0;font-family:${EMAIL.SANS};">
-            <div style="font-size:12px;color:${EMAIL.FAINT};">Plain and simpl.</div>
             <div style="font-size:12px;color:${EMAIL.FAINT};padding-top:6px;">
               <a href="https://simpl.pro" style="color:${EMAIL.FAINT};text-decoration:none;">simpl.pro</a>
               &nbsp;&middot;&nbsp;
