@@ -20,12 +20,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${post.metaTitle} | Simpl`,
     description: post.description,
-    alternates: { canonical: `https://simpl.pro/blog/${post.slug}` },
+    alternates: { canonical: `https://www.simpl.pro/blog/${post.slug}` },
     openGraph: {
       title: post.metaTitle,
       description: post.description,
       type: "article",
-      images: [`https://simpl.pro${post.image}`],
+      images: [`https://www.simpl.pro${post.image}`],
     },
   };
 }
@@ -35,7 +35,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = getPost(slug);
   if (!post) notFound();
 
-  const url = `https://simpl.pro/blog/${post.slug}`;
+  const url = `https://www.simpl.pro/blog/${post.slug}`;
 
   // Cluster interlinking: other posts in the same category, then fill from the
   // rest so there are always sibling links for crawlers to follow.
@@ -59,12 +59,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 "@type": "BlogPosting",
                 headline: post.title,
                 description: post.description,
-                image: `https://simpl.pro${post.image}`,
+                image: `https://www.simpl.pro${post.image}`,
                 datePublished: post.updated,
                 dateModified: post.updated,
                 mainEntityOfPage: url,
-                author: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
-                publisher: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+                author: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
+                publisher: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
               },
               {
                 "@context": "https://schema.org",
@@ -79,8 +79,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-                  { "@type": "ListItem", position: 2, name: "Blog", item: "https://simpl.pro/blog" },
+                  { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+                  { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.simpl.pro/blog" },
                   { "@type": "ListItem", position: 3, name: post.metaTitle, item: url },
                 ],
               },

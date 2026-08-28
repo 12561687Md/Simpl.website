@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description:
       "Find out what's broken with your online presence. Free scan, real results, in seconds.",
   },
-  alternates: { canonical: "https://simpl.pro" },
+  alternates: { canonical: "https://www.simpl.pro" },
 };
 
 // The six services shown in the interactive showcase, matched 1:1 to the nav
@@ -101,7 +101,7 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "Simpl",
-          "url": "https://simpl.pro",
+          "url": "https://www.simpl.pro",
           "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
           "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" }
         }) }} />

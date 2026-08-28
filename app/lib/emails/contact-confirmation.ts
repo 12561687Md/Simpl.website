@@ -34,8 +34,8 @@ export function confirmationEmailHtml(params: {
 
   // If they gave us their site, the next step is THEIR scan, not a generic one.
   const scanUrl = website
-    ? `https://simpl.pro/scan?url=${encodeURIComponent(website)}`
-    : "https://simpl.pro/scan";
+    ? `https://www.simpl.pro/scan?url=${encodeURIComponent(website)}`
+    : "https://www.simpl.pro/scan";
   const scanLabel = website ? "See what your site scores" : "Run my free scan";
 
   /* table-layout:fixed with an explicit label width, because the default
@@ -118,7 +118,7 @@ export function confirmationEmailHtml(params: {
             </div>
 
             <div style="font-size:13px;color:${EMAIL.MUTED};line-height:1.65;padding-top:20px;">
-              In the meantime, ${textLink("https://simpl.pro/start", "here is what working with us looks like")} and what it costs. No surprises on the call.
+              In the meantime, ${textLink("https://www.simpl.pro/start", "here is what working with us looks like")} and what it costs. No surprises on the call.
             </div>
   `;
 

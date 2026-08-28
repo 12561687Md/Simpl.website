@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Success Stories | Simpl",
   description: "Real before/afters from Simpl clients, coming as soon as the work is done.",
   robots: { index: false, follow: true },
-  alternates: { canonical: "https://simpl.pro/success-stories" },
+  alternates: { canonical: "https://www.simpl.pro/success-stories" },
 };
 
 /**

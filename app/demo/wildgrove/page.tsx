@@ -11,7 +11,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "LandscapingBusiness",
   name: "Wildgrove Landscaping",
-  image: "https://simpl.pro/icons/icon-512.png",
+  image: "https://www.simpl.pro/icons/icon-512.png",
   telephone: "+19195550142",
   priceRange: "$$",
   address: {

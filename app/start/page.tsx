@@ -19,11 +19,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Pricing | Simpl",
     description: "More leads. Fewer Saturdays. Pick what you need, add to it when it's working.",
-    url: "https://simpl.pro/start",
+    url: "https://www.simpl.pro/start",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/start" },
+  alternates: { canonical: "https://www.simpl.pro/start" },
 };
 
 const PARTS = [
@@ -87,7 +87,7 @@ export default function StartPage() {
           "@context": "https://schema.org",
           "@type": "Organization",
           "name": "Simpl",
-          "url": "https://simpl.pro",
+          "url": "https://www.simpl.pro",
           "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
           "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" },
           "hasOfferCatalog": {
@@ -116,8 +116,8 @@ export default function StartPage() {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Pricing", "item": "https://simpl.pro/start" }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Pricing", "item": "https://www.simpl.pro/start" }
           ]
         }) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({

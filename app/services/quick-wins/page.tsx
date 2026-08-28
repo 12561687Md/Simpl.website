@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Quick Wins & Site Triage | Simpl",
     description: "Stop leaking leads from broken elements you don't know are failing. Simpl fixes core web vitals, mobile issues, crawler errors, and more.",
-    url: "https://simpl.pro/services/quick-wins",
+    url: "https://www.simpl.pro/services/quick-wins",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/services/quick-wins" },
+  alternates: { canonical: "https://www.simpl.pro/services/quick-wins" },
 };
 
 const DATA: ServiceData = {
@@ -69,18 +69,18 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Quick Wins & Site Triage",
   description: "Fix broken site elements, speed issues, and technical problems that silently leak leads. Core web vitals, mobile repair, crawler errors, and more.",
-  provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+  provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
-  url: "https://simpl.pro/services/quick-wins",
+  url: "https://www.simpl.pro/services/quick-wins",
 };
 
 const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "Quick Wins & Site Triage", item: "https://simpl.pro/services/quick-wins" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.simpl.pro/services" },
+    { "@type": "ListItem", position: 3, name: "Quick Wins & Site Triage", item: "https://www.simpl.pro/services/quick-wins" },
   ],
 };
 

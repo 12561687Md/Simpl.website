@@ -12,11 +12,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Free Website Scan | Simpl",
     description: "Type your domain, get your Simpl Score in 30 seconds. No signup, no email required.",
-    url: "https://simpl.pro/scan",
+    url: "https://www.simpl.pro/scan",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/scan" },
+  alternates: { canonical: "https://www.simpl.pro/scan" },
 };
 
 const SURFACES = [
@@ -44,7 +44,7 @@ export default function ScanPage() {
           "@type": "WebApplication",
           "name": "Simpl Free Website Scanner",
           "description": "Free tool that scans your website, Google Business Profile, SEO, and digital presence. Get a Simpl Score from 0 to 100 in 30 seconds.",
-          "url": "https://simpl.pro/scan",
+          "url": "https://www.simpl.pro/scan",
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Any",
           "offers": {
@@ -55,15 +55,15 @@ export default function ScanPage() {
           "provider": {
             "@type": "Organization",
             "name": "Simpl",
-            "url": "https://simpl.pro"
+            "url": "https://www.simpl.pro"
           }
         }) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Free Scan", "item": "https://simpl.pro/scan" }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Free Scan", "item": "https://www.simpl.pro/scan" }
           ]
         }) }} />
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 96px" }}>

@@ -11,11 +11,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Terms of Service | Simpl",
     description: "Terms and conditions for using Simpl, the digital presence scanning and agency platform.",
-    url: "https://simpl.pro/terms",
+    url: "https://www.simpl.pro/terms",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/terms" },
+  alternates: { canonical: "https://www.simpl.pro/terms" },
 };
 
 const sectionHeading: React.CSSProperties = {
@@ -55,8 +55,8 @@ export default function TermsPage() {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Terms of Service", "item": "https://simpl.pro/terms" }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Terms of Service", "item": "https://www.simpl.pro/terms" }
           ]
         }) }} />
         {/* Hero */}
@@ -458,7 +458,7 @@ export default function TermsPage() {
               <div style={{ color: "var(--muted)" }}>
                 Website:{" "}
                 <a
-                  href="https://simpl.pro"
+                  href="https://www.simpl.pro"
                   style={{
                     color: "var(--accent)",
                     textDecoration: "none",

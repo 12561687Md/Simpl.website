@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Google Business Profile Optimization | Simpl",
     description: "Your Google Business Profile is where most local calls start. Optimization, review velocity, and suspension protection, handled monthly.",
-    url: "https://simpl.pro/services/google-business-profile",
+    url: "https://www.simpl.pro/services/google-business-profile",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/services/google-business-profile" },
+  alternates: { canonical: "https://www.simpl.pro/services/google-business-profile" },
 };
 
 const DATA: ServiceData = {
@@ -69,18 +69,18 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Google Business Profile Optimization",
   description: "Claiming, optimization, photo and post cadence, review velocity, Q&A, and suspension protection for Google Business Profiles, managed monthly.",
-  provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+  provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
-  url: "https://simpl.pro/services/google-business-profile",
+  url: "https://www.simpl.pro/services/google-business-profile",
 };
 
 const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "Google Business Profile Optimization", item: "https://simpl.pro/services/google-business-profile" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.simpl.pro/services" },
+    { "@type": "ListItem", position: 3, name: "Google Business Profile Optimization", item: "https://www.simpl.pro/services/google-business-profile" },
   ],
 };
 

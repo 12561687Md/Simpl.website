@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Local SEO & AI Search Visibility | Simpl",
     description: "Dominate the local 3-pack and show up when someone asks AI who to call. GBP optimization, citation building, review strategy, and AI-search visibility.",
-    url: "https://simpl.pro/services/local-seo",
+    url: "https://www.simpl.pro/services/local-seo",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/services/local-seo" },
+  alternates: { canonical: "https://www.simpl.pro/services/local-seo" },
 };
 
 const DATA: ServiceData = {
@@ -70,18 +70,18 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Local SEO & AI Search Visibility",
   description: "Dominate the local 3-pack with GBP optimization, citation building, review strategy, and local keyword targeting for high-intent searchers.",
-  provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+  provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
-  url: "https://simpl.pro/services/local-seo",
+  url: "https://www.simpl.pro/services/local-seo",
 };
 
 const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "Local SEO & AI Search Visibility", item: "https://simpl.pro/services/local-seo" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.simpl.pro/services" },
+    { "@type": "ListItem", position: 3, name: "Local SEO & AI Search Visibility", item: "https://www.simpl.pro/services/local-seo" },
   ],
 };
 

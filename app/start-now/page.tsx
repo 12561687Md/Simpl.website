@@ -8,7 +8,7 @@ import { SimplWordmark } from "@/components/ui/simpl-brand";
 export const metadata: Metadata = {
   title: "Fix your business | Simpl",
   description: "Find your business and start your free demo, or contact us directly. Real people reply the same business day.",
-  alternates: { canonical: "https://simpl.pro/start-now" },
+  alternates: { canonical: "https://www.simpl.pro/start-now" },
 };
 
 export default function FixYourBusinessPage() {

@@ -58,11 +58,25 @@ export const metadata: Metadata = {
   },
   description:
     "Simpl monitors your website, Google Business Profile, SEO, and online presence 24/7. Type your URL and get your free Simpl Score in seconds.",
-  metadataBase: new URL("https://simpl.pro"),
+  /* WWW, AND IT MUST MATCH THE REDIRECT.
+   *
+   * This was the apex, https://www.simpl.pro, while Vercel 308-redirects the apex
+   * to www. Every page's canonical resolves against metadataBase, so all
+   * sixteen pages were telling Google that the authoritative version of
+   * themselves is a URL that immediately bounces somewhere else. That is a
+   * site-wide conflicting signal about which host is real, and it splits
+   * whatever authority exists across two hostnames. On a domain with rank 0
+   * there is none to spare.
+   *
+   * www is the side that actually serves, and it is what the business card
+   * already says. If the apex is ever made primary instead, this line and the
+   * Vercel domain setting have to change together, or the same bug comes back
+   * pointing the other way. */
+  metadataBase: new URL("https://www.simpl.pro"),
   openGraph: {
     type: "website",
     siteName: "Simpl",
-    url: "https://simpl.pro",
+    url: "https://www.simpl.pro",
     images: [{ url: "/brand/simpl-cover-1200x675.png", width: 1200, height: 675, alt: "Simpl, your digital presence handled" }],
   },
   twitter: {

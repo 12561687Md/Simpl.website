@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Fractional CMO & Strategy | Simpl",
     description: "Continuous data-driven direction to scale your entire digital presence. Monthly audits, competitor intelligence, and full attribution reporting.",
-    url: "https://simpl.pro/services/strategy",
+    url: "https://www.simpl.pro/services/strategy",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/services/strategy" },
+  alternates: { canonical: "https://www.simpl.pro/services/strategy" },
 };
 
 const DATA: ServiceData = {
@@ -74,18 +74,18 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Fractional CMO & Strategy",
   description: "Continuous data-driven strategic direction for your entire digital presence with monthly audits, competitor intelligence, and full attribution reporting.",
-  provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+  provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
-  url: "https://simpl.pro/services/strategy",
+  url: "https://www.simpl.pro/services/strategy",
 };
 
 const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "Fractional CMO & Strategy", item: "https://simpl.pro/services/strategy" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.simpl.pro/services" },
+    { "@type": "ListItem", position: 3, name: "Fractional CMO & Strategy", item: "https://www.simpl.pro/services/strategy" },
   ],
 };
 

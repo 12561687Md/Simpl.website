@@ -44,7 +44,7 @@ const ALLOWED_HOSTS = new Set([
   "calendly.com",
 ]);
 
-const FALLBACK = "https://simpl.pro/";
+const FALLBACK = "https://www.simpl.pro/";
 
 function resolveDestination(): string {
   const configured = process.env.CARD_DESTINATION?.trim();

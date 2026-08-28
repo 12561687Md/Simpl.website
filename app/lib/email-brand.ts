@@ -102,7 +102,7 @@ export function shell(opts: { preheader: string; body: string }): string {
 
         <tr>
           <td align="center" style="padding:0 0 24px;">
-            <img src="https://simpl.pro/brand/simpl-wordmark-dark.png" width="104" height="26" alt="Simpl"
+            <img src="https://www.simpl.pro/brand/simpl-wordmark-dark.png" width="104" height="26" alt="Simpl"
                  style="display:block;border:0;outline:none;width:104px;height:auto;color:${EMAIL.INK};font-family:${EMAIL.SANS};font-size:17px;font-weight:700;letter-spacing:.18em;">
           </td>
         </tr>
@@ -116,7 +116,7 @@ ${opts.body}
         <tr>
           <td align="center" style="padding:24px 0 0;font-family:${EMAIL.SANS};">
             <div style="font-size:12px;color:${EMAIL.FAINT};padding-top:6px;">
-              <a href="https://simpl.pro" style="color:${EMAIL.FAINT};text-decoration:none;">simpl.pro</a>
+              <a href="https://www.simpl.pro" style="color:${EMAIL.FAINT};text-decoration:none;">simpl.pro</a>
               &nbsp;&middot;&nbsp;
               <a href="mailto:team@simpl.pro" style="color:${EMAIL.FAINT};text-decoration:none;">team@simpl.pro</a>
             </div>

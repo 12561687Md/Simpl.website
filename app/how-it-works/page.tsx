@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 export const metadata: Metadata = {
   title: "How It Works | Simpl",
   description: "From a free scan to a working plan: exactly what happens, in order.",
-  alternates: { canonical: "https://simpl.pro/how-it-works" },
+  alternates: { canonical: "https://www.simpl.pro/how-it-works" },
 };
 
 const STEPS = [

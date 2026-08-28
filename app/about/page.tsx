@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Why Simpl | Built for businesses tired of guessing",
     description: "Nobody told you your Google listing was broken. That's why we built Simpl. One scan, six categories, zero guesswork.",
-    url: "https://simpl.pro/about",
+    url: "https://www.simpl.pro/about",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/about" },
+  alternates: { canonical: "https://www.simpl.pro/about" },
 };
 
 const BELIEFS = [
@@ -49,11 +49,11 @@ export default function AboutPage() {
           "@type": "AboutPage",
           "name": "Why Simpl",
           "description": "Nobody told you your Google listing was broken. That's why we built Simpl. One scan, six categories, zero guesswork.",
-          "url": "https://simpl.pro/about",
+          "url": "https://www.simpl.pro/about",
           "mainEntity": {
             "@type": "Organization",
             "name": "Simpl",
-            "url": "https://simpl.pro",
+            "url": "https://www.simpl.pro",
             "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
             "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" }
           }
@@ -62,8 +62,8 @@ export default function AboutPage() {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Why Simpl", "item": "https://simpl.pro/about" }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Why Simpl", "item": "https://www.simpl.pro/about" }
           ]
         }) }} />
         {/* Hero */}

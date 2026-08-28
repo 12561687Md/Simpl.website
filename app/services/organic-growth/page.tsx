@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Long-Term Organic Growth | Simpl",
     description: "Build compounding search authority that outlasts any ad budget. Content architecture, essential page builds, domain authority, and backlink acquisition.",
-    url: "https://simpl.pro/services/organic-growth",
+    url: "https://www.simpl.pro/services/organic-growth",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/services/organic-growth" },
+  alternates: { canonical: "https://www.simpl.pro/services/organic-growth" },
 };
 
 const DATA: ServiceData = {
@@ -69,18 +69,18 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Long-Term Organic Growth",
   description: "Build compounding search authority with content architecture, essential page builds, domain authority growth, and backlink acquisition that outlasts any ad budget.",
-  provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+  provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
-  url: "https://simpl.pro/services/organic-growth",
+  url: "https://www.simpl.pro/services/organic-growth",
 };
 
 const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "Long-Term Organic Growth", item: "https://simpl.pro/services/organic-growth" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.simpl.pro/services" },
+    { "@type": "ListItem", position: 3, name: "Long-Term Organic Growth", item: "https://www.simpl.pro/services/organic-growth" },
   ],
 };
 

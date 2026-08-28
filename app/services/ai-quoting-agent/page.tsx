@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "CRM & AI Automation | Simpl",
     description: "Every lead captured, answered, and followed up. Missed-call text-back, instant quotes, pipeline tracking, and follow-up that keeps every lead warm.",
-    url: "https://simpl.pro/services/ai-quoting-agent",
+    url: "https://www.simpl.pro/services/ai-quoting-agent",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/services/ai-quoting-agent" },
+  alternates: { canonical: "https://www.simpl.pro/services/ai-quoting-agent" },
 };
 
 const DATA: ServiceData = {
@@ -78,18 +78,18 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "CRM & AI Automation",
   description: "CRM, missed-call text-back, instant quotes, 24/7 response, pipeline tracking, booking, and follow-up sequences for local service businesses.",
-  provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+  provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
-  url: "https://simpl.pro/services/ai-quoting-agent",
+  url: "https://www.simpl.pro/services/ai-quoting-agent",
 };
 
 const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "CRM & AI Automation", item: "https://simpl.pro/services/ai-quoting-agent" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.simpl.pro/services" },
+    { "@type": "ListItem", position: 3, name: "CRM & AI Automation", item: "https://www.simpl.pro/services/ai-quoting-agent" },
   ],
 };
 

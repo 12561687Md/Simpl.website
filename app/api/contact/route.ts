@@ -47,7 +47,7 @@ function notificationEmailHtml(params: { name: string; email: string; phone?: st
         ${row("Message", message ? esc(message) : "(none)", true)}
       </tbody>
     </table>
-    ${website ? `<p style="margin-top:16px;font-size:14px;"><a href="https://simpl.pro/scan?url=${encodeURIComponent(website)}">Scan ${esc(website)} before you reply</a></p>` : ""}
+    ${website ? `<p style="margin-top:16px;font-size:14px;"><a href="https://www.simpl.pro/scan?url=${encodeURIComponent(website)}">Scan ${esc(website)} before you reply</a></p>` : ""}
   </div>`;
 }
 

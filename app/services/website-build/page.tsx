@@ -14,11 +14,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Custom Website Build | Simpl",
     description: "A fast, findable website built to turn visitors into calls. Free when you start on Team.",
-    url: "https://simpl.pro/services/website-build",
+    url: "https://www.simpl.pro/services/website-build",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/services/website-build" },
+  alternates: { canonical: "https://www.simpl.pro/services/website-build" },
 };
 
 const INCLUDES = [
@@ -37,18 +37,18 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Custom Website Build",
   description: "A fast, findable website built to turn visitors into calls. Free when you start on the Simpl Team plan with a 3-month commitment.",
-  provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+  provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
-  url: "https://simpl.pro/services/website-build",
+  url: "https://www.simpl.pro/services/website-build",
 };
 
 const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "Custom Website Build", item: "https://simpl.pro/services/website-build" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.simpl.pro/services" },
+    { "@type": "ListItem", position: 3, name: "Custom Website Build", item: "https://www.simpl.pro/services/website-build" },
   ],
 };
 

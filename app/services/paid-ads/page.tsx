@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Paid Performance Marketing | Simpl",
     description: "Scale traffic instantly with campaigns that actually convert. Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking.",
-    url: "https://simpl.pro/services/paid-ads",
+    url: "https://www.simpl.pro/services/paid-ads",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/services/paid-ads" },
+  alternates: { canonical: "https://www.simpl.pro/services/paid-ads" },
 };
 
 const DATA: ServiceData = {
@@ -69,18 +69,18 @@ const SERVICE_SCHEMA = {
   "@type": "Service",
   name: "Paid Performance Marketing",
   description: "Scale traffic instantly with Google Ads, LSAs, Meta retargeting, landing page optimization, and full conversion tracking that proves ROI.",
-  provider: { "@type": "Organization", name: "Simpl", url: "https://simpl.pro" },
+  provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
-  url: "https://simpl.pro/services/paid-ads",
+  url: "https://www.simpl.pro/services/paid-ads",
 };
 
 const BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-    { "@type": "ListItem", position: 2, name: "Services", item: "https://simpl.pro/services" },
-    { "@type": "ListItem", position: 3, name: "Paid Performance Marketing", item: "https://simpl.pro/services/paid-ads" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+    { "@type": "ListItem", position: 2, name: "Services", item: "https://www.simpl.pro/services" },
+    { "@type": "ListItem", position: 3, name: "Paid Performance Marketing", item: "https://www.simpl.pro/services/paid-ads" },
   ],
 };
 

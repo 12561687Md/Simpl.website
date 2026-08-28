@@ -11,11 +11,11 @@ export const metadata: Metadata = {
     images: OG_IMAGE,
     title: "Privacy Policy | Simpl",
     description: "How Simpl collects, uses, and protects your information. We never sell your data.",
-    url: "https://simpl.pro/privacy",
+    url: "https://www.simpl.pro/privacy",
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://simpl.pro/privacy" },
+  alternates: { canonical: "https://www.simpl.pro/privacy" },
 };
 
 const sectionHeading: React.CSSProperties = {
@@ -55,8 +55,8 @@ export default function PrivacyPage() {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://simpl.pro/privacy" }
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
+            { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://www.simpl.pro/privacy" }
           ]
         }) }} />
         {/* Hero */}
@@ -478,7 +478,7 @@ export default function PrivacyPage() {
               <div style={{ color: "var(--muted)" }}>
                 Website:{" "}
                 <a
-                  href="https://simpl.pro"
+                  href="https://www.simpl.pro"
                   style={{
                     color: "var(--accent)",
                     textDecoration: "none",

@@ -380,7 +380,7 @@ function NewSite({ embed = false }: { embed?: boolean }) {
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
           <div style={{ ...wrap, padding: "16px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10, fontSize: 12 }}>
             <span>© {new Date().getFullYear()} {NAP.name}. All rights reserved.</span>
-            <a href="https://simpl.pro" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.85)", textDecoration: "none" }}>
+            <a href="https://www.simpl.pro" target="_blank" rel="noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.85)", textDecoration: "none" }}>
               Powered by <SimplWordmark size={15} />
             </a>
           </div>

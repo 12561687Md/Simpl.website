@@ -74,8 +74,8 @@ function buildEmailHtml(params: {
   // (noindexed, out of the nav), so the old CTA was a dead end. The audit route
   // rehydrates from placeId; without one, the scanner itself is the next best step.
   const reportUrl = placeId
-    ? `https://simpl.pro/audit?placeId=${encodeURIComponent(placeId)}`
-    : "https://simpl.pro/scan";
+    ? `https://www.simpl.pro/audit?placeId=${encodeURIComponent(placeId)}`
+    : "https://www.simpl.pro/scan";
 
   // Land them on the form with everything we already know already filled in.
   // A real <form> cannot live in an email (Gmail and Outlook strip <form> and
@@ -90,7 +90,7 @@ function buildEmailHtml(params: {
       ? `Saw my Simpl Score for ${businessName}. I would like to talk through what to fix first.`
       : `Saw my Simpl Score. I would like to talk through what to fix first.`
   );
-  const contactUrl = `https://simpl.pro/start-now?${q.toString()}`;
+  const contactUrl = `https://www.simpl.pro/start-now?${q.toString()}`;
 
   const topFindings = findings
     .filter((f) => f.severity === "critical" || f.severity === "warning")
@@ -148,7 +148,7 @@ function buildEmailHtml(params: {
 
         <tr>
           <td align="center" style="padding:0 0 24px;">
-            <img src="https://simpl.pro/brand/simpl-wordmark-dark.png" width="104" height="26" alt="Simpl"
+            <img src="https://www.simpl.pro/brand/simpl-wordmark-dark.png" width="104" height="26" alt="Simpl"
                  style="display:block;border:0;outline:none;width:104px;height:auto;color:${INK};font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:17px;font-weight:700;letter-spacing:.18em;">
           </td>
         </tr>
@@ -260,7 +260,7 @@ function buildEmailHtml(params: {
         <tr>
           <td align="center" style="padding:24px 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
             <div style="font-size:12px;color:#6F6D66;padding-top:6px;">
-              <a href="https://simpl.pro" style="color:#6F6D66;text-decoration:none;">simpl.pro</a>
+              <a href="https://www.simpl.pro" style="color:#6F6D66;text-decoration:none;">simpl.pro</a>
               &nbsp;&middot;&nbsp;
               <a href="mailto:team@simpl.pro" style="color:#6F6D66;text-decoration:none;">team@simpl.pro</a>
             </div>

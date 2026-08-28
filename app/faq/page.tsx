@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Frequently Asked Questions | Simpl",
   description:
     "Straight answers about the free Simpl scan, the Simpl Score, local SEO, AI search visibility, Google reviews, and how the Simpl team works with local service businesses.",
-  alternates: { canonical: "https://simpl.pro/faq" },
+  alternates: { canonical: "https://www.simpl.pro/faq" },
 };
 
 /**
@@ -107,8 +107,8 @@ export default function FaqPage() {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: "https://simpl.pro" },
-                  { "@type": "ListItem", position: 2, name: "FAQ", item: "https://simpl.pro/faq" },
+                  { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+                  { "@type": "ListItem", position: 2, name: "FAQ", item: "https://www.simpl.pro/faq" },
                 ],
               },
             ]),
