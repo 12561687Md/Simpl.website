@@ -276,7 +276,7 @@ export function FinalCta({
         <div>
           <h2 className="eg-h2" style={{ maxWidth: 760 }}>{heading}</h2>
           <p className="eg-answer" style={{ color: "var(--muted)" }}>{body}</p>
-          <Ctas primary={primary} />
+          <Ctas primary={primary} secondary={primary?.href === "/book" ? { label: "See your top prospects", href: "/top-prospects" } : undefined} />
         </div>
         <div className="side">
           Prefer to talk first? Call <a href={SITE.phoneHref}>{SITE.phone}</a> or email <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. You work directly with the person who builds your engine.
