@@ -16,3 +16,9 @@ Thumbs.db
 
 .vercel
 .env*
+
+# Google service account keys and private keys
+credentials.json
+*.pem
+*.p12
+service-account*.json
