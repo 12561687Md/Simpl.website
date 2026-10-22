@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: "Success Stories | Simpl",
-  description: "Real before/afters from Simpl clients, coming as soon as the work is done.",
+  description: "Real results from Simpl clients, published as soon as clients approve them.",
   robots: { index: false, follow: true },
   alternates: { canonical: "https://www.simpl.pro/success-stories" },
 };
@@ -32,25 +32,25 @@ export default function SuccessStoriesPage() {
           </h1>
           <p style={{ marginTop: 28, fontSize: 17, lineHeight: 1.65, color: "var(--muted)", maxWidth: 560, marginInline: "auto" }}>
             Simpl is new enough that we don&apos;t have a wall of client logos to show you yet, and we&apos;d rather tell you
-            that plainly than dress up something that isn&apos;t true. What we do have: a real scoring engine, a real
-            process, and clients in progress right now.
+            that plainly than dress up something that isn&apos;t true. What we do have: two growth portals running on the
+            Account Engine today, and clients we&apos;ll name as soon as they say we can.
           </p>
           <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.65, color: "var(--muted)", maxWidth: 560, marginInline: "auto" }}>
-            The first real before/after goes here the moment it exists, with the actual numbers, not a projection.
+            The first real result goes here the moment it exists, with the actual numbers, not a projection.
           </p>
           <div style={{ marginTop: 44, display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
             <Link
-              href="/scan"
+              href="/top-25"
               className="cta-primary"
               style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "14px 26px", fontSize: 14, fontWeight: 700, borderRadius: 6, textDecoration: "none" }}
             >
-              See your own score first →
+              See your top 25 accounts →
             </Link>
             <Link
-              href="/start-now"
+              href="/services/account-engine"
               style={{ display: "inline-flex", alignItems: "center", color: "var(--fg)", padding: "14px 4px", fontSize: 14, fontWeight: 600, textDecoration: "none", borderBottom: "1px solid var(--rule)" }}
             >
-              Be the first story →
+              How the engine works →
             </Link>
           </div>
         </section>

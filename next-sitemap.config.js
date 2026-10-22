@@ -40,11 +40,28 @@ module.exports = {
   exclude: [
     "/api/*",
     "/start",
+    // Revamp 2026-10-22: retired routes (301s in next.config.ts), the noindexed
+    // success-stories placeholder, the demo and the /t business-card redirect.
+    "/how-it-works",
+    "/success-stories",
+    "/demo/*",
+    "/t",
     "/results",
     "/audit",
     "/icon.svg",
     "/manifest.webmanifest",
   ],
+
+  // Money pages first in priority; blog posts and easy-win services after.
+  transform: async (config, path) => {
+    const top = ["/", "/services/account-engine", "/pricing", "/top-25"];
+    const high = ["/services", "/industries", "/services/crm-follow-up", "/services/ai-receptionist", "/free-tools"];
+    const priority = top.includes(path) ? 1.0 : high.includes(path) || path.startsWith("/industries/") ? 0.9 : config.priority;
+    return { loc: path, changefreq: config.changefreq, priority, lastmod: new Date().toISOString() };
+  },
+
+  // /top-25 reads ?plan= so it renders on demand, which next-sitemap skips.
+  additionalPaths: async (config) => [await config.transform(config, "/top-25")],
 
   robotsTxtOptions: {
     additionalSitemaps: [],

@@ -69,8 +69,8 @@ export default function BlogHub({ posts }: { posts: BlogPost[] }) {
             Straight answers to the questions you&apos;re already Googling.
           </h1>
           <p style={{ margin: "22px 0 0", maxWidth: 640, fontSize: 17, lineHeight: 1.6, color: "var(--muted)" }}>
-            No jargon, no fluff. The real answers local businesses search for about ranking, reviews, AI search, and winning
-            online, with links to the primary sources so you can check our work.
+            No jargon, no fluff. How B2B teams find the accounts ready to buy, reach the people who sign and follow up until they answer,
+            plus our guides on websites, SEO and Google. Every post links to its primary sources so you can check our work.
           </p>
         </ScrollReveal>
 

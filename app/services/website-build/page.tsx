@@ -9,11 +9,11 @@ import ScrollReveal, { StaggerReveal, StaggerItem } from "../../components/Scrol
 export const metadata: Metadata = {
   title: "Custom Website Build",
   description:
-    "A fast, findable website built to turn visitors into calls. Free when you start on Team.",
+    "A fast, findable website built to turn visitors into calls and conversations. Scoped to what your business needs and quoted on a free call.",
   openGraph: {
     images: OG_IMAGE,
     title: "Custom Website Build | Simpl",
-    description: "A fast, findable website built to turn visitors into calls. Free when you start on Team.",
+    description: "A fast, findable website built to turn visitors into calls and conversations. Scoped to what your business needs and quoted on a free call.",
     url: "https://www.simpl.pro/services/website-build",
     siteName: "Simpl",
     type: "website",
@@ -36,7 +36,7 @@ const SERVICE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Service",
   name: "Custom Website Build",
-  description: "A fast, findable website built to turn visitors into calls. Free when you start on the Simpl Team plan with a 3-month commitment.",
+  description: "A fast, findable website built to turn visitors into calls and conversations. Scoped to what your business needs and quoted on a free call.",
   provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
   areaServed: { "@type": "Country", name: "United States" },
   url: "https://www.simpl.pro/services/website-build",
@@ -112,11 +112,11 @@ export default function WebsiteBuild() {
             <ScrollReveal>
               <div style={{ borderLeft: "2px solid var(--accent)", paddingLeft: 32, maxWidth: 760 }}>
                 <div className="mono" style={eyebrow}>What it costs</div>
-                <h2 style={h2}>Free when you start on Team.</h2>
+                <h2 style={h2}>Scoped to what you need, quoted on a free call.</h2>
                 <p style={{ maxWidth: 640, fontSize: 17, lineHeight: 1.6, color: "var(--muted)", marginBottom: 28 }}>
-                  Start Simpl.team and the build is on us, we cover it because a client with a fast, findable site is a
-                  client who sticks around. And the site is yours, you keep it no matter what. Standalone builds are scoped
-                  to what your business actually needs, we&apos;ll quote yours on a free call, usually in under 20 minutes.
+                  Every build is scoped to what your business actually needs, on its own or alongside the Account Engine, so the
+                  accounts you call find a company that looks the part. The site is yours, you keep it no matter what. We&apos;ll
+                  quote yours on a free call, usually in under 20 minutes.
                 </p>
                 <Link href="/start-now" style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 4, fontSize: 15 }}>
                   Get your build quote, free<span>→</span>

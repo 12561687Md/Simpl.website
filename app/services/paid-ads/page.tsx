@@ -42,7 +42,7 @@ const DATA: ServiceData = {
     heading: "Ads are driving leads. Now build the assets that make ads optional.",
     body:
       "Paid traffic is fast but it stops the moment you stop spending. Organic growth builds compounding assets that reduce your cost-per-acquisition every month.",
-    link: { href: "/services/organic-growth", label: "Long-Term Organic Growth" },
+    link: { href: "/services/local-seo", label: "SEO & AI search visibility" },
   },
   faqHeading: "Questions we hear before every campaign.",
   faqs: [

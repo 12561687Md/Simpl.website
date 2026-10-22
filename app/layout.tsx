@@ -3,6 +3,8 @@ import { Inter, JetBrains_Mono, Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } fr
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import "./engine.css";
+import { organization, website, ldJson } from "./lib/schema";
 import ScrollToTop from "./components/ScrollToTop";
 import ServiceWorkerRegister from "./components/ServiceWorkerRegister";
 import GoogleTags from "./components/GoogleTags";
@@ -53,11 +55,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Simpl | Your Digital Presence, Handled",
+    default: "Simpl | Custom Growth Engines for High-Ticket B2B Companies",
     template: "%s · Simpl",
   },
   description:
-    "Simpl monitors your website, Google Business Profile, SEO, and online presence 24/7. Type your URL and get your free Simpl Score in seconds.",
+    "Simpl builds your own growth portal: every account in your market scored nightly from the public record, with the reason to call, the proof and who signs. Plus CRM, follow-up and a 24/7 AI receptionist.",
   /* WWW, AND IT MUST MATCH THE REDIRECT.
    *
    * This was the apex, https://www.simpl.pro, while Vercel 308-redirects the apex
@@ -77,7 +79,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Simpl",
     url: "https://www.simpl.pro",
-    images: [{ url: "/brand/simpl-cover-1200x675.png", width: 1200, height: 675, alt: "Simpl, your digital presence handled" }],
+    images: [{ url: "/brand/simpl-cover-1200x675.png", width: 1200, height: 675, alt: "Simpl, custom growth engines for B2B companies" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -110,6 +112,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
       <body>
+        {/* Site-wide entity: one Organization + WebSite, referenced by @id from
+            every page's Service / Breadcrumb / Article schema. */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={ldJson(organization(), website())} />
         <GoogleTags />
         <ServiceWorkerRegister />
         <ScrollToTop />

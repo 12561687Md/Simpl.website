@@ -3,46 +3,43 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MoveRight, Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { MoveRight, Menu, X, LogIn } from "lucide-react";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
 import { RippleLink } from "@/components/ui/ripple-link";
+import { GROWTH_SERVICES, EASY_WINS, INDUSTRIES, RESOURCES, SITE, type NavItem } from "../lib/site";
 
-const SERVICE_GROUPS = [
-  {
-    label: "Start here",
-    items: [
-      { href: "/services/website-build", label: "Custom Website", desc: "Free when you start on Team" },
-      { href: "/services/quick-wins", label: "Quick Wins & Site Triage", desc: "Fast wins first" },
-      { href: "/services/local-seo", label: "Local SEO & AI Search Visibility", desc: "Own local search" },
-    ],
-  },
-  {
-    label: "Scale up",
-    items: [
-      { href: "/services/paid-ads", label: "Paid Performance Marketing", desc: "Scale with ads" },
-      { href: "/services/organic-growth", label: "Long-Term Organic Growth", desc: "Build lasting authority" },
-      { href: "/services/strategy", label: "Fractional CMO & Strategy", desc: "Ongoing oversight" },
-    ],
-  },
-];
+/**
+ * Revamp 2026-10: the header leads with the Account Engine. Services (growth
+ * stack first, easy wins second), Industries, Pricing, Free tools, Resources,
+ * plus a Client login link (to yourcompany.simpl.pro) and the one primary CTA.
+ * Nav data lives in app/lib/site.ts.
+ */
 
-const ALSO_AVAILABLE = [
-  { label: "Google Business Profile", desc: "Own the local map", href: "/services/google-business-profile" },
-  { label: "CRM & AI Automation", desc: "Never miss a lead", href: "/services/ai-quoting-agent" },
-  // The strategy call's real home IS the booking page, so this one stays.
-  { label: "Free Strategy Call", desc: "Free, once you've unlocked your scan", href: "/start-now" },
-];
+type MenuKey = "services" | "industries" | "resources" | null;
 
-const RESOURCE_LINKS = [
-  // "How It Works" lives as a top-level nav link; listing it here too made it
-  // appear twice in the header. Top-level wins.
-  { href: "/blog", label: "Blog" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/success-stories", label: "Success Stories" },
-];
+function MenuLinks({ items, pathname }: { items: NavItem[]; pathname: string }) {
+  return (
+    <div className="flex flex-col gap-0.5">
+      {items.map((s) => (
+        <Link
+          key={s.href}
+          href={s.href}
+          className="no-underline flex items-center justify-between gap-4 rounded-lg px-2.5 py-2.5 text-sm transition-colors hover:bg-[var(--bg-elev-2)]"
+          style={{ color: pathname === s.href ? "var(--accent)" : "var(--fg)" }}
+        >
+          <span>
+            <span style={{ display: "block", fontWeight: 500 }}>{s.label}</span>
+            <span style={{ display: "block", fontSize: 12, color: "var(--muted)", marginTop: 1 }}>{s.desc}</span>
+          </span>
+          <MoveRight className="h-3.5 w-3.5 flex-shrink-0" style={{ color: "var(--muted)" }} />
+        </Link>
+      ))}
+    </div>
+  );
+}
 
-/** Solid gradient promo card shown at the edge of each mega-menu. */
+const groupLabel: React.CSSProperties = { fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 };
+
 function FeaturedCard({ eyebrow, title, href }: { eyebrow: string; title: string; href: string }) {
   return (
     <Link
@@ -52,15 +49,15 @@ function FeaturedCard({ eyebrow, title, href }: { eyebrow: string; title: string
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
-        minWidth: 190,
-        height: 180,
+        width: 210,
+        minHeight: 180,
         borderRadius: 12,
         padding: 18,
-        background: "radial-gradient(120% 140% at 100% 0%, rgba(255,255,255,0.22), transparent 60%), linear-gradient(155deg, #4372FF, #1A3699 70%)",
-        border: "1px solid var(--rule)",
+        background: "radial-gradient(120% 140% at 100% 0%, rgba(137,207,240,0.35), transparent 60%), linear-gradient(155deg, #1d3a4d, #0f1d27 75%)",
+        border: "1px solid var(--accent-line)",
       }}
     >
-      <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.85)", marginBottom: 8 }}>
+      <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>
         {eyebrow}
       </div>
       <div style={{ fontSize: 14.5, fontWeight: 600, lineHeight: 1.35, color: "#fff" }}>{title}</div>
@@ -68,274 +65,206 @@ function FeaturedCard({ eyebrow, title, href }: { eyebrow: string; title: string
   );
 }
 
-/**
- * Simple, normal sticky header: big Simpl wordmark in the top-left, flat nav +
- * two hover mega-menus + CTA on the right. Replaced the old floating centre
- * "puck" that collapsed to a white circle on scroll — this is a standard bar
- * that just sticks to the top. Sits above the shared page starfield via z-index.
- */
 export default function Header() {
-  const pathname = usePathname();
-  const [servicesOpen, setServicesOpen] = React.useState(false);
-  const [resourcesOpen, setResourcesOpen] = React.useState(false);
+  const pathname = usePathname() || "/";
+  const [open, setOpen] = React.useState<MenuKey>(null);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navRef = React.useRef<HTMLDivElement>(null);
 
-  // Close the mobile menu whenever the route changes (a link was tapped).
-  React.useEffect(() => { setMobileOpen(false); }, [pathname]);
-
-  // Touch has no mouseleave: close any open menu on a tap outside the nav.
   React.useEffect(() => {
-    if (!servicesOpen && !resourcesOpen) return;
+    setMobileOpen(false);
+    setOpen(null);
+  }, [pathname]);
+
+  React.useEffect(() => {
+    if (!open) return;
     const onDocClick = (e: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) {
-        setServicesOpen(false);
-        setResourcesOpen(false);
-      }
+      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpen(null);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(null);
     };
     document.addEventListener("click", onDocClick);
-    return () => document.removeEventListener("click", onDocClick);
-  }, [servicesOpen, resourcesOpen]);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("click", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
-  // Transparent over the hero (the starfield shows through the nav), then a
-  // solid black bar once scrolled past most of the hero, for legibility.
   const [scrolled, setScrolled] = React.useState(false);
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.6);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const linkColor = (active: boolean) => (active ? "var(--accent)" : "var(--muted)");
+  const active = (href: string) => pathname === href || pathname.startsWith(href + "/");
   const linkClass = "no-underline whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)]";
-  const triggerClass = "flex cursor-pointer items-center gap-1.5 whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)]";
+  const triggerClass = "flex cursor-pointer items-center gap-1.5 whitespace-nowrap px-3 py-2 text-[15px] font-medium transition-colors hover:text-[var(--fg)] bg-transparent border-0";
+
+  const trigger = (k: Exclude<MenuKey, null>, label: string, isActive: boolean) => (
+    <button
+      type="button"
+      aria-expanded={open === k}
+      aria-haspopup="true"
+      onClick={() => setOpen((v) => (v === k ? null : k))}
+      className={triggerClass}
+      style={{ color: isActive || open === k ? "var(--accent)" : "var(--muted)", fontFamily: "inherit" }}
+    >
+      {label}
+      <svg width="9" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    </button>
+  );
+
+  const panel = (children: React.ReactNode, align: "center" | "right" = "center") => (
+    <div
+      className={`absolute top-full pt-3 ${align === "center" ? "left-1/2 -translate-x-1/2" : "right-0"}`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="flex overflow-hidden rounded-xl border shadow-2xl" style={{ background: "var(--bg-elev)", borderColor: "var(--rule)" }}>
+        {children}
+      </div>
+    </div>
+  );
 
   return (
     <header
       className="fixed inset-x-0 top-0 z-50 w-full transition-colors duration-300"
       style={{
-        background: scrolled ? "rgba(11,12,13,0.82)" : "transparent",
+        background: scrolled ? "rgba(11,12,13,0.86)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
         borderBottom: scrolled ? "1px solid var(--rule)" : "1px solid transparent",
       }}
     >
-      <div ref={navRef} className="relative mx-auto flex h-[92px] max-w-[1220px] items-center justify-between px-5 sm:px-8">
-        {/* Big brand mark, top-left, like a normal header. */}
+      <div ref={navRef} className="relative mx-auto flex h-[84px] max-w-[1240px] items-center justify-between gap-4 px-5 sm:px-8">
         <Link href="/" aria-label="Simpl home" className="no-underline flex flex-shrink-0 items-center">
-          <SimplWordmark size={44} />
+          <SimplWordmark size={40} />
         </Link>
 
-        {/* Centered nav (Owner-style), absolutely centred so it stays put
-            regardless of the logo / CTA widths. inset-y-0 + items-center keeps
-            it vertically centred in the taller bar. Hidden on mobile. */}
-        <nav className="absolute inset-y-0 left-1/2 hidden -translate-x-1/2 items-center gap-0.5 md:flex">
-          {/* Services mega-menu */}
-          <div
-            className="relative nav-trigger-wrap"
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
-          >
-            <span
-              onClick={() => {
-                setResourcesOpen(false);
-                setServicesOpen((v) => !v);
-              }}
-              className={triggerClass}
-              style={{ color: pathname.startsWith("/services") ? "var(--accent)" : "var(--muted)" }}
-            >
-              Services
-              <svg width="9" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </span>
-            {servicesOpen && (
-              <div className="nav-dropdown-anchor absolute left-1/2 top-full -translate-x-1/2 pt-3" onClick={(e) => e.stopPropagation()}>
-                <div className="nav-dropdown-panel flex overflow-hidden rounded-xl border shadow-2xl" style={{ background: "var(--bg-elev)", borderColor: "var(--rule)" }}>
-                  <div className="nav-dropdown-groups" style={{ display: "flex", gap: 36, padding: "20px 24px" }}>
-                    {SERVICE_GROUPS.map((group) => (
-                      <div key={group.label} style={{ minWidth: 220 }}>
-                        <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
-                          {group.label}
-                        </div>
-                        <div className="flex flex-col gap-0.5">
-                          {group.items.map((s) => (
-                            <Link
-                              key={s.href}
-                              href={s.href}
-                              className="no-underline flex items-center justify-between gap-4 rounded-lg px-2.5 py-2.5 text-sm transition-colors hover:bg-[var(--bg-elev-2)]"
-                              style={{ color: pathname === s.href ? "var(--accent)" : "var(--fg)" }}
-                            >
-                              <span>
-                                <span style={{ display: "block", fontWeight: 500 }}>{s.label}</span>
-                                <span style={{ display: "block", fontSize: 12, color: "var(--muted)", marginTop: 1 }}>{s.desc}</span>
-                              </span>
-                              <MoveRight className="h-3.5 w-3.5 flex-shrink-0" style={{ color: "var(--muted)" }} />
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-
-                    <div style={{ minWidth: 200 }}>
-                      <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
-                        Also available
-                      </div>
-                      <div className="flex flex-col gap-0.5">
-                        {ALSO_AVAILABLE.map((s) => (
-                          <Link
-                            key={s.label}
-                            href={s.href}
-                            className="no-underline flex items-center justify-between gap-4 rounded-lg px-2.5 py-2.5 text-sm transition-colors hover:bg-[var(--bg-elev-2)]"
-                            style={{ color: "var(--fg)" }}
-                          >
-                            <span>
-                              <span style={{ display: "block", fontWeight: 500 }}>{s.label}</span>
-                              <span className="mono" style={{ display: "block", fontSize: 11.5, color: "var(--muted)", marginTop: 1 }}>{s.desc}</span>
-                            </span>
-                          </Link>
-                        ))}
-                      </div>
+        <nav aria-label="Main" className="eg-nav-desktop items-center gap-0.5">
+          <div className="relative" onMouseEnter={() => setOpen("services")} onMouseLeave={() => setOpen(null)}>
+            {trigger("services", "Services", active("/services"))}
+            {open === "services" &&
+              panel(
+                <>
+                  <div style={{ display: "flex", gap: 32, padding: "20px 22px" }}>
+                    <div style={{ minWidth: 250 }}>
+                      <div className="mono" style={groupLabel}>Growth engine</div>
+                      <MenuLinks items={GROWTH_SERVICES} pathname={pathname} />
+                    </div>
+                    <div style={{ minWidth: 230 }}>
+                      <div className="mono" style={groupLabel}>Also handled</div>
+                      <MenuLinks items={EASY_WINS} pathname={pathname} />
                     </div>
                   </div>
-                  <div className="hide-mobile" style={{ borderLeft: "1px solid var(--rule)", padding: 16, display: "flex", alignItems: "center" }}>
-                    <FeaturedCard eyebrow="Not sure where to start?" title="Start now, free audit, see what's actually broken." href="/" />
+                  <div style={{ borderLeft: "1px solid var(--rule)", padding: 16, display: "flex", alignItems: "center" }}>
+                    <FeaturedCard eyebrow="Before you pay anything" title="See your own top 25 accounts, with the reason and the record." href="/top-25" />
                   </div>
-                </div>
-              </div>
-            )}
+                </>
+              )}
           </div>
 
-          {/* Pricing (/start) intentionally removed from the nav 2026-07-23:
-              the page stays live "in reserve" but pricing is now a sales-call
-              conversation, not a self-serve browse. Re-add the link here to
-              restore it. */}
-          <Link href="/how-it-works" className={linkClass} style={{ color: linkColor(pathname === "/how-it-works") }}>
-            How it works
-          </Link>
-          <Link href="/about" className={linkClass} style={{ color: linkColor(pathname === "/about") }}>
-            Why Simpl
-          </Link>
-
-          {/* Resources mega-menu */}
-          <div
-            className="relative nav-trigger-wrap"
-            onMouseEnter={() => setResourcesOpen(true)}
-            onMouseLeave={() => setResourcesOpen(false)}
-          >
-            <span
-              onClick={() => {
-                setServicesOpen(false);
-                setResourcesOpen((v) => !v);
-              }}
-              className={triggerClass}
-              style={{ color: RESOURCE_LINKS.some((r) => r.href === pathname) ? "var(--accent)" : "var(--muted)" }}
-            >
-              Resources
-              <svg width="9" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </span>
-            {resourcesOpen && (
-              <div className="nav-dropdown-anchor absolute right-0 top-full pt-3" onClick={(e) => e.stopPropagation()}>
-                <div className="nav-dropdown-panel flex overflow-hidden rounded-xl border shadow-2xl" style={{ background: "var(--bg-elev)", borderColor: "var(--rule)" }}>
-                  <div style={{ minWidth: 190, padding: "20px 12px" }}>
-                    {RESOURCE_LINKS.map((r) => (
-                      <Link
-                        key={r.href}
-                        href={r.href}
-                        className="no-underline block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-[var(--bg-elev-2)]"
-                        style={{ color: pathname === r.href ? "var(--accent)" : "var(--fg)" }}
-                      >
-                        {r.label}
-                      </Link>
-                    ))}
-                  </div>
-                  <div className="hide-mobile" style={{ borderLeft: "1px solid var(--rule)", padding: 16, display: "flex", alignItems: "center" }}>
-                    <FeaturedCard
-                      eyebrow="From the blog"
-                      title="How to rank higher on Google Maps, the local 3-pack explained."
-                      href="/blog/how-to-rank-higher-on-google-maps"
-                    />
-                  </div>
+          <div className="relative" onMouseEnter={() => setOpen("industries")} onMouseLeave={() => setOpen(null)}>
+            {trigger("industries", "Industries", active("/industries"))}
+            {open === "industries" &&
+              panel(
+                <div style={{ padding: "20px 22px", minWidth: 300 }}>
+                  <div className="mono" style={groupLabel}>Who we build for</div>
+                  <MenuLinks items={INDUSTRIES} pathname={pathname} />
+                  <Link href="/industries" className="no-underline mono" style={{ display: "block", marginTop: 10, padding: "8px 10px", fontSize: 11.5, letterSpacing: "0.06em", color: "var(--accent)" }}>
+                    All industries &rarr;
+                  </Link>
                 </div>
-              </div>
-            )}
+              )}
+          </div>
+
+          <Link href="/pricing" className={linkClass} style={{ color: active("/pricing") ? "var(--accent)" : "var(--muted)" }}>Pricing</Link>
+          <Link href="/free-tools" className={linkClass} style={{ color: active("/free-tools") ? "var(--accent)" : "var(--muted)" }}>Free tools</Link>
+
+          <div className="relative" onMouseEnter={() => setOpen("resources")} onMouseLeave={() => setOpen(null)}>
+            {trigger("resources", "Resources", RESOURCES.some((r) => active(r.href)))}
+            {open === "resources" &&
+              panel(
+                <div style={{ padding: "20px 22px", minWidth: 250 }}>
+                  <MenuLinks items={RESOURCES} pathname={pathname} />
+                </div>,
+                "right"
+              )}
           </div>
         </nav>
 
-        {/* Right zone: mobile hamburger + primary CTA. On mobile the hamburger
-            sits to the LEFT of the CTA; on desktop the hamburger is hidden. */}
         <div className="flex flex-shrink-0 items-center gap-2">
+          <Link
+            href="/login"
+            className="eg-login-link no-underline items-center gap-1.5 whitespace-nowrap px-3 py-2 text-[14px] font-medium transition-colors hover:text-[var(--fg)]"
+            style={{ color: active("/login") ? "var(--accent)" : "var(--muted)" }}
+          >
+            <LogIn className="h-4 w-4" aria-hidden="true" /> Client login
+          </Link>
           <button
             type="button"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
-            className="md:hidden inline-flex items-center justify-center"
+            className="eg-nav-toggle items-center justify-center"
             style={{ width: 42, height: 42, borderRadius: 10, border: "1px solid var(--rule-strong)", background: "transparent", color: "var(--fg)", cursor: "pointer" }}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
           <RippleLink
-            href="/start-now"
+            href={SITE.primaryCta.href}
             trigger="hover"
             className="cta-primary no-underline whitespace-nowrap inline-flex"
-            style={{ color: "var(--accent-ink)", padding: "11px 20px", fontSize: 15, fontWeight: 600, borderRadius: 999, textDecoration: "none" }}
+            style={{ color: "var(--accent-ink)", padding: "11px 18px", fontSize: 15, fontWeight: 600, borderRadius: 999, textDecoration: "none" }}
           >
-            Fix Your Business
+            See your top 25
           </RippleLink>
         </div>
       </div>
 
-      {/* Mobile nav panel. Hidden on md+ (the centered mega-menu takes over
-          there). Solid, scrollable, closes on route change via the effect. */}
       {mobileOpen && (
         <div
-          className="md:hidden"
           style={{
-            background: "rgba(11,12,13,0.97)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
+            background: "rgba(11,12,13,0.98)",
             borderTop: "1px solid var(--rule)",
             borderBottom: "1px solid var(--rule)",
-            maxHeight: "calc(100vh - 92px)",
+            maxHeight: "calc(100vh - 84px)",
             overflowY: "auto",
           }}
         >
-          <nav style={{ padding: "20px 20px 28px", display: "flex", flexDirection: "column", gap: 4 }}>
-            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", margin: "6px 0 8px" }}>Services</div>
-            {SERVICE_GROUPS.flatMap((g) => g.items).concat(ALSO_AVAILABLE).map((s) => (
-              <Link
-                key={s.href + s.label}
-                href={s.href}
-                className="no-underline"
-                style={{ display: "block", padding: "11px 8px", fontSize: 16, color: pathname === s.href ? "var(--accent)" : "var(--fg)", borderRadius: 8 }}
-              >
-                {s.label}
-              </Link>
+          <nav aria-label="Mobile" style={{ padding: "18px 20px 28px", display: "flex", flexDirection: "column", gap: 2 }}>
+            {[
+              { label: "Growth engine", items: GROWTH_SERVICES },
+              { label: "Also handled", items: EASY_WINS },
+              { label: "Industries", items: INDUSTRIES },
+              {
+                label: "Company",
+                items: [
+                  { href: "/pricing", label: "Pricing", desc: "" },
+                  { href: "/free-tools", label: "Free tools", desc: "" },
+                  ...RESOURCES,
+                  { href: "/login", label: "Client login", desc: "" },
+                ],
+              },
+            ].map((g) => (
+              <div key={g.label}>
+                <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", margin: "14px 0 6px" }}>{g.label}</div>
+                {g.items.map((s) => (
+                  <Link key={s.href} href={s.href} className="no-underline" style={{ display: "block", padding: "10px 8px", fontSize: 16, color: active(s.href) ? "var(--accent)" : "var(--fg)", borderRadius: 8 }}>
+                    {s.label}
+                  </Link>
+                ))}
+              </div>
             ))}
-
-            <div style={{ height: 1, background: "var(--rule)", margin: "12px 0" }} />
-
-            <Link href="/how-it-works" className="no-underline" style={{ display: "block", padding: "11px 8px", fontSize: 16, color: pathname === "/how-it-works" ? "var(--accent)" : "var(--fg)" }}>How it works</Link>
-            <Link href="/about" className="no-underline" style={{ display: "block", padding: "11px 8px", fontSize: 16, color: pathname === "/about" ? "var(--accent)" : "var(--fg)" }}>Why Simpl</Link>
-
-            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", margin: "16px 0 8px" }}>Resources</div>
-            {RESOURCE_LINKS.map((r) => (
-              <Link
-                key={r.href}
-                href={r.href}
-                className="no-underline"
-                style={{ display: "block", padding: "11px 8px", fontSize: 16, color: pathname === r.href ? "var(--accent)" : "var(--fg)" }}
-              >
-                {r.label}
-              </Link>
-            ))}
-
             <Link
-              href="/start-now"
+              href={SITE.primaryCta.href}
               className="cta-primary no-underline"
               style={{ marginTop: 18, textAlign: "center", color: "var(--accent-ink)", padding: "14px 20px", fontSize: 16, fontWeight: 600, borderRadius: 999, textDecoration: "none" }}
             >
-              Fix Your Business
+              {SITE.primaryCta.label}
             </Link>
           </nav>
         </div>

@@ -24,7 +24,10 @@ const contactSchema = z.object({
   sourcePage: z.string().max(120).optional(),
 });
 
-const ALLOWED_SOURCE_PAGES = new Set(["/start", "/start-now"]);
+// Any of our own page paths (lowercase slug segments only), so a caller can't
+// write arbitrary strings into our own reporting. Widened 2026-10-22 when the
+// form moved onto /top-25, the service pages and the blog.
+const SOURCE_PAGE_RE = /^\/[a-z0-9\-/]{0,118}$/;
 
 const RATE_LIMIT_MAX = 5;
 const TEAM_INBOX = "team@simpl.pro";
@@ -76,7 +79,7 @@ export async function POST(req: Request) {
 
     // Only accept source pages we actually ship, so a caller can't write
     // arbitrary strings into our own reporting.
-    const fromPage = sourcePage && ALLOWED_SOURCE_PAGES.has(sourcePage) ? sourcePage : "/start";
+    const fromPage = sourcePage && SOURCE_PAGE_RE.test(sourcePage) ? sourcePage : "/start";
 
     // No `website` column on `leads` yet, so keep it with the message instead of
     // dropping it. See the schema comment above.
@@ -115,7 +118,7 @@ export async function POST(req: Request) {
       await resend.emails.send({
         from: "Simpl <team@simpl.pro>",
         to: TEAM_INBOX,
-        subject: `New lead: ${name}${website ? ` (${website})` : ""}`,
+        subject: `New lead${service ? ` [${service}]` : ""}: ${name}${website ? ` (${website})` : ""}`,
         html: notificationEmailHtml({ name, email, phone, message, service, website, sourcePage: fromPage }),
       });
     } catch (emailError) {

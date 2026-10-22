@@ -1,42 +1,30 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import ScanTool from "../components/ScanTool";
-import ScrollReveal, { StaggerReveal, StaggerItem } from "../components/ScrollReveal";
+import ScrollReveal from "../components/ScrollReveal";
+import { Section, Eyebrow, QA, FinalCta, Crumbs } from "../components/engine/ui";
+import { breadcrumb, ldJson } from "../lib/schema";
+import { SITE } from "../lib/site";
+
+const TITLE = "About Simpl: Growth Engines Built by the Person You Talk To | Simpl";
+const DESCRIPTION =
+  "Simpl builds custom growth portals for high-ticket B2B companies from Raleigh, NC. No account managers, no sales floor: you work directly with the person who builds your engine.";
 
 export const metadata: Metadata = {
-  title: "Why Simpl | Built for businesses tired of guessing",
-  description:
-    "Nobody told you your Google listing was broken. That's why we built Simpl. One scan, six categories, zero guesswork.",
-  openGraph: {
-    images: OG_IMAGE,
-    title: "Why Simpl | Built for businesses tired of guessing",
-    description: "Nobody told you your Google listing was broken. That's why we built Simpl. One scan, six categories, zero guesswork.",
-    url: "https://www.simpl.pro/about",
-    siteName: "Simpl",
-    type: "website",
-  },
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
+  openGraph: { images: OG_IMAGE, title: TITLE, description: DESCRIPTION, url: "https://www.simpl.pro/about" },
   alternates: { canonical: "https://www.simpl.pro/about" },
 };
 
 const BELIEFS = [
-  {
-    headline: "Transparency over jargon.",
-    body: "You should understand every issue we find without a marketing degree.",
-  },
-  {
-    headline: "Results over retainers.",
-    body: "If we're not making you money, we shouldn't be taking yours.",
-  },
-  {
-    headline: "Speed over process.",
-    body: "A 30-second scan tells you more than a 3-week discovery phase ever will.",
-  },
-  {
-    headline: "Your business, your data.",
-    body: "We never sell your information. Your scan results are yours.",
-  },
+  { h: "Proof on every line.", b: "If we can't link a fact to its record, it doesn't go in your portal. Your rep should never repeat something we can't back up." },
+  { h: "Sell what's built.", b: "Anything still rolling out is labeled that way, with a date. We never call a feature done until it is." },
+  { h: "Yours, not rented.", b: "Your portal, your lists and your data belong to you, at your own address, exportable any time." },
+  { h: "No overhead in your invoice.", b: "No account manager, no sales team, no office. That's the whole reason the price is what it is." },
 ];
 
 export default function AboutPage() {
@@ -44,335 +32,87 @@ export default function AboutPage() {
     <div>
       <Header />
       <main>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "AboutPage",
-          "name": "Why Simpl",
-          "description": "Nobody told you your Google listing was broken. That's why we built Simpl. One scan, six categories, zero guesswork.",
-          "url": "https://www.simpl.pro/about",
-          "mainEntity": {
-            "@type": "Organization",
-            "name": "Simpl",
-            "url": "https://www.simpl.pro",
-            "description": "Digital presence platform that scans, scores, and fixes businesses' online presence.",
-            "contactPoint": { "@type": "ContactPoint", "email": "team@simpl.pro", "contactType": "customer service" }
-          }
-        }) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Why Simpl", "item": "https://www.simpl.pro/about" }
-          ]
-        }) }} />
-        {/* Hero */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 64px" }}>
-          <ScrollReveal>
-            <div
-              className="mono"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-                marginBottom: 40,
-              }}
-            >
-              Why Simpl
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={ldJson(breadcrumb([{ name: "About", path: "/about" }]), {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            name: "About Simpl",
+            url: `${SITE.url}/about`,
+            mainEntity: {
+              "@type": "Person",
+              name: "Matt DuBois",
+              jobTitle: "Founder",
+              worksFor: { "@id": `${SITE.url}/#organization` },
+            },
+          })}
+        />
+        <section className="eg-hero">
+          <div className="eg-wrap">
+            <Crumbs items={[{ name: "About", path: "/about" }]} />
+            <div className="eg-split" style={{ alignItems: "center" }}>
+              <ScrollReveal>
+                <Eyebrow>About Simpl</Eyebrow>
+                <h1 className="eg-h1" style={{ fontSize: "clamp(36px, 5vw, 60px)" }}>
+                  We build the engine. <span className="dim">You make the calls.</span>
+                </h1>
+                <p className="eg-lead">
+                  Simpl started by scanning and fixing how businesses show up online. Then we built a portal for a company that sells network technology into
+                  senior living, and the question changed from &quot;how do we get found&quot; to &quot;who should we call this week?&quot; The Account Engine is
+                  the answer, and it&apos;s what we build now.
+                </p>
+              </ScrollReveal>
+              <ScrollReveal direction="left" delay={0.08}>
+                <figure style={{ margin: "0 auto", maxWidth: 340, position: "relative", aspectRatio: "4 / 5", borderRadius: 18, overflow: "hidden", border: "1px solid var(--rule-strong)" }}>
+                  <Image src="/team/matt-dubois.png" alt="Matt DuBois, founder of Simpl" fill sizes="340px" style={{ objectFit: "cover", objectPosition: "50% 18%" }} priority />
+                  <figcaption style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "60px 22px 20px", background: "linear-gradient(180deg, transparent, rgba(0,0,0,0.8))" }}>
+                    <div style={{ fontWeight: 600, fontSize: 18 }}>Matt DuBois</div>
+                    <div className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.75)" }}>Founder, builds every engine</div>
+                  </figcaption>
+                </figure>
+              </ScrollReveal>
             </div>
-            <h1
-              style={{
-                margin: 0,
-                fontSize: "clamp(34px, 5.5vw, 56px)",
-                lineHeight: 1.08,
-                letterSpacing: "-0.025em",
-                fontWeight: 500,
-                maxWidth: 900,
-              }}
-            >
-              Nobody told you your Google listing was broken.
-              <br />
-              <span style={{ color: "var(--muted)" }}>That&apos;s why we built Simpl.</span>
-            </h1>
-            <p
-              style={{
-                marginTop: 28,
-                maxWidth: 680,
-                fontSize: 19,
-                lineHeight: 1.55,
-              }}
-            >
-              Most small businesses are paying for marketing they can&apos;t measure, websites they can&apos;t audit, and listings they don&apos;t know are broken. We got tired of watching it happen.
-            </p>
-          </ScrollReveal>
-        </section>
-
-        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
-
-        {/* The Problem */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: 32,
-            }}
-          >
-            The problem
-          </div>
-          <h2
-            style={{
-              margin: 0,
-              fontSize: "clamp(28px, 4vw, 48px)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
-              fontWeight: 400,
-              maxWidth: 800,
-            }}
-          >
-            Your digital presence has more moving parts than you think. Most of them are breaking quietly.
-          </h2>
-          <p
-            style={{
-              marginTop: 20,
-              maxWidth: 640,
-              fontSize: 17,
-              lineHeight: 1.55,
-              color: "var(--muted)",
-            }}
-          >
-            Your website. Your Google listing. Your reviews. Your social profiles. Your SEO. Your ads. They all affect whether the phone rings tomorrow. Most business owners have no way to know which ones are working and which ones are silently leaking leads. The last person who could tell you was charging $3,000 a month and sending you a PDF full of graphs you didn&apos;t ask for. You&apos;re not bad at marketing. You just never had the right tool.
-          </p>
-          <p
-            style={{
-              marginTop: 24,
-              fontSize: 15,
-              color: "var(--fg)",
-              lineHeight: 1.55,
-            }}
-          >
-            So what if you could see it all in one place, in 30 seconds, without paying anyone?
-          </p>
-        </section>
-
-        {/* The Approach */}
-        <section
-          style={{
-            background: "var(--bg-soft)",
-            borderTop: "1px solid var(--rule)",
-            borderBottom: "1px solid var(--rule)",
-          }}
-        >
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-            <div
-              className="mono"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-                marginBottom: 32,
-              }}
-            >
-              How we think about it
-            </div>
-            <h2
-              style={{
-                margin: 0,
-                fontSize: "clamp(28px, 4vw, 48px)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.02em",
-                fontWeight: 400,
-                maxWidth: 800,
-              }}
-            >
-              One scan. Six grades. Every answer.
-            </h2>
-            <p
-              style={{
-                marginTop: 20,
-                maxWidth: 640,
-                fontSize: 17,
-                lineHeight: 1.55,
-                color: "var(--muted)",
-              }}
-            >
-              Type your URL. In 30 seconds, Simpl checks six areas of your digital presence and grades each one A through F. Every issue ranked by severity. You see exactly what&apos;s costing you leads and what to fix first. No jargon. No 47-page reports. No monthly calls where someone reads you a spreadsheet. You see what&apos;s broken. We fix it. You see the results. That&apos;s the whole thing. Plain and simpl.
-            </p>
-            <p
-              style={{
-                marginTop: 24,
-                fontSize: 15,
-                color: "var(--accent)",
-                lineHeight: 1.55,
-              }}
-            >
-              But who would build something like that, and why?
-            </p>
           </div>
         </section>
 
-        {/* The Founder */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: 32,
-            }}
-          >
-            Who built this
-          </div>
-          <h2
-            style={{
-              margin: 0,
-              fontSize: "clamp(28px, 4vw, 48px)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
-              fontWeight: 400,
-              maxWidth: 800,
-            }}
-          >
-            Years in the industry. One obsession.
-          </h2>
-          <p
-            style={{
-              marginTop: 20,
-              maxWidth: 640,
-              fontSize: 17,
-              lineHeight: 1.55,
-              color: "var(--muted)",
-            }}
-          >
-            Simpl was built by a team that spent years inside the digital marketing industry watching the same problems on repeat. Businesses overpaying for services they couldn&apos;t measure. Agencies selling retainers with no accountability. Website problems going unnoticed for months while leads quietly disappeared. Every client conversation started the same way: &quot;I&apos;m paying for all this stuff and I have no idea if it&apos;s working.&quot;
-          </p>
-          <p
-            style={{
-              marginTop: 20,
-              maxWidth: 640,
-              fontSize: 17,
-              lineHeight: 1.55,
-              color: "var(--muted)",
-            }}
-          >
-            The only thing on our minds through all of it was how to make the whole thing simpler for everyone. Not a little simpler. Fundamentally simpler. That obsession became Simpl. Plain and simpl.
-          </p>
-          <p
-            style={{
-              marginTop: 24,
-              fontSize: 15,
-              color: "var(--fg)",
-              lineHeight: 1.55,
-            }}
-          >
-            The obsession turned into a set of beliefs. Here&apos;s what drives every decision we make.
-          </p>
-        </section>
-
-        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
-
-        {/* What We Believe */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: 32,
-            }}
-          >
-            What we believe
-          </div>
-          <StaggerReveal
-            className="grid-beliefs"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-              gap: 1,
-              background: "var(--rule)",
-              border: "1px solid var(--rule)",
-            }}
-          >
+        <Section band>
+          <QA
+            eyebrow="How we work"
+            q="Who will we actually work with?"
+            a="The person who builds your engine. Not an account manager relaying messages, not a junior team learning on your market. One call to map your market, one person accountable for what ships."
+          />
+          <div className="eg-g2">
             {BELIEFS.map((b) => (
-              <StaggerItem
-                key={b.headline}
-                style={{
-                  background: "var(--bg)",
-                  padding: "36px 32px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 20,
-                    fontWeight: 500,
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {b.headline}
-                </div>
-                <div
-                  style={{
-                    fontSize: 15,
-                    lineHeight: 1.55,
-                    color: "var(--muted)",
-                  }}
-                >
-                  {b.body}
-                </div>
-              </StaggerItem>
+              <div key={b.h} className="eg-card">
+                <h3 className="eg-h3">{b.h}</h3>
+                <p className="eg-body" style={{ fontSize: 15 }}>{b.b}</p>
+              </div>
             ))}
-          </StaggerReveal>
-        </section>
+          </div>
+        </Section>
 
-        <hr style={{ border: 0, borderTop: "1px solid var(--rule)", margin: 0 }} />
+        <Section>
+          <QA
+            eyebrow="What we build"
+            q="What does Simpl build?"
+            a="Custom growth portals for high-ticket B2B companies: the Account Engine, CRM and follow-up, and 24/7 receptionist and support lines. Websites, SEO, Google Business Profile and ads round it out."
+          />
+          <div className="eg-chips">
+            <Link href="/services/account-engine" className="eg-chip">Account Engine</Link>
+            <Link href="/services/crm-follow-up" className="eg-chip">CRM & follow-up</Link>
+            <Link href="/services/ai-receptionist" className="eg-chip">AI receptionist</Link>
+            <Link href="/services" className="eg-chip">All services</Link>
+            <Link href="/industries" className="eg-chip">Industries</Link>
+          </div>
+          <p className="eg-body" style={{ marginTop: 30, maxWidth: 760 }}>
+            Simpl is based in {SITE.city} and works with companies across the United States. Reach us at{" "}
+            <a className="eg-link" href={`mailto:${SITE.email}`}>{SITE.email}</a> or <a className="eg-link" href={SITE.phoneHref}>{SITE.phone}</a>.
+          </p>
+        </Section>
 
-        {/* Bottom CTA — the page's one accent moment */}
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
-          <ScrollReveal scale>
-            <div
-              style={{
-                borderRadius: 24,
-                border: "1px solid var(--accent-line)",
-                background: "linear-gradient(155deg, rgba(137,207,240,0.12), rgba(137,207,240,0.02) 60%)",
-                boxShadow: "0 40px 100px -50px rgba(137,207,240,0.45), inset 0 1px 0 rgba(255,255,255,0.04)",
-                padding: "clamp(32px, 5vw, 56px)",
-              }}
-            >
-              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 18 }}>
-                See it for yourself
-              </div>
-              <h2
-                style={{
-                  margin: 0,
-                  fontSize: "clamp(28px, 4.5vw, 52px)",
-                  lineHeight: 1.08,
-                  letterSpacing: "-0.025em",
-                  fontWeight: 500,
-                  maxWidth: 800,
-                }}
-              >
-                Find out in 30 seconds what most agencies take 3 weeks to tell you.
-              </h2>
-              <div style={{ marginTop: 40 }}>
-                <ScanTool compact />
-              </div>
-            </div>
-          </ScrollReveal>
-        </section>
+        <FinalCta />
       </main>
-      <Footer />
+      <Footer showLeadForm={false} />
     </div>
   );
 }

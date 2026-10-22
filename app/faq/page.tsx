@@ -2,150 +2,143 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Section, Eyebrow, FaqList, Crumbs, PrimaryCta } from "../components/engine/ui";
+import { breadcrumb, faqPage, ldJson } from "../lib/schema";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | Simpl",
+  title: { absolute: "FAQ: the Account Engine, Pricing, CRM, AI Receptionist and Websites | Simpl" },
   description:
-    "Straight answers about the free Simpl scan, the Simpl Score, local SEO, AI search visibility, Google reviews, and how the Simpl team works with local service businesses.",
+    "Straight answers about Simpl: what the Account Engine is, who it's for, where the data comes from, what it costs, CRM and follow-up, the 24/7 AI receptionist, and websites and SEO.",
   alternates: { canonical: "https://www.simpl.pro/faq" },
 };
 
-/**
- * Written for SEO + AI-search visibility: questions phrased the way people
- * actually ask Google and AI assistants (non-branded, high-intent), answers
- * as direct 40-60 word blocks an LLM can quote standalone, with "Simpl"
- * named inside answers so citations carry attribution. The FAQPage JSON-LD
- * below derives from this array, so it stays in sync automatically.
- * No prices anywhere, pricing is a sales-call conversation.
- */
-const FAQS = [
+const GROUPS: { label: string; id: string; faqs: { q: string; a: string }[] }[] = [
   {
-    q: "What is Simpl?",
-    a: "Simpl is a digital presence team for local service businesses. We scan your website, Google Business Profile, reviews, and SEO, score what we find from 0 to 100, then fix what's broken so customers find you before the competitor down the street. It starts with a free scan at simpl.pro.",
+    label: "The Account Engine",
+    id: "account-engine",
+    faqs: [
+      {
+        q: "What does Simpl do?",
+        a: "Simpl builds custom growth portals for high-ticket B2B companies. The Account Engine finds the right buyers at the right time from the public record, with proof, and tells your team who to call this week. We also set up CRM and follow-up, build 24/7 AI receptionist and support lines, and handle websites, SEO, Google Business Profile and ads.",
+      },
+      {
+        q: "What is the Account Engine?",
+        a: "A private portal built for your company that reads the public record for every account in your market every night (inspections, citations, permits, licenses, ownership changes, bids and budget cycles), scores who is worth a call right now, and shows the reason, the official record behind it and the person who decides.",
+      },
+      {
+        q: "Who is it for?",
+        a: "B2B companies that sell high-ticket products, long-lasting services or big contracts to buildings, facilities and regulated businesses: low voltage and security integrators, telecom, senior living technology, building systems, facility services, healthcare technology, and manufacturers and distributors selling into those markets.",
+      },
+      {
+        q: "Where does the data come from?",
+        a: "Public, official sources: state and federal inspection reports, licensing agencies, building permit and deed records, public bids and procurement postings, the national NPI registry and company filings. Every fact in your portal links to its record.",
+      },
+      {
+        q: "How is it different from ZoomInfo, Apollo or a list vendor?",
+        a: "They give you names. The Account Engine gives you the reason to call this week and the proof behind it, ranked across your whole market. It can feed the CRM and tools you already use.",
+      },
+      {
+        q: "Do other companies in my market see my portal?",
+        a: "No. Each portal is built for one company, at its own address, with its own logins. Your lists, notes and results are yours.",
+      },
+      {
+        q: "How do I see what it would find for us?",
+        a: "Ask for your top 25. We build a 25-account sample of your own market, each with the reason, the record and who decides, and walk you through it before you pay anything.",
+      },
+    ],
   },
   {
-    q: "What is the Simpl Score?",
-    a: "The Simpl Score is a free 0 to 100 rating of a business's online presence, graded across six categories: Website Foundation, Crawlability, On-Page SEO, Content & Pages, Social Presence, and Google Business Profile. Every finding behind it is measured from live data, never invented, like test results, not a sales pitch.",
+    label: "Pricing and terms",
+    id: "pricing",
+    faqs: [
+      {
+        q: "How much does it cost?",
+        a: "Account Engine: $10,000 setup and $1,000 a month. Account Engine Pro: $15,000 setup and $2,500 a month, adding nationwide territory, custom data sources, overnight research, CRM and follow-up, a 24/7 support line and a monthly strategy call.",
+      },
+      {
+        q: "Why is it less than an agency or a hire?",
+        a: "You're not paying for an account manager, a sales team or an office. You work directly with the person who builds it.",
+      },
+      {
+        q: "Who owns the portal and the data?",
+        a: "You do. Your portal, your lists and your data are yours, and you can export them any time.",
+      },
+    ],
   },
   {
-    q: "Is the website scan really free?",
-    a: "Yes. The Simpl scan is free, takes about 60 seconds, and needs no credit card and no sales call. You see your score instantly, and the full report with every finding unlocks with just your email. Many owners run it as a health check even when nothing feels broken.",
+    label: "CRM, follow-up and the 24/7 line",
+    id: "crm-ai",
+    faqs: [
+      {
+        q: "Do we have to change CRMs?",
+        a: "No. We connect to the CRM you already use, such as Salesforce or HubSpot, or set up ours branded as yours.",
+      },
+      {
+        q: "What does the AI receptionist do?",
+        a: "It answers calls and support tickets at any hour, checks your own guides and the account's history, solves what it safely can, and pages whoever is on duty for anything urgent with a written summary.",
+      },
+      {
+        q: "Are CRM and the AI receptionist live?",
+        a: "Both are rolling out now. We give you the go-live date on the first call, and we never call them done until they are.",
+      },
+    ],
   },
   {
-    q: "Why is my business not showing up on Google?",
-    a: "The most common causes are an incomplete Google Business Profile, missing schema markup, thin or missing service pages, few recent reviews, and a slow website. Every one of them is fixable once you know which is yours. The free Simpl scan pinpoints exactly which are holding your business back.",
-  },
-  {
-    q: "What is local SEO, and does my business need it?",
-    a: "Local SEO is the work that makes your business appear when nearby customers search for what you do: Google Maps, the local 3-pack, and organic results. If your revenue comes from your service area, it is usually the highest-return marketing you can do, every day it's missing, those calls go to competitors.",
-  },
-  {
-    q: "How do I show up in AI search results like ChatGPT?",
-    a: "AI assistants recommend businesses they can read: structured data, consistent listings, real reviews, and pages that answer questions directly. Making your business legible to machines is called AI search optimization, and Simpl builds every site and profile to be found by AI tools as well as Google.",
-  },
-  {
-    q: "Do Google reviews affect my ranking?",
-    a: "Yes. Review count, rating, recency, and whether the owner responds are among the strongest local ranking signals Google uses. A profile earning steady recent reviews with owner replies consistently outranks a silent one. That's why reputation work is part of every Simpl engagement, not an add-on.",
-  },
-  {
-    q: "How long does SEO take to show results?",
-    a: "Technical fixes can move things in days: a broken form, missing schema, an unclaimed listing. Rankings, reviews, and content compound over weeks to months. Simpl tells you which of your findings are fast wins and which are compounding plays, instead of promising one universal timeline.",
-  },
-  {
-    q: "Do I need a new website, or can mine be fixed?",
-    a: "Not always. The scan shows whether your website is the real problem or whether it's your Google listing, reviews, or SEO. When a rebuild is the right call, Simpl builds fast, findable sites, and the build is free when you start on the Team plan.",
-  },
-  {
-    q: "What services does Simpl offer?",
-    a: "Website builds, local SEO and AI search visibility, Google Business Profile optimization, review and reputation management, paid ads management, and lead-capture automation like missed-call text-back and instant quoting. You can start with any one of them, scoped to what your scan shows your business actually needs.",
-  },
-  {
-    q: "How is Simpl different from a traditional marketing agency?",
-    a: "You're not paying for an account manager, a sales team, or an office, which is why Simpl costs less than the agencies quoting you monthly retainers. The team that diagnoses your presence is the team that fixes it, and every recommendation traces back to a measured finding in your scan, not a package someone needs to sell you.",
-  },
-  {
-    q: "How much does Simpl cost?",
-    a: "Pricing is scoped to your business on a free strategy call, you hear a straight number before anything starts, and nothing is billed until you approve the plan. Because Simpl doesn't carry account managers or office overhead, engagements consistently come in below typical agency retainers.",
-  },
-  {
-    q: "Do I need to sign a long-term contract?",
-    a: "No. Terms are discussed openly on the call before anything starts, and there's no fine print designed to trap you. Where a minimum applies, like the free website build on Team, you'll know before you commit, and you keep the website either way.",
-  },
-  {
-    q: "What happens after the free scan?",
-    a: "You get your score instantly and the full report with every finding ranked by impact. If you want help, the next step is a free strategy call where we walk through the report and scope what to fix first. No pressure, the report is yours either way.",
-  },
-  {
-    q: "What if my score comes back low?",
-    a: "That's normal, most businesses we scan score between 40 and 65. A low score isn't a verdict, it's a ranked list of exactly what to fix and in what order. The owners who treat it that way are the ones outranking their competitors six months later.",
-  },
-  {
-    q: "Who does Simpl work with?",
-    a: "Local service businesses across the United States: remodelers, contractors, landscapers, detailers, home health, and any company whose customers search \"near me.\" If the phone ringing depends on being found online, Simpl was built for you.",
+    label: "Websites, SEO and free tools",
+    id: "websites-seo",
+    faqs: [
+      {
+        q: "Do you still build websites and do SEO?",
+        a: "Yes. Websites, SEO and AI search visibility, Google Business Profile management and paid ads are available as add-ons or on their own.",
+      },
+      {
+        q: "Is the website scan free?",
+        a: "Yes. The scan on the Free tools page takes about 60 seconds, needs no credit card, and scores your site 0 to 100 across six categories with every finding measured from live data.",
+      },
+      {
+        q: "Do you mark up ad spend?",
+        a: "No. You own the ad account and pay the platform directly. We charge for the management, never a cut of your spend.",
+      },
+    ],
   },
 ];
 
 export default function FaqPage() {
+  const all = GROUPS.flatMap((g) => g.faqs);
   return (
     <div>
       <Header />
       <main>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              {
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                mainEntity: FAQS.map((f) => ({
-                  "@type": "Question",
-                  name: f.q,
-                  acceptedAnswer: { "@type": "Answer", text: f.a },
-                })),
-              },
-              {
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
-                  { "@type": "ListItem", position: 2, name: "FAQ", item: "https://www.simpl.pro/faq" },
-                ],
-              },
-            ]),
-          }}
-        />
-        <section style={{ maxWidth: 860, margin: "0 auto", padding: "140px 32px 40px" }}>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 32 }}>
-            FAQ
-          </div>
-          <h1 style={{ margin: 0, fontSize: "clamp(34px, 5.5vw, 56px)", lineHeight: 1.08, letterSpacing: "-0.025em", fontWeight: 500 }}>
-            Straight answers.<br /><span style={{ color: "var(--muted)" }}>No sales-page hedging.</span>
-          </h1>
-        </section>
-
-        <section style={{ maxWidth: 860, margin: "0 auto", padding: "40px 32px 120px" }}>
-          <div style={{ display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)", borderRadius: 8, overflow: "hidden" }}>
-            {FAQS.map((f) => (
-              <div key={f.q} style={{ background: "var(--bg)", padding: "28px 30px" }}>
-                <h2 style={{ margin: "0 0 10px", fontSize: 18.5, fontWeight: 600, letterSpacing: "-0.01em" }}>{f.q}</h2>
-                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: "var(--muted)" }}>{f.a}</p>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ marginTop: 56, textAlign: "center" }}>
-            <p style={{ fontSize: 15, color: "var(--muted)", marginBottom: 20 }}>Still have a question that's not here?</p>
-            <Link
-              href="/start-now"
-              className="cta-primary"
-              style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "13px 24px", fontSize: 14, fontWeight: 700, borderRadius: 6, textDecoration: "none" }}
-            >
-              Ask us directly →
-            </Link>
+        <script type="application/ld+json" dangerouslySetInnerHTML={ldJson(faqPage(all), breadcrumb([{ name: "FAQ", path: "/faq" }]))} />
+        <section className="eg-hero" style={{ paddingBottom: 30 }}>
+          <div className="eg-wrap">
+            <Crumbs items={[{ name: "FAQ", path: "/faq" }]} />
+            <Eyebrow>FAQ</Eyebrow>
+            <h1 className="eg-h1">
+              Straight answers. <span className="dim">No sales-page hedging.</span>
+            </h1>
+            <div className="eg-chips" style={{ marginTop: 30 }}>
+              {GROUPS.map((g) => (
+                <a key={g.id} href={`#${g.id}`} className="eg-chip">{g.label}</a>
+              ))}
+            </div>
           </div>
         </section>
+        {GROUPS.map((g, i) => (
+          <Section key={g.id} id={g.id} band={i % 2 === 1} tight>
+            <h2 className="eg-h2" style={{ fontSize: "clamp(24px, 3vw, 34px)", marginBottom: 22 }}>{g.label}</h2>
+            <FaqList faqs={g.faqs} />
+          </Section>
+        ))}
+        <Section tight>
+          <p className="eg-body" style={{ marginBottom: 20 }}>
+            Still have a question? Email <a className="eg-link" href="mailto:team@simpl.pro">team@simpl.pro</a>, or start with the thing that answers most of
+            them: your own market. <Link className="eg-link" href="/services/account-engine">How the engine works</Link>.
+          </p>
+          <PrimaryCta />
+        </Section>
       </main>
-      <Footer />
+      <Footer showLeadForm={false} />
     </div>
   );
 }

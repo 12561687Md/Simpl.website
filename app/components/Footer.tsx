@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
 import { FooterBackgroundGradient } from "@/components/ui/hover-footer";
 import PreFooterCTA from "./PreFooterCTA";
+import { GROWTH_SERVICES, EASY_WINS, INDUSTRIES } from "../lib/site";
 
 /**
  * Site footer: real Simpl links + contact, with the FULL brand wordmark (the
@@ -18,19 +19,15 @@ import PreFooterCTA from "./PreFooterCTA";
 const linkStyle: React.CSSProperties = { color: "var(--muted)", textDecoration: "none", fontSize: 14, lineHeight: 1.5 };
 const colLabel: React.CSSProperties = { fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--fg-dim)", marginBottom: 18 };
 
-const SERVICES = [
-  { label: "Custom Website", href: "/services/website-build" },
-  { label: "Quick Wins", href: "/services/quick-wins" },
-  { label: "Local SEO", href: "/services/local-seo" },
-  { label: "Paid Ads", href: "/services/paid-ads" },
-  { label: "Organic Growth", href: "/services/organic-growth" },
-  { label: "Fractional CMO", href: "/services/strategy" },
-];
+const SERVICES = [...GROWTH_SERVICES, ...EASY_WINS].map(({ label, href }) => ({ label, href }));
+const INDUSTRY_LINKS = [...INDUSTRIES.map(({ label, href }) => ({ label, href })), { label: "All industries", href: "/industries" }];
 const COMPANY = [
-  { label: "Why Simpl", href: "/about" },
-  { label: "How It Works", href: "/how-it-works" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Free tools", href: "/free-tools" },
+  { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
+  { label: "Client login", href: "/login" },
 ];
 
 function Column({ label, links }: { label: string; links: { label: string; href: string }[] }) {
@@ -60,14 +57,14 @@ export default function Footer({ showLeadForm = true, sourcePage }: { showLeadFo
           <SimplWordmark size={430} fillColor="rgba(137,207,240,0.5)" className="footer-watermark" style={{ width: "99%", height: "auto", opacity: 0.5, minWidth: 820 }} />
         </div>
         <div style={{ position: "relative", zIndex: 2, maxWidth: 1120, margin: "0 auto", padding: "72px 32px 24px" }}>
-          <div className="grid-footer" style={{ display: "grid", gridTemplateColumns: "1.7fr 1fr 1fr", gap: 48, marginBottom: 44 }}>
+          <div className="grid-footer" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 0.8fr", gap: 48, marginBottom: 44 }}>
             {/* Brand + contact */}
             <div>
               <Link href="/" aria-label="Simpl home" style={{ textDecoration: "none", display: "inline-flex" }}>
                 <SimplWordmark size={34} />
               </Link>
               <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.6, maxWidth: 300, margin: "18px 0 22px" }}>
-                Your digital presence, handled. One free scan to see where you stand, one team to win you more customers.
+                Custom growth engines for high-ticket B2B companies. Who to call this week, why they&apos;ll care and who signs, with proof on every line.
               </p>
               <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 11 }}>
                 <li>
@@ -88,6 +85,7 @@ export default function Footer({ showLeadForm = true, sourcePage }: { showLeadFo
             </div>
 
             <Column label="Services" links={SERVICES} />
+            <Column label="Industries" links={INDUSTRY_LINKS} />
             <Column label="Company" links={COMPANY} />
           </div>
 

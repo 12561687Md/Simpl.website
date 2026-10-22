@@ -17,7 +17,12 @@ const offset: Record<Direction, { x?: number; y?: number }> = {
 /**
  * Scroll-triggered entrance. Expo.out easing, small offset, fires once.
  * `direction` + `scale` let a section vary its motion so the page doesn't
- * animate in one monotonous way. Reduced-motion collapses to a plain render.
+ * animate in one monotonous way.
+ *
+ * Reduced motion: the SAME motion.div renders on server and client (a different
+ * tree caused a hydration mismatch that left the server's opacity:0 in place, so
+ * reduced-motion visitors saw blank sections). It just shows instantly instead
+ * of waiting for scroll. Fixed 2026-10-22.
  */
 export default function ScrollReveal({
   children,
@@ -31,14 +36,14 @@ export default function ScrollReveal({
   scale?: boolean;
 }) {
   const reduce = useReducedMotion();
-  if (reduce) return <div>{children}</div>;
+  const shown = { opacity: 1, x: 0, y: 0, scale: 1 };
 
   return (
     <motion.div
       initial={{ opacity: 0, ...offset[direction], ...(scale ? { scale: 0.965 } : {}) }}
-      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+      {...(reduce ? { animate: shown } : { whileInView: shown })}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: EXPO }}
+      transition={reduce ? { duration: 0 } : { duration: 0.7, delay, ease: EXPO }}
     >
       {children}
     </motion.div>
@@ -72,7 +77,7 @@ export function StaggerReveal({
       style={style}
       variants={container}
       initial="hidden"
-      whileInView="show"
+      {...(reduce ? { animate: "show" } : { whileInView: "show" })}
       viewport={{ once: true, margin: "-60px" }}
     >
       {children}
@@ -173,15 +178,15 @@ export function SlideIn({
     : from === "right" ? { x: distance }
     : from === "top" ? { y: -distance }
     : { y: distance }; // "bottom": starts below and slides up into place
-  if (reduce) return <div className={className} style={merged}>{children}</div>;
+  const shown = { opacity: 1, x: 0, y: 0 };
   return (
     <motion.div
       className={className}
       style={merged}
       initial={{ opacity: 0, ...offset }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      {...(reduce ? { animate: shown } : { whileInView: shown })}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration, ease: EXPO }}
+      transition={reduce ? { duration: 0 } : { duration, ease: EXPO }}
     >
       {children}
     </motion.div>
@@ -198,12 +203,12 @@ export function StaggerItem({
   style?: React.CSSProperties;
 }) {
   const reduce = useReducedMotion();
-  const item: Variants = reduce
-    ? { hidden: { opacity: 1 }, show: { opacity: 1 } }
-    : {
-        hidden: { opacity: 0, y: 20, scale: 0.97 },
-        show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: EXPO } },
-      };
+  // Same hidden state on server and client (see ScrollReveal); reduced motion
+  // only zeroes the duration.
+  const item: Variants = {
+    hidden: { opacity: 0, y: 20, scale: 0.97 },
+    show: { opacity: 1, y: 0, scale: 1, transition: reduce ? { duration: 0 } : { duration: 0.6, ease: EXPO } },
+  };
   return (
     <motion.div className={className} style={style} variants={item}>
       {children}

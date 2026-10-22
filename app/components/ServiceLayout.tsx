@@ -184,6 +184,19 @@ export default function ServiceLayout({ data }: { data: ServiceData }) {
           </div>
         </section>
 
+        {/* Cross-sell to the growth stack (revamp 2026-10): these easy-win pages
+            are the secondary services now, so each one points B2B readers up. */}
+        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "56px 32px 0" }}>
+          <div style={{ border: "1px solid var(--accent-line)", borderRadius: 16, padding: "26px 28px", display: "flex", flexWrap: "wrap", gap: 18, alignItems: "center", justifyContent: "space-between", background: "var(--accent-soft)" }}>
+            <p style={{ margin: 0, fontSize: 16, lineHeight: 1.55, maxWidth: 720 }}>
+              <b>Selling high-ticket B2B?</b> <span style={{ color: "var(--muted)" }}>The Account Engine finds the accounts with a reason to buy this week, from the public record, with proof.</span>
+            </p>
+            <Link href="/services/account-engine" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)", paddingBottom: 3, fontSize: 15, whiteSpace: "nowrap" }}>
+              See the Account Engine →
+            </Link>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section style={{ maxWidth: 1120, margin: "0 auto", padding: "96px 32px" }}>
           <ScrollReveal>

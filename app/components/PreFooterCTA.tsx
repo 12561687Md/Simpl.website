@@ -36,14 +36,14 @@ export default function PreFooterCTA({ sourcePage }: { sourcePage?: string }) {
                 Ready when you are
               </div>
               <h2 style={{ margin: "0 0 16px", fontSize: "clamp(26px, 3.4vw, 40px)", lineHeight: 1.12, letterSpacing: "-0.025em", fontWeight: 500 }}>
-                Tell us about your business.<br />
-                <span style={{ color: "var(--muted)" }}>We&apos;ll show you the wins waiting.</span>
+                Tell us what you sell and where.<br />
+                <span style={{ color: "var(--muted)" }}>We&apos;ll show you who&apos;s ready to buy.</span>
               </h2>
               <p style={{ margin: 0, fontSize: 16.5, lineHeight: 1.6, color: "var(--muted)", maxWidth: 440 }}>
-                Real people read every message and reply the same business day, usually within four hours. No pitch attached to a first reply, just a straight answer on where you stand and what we&apos;d do first.
+                Real people read every message and reply the same business day, usually within four hours. No pitch attached to a first reply, just a straight answer on what we&apos;d build first and what it would find in your market.
               </p>
             </div>
-            <ContactForm ctaLabel="Fix my business" sourcePage={src} />
+            <ContactForm ctaLabel="Send it" sourcePage={src} />
           </div>
         </div>
       </div>

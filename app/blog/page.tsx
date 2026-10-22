@@ -5,9 +5,9 @@ import { BLOG_POSTS } from "../lib/blog";
 import BlogHub from "./BlogHub";
 
 export const metadata: Metadata = {
-  title: "Simpl Blog | Answers for local businesses growing online",
+  title: { absolute: "Simpl Blog: B2B Buying Signals, Sales Playbooks and Growth Guides" },
   description:
-    "Plain-English answers to the questions local service businesses actually ask about ranking on Google, getting reviews, AI search, and winning online.",
+    "Plain-English answers for high-ticket B2B teams: sales trigger events, public-record prospecting, decision makers and follow-up, plus guides for websites, SEO and Google Business Profiles.",
   alternates: { canonical: "https://www.simpl.pro/blog" },
 };
 

@@ -208,7 +208,7 @@ export default function AuditFlow() {
         </div>
         <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--muted)", margin: "0 0 26px" }}>{error}</p>
         <a
-          href={place && !place.website ? "/start" : "/"}
+          href={place && !place.website ? "/start-now" : "/"}
           className="cta-primary"
           style={{
             display: "inline-flex",

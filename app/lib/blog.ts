@@ -17,6 +17,8 @@
  *  - Every external link points somewhere genuinely authoritative.
  */
 
+import { B2B_POSTS } from "./blog-b2b";
+
 export interface BlogLink {
   label: string;
   href: string;
@@ -53,6 +55,9 @@ export interface BlogPost {
   keyTakeaways: string[];
   /** The pillar/cornerstone post gets the hero slot on the hub. */
   featured?: boolean;
+  /** "b2b" posts (2026-10 revamp) get the Account Engine CTA instead of the
+   *  free-scan CTA. Unset = the original local-business posts. */
+  audience?: "b2b";
   intro: string;
   sections: BlogSection[];
   faqs: BlogFAQ[];
@@ -64,6 +69,9 @@ export interface BlogPost {
  * shelves and the filter bar. Every post's `category` must match a label here.
  */
 export const BLOG_CATEGORIES: { label: string; slug: string; blurb: string }[] = [
+  { label: "Buying Signals", slug: "buying-signals", blurb: "The public records that tell you who is ready to buy, and when." },
+  { label: "B2B Sales Playbooks", slug: "b2b-sales", blurb: "Decision makers, follow-up and the tools behind a B2B pipeline." },
+  { label: "B2B Industries", slug: "b2b-industries", blurb: "How to find and win accounts in specific B2B markets." },
   { label: "Industry Guides", slug: "industry-guides", blurb: "Marketing playbooks written for your trade, not for everyone." },
   { label: "Local SEO", slug: "local-seo", blurb: "Rank in Google Maps and the local 3-pack." },
   { label: "Paid Ads", slug: "paid-ads", blurb: "Google Ads, Local Services Ads, and what actually books jobs." },
@@ -77,7 +85,7 @@ export function categorySlug(label: string): string {
   return BLOG_CATEGORIES.find((c) => c.label === label)?.slug ?? "local-seo";
 }
 
-export const BLOG_POSTS: BlogPost[] = [
+const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-to-rank-higher-on-google-maps",
     title: "How to rank higher on Google Maps (the local 3-pack), explained",
@@ -91,7 +99,6 @@ export const BLOG_POSTS: BlogPost[] = [
     image: "/blog/how-to-rank-higher-on-google-maps.webp",
     imageAlt: "A person holding a phone open to Google Maps on a city street",
     imageCredit: "Theo Decker / Pexels",
-    featured: true,
     keyTakeaways: [
       "Google ranks the local 3-pack on three things: relevance, distance, and prominence.",
       "Distance is mostly fixed, so a complete Google Business Profile and a steady stream of recent reviews are the two levers you actually control.",
@@ -556,7 +563,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "Build a page per service, not one “services” page",
         paragraphs: [
           "Google ranks pages, not businesses. A single page listing “lawn care, landscaping, hardscaping, irrigation” ranks for none of them well. A dedicated page for each, targeting how customers actually search (“paver patio [city],” “lawn fertilization program [city]”), is how you show up across the full range of jobs, including the high-margin design and hardscape work.",
-          "This is the compounding side of [long-term organic growth](/services/organic-growth): each service and location page you publish keeps earning traffic for years. Interlink them so a lawn-care visitor discovers you also do drainage and lighting.",
+          "This is the compounding side of [long-term organic growth](/services/local-seo): each service and location page you publish keeps earning traffic for years. Interlink them so a lawn-care visitor discovers you also do drainage and lighting.",
         ],
       },
       {
@@ -759,7 +766,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "Build pages for services and the towns you serve",
         paragraphs: [
           "One “services” page can't rank for everything. Separate pages for collision repair, dent and scratch repair, auto painting, and frame work, each targeting how customers search, capture far more traffic. Add a page per city or town in your service area with genuinely local content.",
-          "This service-times-location grid is a core [organic growth](/services/organic-growth) play and it compounds. Shop owners compare local-marketing notes in [r/AutoBodyRepair](https://www.reddit.com/r/AutoBodyRepair/); the recurring theme is that reviews plus a real website beat any lead-buying service.",
+          "This service-times-location grid is a core [organic growth](/services/local-seo) play and it compounds. Shop owners compare local-marketing notes in [r/AutoBodyRepair](https://www.reddit.com/r/AutoBodyRepair/); the recurring theme is that reviews plus a real website beat any lead-buying service.",
         ],
       },
     ],
@@ -941,7 +948,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "Separate your residential and commercial message",
         paragraphs: [
           "A homeowner and a general contractor want different things. Residential pages should emphasize speed, safety, licensing, and clear pricing; commercial pages should emphasize capacity, scheduling reliability, code compliance, and past project scale. Trying to serve both on one page dilutes both.",
-          "This is a straightforward [organic growth](/services/organic-growth) play: dedicated service and audience pages rank for their own searches and speak to the right buyer. For commercial work especially, referrals and relationships matter, so make your credibility easy to verify online.",
+          "This is a straightforward [organic growth](/services/local-seo) play: dedicated service and audience pages rank for their own searches and speak to the right buyer. For commercial work especially, referrals and relationships matter, so make your credibility easy to verify online.",
         ],
       },
       {
@@ -999,7 +1006,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "Start with the rule of thumb, then adjust",
         paragraphs: [
           "The [U.S. Small Business Administration](https://www.sba.gov/) has long suggested small businesses budget around 7-8% of revenue for marketing, and a common working range is 5-10% for established businesses, higher when you're actively pushing for growth or entering a new market.",
-          "Treat that as a starting point, not a law. A business with high margins and ambitious growth goals can justify spending more; one with thin margins in a sleepy market should spend carefully and lean on the compounding, lower-cost channels like [organic growth](/services/organic-growth).",
+          "Treat that as a starting point, not a law. A business with high margins and ambitious growth goals can justify spending more; one with thin margins in a sleepy market should spend carefully and lean on the compounding, lower-cost channels like [organic growth](/services/local-seo).",
         ],
       },
       {
@@ -1139,7 +1146,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "Reminders and reviews close the loop",
         paragraphs: [
           "The same system that captures leads should keep customers coming back: appointment reminders that cut no-shows, and an automatic [review request](/blog/how-do-i-get-more-google-reviews) sent the moment a job is done, when satisfaction is highest. Both run without you touching them.",
-          "This is the [lead-capture layer](/services/quick-wins) that sits under everything else. Winning the [search ranking](/blog/how-to-rank-higher-on-google-maps) fills the top of the funnel; automated follow-up seals the bottom so the traffic you worked for actually turns into booked, repeat revenue.",
+          "This is the [lead-capture layer](/services/ai-receptionist) that sits under everything else. Winning the [search ranking](/blog/how-to-rank-higher-on-google-maps) fills the top of the funnel; automated follow-up seals the bottom so the traffic you worked for actually turns into booked, repeat revenue.",
         ],
       },
     ],
@@ -1188,7 +1195,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "The conversion essentials (get these first)",
         paragraphs: [
           "Every page needs an obvious way to contact you: a click-to-call phone number in the header (tappable on mobile), a short quote form, and your service area stated clearly. If a visitor has to hunt for how to reach you, you've lost them. Promise-based calls to action (“Get your free estimate”) beat generic ones (“Submit”).",
-          "Speed is a conversion factor, not just an SEO one: a page that takes more than about three seconds to load on a phone loses a large share of visitors before they see anything. Check yours with Google's [PageSpeed Insights](https://pagespeed.web.dev/), most service sites have room to improve, and it's a core part of our [quick wins service](/services/quick-wins).",
+          "Speed is a conversion factor, not just an SEO one: a page that takes more than about three seconds to load on a phone loses a large share of visitors before they see anything. Check yours with Google's [PageSpeed Insights](https://pagespeed.web.dev/), most service sites have room to improve, and it's a core part of our [free website audit](/free-tools).",
         ],
       },
       {
@@ -1201,7 +1208,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Structure for Google and AI: pages and schema",
         paragraphs: [
-          "One page can't rank for everything. Build a dedicated page for each service and each city you serve, targeting how customers actually search, this is the [organic growth](/services/organic-growth) foundation, and it's why a business [doesn't show up on Google](/blog/why-is-my-website-not-showing-up-on-google) when everything's crammed onto one page.",
+          "One page can't rank for everything. Build a dedicated page for each service and each city you serve, targeting how customers actually search, this is the [organic growth](/services/local-seo) foundation, and it's why a business [doesn't show up on Google](/blog/why-is-my-website-not-showing-up-on-google) when everything's crammed onto one page.",
           "Add [structured data](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) (schema markup) so machines understand your business, services, service area, hours, and reviews without guessing. It's what helps you appear in rich results and, increasingly, in [AI search recommendations](/blog/how-to-get-your-business-recommended-by-ai). Finish with a sitemap and clean indexing so Google can find every page.",
         ],
       },
@@ -1227,6 +1234,9 @@ export const BLOG_POSTS: BlogPost[] = [
     ],
   },
 ];
+
+/** B2B posts first: they're the new positioning's content. */
+export const BLOG_POSTS: BlogPost[] = [...B2B_POSTS, ...LOCAL_POSTS];
 
 export function getPost(slug: string): BlogPost | undefined {
   return BLOG_POSTS.find((p) => p.slug === slug);

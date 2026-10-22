@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs>
+<radialGradient id="g" cx="85%" cy="0%" r="90%"><stop offset="0" stop-color="#89CFF0" stop-opacity="0.32"/><stop offset="0.6" stop-color="#89CFF0" stop-opacity="0"/></radialGradient>
+<pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#1D2023" stroke-width="1"/></pattern>
+</defs>
+<rect width="1600" height="900" fill="#0B0C0D"/>
+<rect width="1600" height="900" fill="url(#grid)"/>
+<rect width="1600" height="900" fill="url(#g)"/>
+<text x="110" y="190" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="30" letter-spacing="6" fill="#89CFF0">B2B INDUSTRIES</text>
+<text x="104" y="320" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="104" font-weight="700" letter-spacing="-3" fill="#F3F2ED">Low voltage leads,</text>
+<text x="104" y="438" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="104" font-weight="700" letter-spacing="-3" fill="#F3F2ED">found first</text>
+<rect x="110" y="640" rx="30" width="153" height="60" fill="none" stroke="#3A3E41" stroke-width="2"/>
+<text x="127" y="679" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="26" fill="#ADACA7">Permits</text>
+<rect x="281" y="640" rx="30" width="289" height="60" fill="none" stroke="#3A3E41" stroke-width="2"/>
+<text x="298" y="679" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="26" fill="#ADACA7">E-Rate Form 470</text>
+<rect x="588" y="640" rx="30" width="272" height="60" fill="none" stroke="#3A3E41" stroke-width="2"/>
+<text x="605" y="679" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="26" fill="#ADACA7">Property sales</text>
+<rect x="878" y="640" rx="30" width="187" height="60" fill="none" stroke="#3A3E41" stroke-width="2"/>
+<text x="895" y="679" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="26" fill="#ADACA7">Citations</text>
+<circle cx="1452" cy="790" r="12" fill="#89CFF0"/>
+<text x="1428" y="802" text-anchor="end" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#F3F2ED">Simpl</text>
+</svg>

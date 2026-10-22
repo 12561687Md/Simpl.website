@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import { BLOG_POSTS, getPost } from "../../lib/blog";
 import { RichText } from "../RichText";
 import ContactForm from "../../components/ContactForm";
+import { GROWTH_SERVICES, EASY_WINS, INDUSTRIES } from "../../lib/site";
 
 const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
 
@@ -36,6 +37,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
 
   const url = `https://www.simpl.pro/blog/${post.slug}`;
+  // B2B posts sell the Account Engine; the original local posts keep the scan.
+  const b2b = post.audience === "b2b";
+  const cta = b2b
+    ? { mid: "Want these signals tracked for your own territory? We'll build your top 25 accounts, with the record behind each one.", midBtn: "See your top 25 accounts →", href: "/top-25", h: "See who's ready to buy in your market.", p: "Tell us what you sell and where. We'll build a free 25-account sample with the reason to call, the record and who decides for each.", btn: "See your top 25 accounts →" }
+    : { mid: "Want this checked on your own site? The free Simpl scan finds exactly which of these is holding you back.", midBtn: "Run the free scan →", href: "/free-tools", h: "Want to know how your business actually scores?", p: "The free scan shows exactly where you stand on everything above, in about 60 seconds. No credit card, no call required.", btn: "Run my free scan →" };
 
   // Cluster interlinking: other posts in the same category, then fill from the
   // rest so there are always sibling links for crawlers to follow.
@@ -63,7 +69,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 datePublished: post.updated,
                 dateModified: post.updated,
                 mainEntityOfPage: url,
-                author: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
+                author: { "@type": "Person", name: "Matt DuBois", url: "https://www.simpl.pro/about" },
                 publisher: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
               },
               {
@@ -109,7 +115,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={post.image} alt={post.imageAlt} style={{ width: "100%", aspectRatio: "16 / 9", objectFit: "cover", borderRadius: 12, display: "block" }} />
             <figcaption className="mono" style={{ marginTop: 8, fontSize: 10.5, letterSpacing: "0.06em", color: "var(--fg-dim)", textTransform: "uppercase" }}>
-              Photo: {post.imageCredit}
+              {b2b ? "Graphic" : "Photo"}: {post.imageCredit}
             </figcaption>
           </figure>
 
@@ -143,10 +149,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               {si === 1 && (
                 <div style={{ margin: "8px 0 4px", padding: "20px 22px", borderRadius: 10, border: "1px solid var(--rule-strong)", background: "var(--bg-soft)", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
                   <span style={{ fontSize: 15.5, lineHeight: 1.5, maxWidth: 420 }}>
-                    Want this checked on your own site? The free Simpl scan finds exactly which of these is holding you back.
+                    {cta.mid}
                   </span>
-                  <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "11px 20px", fontSize: 14, fontWeight: 600, borderRadius: 999, whiteSpace: "nowrap" }}>
-                    Run the free scan →
+                  <Link href={cta.href} className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "11px 20px", fontSize: 14, fontWeight: 600, borderRadius: 999, whiteSpace: "nowrap" }}>
+                    {cta.midBtn}
                   </Link>
                 </div>
               )}
@@ -187,14 +193,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {/* Conversion CTA */}
           <section style={{ marginTop: 56, padding: "32px 30px", borderRadius: 12, border: "1px solid var(--accent)", background: "linear-gradient(180deg, var(--bg-soft), var(--bg))", boxShadow: "0 16px 48px -30px var(--accent)" }}>
             <h2 style={{ margin: "0 0 10px", fontSize: 22, fontWeight: 600, letterSpacing: "-0.02em" }}>
-              Want to know how your business actually scores?
+              {cta.h}
             </h2>
             <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.6, color: "var(--muted)", maxWidth: 520 }}>
-              The free scan shows exactly where you stand on everything above, in about 60 seconds. No credit card, no call required.
+              {cta.p}
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/start-now" className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "13px 24px", fontSize: 14, fontWeight: 700, borderRadius: 999, textDecoration: "none" }}>
-                Run my free scan →
+              <Link href={cta.href} className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "13px 24px", fontSize: 14, fontWeight: 700, borderRadius: 999, textDecoration: "none" }}>
+                {cta.btn}
               </Link>
               <a href="tel:+19194289452" style={{ display: "inline-flex", alignItems: "center", color: "var(--fg)", padding: "12px 22px", fontSize: 14, border: "1px solid var(--rule-strong)", borderRadius: 999, textDecoration: "none" }}>
                 (919) 428-9452
@@ -231,16 +237,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <div style={{ border: "1px solid var(--rule)", background: "var(--bg-soft)", borderRadius: 14, padding: "16px 16px" }}>
               <div className="mono" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>Related services</div>
               <div style={{ display: "grid", gap: 1 }}>
-                {[
-                  { label: "Custom Website", href: "/services/website-build" },
-                  { label: "Quick Wins & Site Triage", href: "/services/quick-wins" },
-                  { label: "Local SEO & AI Visibility", href: "/services/local-seo" },
-                  { label: "Google Business Profile", href: "/services/google-business-profile" },
-                  { label: "CRM & AI Automation", href: "/services/ai-quoting-agent" },
-                  { label: "Paid Performance Marketing", href: "/services/paid-ads" },
-                  { label: "Long-Term Organic Growth", href: "/services/organic-growth" },
-                  { label: "Fractional CMO & Strategy", href: "/services/strategy" },
-                ].map((s) => (
+                {(b2b ? [...GROWTH_SERVICES, ...INDUSTRIES.slice(0, 3)] : [...EASY_WINS, ...GROWTH_SERVICES.slice(0, 1)]).map((s) => (
                   <Link key={s.href} href={s.href} className="blog-svc-link" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, padding: "8px 6px", borderRadius: 8, textDecoration: "none", color: "var(--fg)", fontSize: 13.5, lineHeight: 1.3 }}>
                     <span>{s.label}</span>
                     <span aria-hidden="true" style={{ color: "var(--accent)" }}>→</span>
@@ -249,8 +246,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </div>
             </div>
             <div style={{ border: "1px solid var(--accent-line)", borderRadius: 14, background: "linear-gradient(180deg, rgba(137,207,240,0.09), rgba(137,207,240,0.02))", boxShadow: "0 30px 70px -42px rgba(137,207,240,0.55)", padding: "16px" }}>
-              <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 10 }}>Tell us what&apos;s going on</div>
-              <ContactForm compact ctaLabel="Fix my business" sourcePage={`/blog/${post.slug}`} />
+              <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 10 }}>{b2b ? "Tell us what you sell and where" : "Tell us what's going on"}</div>
+              <ContactForm compact ctaLabel={b2b ? "Send it" : "Fix my business"} sourcePage={`/blog/${post.slug}`} />
             </div>
           </div>
         </aside>
