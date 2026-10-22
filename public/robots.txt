@@ -1,12 +1,37 @@
 # *
 User-agent: *
 Allow: /
-
-# *
-User-agent: *
 Disallow: /results
 Disallow: /audit
 Disallow: /api/
+
+# GPTBot
+User-agent: GPTBot
+Allow: /
+
+# ChatGPT-User
+User-agent: ChatGPT-User
+Allow: /
+
+# OAI-SearchBot
+User-agent: OAI-SearchBot
+Allow: /
+
+# ClaudeBot
+User-agent: ClaudeBot
+Allow: /
+
+# Claude-SearchBot
+User-agent: Claude-SearchBot
+Allow: /
+
+# PerplexityBot
+User-agent: PerplexityBot
+Allow: /
+
+# Google-Extended
+User-agent: Google-Extended
+Allow: /
 
 # Host
 Host: https://www.simpl.pro

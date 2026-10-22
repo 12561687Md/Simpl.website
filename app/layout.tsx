@@ -55,11 +55,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Simpl | Custom Growth Engines for High-Ticket B2B Companies",
-    template: "%s · Simpl",
+    default: "B2B Lead Generation Company | Simpl Account Engine",
+    template: "%s | Simpl",
   },
   description:
-    "Simpl builds your own growth portal: every account in your market scored nightly from the public record, with the reason to call, the proof and who signs. Plus CRM, follow-up and a 24/7 AI receptionist.",
+    "Simpl is a B2B lead generation company. Your Account Engine reads public records nightly and tells your team who to call, why now and who decides.",
   /* WWW, AND IT MUST MATCH THE REDIRECT.
    *
    * This was the apex, https://www.simpl.pro, while Vercel 308-redirects the apex
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Simpl",
     url: "https://www.simpl.pro",
-    images: [{ url: "/brand/simpl-cover-1200x675.png", width: 1200, height: 675, alt: "Simpl, custom growth engines for B2B companies" }],
+    images: [{ url: "/brand/simpl-cover-1200x675.png", width: 1200, height: 675, alt: "Simpl, B2B lead generation from the public record" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -361,7 +361,7 @@ body { overflow-x: hidden; position: relative; }
   background: var(--accent);
   transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
   box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 8px 28px -16px var(--accent);
-  animation: cta-jump 1.5s ease-in-out infinite;
+  /* bounce removed 2026-10-22: premium, restrained */
 }
 .cta-primary:hover {
   transform: translateY(-1px);

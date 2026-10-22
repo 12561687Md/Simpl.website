@@ -4,16 +4,20 @@ import StartSearch from "./StartSearch";
 import StartLeadCard from "./StartLeadCard";
 import WildgroveShot from "./WildgroveShot";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
+import { breadcrumb, webPage, ldJson } from "../lib/schema";
 
 export const metadata: Metadata = {
-  title: "Fix your business | Simpl",
-  description: "Find your business and start your free demo, or contact us directly. Real people reply the same business day.",
+  title: { absolute: "Find Your Business and Start a Free Website Audit | Simpl" },
+  description: "Find your business on Google and start a free website audit, or contact us directly. Real people reply the same business day.",
   alternates: { canonical: "https://www.simpl.pro/start-now" },
+  // Conversion landing page for the local door; /free-tools is the indexed page for this intent.
+  robots: { index: false, follow: true },
 };
 
 export default function FixYourBusinessPage() {
   return (
     <main className="start-split">
+      <script type="application/ld+json" dangerouslySetInnerHTML={ldJson(webPage({ path: "/start-now", name: "Find Your Business and Start a Free Website Audit", description: "Find your business on Google and start a free website audit." }), breadcrumb([{ name: "Free website audit", path: "/free-tools" }, { name: "Find your business", path: "/start-now" }]))} />
       {/* LEFT: logo pinned to the top (centered, big) -> render -> search -> copy */}
       <section className="start-panel start-left" style={{ textAlign: "center", justifyContent: "flex-start", paddingTop: 28 }}>
         <Link href="/" aria-label="Simpl home" style={{ display: "inline-flex", justifyContent: "center", marginBottom: 22 }}>

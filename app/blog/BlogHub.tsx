@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { Crumbs } from "../components/engine/ui";
 import { BLOG_CATEGORIES, categorySlug, type BlogPost } from "../lib/blog";
 import ScrollReveal from "../components/ScrollReveal";
 
@@ -60,19 +61,17 @@ export default function BlogHub({ posts }: { posts: BlogPost[] }) {
   return (
     <>
       {/* Hero */}
-      <section style={{ maxWidth: 1120, margin: "0 auto", padding: "128px 32px 32px" }}>
-        <ScrollReveal>
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 20 }}>
-            The Simpl blog
-          </div>
-          <h1 style={{ margin: 0, fontSize: "clamp(34px, 5vw, 58px)", lineHeight: 1.05, letterSpacing: "-0.03em", fontWeight: 600, maxWidth: 820 }}>
-            Straight answers to the questions you&apos;re already Googling.
+      <section style={{ maxWidth: 1120, margin: "0 auto", padding: "164px 32px 32px" }}>
+        <div>
+          <Crumbs schema={false} items={[{ name: "Blog", path: "/blog" }]} />
+          <h1 style={{ margin: 0, fontSize: "clamp(34px, 5vw, 58px)", lineHeight: 1.05, letterSpacing: "-0.035em", fontWeight: 650, maxWidth: 900 }}>
+            B2B prospecting and local SEO guides. <span style={{ color: "var(--accent)" }}>Straight answers.</span>
           </h1>
           <p style={{ margin: "22px 0 0", maxWidth: 640, fontSize: 17, lineHeight: 1.6, color: "var(--muted)" }}>
             No jargon, no fluff. How B2B teams find the accounts ready to buy, reach the people who sign and follow up until they answer,
             plus our guides on websites, SEO and Google. Every post links to its primary sources so you can check our work.
           </p>
-        </ScrollReveal>
+        </div>
 
         {/* Search + category filter bar */}
         <div style={{ marginTop: 36, display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
@@ -190,18 +189,14 @@ export default function BlogHub({ posts }: { posts: BlogPost[] }) {
         <ScrollReveal>
           <div style={{ borderRadius: 18, border: "1px solid var(--accent-line)", background: "linear-gradient(180deg, var(--bg-soft), var(--bg))", padding: "clamp(36px, 6vw, 64px)", textAlign: "center" }}>
             <h2 style={{ margin: "0 auto 14px", fontSize: "clamp(24px, 3.4vw, 40px)", fontWeight: 600, letterSpacing: "-0.025em", lineHeight: 1.12, maxWidth: 640 }}>
-              Stop reading about it. See where your business actually stands.
+              Stop reading about it. See it on your own market.
             </h2>
-            <p style={{ margin: "0 auto 28px", fontSize: 17, lineHeight: 1.6, color: "var(--muted)", maxWidth: 540 }}>
-              The free Simpl scan grades your whole online presence in about 60 seconds. No credit card, no call required.
+            <p style={{ margin: "0 auto 28px", fontSize: 17, lineHeight: 1.6, color: "var(--muted)", maxWidth: 560 }}>
+              Selling B2B? We build a sample of your top prospects with the reason and the record for each. Selling locally? The free website audit scores your site in about 60 seconds.
             </p>
-            <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="/start-now" className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "14px 28px", fontSize: 15, fontWeight: 600, borderRadius: 999 }}>
-                Run my free scan →
-              </Link>
-              <a href="tel:+19194289452" style={{ color: "var(--fg)", textDecoration: "none", padding: "13px 26px", fontSize: 15, border: "1px solid var(--rule-strong)", borderRadius: 999 }}>
-                (919) 428-9452
-              </a>
+            <div className="tone-ink" style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", background: "transparent" }}>
+              <Link href="/top-prospects" className="eg-btn primary">See your top prospects <span aria-hidden="true">&rarr;</span></Link>
+              <Link href="/free-tools" className="eg-btn ghost">Get your free website audit</Link>
             </div>
           </div>
         </ScrollReveal>

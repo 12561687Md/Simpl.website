@@ -1,11 +1,16 @@
 /**
- * One source of truth for the revamped site's structure (2026-10-22 revamp).
+ * One source of truth for the site's structure (revamp 2026-10-22).
  *
- * Header, footer, hubs, sitemap-adjacent links and JSON-LD all read from here,
- * so a renamed service or a new industry changes in exactly one place.
- * Positioning: Simpl builds custom growth portals for high-ticket B2B companies
- * (the Account Engine), plus CRM and follow-up and an AI receptionist. Websites,
- * SEO, GBP and ads are the secondary "easy wins".
+ * Header, footer, hubs, related links and JSON-LD all read from here, so a
+ * renamed service or a new industry changes in exactly one place.
+ *
+ * Positioning: Simpl is a client acquisition partner for B2B companies. Door
+ * one is the Account Engine (a private portal that reads the public record and
+ * tells a sales team who to call, why now and who decides). Door two is local
+ * SEO and websites for service businesses.
+ *
+ * Prices are deliberately NOT on the site (Matt, 2026-10-22). Every engagement
+ * is scoped on a call.
  */
 
 export const SITE = {
@@ -15,7 +20,9 @@ export const SITE = {
   phone: "(919) 428-9452",
   phoneHref: "tel:+19194289452",
   city: "Raleigh, NC",
-  primaryCta: { label: "See your top 25 accounts", href: "/top-25" },
+  primaryCta: { label: "See your top prospects", href: "/top-prospects" },
+  book: { label: "Book a call", href: "/book" },
+  login: { label: "Client login", href: "/login" },
 } as const;
 
 export interface NavItem {
@@ -24,84 +31,43 @@ export interface NavItem {
   desc: string;
 }
 
-/** The money: custom growth portals and what runs on them. */
+/** Door one: the B2B client acquisition stack. */
 export const GROWTH_SERVICES: NavItem[] = [
   { href: "/services/account-engine", label: "Account Engine", desc: "Who to call this week, with proof" },
   { href: "/services/crm-follow-up", label: "CRM & follow-up", desc: "Every good account, followed up" },
-  { href: "/services/ai-receptionist", label: "AI receptionist & 24/7 support", desc: "Every call answered, any hour" },
+  { href: "/services/ai-receptionist", label: "AI receptionist", desc: "Every call answered, any hour" },
 ];
 
-/** The easy wins: still sold, never the lead. */
-export const EASY_WINS: NavItem[] = [
+/** Door two: local SEO and websites for service businesses. */
+export const LOCAL_SERVICES: NavItem[] = [
+  { href: "/services/local-seo", label: "Local SEO", desc: "Found on Google Maps and in AI answers" },
   { href: "/services/website-build", label: "Websites", desc: "Fast, findable, built to convert" },
-  { href: "/services/local-seo", label: "SEO & AI search", desc: "Found on Google and in AI answers" },
   { href: "/services/google-business-profile", label: "Google Business Profile", desc: "Own the map listing" },
-  { href: "/services/paid-ads", label: "Paid ads", desc: "Google and Meta, no markup" },
+  { href: "/services/paid-ads", label: "PPC management", desc: "Google and Meta ads, no markup" },
 ];
+
+/** Kept for older imports. */
+export const EASY_WINS = LOCAL_SERVICES;
 
 export const INDUSTRIES: (NavItem & { slug: string })[] = [
-  { slug: "low-voltage-security", href: "/industries/low-voltage-security", label: "Low voltage, security & telecom", desc: "Integrators, access control, cabling" },
+  { slug: "low-voltage-security", href: "/industries/low-voltage-security", label: "Low voltage & security", desc: "Integrators, access control, cabling" },
   { slug: "senior-living-technology", href: "/industries/senior-living-technology", label: "Senior living technology", desc: "Nurse call, networks, resident tech" },
   { slug: "building-systems", href: "/industries/building-systems", label: "Building systems", desc: "Fire protection, HVAC, elevators" },
-  { slug: "facility-services", href: "/industries/facility-services", label: "Facility services", desc: "Cleaning, maintenance, property services" },
+  { slug: "facility-services", href: "/industries/facility-services", label: "Facility services", desc: "Commercial cleaning, maintenance" },
   { slug: "healthcare-technology", href: "/industries/healthcare-technology", label: "Healthcare technology", desc: "Medical equipment, healthcare IT" },
 ];
 
+export const CASE_STUDY = { href: "/case-studies/noovis", label: "Noovis case study", desc: "A network integrator's Account Engine" };
+
 export const RESOURCES: NavItem[] = [
-  { href: "/blog", label: "Blog", desc: "B2B growth playbooks" },
+  { href: CASE_STUDY.href, label: "Case study: Noovis", desc: CASE_STUDY.desc },
+  { href: "/blog", label: "Blog", desc: "B2B prospecting playbooks" },
+  { href: "/free-tools", label: "Free website audit", desc: "For local service businesses" },
   { href: "/faq", label: "FAQ", desc: "Straight answers" },
-  { href: "/about", label: "About Simpl", desc: "Who builds it and why" },
 ];
 
-/** Account Engine pricing. Mirrors Simpl.master/brand/pricing/simpl-engine-pricing.html. */
-export const PLANS = [
-  {
-    id: "base",
-    name: "Account Engine",
-    monthly: 1000,
-    setup: 10000,
-    tag: "Your market, researched every night, in a portal that's yours.",
-    replaces: [
-      ["Research / business development hire", "$5,000+/mo"],
-      ["Data and contact tools", "$1,250+/mo"],
-      ["An outbound agency", "$3,000-10,000/mo"],
-    ] as [string, string][],
-    featLead: "What you get",
-    features: [
-      { b: "Your own portal.", t: "Your brand, your address, your team's logins" },
-      { b: "Your whole market scored nightly", t: "from inspections, permits, licenses, new owners and budget cycles" },
-      { b: "A daily game plan.", t: "Today's best calls, follow-ups due, what changed overnight" },
-      { b: "Who decides, found on demand,", t: "confirmed from public sources" },
-      { b: "Proof on every fact,", t: "linked to the official record" },
-      { b: "Lists, pipeline, notes and exports", t: "for the whole team" },
-    ],
-    cta: { label: "See your top 25 accounts", href: "/top-25?plan=base" },
-  },
-  {
-    id: "pro",
-    name: "Account Engine Pro",
-    monthly: 2500,
-    setup: 15000,
-    badge: "Most complete",
-    tag: "Everything in Account Engine, plus the follow-up, the phones and the reach to close it.",
-    replaces: [
-      ["Everything in Account Engine", "$6,250+/mo"],
-      ["CRM + follow-up sequences, set up and run", "$800+/mo"],
-      ["24/7 answering and support line", "$1,000+/mo"],
-      ["Researcher on call for any account", "$2,000+/mo"],
-    ] as [string, string][],
-    featLead: "Everything in Account Engine, plus",
-    features: [
-      { b: "Any territory, up to nationwide,", t: "with multiple markets and states" },
-      { b: "Custom reasons to call", t: "built around how you sell, from new data sources" },
-      { b: "Overnight research", t: "on your top accounts, every night" },
-      { b: "CRM and follow-up:", t: "email, wait, call, follow up until they reply, in your CRM or ours", soon: true },
-      { b: "24/7 answering and support line", t: "for your customers", soon: true },
-      { b: "Ask your engine", t: "anything, in plain English", soon: true },
-      { b: "A monthly strategy call", t: "and priority support" },
-    ],
-    cta: { label: "Map your market with us", href: "/top-25?plan=pro" },
-  },
-] as const;
-
-export const money = (n: number) => `$${n.toLocaleString("en-US")}`;
+export const COMPANY: NavItem[] = [
+  { href: "/about", label: "About Simpl", desc: "Who builds it and why" },
+  { href: "/book", label: "Book a call", desc: "30 minutes, no pitch deck" },
+  { href: "/login", label: "Client login", desc: "Go to your portal" },
+];

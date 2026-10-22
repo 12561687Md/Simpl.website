@@ -118,7 +118,7 @@ export function confirmationEmailHtml(params: {
             </div>
 
             <div style="font-size:13px;color:${EMAIL.MUTED};line-height:1.65;padding-top:20px;">
-              In the meantime, ${textLink("https://www.simpl.pro/start", "here is what working with us looks like")} and what it costs. No surprises on the call.
+              In the meantime, ${textLink("https://www.simpl.pro/services", "here is what working with us looks like")}. No surprises on the call.
             </div>
   `;
 

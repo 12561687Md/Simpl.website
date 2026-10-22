@@ -1,23 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Section, Eyebrow, QA, Ctas, FinalCta, Crumbs } from "../components/engine/ui";
+import { Section, QA, Hero, FinalCta } from "../components/engine/ui";
 import { INDUSTRY_DATA } from "../lib/industries";
-import { SITE } from "../lib/site";
-import { breadcrumb, ldJson } from "../lib/schema";
+import { webPage, itemList, ldJson, pageMeta } from "../lib/schema";
 
-const TITLE = "Industries: Growth Engines for High-Ticket B2B Companies | Simpl";
+/* Primary keyword: "commercial leads" (90/mo). Secondary: commercial sales leads by industry. */
+const PATH = "/industries";
+const TITLE = "Commercial Leads by Industry, From Public Records | Simpl";
 const DESCRIPTION =
-  "The Account Engine is built for B2B companies that sell to buildings, facilities and regulated businesses: low voltage and security, senior living technology, building systems, facility services, healthcare technology and more.";
+  "Commercial leads for teams that sell to buildings and facilities: low voltage, senior living, building systems, facility services and healthcare.";
 
-export const metadata: Metadata = {
-  title: { absolute: TITLE },
-  description: DESCRIPTION,
-  openGraph: { images: OG_IMAGE, title: TITLE, description: DESCRIPTION, url: "https://www.simpl.pro/industries" },
-  alternates: { canonical: "https://www.simpl.pro/industries" },
-};
+export const metadata: Metadata = pageMeta({ path: PATH, title: TITLE, description: DESCRIPTION });
 
 const ALSO = [
   "Manufacturers and distributors selling into facilities",
@@ -35,52 +30,57 @@ export default function IndustriesHub() {
       <main>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={ldJson(breadcrumb([{ name: "Industries", path: "/industries" }]), {
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: "Industries Simpl builds for",
-            itemListElement: INDUSTRY_DATA.map((i, n) => ({ "@type": "ListItem", position: n + 1, name: i.name, url: `${SITE.url}/industries/${i.slug}` })),
-          })}
+          dangerouslySetInnerHTML={ldJson(
+            webPage({ path: PATH, name: TITLE, description: DESCRIPTION, type: "CollectionPage" }),
+            itemList("Industries", INDUSTRY_DATA.map((i) => ({ name: i.name, path: `/industries/${i.slug}` })))
+          )}
         />
-        <section className="eg-hero" style={{ paddingBottom: 40 }}>
-          <div className="eg-wrap">
-            <Crumbs items={[{ name: "Industries", path: "/industries" }]} />
-            <Eyebrow>Industries</Eyebrow>
-            <h1 className="eg-h1" style={{ maxWidth: 1000 }}>
-              Built for companies whose buyers <span className="dim">leave a public paper trail.</span>
-            </h1>
-            <p className="eg-lead">
-              If you sell high-ticket products, long-lasting services or big contracts to buildings, facilities and regulated businesses, your buyers are
-              inspected, permitted, licensed and sold. Every one of those events is a reason to call.
-            </p>
-            <Ctas />
-          </div>
-        </section>
 
-        <Section>
-          <QA eyebrow="Industries" q="Which industries does the Account Engine work for?" a="Any B2B company whose next deal is announced somewhere official first. These are the markets we build for most." />
+        <Hero
+          crumbs={[{ name: "Industries", path: PATH }]}
+          eyebrow="Industries"
+          h1={<>Commercial leads for teams that sell to <em>buildings and facilities.</em></>}
+          sub="If your buyers leave a public paper trail, we can rank them."
+          lead="Inspections, permits, licenses, ownership changes and bids are all public. Each industry below has its own reasons to call and its own decision makers, and every Account Engine is built around yours."
+        />
+
+        <Section tone="paper" label="Industries">
           <div className="eg-g3">
             {INDUSTRY_DATA.map((i) => (
               <Link key={i.slug} href={`/industries/${i.slug}`} className="eg-card link">
-                <div className="mono" style={{ fontSize: 10.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>{i.eyebrow}</div>
-                <h2 className="eg-h3" style={{ fontSize: 21 }}>{i.h1} {i.h1Dim}</h2>
-                <p className="eg-body" style={{ fontSize: 15 }}>{i.signals.slice(0, 3).map((s) => s.h).join(" · ")}</p>
-                <span className="go">See how it works <span aria-hidden="true">&rarr;</span></span>
+                <span className="mono-label" style={{ display: "block", marginBottom: 12 }}>{i.eyebrow}</span>
+                <h2 className="eg-h3" style={{ fontSize: 21 }}>{i.name}</h2>
+                <p className="eg-body" style={{ fontSize: 15 }}>{i.sub}</p>
+                <span className="go">See the signals <span aria-hidden="true">&rarr;</span></span>
               </Link>
             ))}
+            <div className="eg-card">
+              <span className="mono-label" style={{ display: "block", marginBottom: 12 }}>Also</span>
+              <h2 className="eg-h3" style={{ fontSize: 21 }}>Other B2B markets</h2>
+              <ul className="eg-list" style={{ gap: 8 }}>
+                {ALSO.map((a) => (
+                  <li key={a} style={{ fontSize: 14.5 }}><span>{a}</span></li>
+                ))}
+              </ul>
+            </div>
           </div>
         </Section>
 
-        <Section band>
-          <QA eyebrow="Also a fit" q="Don't see your industry?" a="If one new account is worth $50,000 or more to you and your buyers show up in public records, it probably works. We'll confirm it with your own top 25 before you pay anything." />
-          <ul className="eg-list" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
-            {ALSO.map((a) => <li key={a}><span>{a}</span></li>)}
-          </ul>
+        <Section tone="deep" label="How we decide fit">
+          <QA
+            eyebrow="Is your market a fit?"
+            q="Three questions decide it."
+            a="Do your buyers show up in a public record (licenses, inspections, permits, property or procurement)? Is one new account worth a lot to you? Do you sell over weeks or months, not minutes? Three yeses and the engine will find you calls worth making."
+          />
+          <div className="eg-links">
+            <Link href="/services/account-engine" className="eg-link">How the Account Engine works &rarr;</Link>
+            <Link href="/case-studies/noovis" className="eg-link">See it running for a network integrator &rarr;</Link>
+          </div>
         </Section>
 
         <FinalCta />
       </main>
-      <Footer showLeadForm={false} />
+      <Footer />
     </div>
   );
 }

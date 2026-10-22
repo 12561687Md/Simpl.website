@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { Crumbs } from "../components/engine/ui";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Simpl",
+  title: { absolute: "Privacy Policy: How Simpl Handles Your Data | Simpl" },
   description:
     "How Simpl collects, uses, and protects your information. We never sell your data.",
   openGraph: {
@@ -64,21 +65,10 @@ export default function PrivacyPage() {
           style={{
             maxWidth: 1120,
             margin: "0 auto",
-            padding: "120px 32px 64px",
+            padding: "160px 32px 64px",
           }}
         >
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--muted)",
-              marginBottom: 40,
-            }}
-          >
-            Legal
-          </div>
+          <Crumbs schema={false} items={[{ name: "Privacy Policy", path: "/privacy" }]} />
           <h1
             style={{
               margin: 0,

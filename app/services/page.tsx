@@ -1,97 +1,101 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Section, Eyebrow, QA, Ctas, FinalCta, Crumbs } from "../components/engine/ui";
-import { GROWTH_SERVICES, EASY_WINS, SITE } from "../lib/site";
-import { breadcrumb, ldJson } from "../lib/schema";
+import { Section, QA, Hero, FinalCta, Versus } from "../components/engine/ui";
+import { GROWTH_SERVICES, LOCAL_SERVICES } from "../lib/site";
+import { webPage, itemList, ldJson, pageMeta } from "../lib/schema";
 
-const TITLE = "Services: Account Engine, CRM, AI Receptionist, Websites and SEO | Simpl";
+/* Primary keyword: "B2B lead generation services" (390/mo, KD 33).
+   Secondary: lead generation services, outbound lead generation. */
+const PATH = "/services";
+const TITLE = "B2B Lead Generation Services and Local SEO | Simpl";
 const DESCRIPTION =
-  "The growth stack for high-ticket B2B companies: the Account Engine, CRM and follow-up, and a 24/7 AI receptionist. Plus websites, SEO and AI search, Google Business Profile and paid ads.";
+  "B2B lead generation services built on public records: the Account Engine, CRM follow-up and an AI receptionist. Plus local SEO and websites.";
 
-export const metadata: Metadata = {
-  title: { absolute: TITLE },
-  description: DESCRIPTION,
-  openGraph: { images: OG_IMAGE, title: TITLE, description: DESCRIPTION, url: "https://www.simpl.pro/services" },
-  alternates: { canonical: "https://www.simpl.pro/services" },
-};
+export const metadata: Metadata = pageMeta({ path: PATH, title: TITLE, description: DESCRIPTION });
 
-const GROWTH_DETAIL: Record<string, string> = {
-  "/services/account-engine": "Your own portal: every account in your market scored nightly from the public record, with the reason, the proof and who decides.",
-  "/services/crm-follow-up": "Every account worth a call flows into your CRM with the sequence running: email, wait, call, follow up until they reply.",
+const DETAIL: Record<string, string> = {
+  "/services/account-engine": "Your own portal: every account in your market scored nightly from the public record, with the reason, the source and who decides.",
+  "/services/crm-follow-up": "Every account worth a call lands in your CRM with the sequence running: email, wait, call, follow up until they reply.",
   "/services/ai-receptionist": "Calls and tickets answered at any hour from your own guides, with urgent issues paged to whoever is on duty.",
-};
-const EASY_DETAIL: Record<string, string> = {
-  "/services/website-build": "Fast, findable sites with the schema, speed and calls to action that turn visits into conversations.",
-  "/services/local-seo": "Rank in Google and get cited in AI answers for the searches your buyers actually make.",
+  "/services/local-seo": "Show up in the Google Maps 3-pack and in AI answers for the searches your customers make.",
+  "/services/website-build": "Fast, findable websites with the schema, speed and calls to action that turn visits into calls.",
   "/services/google-business-profile": "A complete, active profile that wins the map listing and the click.",
   "/services/paid-ads": "Google and Meta campaigns with real conversion tracking. You own the account, no markup on spend.",
 };
 
 export default function ServicesHub() {
-  const all = [...GROWTH_SERVICES, ...EASY_WINS];
   return (
     <div>
       <Header />
       <main>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={ldJson(breadcrumb([{ name: "Services", path: "/services" }]), {
-            "@context": "https://schema.org",
-            "@type": "ItemList",
-            name: "Simpl services",
-            itemListElement: all.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: s.label, url: `${SITE.url}${s.href}` })),
-          })}
+          dangerouslySetInnerHTML={ldJson(
+            webPage({ path: PATH, name: TITLE, description: DESCRIPTION, type: "CollectionPage" }),
+            itemList("Simpl services", [...GROWTH_SERVICES, ...LOCAL_SERVICES].map((s) => ({ name: s.label, path: s.href })))
+          )}
         />
-        <section className="eg-hero" style={{ paddingBottom: 40 }}>
-          <div className="eg-wrap">
-            <Crumbs items={[{ name: "Services", path: "/services" }]} />
-            <Eyebrow>Services</Eyebrow>
-            <h1 className="eg-h1" style={{ maxWidth: 980 }}>
-              Find the accounts. Follow every one up. <span className="dim">Answer every call.</span>
-            </h1>
-            <p className="eg-lead">
-              Three builds make the money: the Account Engine, CRM and follow-up, and a 24/7 receptionist. The easy wins, websites, SEO, Google Business
-              Profile and ads, are there when you want them.
-            </p>
-            <Ctas />
-          </div>
-        </section>
 
-        <Section>
-          <QA eyebrow="The growth engine" q="Which services make the biggest difference?" a="The ones that put more qualified conversations in front of your team. Start with the engine; add follow-up and the phones as you grow." />
+        <Hero
+          crumbs={[{ name: "Services", path: PATH }]}
+          eyebrow="Services"
+          h1={<>B2B lead generation services, <em>built on the public record.</em></>}
+          sub="Find the accounts, follow them up, answer every call."
+          lead="Door one is for B2B companies that sell to buildings, facilities and regulated businesses. Door two is for service businesses that win customers locally. Same team, same standard: every claim provable."
+        />
+
+        <Section tone="paper" label="B2B client acquisition">
+          <QA
+            eyebrow="Door one"
+            q="B2B client acquisition"
+            a="Outbound lead generation that starts with a reason to call. The Account Engine finds the accounts; CRM follow-up and the AI receptionist make sure none of them slip."
+          />
           <div className="eg-g3">
             {GROWTH_SERVICES.map((s) => (
               <Link key={s.href} href={s.href} className="eg-card link">
-                <h2 className="eg-h3" style={{ fontSize: 22 }}>{s.label}</h2>
-                <p className="eg-body" style={{ fontSize: 15 }}>{GROWTH_DETAIL[s.href]}</p>
+                <h3 className="eg-h3">{s.label}</h3>
+                <p className="eg-body" style={{ fontSize: 15 }}>{DETAIL[s.href]}</p>
                 <span className="go">Learn more <span aria-hidden="true">&rarr;</span></span>
               </Link>
             ))}
           </div>
         </Section>
 
-        <Section band>
-          <QA eyebrow="Also handled" q="Do you still build websites and run SEO?" a="Yes. They're simpler to buy and quicker to ship, and they make sure the accounts you call find a company that looks the part." />
-          <div className="eg-g4">
-            {EASY_WINS.map((s) => (
+        <Section tone="deep" label="Why it works">
+          <QA eyebrow="Why it works" q="Lead generation services usually sell volume. We sell reasons." />
+          <Versus
+            withoutLabel="Typical lead generation"
+            withLabel="Simpl"
+            without={["Purchased lists, the same ones your competitors buy", "Volume emails with no reason to reply", "Leads you rent, then lose when you stop paying", "Results you can't trace back to a source"]}
+            withUs={[<><b>Your whole market,</b> read from the public record</>, <><b>A dated reason to call</b> for every account</>, <><b>A portal under your name,</b> data you can export</>, <><b>A source link</b> on every fact</>]}
+          />
+        </Section>
+
+        <Section tone="mist" label="Local businesses">
+          <QA
+            eyebrow="Door two"
+            q="Local SEO and websites for service businesses"
+            a="For businesses that win customers in their own town: get found on Google Maps and in AI answers, with a website that turns the visit into a call."
+          />
+          <div className="eg-g2">
+            {LOCAL_SERVICES.map((s) => (
               <Link key={s.href} href={s.href} className="eg-card link">
-                <h2 className="eg-h3">{s.label}</h2>
-                <p className="eg-body" style={{ fontSize: 15 }}>{EASY_DETAIL[s.href]}</p>
+                <h3 className="eg-h3">{s.label}</h3>
+                <p className="eg-body" style={{ fontSize: 15 }}>{DETAIL[s.href]}</p>
                 <span className="go">Learn more <span aria-hidden="true">&rarr;</span></span>
               </Link>
             ))}
           </div>
           <p className="eg-body" style={{ marginTop: 24 }}>
-            Not sure where your site stands? <Link className="eg-link" href="/free-tools">Run the free website and presence scan</Link>.
+            Not sure where to start? Run the <Link href="/free-tools" className="eg-link">free website audit</Link>.
           </p>
         </Section>
 
         <FinalCta />
       </main>
-      <Footer showLeadForm={false} />
+      <Footer />
     </div>
   );
 }

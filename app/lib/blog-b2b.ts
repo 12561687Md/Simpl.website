@@ -15,10 +15,10 @@ const UPDATED = "2026-10-22";
 export const B2B_POSTS: BlogPost[] = [
   {
     slug: "sales-trigger-events-b2b",
-    title: "Sales trigger events: the B2B guide to calling at the right moment",
-    metaTitle: "Sales Trigger Events: A B2B Guide With Examples",
+    title: "Buying signals and sales trigger events: the B2B guide to calling at the right moment",
+    metaTitle: "Buying Signals and Sales Trigger Events: B2B Guide",
     description:
-      "What sales trigger events are, the public records that reveal them, and examples by industry, so your team calls accounts the week they get a reason to buy.",
+      "What buying signals and sales trigger events are, the public records that reveal them, and examples by industry, so your team calls at the right time.",
     question: "What are sales trigger events in B2B?",
     category: "Buying Signals",
     readMinutes: 8,
@@ -90,9 +90,9 @@ export const B2B_POSTS: BlogPost[] = [
   {
     slug: "how-to-sell-to-senior-living-communities",
     title: "How to sell to senior living communities (and reach the operator who signs)",
-    metaTitle: "How to Sell to Senior Living Communities",
+    metaTitle: "How to Sell to Senior Living Communities: A Guide",
     description:
-      "A practical guide to selling technology and services into assisted living and nursing communities: the inspection records to watch, the operator behind each community, and who to call.",
+      "How to sell technology and services to assisted living and nursing communities: the inspection records to watch, the operator behind each, and who to call.",
     question: "How do you sell to senior living communities?",
     category: "B2B Industries",
     readMinutes: 8,
@@ -163,7 +163,7 @@ export const B2B_POSTS: BlogPost[] = [
     title: "How to use building permits for sales leads",
     metaTitle: "How to Use Building Permits for Sales Leads",
     description:
-      "Building permits announce construction and renovation weeks before the work is bid. Here's where commercial permit data lives, which permits matter, and how to turn them into calls.",
+      "Building permits announce construction weeks before work is bid. Where commercial permit data lives, which permits matter, and how to turn them into calls.",
     question: "How do you use building permits to find sales leads?",
     category: "Buying Signals",
     readMinutes: 7,
@@ -233,7 +233,7 @@ export const B2B_POSTS: BlogPost[] = [
     title: "ZoomInfo alternatives for B2B service companies: names vs. reasons to call",
     metaTitle: "ZoomInfo Alternatives for B2B Service Companies",
     description:
-      "Contact databases like ZoomInfo and Apollo sell names. B2B service companies that sell to buildings and facilities often need something different: a reason to call, with proof.",
+      "ZoomInfo and Apollo sell names. B2B service companies that sell to buildings and facilities often need something else: a reason to call, with proof.",
     question: "What is a good ZoomInfo alternative for B2B service companies?",
     category: "B2B Sales Playbooks",
     readMinutes: 7,
@@ -275,7 +275,7 @@ export const B2B_POSTS: BlogPost[] = [
         heading: "How to choose",
         paragraphs: [
           "Look at the last ten deals you won and ask what happened at each account in the month before. If the answer is 'they hired a new VP' or 'they raised money', a contact database with alerts may be enough. If it's 'they got cited', 'they bought the building' or 'they put it out to bid', you need public-record triggers.",
-          "Then compare cost to one deal. If one new account is worth $50,000 or more, the right signal source pays for itself quickly; the wrong one costs you a year of reps calling the wrong accounts. You can see what triggers exist in your market by asking for your [top 25 accounts](/top-25).",
+          "Then compare cost to one deal. If one new account is worth $50,000 or more, the right signal source pays for itself quickly; the wrong one costs you a year of reps calling the wrong accounts. You can see what triggers exist in your market by asking for your [top prospects](/top-prospects).",
         ],
       },
     ],
@@ -304,7 +304,7 @@ export const B2B_POSTS: BlogPost[] = [
     title: "How to find the decision maker at a company (by seat, not by title)",
     metaTitle: "How to Find the Decision Maker at a Company",
     description:
-      "B2B deals have more than one decision maker. Here's how to map the seats that matter for your sale (owner, finance, facilities, operations) and confirm the people in them from public sources.",
+      "B2B deals have more than one decision maker. How to map the seats that matter (owner, finance, facilities, operations) and confirm who sits in them.",
     question: "How do you find the decision maker at a company?",
     category: "B2B Sales Playbooks",
     readMinutes: 7,
@@ -375,7 +375,7 @@ export const B2B_POSTS: BlogPost[] = [
     title: "Lead generation for low voltage contractors: where the projects show up first",
     metaTitle: "Lead Generation for Low Voltage Contractors",
     description:
-      "Low voltage, security and cabling projects are announced in permits, E-Rate bids, property sales and inspections before they're bid. Here's how to find them first.",
+      "Low voltage, security and cabling projects show up in permits, E-Rate bids, property sales and inspections before they're bid. How to find them first.",
     question: "How do low voltage contractors get more leads?",
     category: "B2B Industries",
     readMinutes: 8,
@@ -417,7 +417,7 @@ export const B2B_POSTS: BlogPost[] = [
         heading: "Putting it together",
         paragraphs: [
           "Watch those four sources for your territory, score each building on how fresh and how strong its signal is, attach the owner, the GC or the facilities lead, and call the top of the list every week. Federal opportunities on [SAM.gov](https://sam.gov/) and state procurement portals add public-sector work.",
-          "That's exactly what the [Account Engine for low voltage, security and telecom](/industries/low-voltage-security) does, every night, with the record linked on every reason. You can see what it finds in your own territory with a free [top 25 accounts](/top-25) sample.",
+          "That's exactly what the [Account Engine for low voltage, security and telecom](/industries/low-voltage-security) does, every night, with the record linked on every reason. You can see what it finds in your own territory with a free [top prospects](/top-prospects) sample.",
         ],
       },
     ],
@@ -444,7 +444,7 @@ export const B2B_POSTS: BlogPost[] = [
   {
     slug: "b2b-sales-follow-up-cadence",
     title: "How many times should you follow up in B2B sales?",
-    metaTitle: "How Many Times to Follow Up in B2B Sales",
+    metaTitle: "How Many Times Should You Follow Up in B2B Sales?",
     description:
       "A practical B2B follow-up cadence across email and phone: how many touches, how far apart, what to say each time, and when to stop, within the rules.",
     question: "How many times should you follow up with a B2B prospect?",
@@ -514,10 +514,10 @@ export const B2B_POSTS: BlogPost[] = [
   },
   {
     slug: "ai-receptionist-for-b2b-service-companies",
-    title: "AI receptionist for B2B service companies: what it should and shouldn't do",
-    metaTitle: "AI Receptionist for B2B Service Companies",
+    title: "What an AI receptionist should and shouldn't do for a B2B service company",
+    metaTitle: "What an AI Receptionist Should Do for a B2B Company",
     description:
-      "What a 24/7 AI receptionist and support line should handle for a B2B service company, what it should always hand to a person, and how to roll one out safely.",
+      "What a 24/7 AI receptionist should handle for a B2B service company, what it should always hand to a person, and how to roll one out safely.",
     question: "Should a B2B service company use an AI receptionist?",
     category: "B2B Sales Playbooks",
     readMinutes: 7,

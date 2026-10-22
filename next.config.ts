@@ -20,7 +20,16 @@ const nextConfig: NextConfig = {
       // Revamp 2026-10-22 (Account Engine positioning, docs/REVAMP_PLAN.md §9).
       // Retired pages 301 to their closest new home so indexed URLs keep their
       // equity instead of 404ing.
-      { source: "/start", destination: "/pricing", permanent: true },
+      // 2026-10-22 (second pass): prices are off the site, so /pricing and the
+      // old /start tier grid land on the Account Engine page; /top-25 became
+      // /top-prospects; the noindexed /success-stories placeholder became the
+      // Noovis case study.
+      { source: "/start", destination: "/services/account-engine", permanent: true },
+      { source: "/pricing", destination: "/services/account-engine", permanent: true },
+      { source: "/top-25", destination: "/top-prospects", permanent: true },
+      { source: "/success-stories", destination: "/case-studies/noovis", permanent: true },
+      { source: "/case-studies", destination: "/case-studies/noovis", permanent: false },
+      { source: "/contact", destination: "/book", permanent: true },
       { source: "/how-it-works", destination: "/services/account-engine", permanent: true },
       { source: "/services/quick-wins", destination: "/free-tools", permanent: true },
       { source: "/services/organic-growth", destination: "/services/local-seo", permanent: true },

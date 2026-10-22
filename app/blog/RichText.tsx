@@ -28,7 +28,7 @@ export function RichText({ text }: { text: string }) {
           // Internal links (our own /blog and /services pages) stay in-tab and
           // are followed by crawlers; external citations open in a new tab.
           {...(internal ? {} : { target: "_blank", rel: "noopener noreferrer" })}
-          style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)" }}
+          style={{ color: "var(--accent-text, var(--accent))", textDecoration: "none", borderBottom: "1px solid var(--accent-line)", fontWeight: 520 }}
         >
           {m[1]}
         </a>

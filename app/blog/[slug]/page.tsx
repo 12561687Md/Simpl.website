@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import AuthorBio from "../../components/engine/AuthorBio";
+import { Crumbs, FinalCta } from "../../components/engine/ui";
 import { BLOG_POSTS, getPost } from "../../lib/blog";
 import { RichText } from "../RichText";
-import ContactForm from "../../components/ContactForm";
-import { GROWTH_SERVICES, EASY_WINS, INDUSTRIES } from "../../lib/site";
-
-const mono = { fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" };
+import { GROWTH_SERVICES, LOCAL_SERVICES, INDUSTRIES } from "../../lib/site";
+import { faqPage, ldJson, AUTHOR_ID, pageMeta } from "../../lib/schema";
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((p) => ({ slug: p.slug }));
@@ -18,17 +19,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return { title: "Not found | Simpl" };
-  return {
+  const meta = pageMeta({
+    path: `/blog/${post.slug}`,
     title: `${post.metaTitle} | Simpl`,
     description: post.description,
-    alternates: { canonical: `https://www.simpl.pro/blog/${post.slug}` },
-    openGraph: {
-      title: post.metaTitle,
-      description: post.description,
-      type: "article",
-      images: [`https://www.simpl.pro${post.image}`],
-    },
-  };
+    images: [{ url: post.image, width: 1600, height: 900, alt: post.imageAlt }],
+  });
+  return { ...meta, openGraph: { ...meta.openGraph, type: "article" }, authors: [{ name: "Matt DuBois", url: "https://www.simpl.pro/about" }] };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -37,221 +34,175 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
 
   const url = `https://www.simpl.pro/blog/${post.slug}`;
-  // B2B posts sell the Account Engine; the original local posts keep the scan.
+  // B2B posts point to the Account Engine; the local posts point to the free audit.
   const b2b = post.audience === "b2b";
   const cta = b2b
-    ? { mid: "Want these signals tracked for your own territory? We'll build your top 25 accounts, with the record behind each one.", midBtn: "See your top 25 accounts →", href: "/top-25", h: "See who's ready to buy in your market.", p: "Tell us what you sell and where. We'll build a free 25-account sample with the reason to call, the record and who decides for each.", btn: "See your top 25 accounts →" }
-    : { mid: "Want this checked on your own site? The free Simpl scan finds exactly which of these is holding you back.", midBtn: "Run the free scan →", href: "/free-tools", h: "Want to know how your business actually scores?", p: "The free scan shows exactly where you stand on everything above, in about 60 seconds. No credit card, no call required.", btn: "Run my free scan →" };
+    ? { mid: "Want these signals tracked for your own territory? We'll build a sample of your top prospects, with the record behind each one.", midBtn: "See your top prospects", href: "/top-prospects" }
+    : { mid: "Want this checked on your own site? The free website audit shows which of these is holding you back.", midBtn: "Get your free website audit", href: "/free-tools" };
 
-  // Cluster interlinking: other posts in the same category, then fill from the
-  // rest so there are always sibling links for crawlers to follow.
   const related = [
     ...BLOG_POSTS.filter((p) => p.slug !== post.slug && p.category === post.category),
     ...BLOG_POSTS.filter((p) => p.slug !== post.slug && p.category !== post.category),
   ].slice(0, 3);
+  const isSvg = (src: string) => src.endsWith(".svg");
+  const updated = new Date(post.updated).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
   return (
     <div>
       <Header />
       <main>
-        {/* BlogPosting + FAQPage + Breadcrumb. FAQPage is the AEO payload that
-            gets this post quoted by answer engines. */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              {
-                "@context": "https://schema.org",
-                "@type": "BlogPosting",
-                headline: post.title,
-                description: post.description,
-                image: `https://www.simpl.pro${post.image}`,
-                datePublished: post.updated,
-                dateModified: post.updated,
-                mainEntityOfPage: url,
-                author: { "@type": "Person", name: "Matt DuBois", url: "https://www.simpl.pro/about" },
-                publisher: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
-              },
-              {
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                mainEntity: post.faqs.map((f) => ({
-                  "@type": "Question",
-                  name: f.q,
-                  acceptedAnswer: { "@type": "Answer", text: f.a },
-                })),
-              },
-              {
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
-                  { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.simpl.pro/blog" },
-                  { "@type": "ListItem", position: 3, name: post.metaTitle, item: url },
-                ],
-              },
-            ]),
-          }}
+          dangerouslySetInnerHTML={ldJson(
+            {
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              headline: post.title,
+              description: post.description,
+              image: `https://www.simpl.pro${post.image}`,
+              datePublished: post.updated,
+              dateModified: post.updated,
+              mainEntityOfPage: url,
+              author: { "@type": "Person", "@id": AUTHOR_ID, name: "Matt DuBois", jobTitle: "Founder", url: "https://www.simpl.pro/about" },
+              publisher: { "@type": "Organization", "@id": "https://www.simpl.pro/#organization", name: "Simpl", url: "https://www.simpl.pro", logo: "https://www.simpl.pro/brand/simpl-logo-1024.png" },
+            },
+            faqPage(post.faqs)
+          )}
         />
 
-        <div className="blog-layout" style={{ maxWidth: 1140, margin: "0 auto", padding: "112px 32px 40px", display: "grid", gridTemplateColumns: "minmax(0, 1fr) 320px", gap: 48, alignItems: "start" }}>
-        <article style={{ maxWidth: 760, margin: 0, padding: 0, minWidth: 0 }}>
-          <div style={{ ...mono, fontSize: 12, marginBottom: 22 }}>
-            <Link href="/blog" style={{ color: "var(--muted)", textDecoration: "none" }}>
-              ← All answers
-            </Link>
-          </div>
+        <div className="tone-paper">
+          <div className="blog-layout" style={{ maxWidth: 1180, margin: "0 auto", padding: "160px 32px 72px", display: "grid", gridTemplateColumns: "minmax(0, 1fr) 300px", gap: 56, alignItems: "start" }}>
+            <article style={{ maxWidth: 760, margin: 0, padding: 0, minWidth: 0 }}>
+              <Crumbs items={[{ name: "Blog", path: "/blog" }, { name: post.metaTitle, path: `/blog/${post.slug}` }]} />
 
-          <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 16 }}>
-            {post.category} · {post.readMinutes} min read · Updated {new Date(post.updated).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
-          </div>
-          <h1 style={{ margin: 0, fontSize: "clamp(28px, 4.4vw, 44px)", lineHeight: 1.1, letterSpacing: "-0.03em", fontWeight: 600 }}>
-            {post.title}
-          </h1>
-          <p style={{ margin: "22px 0 0", fontSize: 18, lineHeight: 1.65, color: "var(--muted)" }}>{post.intro}</p>
+              <div className="mono-label" style={{ color: "var(--accent-text)", marginBottom: 16 }}>
+                {post.category} · {post.readMinutes} min read
+              </div>
+              <h1 style={{ margin: 0, fontSize: "clamp(30px, 4.4vw, 48px)", lineHeight: 1.08, letterSpacing: "-0.035em", fontWeight: 650 }}>{post.title}</h1>
+              <p style={{ margin: "18px 0 0", fontSize: 14.5, color: "var(--muted)" }}>
+                By <Link href="/about" className="eg-link">Matt DuBois</Link>, Founder of Simpl · Updated <time dateTime={post.updated}>{updated}</time>
+              </p>
+              <p style={{ margin: "22px 0 0", fontSize: 18.5, lineHeight: 1.65, color: "var(--muted)" }}>{post.intro}</p>
 
-          {/* Hero image */}
-          <figure style={{ margin: "32px 0 0" }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.image} alt={post.imageAlt} style={{ width: "100%", aspectRatio: "16 / 9", objectFit: "cover", borderRadius: 12, display: "block" }} />
-            <figcaption className="mono" style={{ marginTop: 8, fontSize: 10.5, letterSpacing: "0.06em", color: "var(--fg-dim)", textTransform: "uppercase" }}>
-              {b2b ? "Graphic" : "Photo"}: {post.imageCredit}
-            </figcaption>
-          </figure>
+              <figure style={{ margin: "32px 0 0" }}>
+                <Image
+                  src={post.image}
+                  alt={post.imageAlt}
+                  width={1600}
+                  height={900}
+                  priority
+                  unoptimized={isSvg(post.image)}
+                  sizes="(max-width: 860px) 100vw, 760px"
+                  style={{ width: "100%", height: "auto", aspectRatio: "16 / 9", objectFit: "cover", borderRadius: 14, display: "block" }}
+                />
+                <figcaption className="mono" style={{ marginTop: 8, fontSize: 10.5, letterSpacing: "0.06em", color: "var(--fg-dim)", textTransform: "uppercase" }}>
+                  {b2b ? "Graphic" : "Photo"}: {post.imageCredit}
+                </figcaption>
+              </figure>
 
-          {/* Key takeaways box (answer-first, LLM-extractable) */}
-          <aside style={{ marginTop: 36, padding: "24px 26px", borderRadius: 12, border: "1px solid var(--accent-line)", background: "var(--accent-soft)" }}>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 14 }}>
-              Key takeaways
-            </div>
-            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 12 }}>
-              {post.keyTakeaways.map((t, i) => (
-                <li key={i} style={{ display: "grid", gridTemplateColumns: "20px 1fr", gap: 10, alignItems: "start", fontSize: 15.5, lineHeight: 1.55 }}>
-                  <span aria-hidden="true" style={{ color: "var(--accent)", fontWeight: 700 }}>→</span>
-                  <span>{t}</span>
-                </li>
+              <aside style={{ marginTop: 36, padding: "24px 26px", borderRadius: 14, border: "1px solid var(--accent-line)", background: "var(--accent-soft)" }}>
+                <div className="mono-label" style={{ color: "var(--accent-text)", marginBottom: 14 }}>Key takeaways</div>
+                <ul className="eg-list">
+                  {post.keyTakeaways.map((t, i) => (
+                    <li key={i} style={{ color: "var(--fg)" }}><span>{t}</span></li>
+                  ))}
+                </ul>
+              </aside>
+
+              {post.sections.map((s, si) => (
+                <section key={s.heading} style={{ marginTop: 44 }}>
+                  <h2 style={{ margin: "0 0 16px", fontSize: 25, fontWeight: 650, letterSpacing: "-0.02em", lineHeight: 1.25 }}>{s.heading}</h2>
+                  {s.paragraphs.map((p, i) => (
+                    <p key={i} style={{ margin: "0 0 16px", fontSize: 17, lineHeight: 1.75, color: "#2A3036" }}>
+                      <RichText text={p} />
+                    </p>
+                  ))}
+                  {si === 1 && (
+                    <div className="tone-ink" style={{ margin: "12px 0 4px", padding: "22px 24px", borderRadius: 14, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+                      <span style={{ fontSize: 15.5, lineHeight: 1.5, maxWidth: 420 }}>{cta.mid}</span>
+                      <Link href={cta.href} className="eg-btn primary" style={{ padding: "12px 20px", fontSize: 14.5 }}>{cta.midBtn} <span aria-hidden="true">&rarr;</span></Link>
+                    </div>
+                  )}
+                </section>
               ))}
-            </ul>
-          </aside>
 
-          {post.sections.map((s, si) => (
-            <section key={s.heading} style={{ marginTop: 44 }}>
-              <h2 style={{ margin: "0 0 16px", fontSize: 23, fontWeight: 600, letterSpacing: "-0.015em", lineHeight: 1.25 }}>
-                {s.heading}
-              </h2>
-              {s.paragraphs.map((p, i) => (
-                <p key={i} style={{ margin: "0 0 16px", fontSize: 16.5, lineHeight: 1.7 }}>
-                  <RichText text={p} />
-                </p>
-              ))}
-
-              {/* Mid-post contextual CTA, once, after the second section. */}
-              {si === 1 && (
-                <div style={{ margin: "8px 0 4px", padding: "20px 22px", borderRadius: 10, border: "1px solid var(--rule-strong)", background: "var(--bg-soft)", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
-                  <span style={{ fontSize: 15.5, lineHeight: 1.5, maxWidth: 420 }}>
-                    {cta.mid}
-                  </span>
-                  <Link href={cta.href} className="cta-primary" style={{ color: "var(--accent-ink)", textDecoration: "none", padding: "11px 20px", fontSize: 14, fontWeight: 600, borderRadius: 999, whiteSpace: "nowrap" }}>
-                    {cta.midBtn}
-                  </Link>
+              <section style={{ marginTop: 56 }}>
+                <h2 style={{ margin: "0 0 18px", fontSize: 25, fontWeight: 650, letterSpacing: "-0.02em" }}>Frequently asked</h2>
+                <div style={{ borderTop: "1px solid var(--rule)" }}>
+                  {post.faqs.map((f) => (
+                    <div key={f.q} style={{ padding: "22px 0", borderBottom: "1px solid var(--rule)" }}>
+                      <h3 style={{ margin: "0 0 8px", fontSize: 17.5, fontWeight: 620, lineHeight: 1.35 }}>{f.q}</h3>
+                      <p style={{ margin: 0, fontSize: 16, lineHeight: 1.65, color: "var(--muted)" }}>{f.a}</p>
+                    </div>
+                  ))}
                 </div>
+              </section>
+
+              <section style={{ marginTop: 44 }}>
+                <h2 className="mono-label" style={{ marginBottom: 14, fontWeight: 500 }}>Sources</h2>
+                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
+                  {post.sources.map((s) => (
+                    <li key={s.href}>
+                      <a href={s.href} target="_blank" rel="noopener noreferrer" className="eg-link" style={{ fontSize: 15 }}>
+                        {s.label} &#8599;
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <div style={{ marginTop: 44 }}>
+                <AuthorBio />
+              </div>
+
+              {related.length > 0 && (
+                <section style={{ marginTop: 56 }}>
+                  <h2 className="mono-label" style={{ marginBottom: 18, fontWeight: 500 }}>Keep reading</h2>
+                  <div style={{ display: "grid", gap: 12 }}>
+                    {related.map((r) => (
+                      <Link key={r.slug} href={`/blog/${r.slug}`} className="eg-card link" style={{ display: "flex", alignItems: "center", gap: 16, padding: 14 }}>
+                        <Image src={r.image} alt={r.imageAlt} width={184} height={124} unoptimized={isSvg(r.image)} style={{ width: 92, height: 62, objectFit: "cover", borderRadius: 8, flexShrink: 0 }} />
+                        <span>
+                          <span className="mono-label" style={{ display: "block", color: "var(--accent-text)", marginBottom: 5, fontSize: 10 }}>{r.category}</span>
+                          <span style={{ display: "block", fontSize: 16, fontWeight: 620, lineHeight: 1.3, letterSpacing: "-0.01em" }}>{r.title}</span>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
               )}
-            </section>
-          ))}
+            </article>
 
-          {/* FAQ, rendered to match the FAQPage schema above. */}
-          <section style={{ marginTop: 56 }}>
-            <h2 style={{ margin: "0 0 24px", fontSize: 23, fontWeight: 600, letterSpacing: "-0.015em" }}>
-              Frequently asked
-            </h2>
-            <div style={{ borderTop: "1px solid var(--rule)" }}>
-              {post.faqs.map((f) => (
-                <div key={f.q} style={{ padding: "22px 0", borderBottom: "1px solid var(--rule)" }}>
-                  <h3 style={{ margin: "0 0 8px", fontSize: 17, fontWeight: 600, lineHeight: 1.3 }}>{f.q}</h3>
-                  <p style={{ margin: 0, fontSize: 15.5, lineHeight: 1.65, color: "var(--muted)" }}>{f.a}</p>
+            <aside className="blog-rail">
+              <div style={{ position: "sticky", top: 130, display: "grid", gap: 16 }}>
+                <div className="eg-card" style={{ padding: 18 }}>
+                  <div className="mono-label" style={{ color: "var(--accent-text)", marginBottom: 10 }}>Related services</div>
+                  <nav aria-label="Related services" style={{ display: "grid", gap: 2 }}>
+                    {(b2b ? [...GROWTH_SERVICES, ...INDUSTRIES.slice(0, 3)] : [...LOCAL_SERVICES, GROWTH_SERVICES[0]]).map((s) => (
+                      <Link key={s.href} href={s.href} style={{ display: "flex", justifyContent: "space-between", gap: 10, padding: "8px 4px", textDecoration: "none", color: "var(--fg)", fontSize: 14 }}>
+                        <span>{s.label}</span>
+                        <span aria-hidden="true" style={{ color: "var(--accent-text)" }}>&rarr;</span>
+                      </Link>
+                    ))}
+                  </nav>
                 </div>
-              ))}
-            </div>
-          </section>
-
-          {/* Outbound sources, an explicit AEO/E-E-A-T trust signal. */}
-          <section style={{ marginTop: 48 }}>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14 }}>
-              Sources
-            </div>
-            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 10 }}>
-              {post.sources.map((s) => (
-                <li key={s.href}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontSize: 14.5, color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--rule)" }}>
-                    {s.label} ↗
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Conversion CTA */}
-          <section style={{ marginTop: 56, padding: "32px 30px", borderRadius: 12, border: "1px solid var(--accent)", background: "linear-gradient(180deg, var(--bg-soft), var(--bg))", boxShadow: "0 16px 48px -30px var(--accent)" }}>
-            <h2 style={{ margin: "0 0 10px", fontSize: 22, fontWeight: 600, letterSpacing: "-0.02em" }}>
-              {cta.h}
-            </h2>
-            <p style={{ margin: "0 0 20px", fontSize: 15.5, lineHeight: 1.6, color: "var(--muted)", maxWidth: 520 }}>
-              {cta.p}
-            </p>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href={cta.href} className="cta-primary" style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "13px 24px", fontSize: 14, fontWeight: 700, borderRadius: 999, textDecoration: "none" }}>
-                {cta.btn}
-              </Link>
-              <a href="tel:+19194289452" style={{ display: "inline-flex", alignItems: "center", color: "var(--fg)", padding: "12px 22px", fontSize: 14, border: "1px solid var(--rule-strong)", borderRadius: 999, textDecoration: "none" }}>
-                (919) 428-9452
-              </a>
-            </div>
-          </section>
-
-          {/* Related posts, cluster interlinking */}
-          {related.length > 0 && (
-            <section style={{ marginTop: 64 }}>
-              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 20 }}>
-                Keep reading
+                <div className="eg-card tone-ink" style={{ padding: 20 }}>
+                  <div style={{ fontSize: 16, fontWeight: 620, marginBottom: 8 }}>{b2b ? "See it on your own market" : "Check your own site"}</div>
+                  <p className="eg-body" style={{ fontSize: 14, marginBottom: 16 }}>
+                    {b2b ? "A free sample of your top prospects, with the reason and the record for each." : "Your score and your fastest wins in about 60 seconds."}
+                  </p>
+                  <Link href={cta.href} className="eg-btn primary" style={{ width: "100%", padding: "12px 16px", fontSize: 14.5 }}>{cta.midBtn}</Link>
+                </div>
               </div>
-              <div style={{ display: "grid", gap: 14 }}>
-                {related.map((r) => (
-                  <Link key={r.slug} href={`/blog/${r.slug}`} style={{ display: "flex", alignItems: "center", gap: 16, padding: "14px", borderRadius: 12, border: "1px solid var(--rule)", textDecoration: "none", color: "inherit" }} className="blog-related">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={r.image} alt={r.imageAlt} loading="lazy" style={{ width: 92, height: 62, objectFit: "cover", borderRadius: 8, flexShrink: 0 }} />
-                    <span>
-                      <span className="mono" style={{ display: "block", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 5 }}>{r.category}</span>
-                      <span style={{ display: "block", fontSize: 16, fontWeight: 600, lineHeight: 1.3, letterSpacing: "-0.01em" }}>{r.title}</span>
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
-        </article>
-
-        {/* Sticky contact rail: rides the scroll the whole way down. Hidden on
-            mobile (the article's own CTAs + the pre-footer form cover it). */}
-        <aside className="blog-rail">
-          <div style={{ position: "sticky", top: 108, display: "grid", gap: 16 }}>
-            <div style={{ border: "1px solid var(--rule)", background: "var(--bg-soft)", borderRadius: 14, padding: "16px 16px" }}>
-              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 10 }}>Related services</div>
-              <div style={{ display: "grid", gap: 1 }}>
-                {(b2b ? [...GROWTH_SERVICES, ...INDUSTRIES.slice(0, 3)] : [...EASY_WINS, ...GROWTH_SERVICES.slice(0, 1)]).map((s) => (
-                  <Link key={s.href} href={s.href} className="blog-svc-link" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 10, padding: "8px 6px", borderRadius: 8, textDecoration: "none", color: "var(--fg)", fontSize: 13.5, lineHeight: 1.3 }}>
-                    <span>{s.label}</span>
-                    <span aria-hidden="true" style={{ color: "var(--accent)" }}>→</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div style={{ border: "1px solid var(--accent-line)", borderRadius: 14, background: "linear-gradient(180deg, rgba(137,207,240,0.09), rgba(137,207,240,0.02))", boxShadow: "0 30px 70px -42px rgba(137,207,240,0.55)", padding: "16px" }}>
-              <div style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 10 }}>{b2b ? "Tell us what you sell and where" : "Tell us what's going on"}</div>
-              <ContactForm compact ctaLabel={b2b ? "Send it" : "Fix my business"} sourcePage={`/blog/${post.slug}`} />
-            </div>
+            </aside>
           </div>
-        </aside>
         </div>
+
+        <FinalCta
+          heading={b2b ? "See who's ready to buy in your market." : "See what's holding your site back."}
+          body={b2b ? "Tell us what you sell and where. We build a free sample of your top prospects with the reason to call, the record and who decides for each." : "The free website audit shows where you stand on everything above, in about 60 seconds. No credit card, no call required."}
+          primary={b2b ? undefined : { label: "Get your free website audit", href: "/free-tools" }}
+        />
       </main>
       <Footer />
     </div>

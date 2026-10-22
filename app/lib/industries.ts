@@ -18,8 +18,10 @@ export interface Industry {
   metaDescription: string;
   keyword: string;
   eyebrow: string;
+  /** H1 = keyword phrase, then the accent phrase. sub = the brand line. */
   h1: string;
   h1Dim: string;
+  sub: string;
   lead: string;
   buyers: string[];
   signalsQ: string;
@@ -35,13 +37,14 @@ export const INDUSTRY_DATA: Industry[] = [
   {
     slug: "low-voltage-security",
     name: "Low voltage, security & telecom",
-    metaTitle: "Lead Generation for Low Voltage, Security and Telecom Contractors | Simpl",
+    metaTitle: "Low Voltage Leads for Security Integrators | Simpl",
     metaDescription:
-      "Find the buildings that need cabling, access control, cameras, nurse call or Wi-Fi this month: permits, E-Rate bids, new owners and inspection citations, each linked to its public record.",
-    keyword: "lead generation for low voltage contractors",
+      "Low voltage leads from permits, E-Rate bids, new owners and inspection citations, ranked weekly with the record and the decision maker attached.",
+    keyword: "low voltage leads",
     eyebrow: "Low voltage, security & telecom",
-    h1: "Find the buildings that need your systems,",
+    h1: "Low voltage leads for security and cabling integrators,",
     h1Dim: "before the bid goes out.",
+    sub: "Find the buildings that need your systems this month.",
     lead:
       "Integrators win when they're in the room early. The Account Engine watches permits, school bids, new owners and inspection citations across your territory and tells your team which buildings to call this week.",
     buyers: ["Structured cabling and networks", "Access control and video", "Nurse call and resident safety", "Fire alarm and life safety", "Wi-Fi, DAS and telecom", "AV and intercom"],
@@ -86,13 +89,14 @@ export const INDUSTRY_DATA: Industry[] = [
   {
     slug: "senior-living-technology",
     name: "Senior living technology",
-    metaTitle: "How to Sell to Senior Living Communities: Inspection-Driven Leads | Simpl",
+    metaTitle: "Senior Living Sales Leads From Inspection Records | Simpl",
     metaDescription:
-      "Find the assisted living and nursing communities that need nurse call, resident safety, networks or software now: inspection citations, new owners and new licenses, rolled up to the operator that buys.",
-    keyword: "how to sell to senior living communities",
+      "Senior living sales leads from licensing surveys, CMS inspections, new owners and new licenses, rolled up to the operator that buys, with proof.",
+    keyword: "senior living sales",
     eyebrow: "Senior living technology",
-    h1: "Know which communities need you,",
-    h1Dim: "and which operator signs.",
+    h1: "Senior living sales leads,",
+    h1Dim: "rolled up to the operator who signs.",
+    sub: "Know which communities need you this month.",
     lead:
       "Senior living leaves one of the richest public paper trails in any industry: licensing surveys, federal inspections, ownership changes and new licenses. The Account Engine turns it into a weekly call list, rolled up from each community to the operator that actually buys.",
     buyers: ["Nurse call and resident safety", "Wander management and access", "Networks and Wi-Fi", "EHR and care software", "Fall detection and sensors", "Emergency power and life safety"],
@@ -137,13 +141,14 @@ export const INDUSTRY_DATA: Industry[] = [
   {
     slug: "building-systems",
     name: "Building systems",
-    metaTitle: "Fire Protection, HVAC and Elevator Contractor Leads From Public Records | Simpl",
+    metaTitle: "Commercial Construction Leads for Building Systems | Simpl",
     metaDescription:
-      "Find the buildings that need fire protection, commercial HVAC, elevator or roofing work: permits, building age, new owners and inspection records, ranked weekly with the proof.",
-    keyword: "fire protection contractor leads",
+      "Commercial construction leads for fire protection, HVAC, elevator and roofing contractors: permits, building age, new owners and inspections.",
+    keyword: "commercial construction leads",
     eyebrow: "Fire protection, HVAC, elevators & roofing",
-    h1: "The buildings due for your work,",
+    h1: "Commercial construction leads for fire, HVAC and elevator contractors,",
     h1Dim: "ranked every week.",
+    sub: "The buildings due for your work, with the permit behind each one.",
     lead:
       "Building systems age on a schedule, change hands, and get inspected. The Account Engine reads the permits, property records and inspection data for your territory and puts the buildings with a reason this month at the top of the list.",
     buyers: ["Fire alarm and sprinkler", "Commercial HVAC and controls", "Elevator service and modernization", "Commercial roofing", "Generators and emergency power", "Building automation"],
@@ -188,13 +193,14 @@ export const INDUSTRY_DATA: Industry[] = [
   {
     slug: "facility-services",
     name: "Facility services",
-    metaTitle: "Facility Services Lead Generation: New Owners, New Buildings, Open Bids | Simpl",
+    metaTitle: "Commercial Cleaning Leads and Facility Service Leads | Simpl",
     metaDescription:
-      "Commercial cleaning, maintenance and property services companies: find the buildings with a new owner, a new opening or an open contract this month, with the record and the decision maker.",
-    keyword: "facility services lead generation",
+      "Commercial cleaning and facility service leads: buildings with a new owner, a new opening or an open bid this month, with the record and who decides.",
+    keyword: "commercial cleaning leads",
     eyebrow: "Facility services",
-    h1: "Win the contract the week",
-    h1Dim: "the building changes hands.",
+    h1: "Commercial cleaning leads",
+    h1Dim: "the week a building changes hands.",
+    sub: "Win the contract while the decision is still open.",
     lead:
       "Facility contracts move when something changes: a sale, a new tenant, a new building, a contract up for bid. The Account Engine watches for those changes across your territory and tells your team who to call while the decision is still open.",
     buyers: ["Commercial cleaning", "Building maintenance", "Security services", "Pest and environmental", "Grounds and snow", "Integrated facility management"],
@@ -239,13 +245,14 @@ export const INDUSTRY_DATA: Industry[] = [
   {
     slug: "healthcare-technology",
     name: "Healthcare technology",
-    metaTitle: "Healthcare IT and Medical Equipment Sales Prospecting | Simpl",
+    metaTitle: "Medical Equipment Sales Leads From Public Records | Simpl",
     metaDescription:
-      "Find the hospitals, clinics and care facilities with a reason to buy now: new providers, inspection deficiencies, ownership changes and expansions, each linked to its public record.",
-    keyword: "healthcare IT sales prospecting",
+      "Medical equipment and healthcare IT sales leads from new NPIs, CMS inspection deficiencies, ownership changes and expansions, each with its record.",
+    keyword: "medical equipment sales leads",
     eyebrow: "Healthcare technology",
-    h1: "Reach the facilities that just got",
-    h1Dim: "a reason to change.",
+    h1: "Medical equipment and healthcare IT sales leads,",
+    h1Dim: "from the public record.",
+    sub: "Reach the facilities that just got a reason to change.",
     lead:
       "Healthcare is one of the most documented industries in the country. New providers, inspection deficiencies, ownership changes and expansions are all public. The Account Engine turns them into a weekly list of facilities worth a call, with the decision makers by role.",
     buyers: ["Medical equipment", "EHR and practice software", "Healthcare IT and security", "Patient communication", "Pharmacy and lab systems", "Facility technology"],

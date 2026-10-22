@@ -2,98 +2,97 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { Section, Eyebrow, FaqList, Crumbs, PrimaryCta } from "../components/engine/ui";
-import { breadcrumb, faqPage, ldJson } from "../lib/schema";
+import { Section, FaqList, Hero, FinalCta, type Tone } from "../components/engine/ui";
+import { faqPage, webPage, ldJson, pageMeta } from "../lib/schema";
 
-export const metadata: Metadata = {
-  title: { absolute: "FAQ: the Account Engine, Pricing, CRM, AI Receptionist and Websites | Simpl" },
-  description:
-    "Straight answers about Simpl: what the Account Engine is, who it's for, where the data comes from, what it costs, CRM and follow-up, the 24/7 AI receptionist, and websites and SEO.",
-  alternates: { canonical: "https://www.simpl.pro/faq" },
-};
+/* Primary keyword: "B2B lead generation FAQ" (question cluster; every
+   question is a long-tail target). Answers here are worded for this page, not
+   copied from the service pages, so no two pages carry the same block. */
+const PATH = "/faq";
+const TITLE = "B2B Lead Generation FAQ: Account Engine Explained | Simpl";
+const DESCRIPTION =
+  "Straight answers about Simpl: the Account Engine, where the data comes from, pricing, ownership, CRM follow-up, the AI receptionist and local SEO.";
 
-const GROUPS: { label: string; id: string; faqs: { q: string; a: string }[] }[] = [
+export const metadata: Metadata = pageMeta({ path: PATH, title: TITLE, description: DESCRIPTION });
+
+const GROUPS: { label: string; id: string; tone: Tone; faqs: { q: string; a: string }[] }[] = [
   {
     label: "The Account Engine",
     id: "account-engine",
+    tone: "paper",
     faqs: [
       {
-        q: "What does Simpl do?",
-        a: "Simpl builds custom growth portals for high-ticket B2B companies. The Account Engine finds the right buyers at the right time from the public record, with proof, and tells your team who to call this week. We also set up CRM and follow-up, build 24/7 AI receptionist and support lines, and handle websites, SEO, Google Business Profile and ads.",
+        q: "What does Simpl do, in one sentence?",
+        a: "Simpl is a client acquisition partner for B2B companies: we build each client a private Account Engine that reads the public record every night and tells their sales team which accounts to call, why now and who decides, with a source link on every fact.",
       },
       {
-        q: "What is the Account Engine?",
-        a: "A private portal built for your company that reads the public record for every account in your market every night (inspections, citations, permits, licenses, ownership changes, bids and budget cycles), scores who is worth a call right now, and shows the reason, the official record behind it and the person who decides.",
+        q: "What counts as a reason to call?",
+        a: "Anything an official body records that makes your product relevant now: an inspection citation, a building permit, a sale or new owner, a new license or location, a public bid, an overdue inspection or the start of a budget season. We choose the ones that predict your sales with you.",
       },
       {
-        q: "Who is it for?",
-        a: "B2B companies that sell high-ticket products, long-lasting services or big contracts to buildings, facilities and regulated businesses: low voltage and security integrators, telecom, senior living technology, building systems, facility services, healthcare technology, and manufacturers and distributors selling into those markets.",
-      },
-      {
-        q: "Where does the data come from?",
-        a: "Public, official sources: state and federal inspection reports, licensing agencies, building permit and deed records, public bids and procurement postings, the national NPI registry and company filings. Every fact in your portal links to its record.",
-      },
-      {
-        q: "How is it different from ZoomInfo, Apollo or a list vendor?",
-        a: "They give you names. The Account Engine gives you the reason to call this week and the proof behind it, ranked across your whole market. It can feed the CRM and tools you already use.",
+        q: "Which public sources does the engine read?",
+        a: "It depends on your market. Common ones are state and federal inspection reports, CMS data, state licensing agencies, county permit and deed records, USAC E-Rate filings, SAM.gov and state procurement portals, the NPI registry and company websites. Every fact links back to its source.",
       },
       {
         q: "Do other companies in my market see my portal?",
-        a: "No. Each portal is built for one company, at its own address, with its own logins. Your lists, notes and results are yours.",
+        a: "No. Each portal is built for one company, under its own name, with its own logins. Your lists, notes and results are yours.",
       },
       {
         q: "How do I see what it would find for us?",
-        a: "Ask for your top 25. We build a 25-account sample of your own market, each with the reason, the record and who decides, and walk you through it before you pay anything.",
+        a: "Ask for your top prospects. We build a sample of your own market, each account with the reason, the record and who decides, and walk you through it before you pay anything.",
       },
     ],
   },
   {
-    label: "Pricing and terms",
+    label: "Pricing and ownership",
     id: "pricing",
+    tone: "mist",
     faqs: [
       {
-        q: "How much does it cost?",
-        a: "Account Engine: $10,000 setup and $1,000 a month. Account Engine Pro: $15,000 setup and $2,500 a month, adding nationwide territory, custom data sources, overnight research, CRM and follow-up, a 24/7 support line and a monthly strategy call.",
+        q: "Why don't you list prices?",
+        a: "Because every engine is different: the size of your territory, the number of data sources and the add-ons change the work. You get a one-time setup and a monthly fee in writing after a 30-minute call.",
       },
       {
-        q: "Why is it less than an agency or a hire?",
+        q: "Why does Simpl cost less than an agency or a new hire?",
         a: "You're not paying for an account manager, a sales team or an office. You work directly with the person who builds it.",
       },
       {
-        q: "Who owns the portal and the data?",
-        a: "You do. Your portal, your lists and your data are yours, and you can export them any time.",
+        q: "Can we export our data if we leave?",
+        a: "Yes. Lists, notes and pipeline export any time, and they are yours to keep.",
       },
     ],
   },
   {
     label: "CRM, follow-up and the 24/7 line",
     id: "crm-ai",
+    tone: "paper",
     faqs: [
       {
-        q: "Do we have to change CRMs?",
-        a: "No. We connect to the CRM you already use, such as Salesforce or HubSpot, or set up ours branded as yours.",
+        q: "Will the engine work with Salesforce or HubSpot?",
+        a: "Yes. We connect it to the CRM you already pay for, or set one up under your company's name if you don't have one.",
       },
       {
-        q: "What does the AI receptionist do?",
-        a: "It answers calls and support tickets at any hour, checks your own guides and the account's history, solves what it safely can, and pages whoever is on duty for anything urgent with a written summary.",
+        q: "What happens to an after-hours call?",
+        a: "The AI receptionist answers on the first ring, identifies the customer and site, checks your guides, solves what it safely can and pages whoever is on duty for anything urgent, with a written summary.",
       },
       {
-        q: "Are CRM and the AI receptionist live?",
+        q: "Are CRM follow-up and the AI receptionist live?",
         a: "Both are rolling out now. We give you the go-live date on the first call, and we never call them done until they are.",
       },
     ],
   },
   {
-    label: "Websites, SEO and free tools",
-    id: "websites-seo",
+    label: "Local SEO, websites and free tools",
+    id: "local",
+    tone: "mist",
     faqs: [
       {
-        q: "Do you still build websites and do SEO?",
-        a: "Yes. Websites, SEO and AI search visibility, Google Business Profile management and paid ads are available as add-ons or on their own.",
+        q: "Do you still work with local service businesses?",
+        a: "Yes. Local SEO, website design, Google Business Profile management and PPC management are available on their own for businesses that win customers locally.",
       },
       {
-        q: "Is the website scan free?",
-        a: "Yes. The scan on the Free tools page takes about 60 seconds, needs no credit card, and scores your site 0 to 100 across six categories with every finding measured from live data.",
+        q: "What does the free website audit cost?",
+        a: "Nothing. It takes about 60 seconds, needs no credit card, and scores your site 0 to 100 across six categories with every finding measured from live data.",
       },
       {
         q: "Do you mark up ad spend?",
@@ -109,36 +108,37 @@ export default function FaqPage() {
     <div>
       <Header />
       <main>
-        <script type="application/ld+json" dangerouslySetInnerHTML={ldJson(faqPage(all), breadcrumb([{ name: "FAQ", path: "/faq" }]))} />
-        <section className="eg-hero" style={{ paddingBottom: 30 }}>
-          <div className="eg-wrap">
-            <Crumbs items={[{ name: "FAQ", path: "/faq" }]} />
-            <Eyebrow>FAQ</Eyebrow>
-            <h1 className="eg-h1">
-              Straight answers. <span className="dim">No sales-page hedging.</span>
-            </h1>
+        <script type="application/ld+json" dangerouslySetInnerHTML={ldJson(webPage({ path: PATH, name: TITLE, description: DESCRIPTION }), faqPage(all))} />
+        <Hero
+          crumbs={[{ name: "FAQ", path: PATH }]}
+          eyebrow="FAQ"
+          h1={<>B2B lead generation FAQ: <em>straight answers.</em></>}
+          sub="No sales-page hedging."
+          lead="What the Account Engine is, where the data comes from, how pricing works, and what we do for local businesses. If your question isn't here, email team@simpl.pro."
+          ctas={
             <div className="eg-chips" style={{ marginTop: 30 }}>
               {GROUPS.map((g) => (
                 <a key={g.id} href={`#${g.id}`} className="eg-chip">{g.label}</a>
               ))}
             </div>
-          </div>
-        </section>
-        {GROUPS.map((g, i) => (
-          <Section key={g.id} id={g.id} band={i % 2 === 1} tight>
+          }
+        />
+        {GROUPS.map((g) => (
+          <Section key={g.id} id={g.id} tone={g.tone} tight label={g.label}>
             <h2 className="eg-h2" style={{ fontSize: "clamp(24px, 3vw, 34px)", marginBottom: 22 }}>{g.label}</h2>
             <FaqList faqs={g.faqs} />
           </Section>
         ))}
-        <Section tight>
-          <p className="eg-body" style={{ marginBottom: 20 }}>
-            Still have a question? Email <a className="eg-link" href="mailto:team@simpl.pro">team@simpl.pro</a>, or start with the thing that answers most of
-            them: your own market. <Link className="eg-link" href="/services/account-engine">How the engine works</Link>.
+        <Section tone="ink" tight label="More">
+          <p className="eg-body">
+            Go deeper: <Link className="eg-link" href="/services/account-engine">how the Account Engine works</Link>,{" "}
+            <Link className="eg-link" href="/case-studies/noovis">the Noovis case study</Link> or{" "}
+            <Link className="eg-link" href="/blog/sales-trigger-events-b2b">buying signals explained</Link>.
           </p>
-          <PrimaryCta />
         </Section>
+        <FinalCta />
       </main>
-      <Footer showLeadForm={false} />
+      <Footer />
     </div>
   );
 }

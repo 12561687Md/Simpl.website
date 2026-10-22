@@ -15,6 +15,6 @@ export const OG_IMAGE = [
     url: "/brand/simpl-cover-1200x675.png",
     width: 1200,
     height: 675,
-    alt: "Simpl, your digital presence handled",
+    alt: "Simpl, B2B lead generation from the public record",
   },
 ];

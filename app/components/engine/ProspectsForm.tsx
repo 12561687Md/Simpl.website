@@ -4,11 +4,11 @@ import { useState } from "react";
 import { track } from "../../lib/analytics";
 
 /**
- * "See your top 25 accounts" request. Posts to the existing /api/contact
- * route (same DB row + team notification), tagged service "Top 25 accounts"
+ * "See your top prospects" request. Posts to the existing /api/contact
+ * route (same DB row + team notification), tagged service "Top prospects sample"
  * so it's obvious in the inbox which offer the lead came from.
  */
-export default function Top25Form({ plan, sourcePage = "/top-25" }: { plan?: string; sourcePage?: string }) {
+export default function ProspectsForm({ sourcePage = "/top-prospects" }: { sourcePage?: string }) {
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [error, setError] = useState("");
 
@@ -36,13 +36,12 @@ export default function Top25Form({ plan, sourcePage = "/top-25" }: { plan?: str
           email,
           phone: get("phone"),
           website: get("website"),
-          service: "Top 25 accounts",
+          service: "Top prospects sample",
           sourcePage,
           message: [
             `Company: ${company}`,
             `What they sell: ${sells}`,
             `Territory: ${territory || "(not given)"}`,
-            plan ? `Plan interest: ${plan}` : null,
             get("notes") ? `Notes: ${get("notes")}` : null,
           ]
             .filter(Boolean)
@@ -51,7 +50,7 @@ export default function Top25Form({ plan, sourcePage = "/top-25" }: { plan?: str
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.success) throw new Error(data.error || "Could not send. Try again.");
-      track("generate_lead", { form: "top_25", plan: plan || "" });
+      track("generate_lead", { form: "top_prospects" });
       setState("done");
     } catch (err) {
       setState("error");
@@ -65,7 +64,7 @@ export default function Top25Form({ plan, sourcePage = "/top-25" }: { plan?: str
         <div className="eg-eyebrow">Got it</div>
         <h2 className="eg-h3" style={{ fontSize: 24 }}>We&apos;re mapping your market.</h2>
         <p className="eg-body">
-          Matt will reply within one business day to confirm your territory and your best reasons to call, then build your 25-account sample.
+          We will reply within one business day to confirm your territory and your best reasons to call, then build your sample of top prospects.
           Want to talk sooner? Call <a className="eg-link" href="tel:+19194289452">(919) 428-9452</a>.
         </p>
       </div>
@@ -114,8 +113,8 @@ export default function Top25Form({ plan, sourcePage = "/top-25" }: { plan?: str
       </div>
       {error && <div className="err" role="alert">{error}</div>}
       <div>
-        <button type="submit" className="eg-btn primary cta-primary" disabled={state === "sending"}>
-          {state === "sending" ? "Sending..." : "Build my top 25"} <span aria-hidden="true">&rarr;</span>
+        <button type="submit" className="eg-btn primary" disabled={state === "sending"}>
+          {state === "sending" ? "Sending..." : "See my top prospects"} <span aria-hidden="true">&rarr;</span>
         </button>
         <p className="mono" style={{ marginTop: 14, fontSize: 11.5, color: "var(--muted)", letterSpacing: "0.04em" }}>
           Free. No contract. A real person replies within one business day.

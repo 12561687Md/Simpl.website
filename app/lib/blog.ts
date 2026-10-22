@@ -89,7 +89,7 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-to-rank-higher-on-google-maps",
     title: "How to rank higher on Google Maps (the local 3-pack), explained",
-    metaTitle: "How to Rank Higher on Google Maps",
+    metaTitle: "How to Rank Higher on Google Maps (Local 3-Pack)",
     description:
       "A plain-English guide to ranking in Google's local 3-pack: what actually moves the needle for a local service business, and what's a waste of time.",
     question: "How do I rank higher on Google Maps?",
@@ -154,7 +154,7 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "why-is-my-website-not-showing-up-on-google",
     title: "Why is my website not showing up on Google? A checklist",
-    metaTitle: "Why Isn't My Website on Google?",
+    metaTitle: "Why Isn't My Website Showing Up on Google? Fixes",
     description:
       "If you can't find your own business on Google, one of a handful of things is usually wrong. Here's how to diagnose it, in order.",
     question: "Why is my website not showing up on Google?",
@@ -220,7 +220,7 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-do-i-get-more-google-reviews",
     title: "How do I get more Google reviews (without breaking the rules)?",
-    metaTitle: "How to Get More Google Reviews",
+    metaTitle: "How to Get More Google Reviews for Your Business",
     description:
       "More reviews mean more trust and better local ranking. Here's how to earn them steadily without violating Google's policies.",
     question: "How do I get more Google reviews?",
@@ -277,7 +277,7 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-to-get-your-business-recommended-by-ai",
     title: "How to get your business recommended by ChatGPT and AI search",
-    metaTitle: "How to Get Recommended by ChatGPT & AI Search",
+    metaTitle: "How to Get Recommended by ChatGPT and AI Search",
     description:
       "AI assistants now answer \"who should I call\" questions directly. Here's what decides which local businesses they recommend, and how to become one of them.",
     question: "How do I get my business recommended by ChatGPT and AI search?",
@@ -348,9 +348,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-long-does-local-seo-take",
     title: "How long does local SEO take to work? An honest timeline",
-    metaTitle: "How Long Does Local SEO Take to Work?",
+    metaTitle: "How Long Does Local SEO Take to Work? Real Timeline",
     description:
-      "Some fixes move your visibility in days, others compound for months. An honest breakdown of what happens when in local SEO, and what to measure while you wait.",
+      "Some local SEO fixes move visibility in days, others compound for months. An honest timeline of what happens when, and what to measure while you wait.",
     question: "How long does local SEO take to work?",
     category: "Local SEO",
     readMinutes: 4,
@@ -415,7 +415,7 @@ const LOCAL_POSTS: BlogPost[] = [
     title: "What a missed call actually costs a service business",
     metaTitle: "What a Missed Call Costs a Service Business",
     description:
-      "When a customer's call goes unanswered, they don't leave a voicemail, they call the next company on the list. What the research says about speed, and how to stop the leak.",
+      "When a call goes unanswered, customers rarely leave a voicemail; they call the next company. What the research says about speed, and how to fix it.",
     question: "What happens when a customer's call to my business goes unanswered?",
     category: "Lead Capture",
     readMinutes: 4,
@@ -478,9 +478,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-to-get-more-plumbing-leads",
     title: "How to get more plumbing leads (without buying them from lead resellers)",
-    metaTitle: "How to Get More Plumbing Leads",
+    metaTitle: "How to Get More Plumbing Leads From Google",
     description:
-      "A plumber's guide to generating your own leads online: local SEO, Google's Local Services Ads, reviews, and answering the phone so emergency calls become booked jobs.",
+      "A plumber's guide to generating your own leads: local SEO, Local Services Ads, reviews, and answering fast so emergency calls become booked jobs.",
     question: "How do I get more plumbing leads?",
     category: "Industry Guides",
     readMinutes: 6,
@@ -541,9 +541,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "seo-for-landscapers",
     title: "SEO for landscapers: how to rank for local lawn care and design searches",
-    metaTitle: "SEO for Landscapers",
+    metaTitle: "SEO for Landscapers: How to Rank and Get Calls",
     description:
-      "A landscaper's guide to ranking on Google: service pages for lawn care, hardscaping, and design, a strong Google Business Profile, seasonal content, and before/after proof.",
+      "A landscaper's guide to ranking on Google: service pages for lawn care and hardscaping, a strong Google Business Profile, seasonal content and proof.",
     question: "How do I do SEO for a landscaping business?",
     category: "Industry Guides",
     readMinutes: 6,
@@ -604,9 +604,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "google-ads-for-remodelers",
     title: "Google Ads for remodelers: what actually books kitchen and bath jobs",
-    metaTitle: "Google Ads for Remodelers",
+    metaTitle: "Google Ads for Remodelers: Setup, Budget, Keywords",
     description:
-      "A remodeling contractor's guide to Google Ads: high-intent keywords, why landing pages matter more than the ad, tracking real jobs not clicks, and defending your brand.",
+      "A remodeler's guide to Google Ads: high-intent keywords, landing pages that convert, tracking real jobs instead of clicks, and defending your brand.",
     question: "How do remodelers use Google Ads to get more jobs?",
     category: "Industry Guides",
     readMinutes: 6,
@@ -667,9 +667,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-to-market-a-car-detailing-business",
     title: "How to market a car detailing business and stay booked out",
-    metaTitle: "How to Market a Car Detailing Business",
+    metaTitle: "How to Market a Car Detailing Business Locally",
     description:
-      "A detailer's marketing guide: winning local search, using before/after photos and short video, getting reviews, and turning one-time washes into recurring plans.",
+      "A detailer's marketing guide: local search, before/after photos and short video, reviews, and turning one-time washes into recurring plans.",
     question: "How do I market my car detailing business?",
     category: "Industry Guides",
     readMinutes: 5,
@@ -730,9 +730,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "local-seo-for-auto-body-shops",
     title: "Local SEO for auto body shops: how to get found after a collision",
-    metaTitle: "Local SEO for Auto Body Shops",
+    metaTitle: "Local SEO for Auto Body Shops: Get Found on Google",
     description:
-      "An auto body shop's guide to local SEO: ranking for collision and repair searches, managing reviews and insurance trust signals, and building service and location pages.",
+      "An auto body shop's guide to local SEO: ranking for collision and repair searches, reviews and insurance trust signals, and service pages.",
     question: "How do auto body shops improve local SEO?",
     category: "Industry Guides",
     readMinutes: 5,
@@ -793,9 +793,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-to-get-more-hvac-leads",
     title: "How to get more HVAC leads online, in season and out",
-    metaTitle: "How to Get More HVAC Leads",
+    metaTitle: "How to Get More HVAC Leads From Google and Maps",
     description:
-      "An HVAC contractor's guide to generating leads: Local Services Ads for emergency calls, local SEO, maintenance-plan marketing, and fast follow-up that beats the competition.",
+      "An HVAC contractor's guide to more leads: Local Services Ads for emergency calls, local SEO, maintenance plans, and follow-up that beats competitors.",
     question: "How do HVAC companies get more leads?",
     category: "Industry Guides",
     readMinutes: 6,
@@ -856,9 +856,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-to-get-more-roofing-leads",
     title: "How to get more roofing leads that turn into signed jobs",
-    metaTitle: "How to Get More Roofing Leads",
+    metaTitle: "How to Get More Roofing Leads Without Buying Them",
     description:
-      "A roofer's guide to generating quality leads: local SEO, Local Services Ads, storm-season readiness, reviews and trust, and following up before the competition does.",
+      "A roofer's guide to quality leads: local SEO, Local Services Ads, storm-season readiness, reviews and trust, and following up before competitors do.",
     question: "How do roofers get more leads?",
     category: "Industry Guides",
     readMinutes: 6,
@@ -919,9 +919,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "marketing-for-electricians",
     title: "Marketing for electricians: how to keep your schedule full",
-    metaTitle: "Marketing for Electricians",
+    metaTitle: "Marketing for Electricians: Get Found, Get Booked",
     description:
-      "An electrician's marketing guide: local SEO, Local Services Ads, reviews and licensing trust, residential vs commercial targeting, and fast follow-up on service calls.",
+      "An electrician's marketing guide: local SEO, Local Services Ads, reviews and licensing trust, residential vs commercial, and fast follow-up.",
     question: "How do electricians get more customers?",
     category: "Industry Guides",
     readMinutes: 5,
@@ -984,9 +984,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "how-much-should-a-service-business-spend-on-marketing",
     title: "How much should a service business spend on marketing?",
-    metaTitle: "How Much Should a Service Business Spend on Marketing?",
+    metaTitle: "What Should a Service Business Spend on Marketing?",
     description:
-      "A practical guide to setting a marketing budget for a local service business: the percentage-of-revenue rule of thumb, what to prioritize first, and how to measure return.",
+      "How to set a marketing budget for a local service business: the percent-of-revenue rule of thumb, what to fund first, and how to measure return.",
     question: "How much should a service business spend on marketing?",
     category: "Strategy",
     readMinutes: 5,
@@ -1047,9 +1047,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "local-services-ads-vs-google-ads",
     title: "Local Services Ads vs Google Ads: which is right for your trade?",
-    metaTitle: "Local Services Ads vs Google Ads",
+    metaTitle: "Local Services Ads vs Google Ads: Which Is Better?",
     description:
-      "A plain-English comparison of Google's Local Services Ads and standard Google Ads for local service businesses: how each is priced, who should use which, and why most use both.",
+      "Local Services Ads vs Google Ads for local service businesses: how each is priced, who should use which, and why most businesses use both.",
     question: "What's the difference between Local Services Ads and Google Ads?",
     category: "Paid Ads",
     readMinutes: 5,
@@ -1112,7 +1112,7 @@ const LOCAL_POSTS: BlogPost[] = [
     title: "How to set up automated lead follow-up for a service business",
     metaTitle: "Automated Lead Follow-Up for Service Businesses",
     description:
-      "A practical guide to automating lead follow-up: missed-call text-back, instant form replies, and reminder sequences that keep leads warm while you're on the job.",
+      "How to automate lead follow-up: missed-call text-back, instant form replies and reminder sequences that keep leads warm while you're on the job.",
     question: "How do I automate lead follow-up for my service business?",
     category: "Strategy",
     readMinutes: 5,
@@ -1173,9 +1173,9 @@ const LOCAL_POSTS: BlogPost[] = [
   {
     slug: "website-checklist-for-service-businesses",
     title: "The website checklist every service business needs to book more jobs",
-    metaTitle: "Website Checklist for Service Businesses",
+    metaTitle: "The Website Checklist for Service Businesses",
     description:
-      "A practical website checklist for local service businesses: the pages, trust signals, speed, mobile, schema, and conversion elements that turn visitors into booked jobs.",
+      "A website checklist for local service businesses: the pages, trust signals, speed, mobile, schema and conversion elements that win booked jobs.",
     question: "What should a service business website include?",
     category: "Strategy",
     readMinutes: 6,

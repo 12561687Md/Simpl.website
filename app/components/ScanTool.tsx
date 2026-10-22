@@ -488,7 +488,7 @@ export default function ScanTool({
               style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap", justifyContent: "space-between" }}
             >
               <a href="/start-now" style={{ ...mono, fontSize: 12.5, color: "var(--fg)", letterSpacing: "0.02em", textDecoration: "none", borderBottom: "1px solid var(--rule)", paddingBottom: 2 }}>
-                Or skip ahead — start fixing this with our team →
+                Or skip ahead: start fixing this with our team →
               </a>
               <button onClick={reset} style={{ background: "transparent", border: 0, color: "var(--muted)", cursor: "pointer", padding: 0, font: "inherit", fontSize: 12.5, textDecoration: "underline", textUnderlineOffset: 3 }}>
                 Try another site

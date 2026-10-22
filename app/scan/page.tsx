@@ -16,7 +16,11 @@ export const metadata: Metadata = {
     siteName: "Simpl",
     type: "website",
   },
-  alternates: { canonical: "https://www.simpl.pro/scan" },
+  // Merged into /free-tools (2026-10-22): same intent, so this URL points its
+  // canonical there and stays out of the index. It is kept live (not 301'd)
+  // because emails link to /scan?url=... to start a scan directly.
+  alternates: { canonical: "https://www.simpl.pro/free-tools" },
+  robots: { index: false, follow: true },
 };
 
 const SURFACES = [
@@ -86,7 +90,7 @@ export default function ScanPage() {
           </ScrollReveal>
           <StaggerReveal style={{ marginTop: 72, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
             {STEPS.map((s) => (
-              <StaggerItem key={s.n} style={{ background: "var(--bg)", padding: "32px 36px", display: "grid", gridTemplateColumns: "60px minmax(220px, 1fr) minmax(0, 2fr)", gap: 28, alignItems: "baseline" }}>
+              <StaggerItem key={s.n} className="scan-step" style={{ background: "var(--bg)", padding: "32px 36px", display: "grid", gridTemplateColumns: "60px minmax(220px, 1fr) minmax(0, 2fr)", gap: 28, alignItems: "baseline" }}>
                 <div className="mono" style={{ color: "var(--fg)", fontSize: 13 }}>{s.n}</div>
                 <h3 style={{ fontSize: 22, fontWeight: 400, margin: 0 }}>{s.h}</h3>
                 <div style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.55 }}>{s.p}</div>

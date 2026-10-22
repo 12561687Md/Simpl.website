@@ -319,9 +319,9 @@ function SerpBoard({
             {opportunities.map((o, i) => (
               <div key={`${o.keyword}-${i}`} style={{ display: "grid", gridTemplateColumns: "2fr 130px 110px", gap: 12, padding: "12px 16px", fontSize: 13.5, borderBottom: i < opportunities.length - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
                 <span style={{ ...display, fontWeight: 600 }}>{o.keyword}</span>
-                <span style={{ ...rmono, color: "var(--fg)" }}>{o.search_volume != null ? o.search_volume.toLocaleString() : "—"}</span>
+                <span style={{ ...rmono, color: "var(--fg)" }}>{o.search_volume != null ? o.search_volume.toLocaleString() : "n/a"}</span>
                 <span style={{ ...rmono, fontSize: 11.5, color: o.competition === "HIGH" ? "#E05252" : o.competition === "MEDIUM" ? "#E0A852" : "var(--ok)" }}>
-                  {o.competition ? o.competition.charAt(0) + o.competition.slice(1).toLowerCase() : "—"}
+                  {o.competition ? o.competition.charAt(0) + o.competition.slice(1).toLowerCase() : "n/a"}
                 </span>
               </div>
             ))}
@@ -925,7 +925,7 @@ export default function ScanReport({
                     return (
                       <div key={h} style={{ display: "flex", justifyContent: "space-between", gap: 12, borderBottom: "1px solid var(--rule)", padding: "1px 0" }}>
                         <span>{day}</span>
-                        <span style={{ color: "var(--fg)", textAlign: "right" }}>{rest.join(": ") || "—"}</span>
+                        <span style={{ color: "var(--fg)", textAlign: "right" }}>{rest.join(": ") || "n/a"}</span>
                       </div>
                     );
                   })}
@@ -1067,7 +1067,7 @@ export default function ScanReport({
               return (
                 <div key={c.name} style={{ display: "grid", gridTemplateColumns: "1.6fr 90px 1.2fr", gap: 12, padding: "13px 16px", fontSize: 13.5, borderBottom: i < Math.min(localCompetitors.length, 6) - 1 ? "1px solid var(--rule)" : "none", alignItems: "center" }}>
                   <span style={{ ...display, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.name}</span>
-                  <span style={{ ...rmono, fontSize: 12, color: c.rating != null ? "#E0A852" : "var(--muted)" }}>{c.rating != null ? `★ ${c.rating.toFixed(1)}` : "—"}</span>
+                  <span style={{ ...rmono, fontSize: 12, color: c.rating != null ? "#E0A852" : "var(--muted)" }}>{c.rating != null ? `★ ${c.rating.toFixed(1)}` : "n/a"}</span>
                   <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <span style={{ flex: 1 }}><Track pct={pct} color="#E05252" /></span>
                     <span style={{ ...rmono, color: "var(--muted)", fontSize: 11.5, whiteSpace: "nowrap" }}>{beatKeywords}/{boardSnapshots.length}</span>

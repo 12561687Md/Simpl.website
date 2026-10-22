@@ -1,107 +1,60 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
-import { FooterBackgroundGradient } from "@/components/ui/hover-footer";
-import PreFooterCTA from "./PreFooterCTA";
-import { GROWTH_SERVICES, EASY_WINS, INDUSTRIES } from "../lib/site";
+import { GROWTH_SERVICES, LOCAL_SERVICES, INDUSTRIES, RESOURCES, COMPANY, SITE } from "../lib/site";
 
 /**
- * Site footer: real Simpl links + contact, with the FULL brand wordmark (the
- * vitalsign-I and the identity dot) spread across the entire footer as a
- * ghosted background watermark, plus a soft accent gradient. Dead-end links
- * (/scan, a bare duplicate of the hero tool; /results, an empty report with no
- * scan data) were removed, every link here is a real destination.
- *
- * `showLeadForm` (default true) renders the slide-in <PreFooterCTA> above;
- * pages that ARE a form (start-now) or don't want it (legal) pass false.
+ * Site footer (revamp 2026-10-22). Every key page is linked here, so nothing
+ * on the site is more than two clicks from anywhere (no orphan pages).
+ * The props are kept for older call sites; the slide-in lead form is retired
+ * because every page now ends on the FinalCta band.
  */
-
-const linkStyle: React.CSSProperties = { color: "var(--muted)", textDecoration: "none", fontSize: 14, lineHeight: 1.5 };
-const colLabel: React.CSSProperties = { fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--fg-dim)", marginBottom: 18 };
-
-const SERVICES = [...GROWTH_SERVICES, ...EASY_WINS].map(({ label, href }) => ({ label, href }));
-const INDUSTRY_LINKS = [...INDUSTRIES.map(({ label, href }) => ({ label, href })), { label: "All industries", href: "/industries" }];
-const COMPANY = [
-  { label: "Pricing", href: "/pricing" },
-  { label: "Free tools", href: "/free-tools" },
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Client login", href: "/login" },
-];
 
 function Column({ label, links }: { label: string; links: { label: string; href: string }[] }) {
   return (
     <div>
-      <div className="mono" style={colLabel}>{label}</div>
-      <nav style={{ display: "flex", flexDirection: "column", gap: 11 }}>
+      <div className="lbl">{label}</div>
+      <nav aria-label={label}>
         {links.map((l) => (
-          <Link key={l.href} href={l.href} className="footer-link" style={linkStyle}>{l.label}</Link>
+          <Link key={l.href + l.label} href={l.href}>{l.label}</Link>
         ))}
       </nav>
     </div>
   );
 }
 
-export default function Footer({ showLeadForm = true, sourcePage }: { showLeadForm?: boolean; sourcePage?: string }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function Footer(_props: { showLeadForm?: boolean; sourcePage?: string } = {}) {
   return (
-    <>
-      {showLeadForm && <PreFooterCTA sourcePage={sourcePage} />}
-      <footer style={{ position: "relative", borderTop: "1px solid var(--rule)", background: "var(--bg-soft)", overflow: "hidden" }}>
-        <FooterBackgroundGradient />
-        {/* The full Simpl wordmark (vitalsign-I + dot) spread edge to edge
-            behind everything, a ghosted brand watermark. CSS width beats the
-            SVG's width attribute, so it stretches to fill while keeping its
-            aspect via height:auto. */}
-        <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 1, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
-          <SimplWordmark size={430} fillColor="rgba(137,207,240,0.5)" className="footer-watermark" style={{ width: "99%", height: "auto", opacity: 0.5, minWidth: 820 }} />
-        </div>
-        <div style={{ position: "relative", zIndex: 2, maxWidth: 1120, margin: "0 auto", padding: "72px 32px 24px" }}>
-          <div className="grid-footer" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr 0.8fr", gap: 48, marginBottom: 44 }}>
-            {/* Brand + contact */}
-            <div>
-              <Link href="/" aria-label="Simpl home" style={{ textDecoration: "none", display: "inline-flex" }}>
-                <SimplWordmark size={34} />
-              </Link>
-              <p style={{ color: "var(--muted)", fontSize: 14.5, lineHeight: 1.6, maxWidth: 300, margin: "18px 0 22px" }}>
-                Custom growth engines for high-ticket B2B companies. Who to call this week, why they&apos;ll care and who signs, with proof on every line.
-              </p>
-              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: 11 }}>
-                <li>
-                  <a href="mailto:team@simpl.pro" className="footer-contact" style={{ display: "flex", alignItems: "center", gap: 10, ...linkStyle }}>
-                    <Mail size={16} style={{ color: "var(--accent)", flexShrink: 0 }} /> team@simpl.pro
-                  </a>
-                </li>
-                <li>
-                  <a href="tel:+19194289452" className="footer-contact" style={{ display: "flex", alignItems: "center", gap: 10, ...linkStyle }}>
-                    <Phone size={16} style={{ color: "var(--accent)", flexShrink: 0 }} /> (919) 428-9452
-                  </a>
-                </li>
-                <li style={{ display: "flex", alignItems: "center", gap: 10, ...linkStyle }}>
-                  <MapPin size={16} style={{ color: "var(--accent)", flexShrink: 0 }} />
-                  <address style={{ fontStyle: "normal", margin: 0 }}>Raleigh, NC · Serving the US</address>
-                </li>
-              </ul>
-            </div>
-
-            <Column label="Services" links={SERVICES} />
-            <Column label="Industries" links={INDUSTRY_LINKS} />
-            <Column label="Company" links={COMPANY} />
-          </div>
-
-          {/* Bottom bar */}
-          <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 22, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-            <div className="mono" style={{ fontSize: 11, color: "var(--fg-dim)", letterSpacing: "0.04em" }}>
-              &copy; {new Date().getFullYear()} Simpl. All rights reserved.
-            </div>
-            <div style={{ display: "flex", gap: 22 }}>
-              <Link href="/privacy" className="footer-link" style={{ ...linkStyle, fontSize: 12.5 }}>Privacy</Link>
-              <Link href="/terms" className="footer-link" style={{ ...linkStyle, fontSize: 12.5 }}>Terms</Link>
+    <footer className="sf">
+      <div className="eg-wrap">
+        <div className="grid">
+          <div>
+            <Link href="/" aria-label="Simpl home" style={{ display: "inline-flex" }}>
+              <SimplWordmark size={32} />
+            </Link>
+            <p className="about">
+              Simpl is a client acquisition partner for B2B companies. We build your Account Engine: who to call this week, why now and who decides, with a source on every fact.
+            </p>
+            <div style={{ display: "grid", gap: 10 }}>
+              <a href={`mailto:${SITE.email}`} style={{ display: "inline-flex", gap: 10, alignItems: "center" }}><Mail size={15} color="#89CFF0" aria-hidden="true" /> {SITE.email}</a>
+              <a href={SITE.phoneHref} style={{ display: "inline-flex", gap: 10, alignItems: "center" }}><Phone size={15} color="#89CFF0" aria-hidden="true" /> {SITE.phone}</a>
+              <span style={{ display: "inline-flex", gap: 10, alignItems: "center", color: "#ADACA7", fontSize: 14 }}><MapPin size={15} color="#89CFF0" aria-hidden="true" /> Raleigh, NC. Serving the US.</span>
             </div>
           </div>
+          <Column label="B2B growth" links={[...GROWTH_SERVICES, { href: "/top-prospects", label: "See your top prospects" }]} />
+          <Column label="Industries" links={[...INDUSTRIES, { href: "/industries", label: "All industries" }]} />
+          <Column label="Local businesses" links={[...LOCAL_SERVICES, { href: "/services", label: "All services" }]} />
+          <Column label="Company" links={[...RESOURCES, ...COMPANY]} />
         </div>
-
-      </footer>
-    </>
+        <div className="bottom">
+          <span>&copy; {new Date().getFullYear()} Simpl Systems LLC. All rights reserved.</span>
+          <span style={{ display: "flex", gap: 20 }}>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
+          </span>
+        </div>
+      </div>
+    </footer>
   );
 }

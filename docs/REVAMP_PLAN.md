@@ -1,5 +1,15 @@
 # Simpl website revamp plan (2026-10-22)
 
+> **Second pass, 2026-10-22 (Matt's instructions). This box overrides anything below it.**
+> - Primary CTA is **"See your top prospects"** (`/top-prospects`); `/top-25` 301s there. Secondary CTA is **"Book a call"** (`/book`).
+> - **No prices anywhere**, including schema. `/pricing` and `/start` 301 to `/services/account-engine`, which explains how pricing works without numbers.
+> - **No photo of Matt.** Author attribution is name, role and experience only.
+> - **Theme system:** section tones `ink`, `paper`, `deep`, `mist`, `accent` in `app/engine.css`, alternated on every page (modeled on the trades template tokens).
+> - **Keyword H1s** on every page; the full keyword map, intent per page, GSC steps and backlink plan are in `docs/SEO_REPORT_2026-10-22.md`.
+> - **Noovis** is named: one case study (`/case-studies/noovis`) plus mentions on the home, Account Engine and low voltage pages. Facts only from `Simpl.master/clients/noovis`. The other portal client is never named.
+> - **Portal visuals** are coded mockups with fictional accounts (`app/components/portal/Portal.tsx`); real portal screenshots contain confidential prospect names.
+> - Header: utility strip (phone, Book a call, Client login) + five nav items + one CTA. Sections 8 (GBP) and the pricing cards below are on hold.
+
 Branch: `revamp-2026-10`. Built and reviewed on localhost only. Never merged to `main` without Matt's go.
 
 ## 1. The shift in one paragraph

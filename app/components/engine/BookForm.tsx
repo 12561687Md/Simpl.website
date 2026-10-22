@@ -1,0 +1,97 @@
+"use client";
+
+import { useState } from "react";
+import { track } from "../../lib/analytics";
+
+/**
+ * "Book a call" request. Posts to the existing /api/contact route (same DB
+ * row + team notification), tagged service "Book a call".
+ */
+export default function BookForm() {
+  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [error, setError] = useState("");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const get = (k: string) => String(f.get(k) || "").trim();
+    const name = get("name");
+    const email = get("email");
+    if (name.length < 2) return setError("Tell us your name.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("Enter a valid email.");
+    setError("");
+    setState("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: get("phone"),
+          service: "Book a call",
+          sourcePage: "/book",
+          message: [`Company: ${get("company") || "(not given)"}`, `Best times: ${get("times") || "(not given)"}`, get("topic") ? `Topic: ${get("topic")}` : null]
+            .filter(Boolean)
+            .join("\n"),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.success) throw new Error(data.error || "Could not send. Try again.");
+      track("generate_lead", { form: "book_a_call" });
+      setState("done");
+    } catch (err) {
+      setState("error");
+      setError(err instanceof Error ? err.message : "Could not send. Try again.");
+    }
+  }
+
+  if (state === "done") {
+    return (
+      <div>
+        <div className="eg-eyebrow">Request received</div>
+        <h2 className="eg-h3" style={{ fontSize: 24 }}>We&apos;ll confirm a time within one business day.</h2>
+        <p className="eg-body">Watch your inbox for a calendar invite. Need us sooner? Call <a className="eg-link" href="tel:+19194289452">(919) 428-9452</a>.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form className="eg-form" onSubmit={onSubmit} noValidate>
+      <div className="row2">
+        <div>
+          <label htmlFor="bk-name">Your name</label>
+          <input id="bk-name" name="name" autoComplete="name" required />
+        </div>
+        <div>
+          <label htmlFor="bk-email">Email</label>
+          <input id="bk-email" name="email" type="email" autoComplete="email" required />
+        </div>
+      </div>
+      <div className="row2">
+        <div>
+          <label htmlFor="bk-company">Company</label>
+          <input id="bk-company" name="company" autoComplete="organization" />
+        </div>
+        <div>
+          <label htmlFor="bk-phone">Phone (optional)</label>
+          <input id="bk-phone" name="phone" type="tel" autoComplete="tel" />
+        </div>
+      </div>
+      <div>
+        <label htmlFor="bk-times">Best days and times</label>
+        <input id="bk-times" name="times" placeholder="e.g. Tue or Wed afternoon, Eastern" />
+      </div>
+      <div>
+        <label htmlFor="bk-topic">What do you want to cover? (optional)</label>
+        <textarea id="bk-topic" name="topic" rows={3} placeholder="What you sell, your territory, or the local business you want found" />
+      </div>
+      {error && <div className="err" role="alert">{error}</div>}
+      <div>
+        <button type="submit" className="eg-btn primary" disabled={state === "sending"}>
+          {state === "sending" ? "Sending..." : "Book a call"}
+        </button>
+      </div>
+    </form>
+  );
+}

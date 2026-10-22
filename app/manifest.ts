@@ -8,7 +8,7 @@ import type { MetadataRoute } from "next";
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Simpl — Your Digital Presence, Handled",
+    name: "Simpl: B2B Lead Generation and Local SEO",
     short_name: "Simpl",
     description:
       "Fix your business's online presence. Your Simpl Score, findings, and one-tap fixes, in one app.",

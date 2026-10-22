@@ -1,43 +1,47 @@
 # Simpl
 
-> Simpl (simpl.pro) builds custom growth portals for high-ticket B2B companies in the United States. Its flagship, the Account Engine, reads the public record for every account in a client's market every night (inspections and citations, building permits, licenses, ownership changes, public bids and budget cycles), scores which accounts are worth a call right now, and shows the client's team the reason to call, a link to the official record behind it, and the person who decides. Simpl also sets up CRM and follow-up sequences and builds 24/7 AI receptionist and support lines. Websites, SEO and AI search visibility, Google Business Profile management and paid ads are offered as secondary services.
+> Simpl (simpl.pro) is a client acquisition partner for B2B companies in the United States. Simpl builds each client an Account Engine: a private, branded portal (yourcompany.simpl.pro) that reads the public record for every account in the client's market every night (inspections and citations, building permits, licenses, ownership changes, public bids and budget cycles), ranks which accounts are worth a call right now, and shows the client's sales team the reason to call, a link to the official record behind it, and the person who decides. Simpl also sets up CRM follow-up and builds 24/7 AI receptionist and support lines. A second line of business offers local SEO, website design, Google Business Profile management and PPC management to local service businesses.
 
-Simpl is built for B2B companies that sell high-ticket products, long-lasting services or big contracts to buildings, facilities and regulated businesses: low voltage, security and telecom integrators; senior living technology; building systems such as fire protection, commercial HVAC and elevators; facility services; healthcare technology; and manufacturers and distributors selling into those markets.
+The Account Engine is built for B2B companies that sell to buildings, facilities and regulated businesses: low voltage, security and cabling integrators; senior living technology; building systems such as fire protection, commercial HVAC and elevators; facility services such as commercial cleaning; and healthcare technology and medical equipment.
 
 ## What Simpl does
 
-- Account Engine: a private, branded client portal (yourcompany.simpl.pro) with the client's whole market scored nightly from public records, a daily list of the best calls, decision makers by seat confirmed from public sources, proof linked on every fact, and team lists, pipeline, notes and exports
-- CRM and follow-up: every account worth a call flows into the client's CRM (theirs or Simpl's) with an email and phone sequence that runs until the prospect replies or opts out (rolling out)
+- Account Engine (B2B lead generation and sales prospecting): a private client portal with the client's whole market scored nightly from public records, a daily list of the best calls, decision makers by seat confirmed from public sources, a source link on every fact, and team lists, pipeline, notes and exports
+- CRM implementation and follow-up: every account worth a call flows into the client's CRM with an email and phone sequence that runs until the prospect replies or opts out (rolling out)
 - AI receptionist and 24/7 support line: answers calls and tickets at any hour from the client's own guides and escalates urgent issues to whoever is on duty (rolling out)
-- Websites, SEO and AI search visibility, Google Business Profile management, and paid ads management (client owns the ad account, no markup on spend)
-- A free website and digital presence scan that scores a site 0 to 100 across six categories
+- Local SEO, small business website design, Google Business Profile management and PPC management for local service businesses (client owns the ad account, no markup on spend)
+- A free website audit that scores a site 0 to 100 across six categories
 
 ## Pricing
 
-- Account Engine: $10,000 one-time setup, then $1,000 per month
-- Account Engine Pro: $15,000 one-time setup, then $2,500 per month; adds any territory up to nationwide, custom data sources, overnight research, CRM and follow-up, a 24/7 answering and support line, and a monthly strategy call
-- Every prospect can see a free sample of their own top 25 accounts before paying anything
-- Websites, SEO, Google Business Profile and ads are scoped and quoted per client
+Simpl does not publish prices. Every Account Engine is scoped to the client's territory, data sources and add-ons (a one-time setup and a monthly fee) and quoted in writing after a 30-minute call. Prospects can see a free sample of their own top prospects before paying anything.
+
+## Proof
+
+- Noovis, LLC, a network infrastructure and smart-building integrator in Hanover, Maryland, uses an Account Engine built by Simpl covering Maryland, Delaware, Washington DC, Virginia, Pennsylvania and West Virginia. Case study: https://www.simpl.pro/case-studies/noovis
 
 ## Key pages
 
-- [Home](https://www.simpl.pro/): the Account Engine
-- [Account Engine](https://www.simpl.pro/services/account-engine): how it works, the signals it tracks, pricing
+- [Home](https://www.simpl.pro/): B2B lead generation from public records
+- [Account Engine](https://www.simpl.pro/services/account-engine): sales prospecting, the buying signals it tracks, how it works
+- [Services](https://www.simpl.pro/services): B2B lead generation services and local SEO
 - [CRM and follow-up](https://www.simpl.pro/services/crm-follow-up)
-- [AI receptionist and 24/7 support](https://www.simpl.pro/services/ai-receptionist)
-- [Pricing](https://www.simpl.pro/pricing)
+- [AI receptionist](https://www.simpl.pro/services/ai-receptionist)
 - [Industries](https://www.simpl.pro/industries): low voltage and security, senior living technology, building systems, facility services, healthcare technology
-- [See your top 25 accounts](https://www.simpl.pro/top-25): request a free sample of your market
-- [Free tools](https://www.simpl.pro/free-tools): free website audit and presence scan
+- [Noovis case study](https://www.simpl.pro/case-studies/noovis)
+- [See your top prospects](https://www.simpl.pro/top-prospects): request a free sample of your market
+- [Book a call](https://www.simpl.pro/book)
+- [Local SEO services](https://www.simpl.pro/services/local-seo)
+- [Free website audit](https://www.simpl.pro/free-tools)
 - [FAQ](https://www.simpl.pro/faq)
-- [Blog](https://www.simpl.pro/blog): sales trigger events, public-record prospecting, decision makers, follow-up cadence
+- [Blog](https://www.simpl.pro/blog): buying signals, public-record prospecting, decision makers, follow-up cadence, local SEO
 - [About](https://www.simpl.pro/about)
-- [Client login](https://www.simpl.pro/login): clients reach their portal at their own simpl.pro subdomain
 
 ## Facts
 
-- Company: Simpl, simpl.pro, Raleigh, North Carolina, serving companies across the United States
+- Company: Simpl Systems LLC, simpl.pro, Raleigh, North Carolina, serving companies across the United States
+- Founder: Matt DuBois
 - Contact: team@simpl.pro, (919) 428-9452
 - Every fact in a client portal links to the public record it came from; facility-level and business records only, never private personal data
-- Clients own their portal, lists and data
+- Clients own their portal data and can export it any time
 - Features still in build are labeled "rolling out" and are never described as done
