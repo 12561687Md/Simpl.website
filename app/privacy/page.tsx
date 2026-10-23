@@ -89,7 +89,7 @@ export default function PrivacyPage() {
               lineHeight: 1.55,
             }}
           >
-            Last updated: June 2026
+            Last updated: October 23, 2026
           </p>
         </section>
 
@@ -151,10 +151,19 @@ export default function PrivacyPage() {
               </li>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
+                  Text message consent.
+                </strong>{" "}
+                If you check the optional box to get texts about your request,
+                we record that you agreed, the wording you agreed to, and when.
+                The box is never checked for you.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>
                   Contact form submissions.
                 </strong>{" "}
-                Our pricing page includes a contact form that collects your name,
-                email, phone number, and message.
+                Our forms (Book a call, See your top prospects) collect your
+                name, email, company, website, phone number if you give one, and
+                your message.
               </li>
             </ul>
 
@@ -183,12 +192,14 @@ export default function PrivacyPage() {
               </li>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
-                  Anonymous analytics.
+                  Analytics.
                 </strong>{" "}
                 We use Vercel Analytics and Vercel Speed Insights to understand
                 general usage patterns. These tools collect anonymous,
-                aggregated data such as page views and performance metrics. They
-                do not track individual users or use cookies.
+                aggregated data such as page views and performance metrics and
+                do not use cookies. We may also use Google Analytics, which sets
+                first-party cookies to count visits and form submissions. We
+                never send it your name, email or phone number.
               </li>
             </ul>
 
@@ -203,7 +214,7 @@ export default function PrivacyPage() {
             </h3>
             <ul style={list}>
               <li style={{ marginBottom: 8 }}>
-                We do not use cookies for advertising or tracking.
+                We do not use cookies for advertising.
               </li>
               <li style={{ marginBottom: 8 }}>
                 We do not use third-party ad trackers.
@@ -232,7 +243,12 @@ export default function PrivacyPage() {
                 Deliver scan results and reports to your email when requested.
               </li>
               <li style={{ marginBottom: 8 }}>
-                Respond to inquiries submitted through our contact form.
+                Respond to inquiries submitted through our forms, and follow up
+                on a call or a request you made.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                Text you about your request, only if you checked the optional
+                text message box.
               </li>
               <li style={{ marginBottom: 8 }}>
                 Improve the accuracy and performance of our scanning platform.
@@ -243,7 +259,8 @@ export default function PrivacyPage() {
             </ul>
             <p style={paragraph}>
               We do not sell your personal information. We do not share your
-              email address with third parties for marketing purposes.
+              email address or phone number with third parties for their
+              marketing purposes.
             </p>
           </div>
 
@@ -316,7 +333,7 @@ export default function PrivacyPage() {
                 available HTML.
               </li>
               <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>SerpWow</strong> - Search
+                <strong style={{ color: "var(--fg)" }}>DataForSEO</strong> - Search
                 engine results data for visibility analysis.
               </li>
               <li style={{ marginBottom: 8 }}>
@@ -329,6 +346,11 @@ export default function PrivacyPage() {
                 <strong style={{ color: "var(--fg)" }}>Resend</strong> - Email
                 delivery service for sending scan reports.
               </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>Our CRM and calendar provider</strong>{" "}
+                - Stores the contact details and requests you send us, and call
+                bookings, so our team can follow up. It acts on our behalf only.
+              </li>
             </ul>
             <p style={paragraph}>
               We do not share your personal information with these services
@@ -337,9 +359,44 @@ export default function PrivacyPage() {
             </p>
           </div>
 
-          {/* 6. Your Rights */}
+          {/* 6. Text Messages (SMS) */}
+          <div style={sectionBlock} id="sms">
+            <h2 style={sectionHeading}>6. Text Messages (SMS)</h2>
+            <p style={paragraph}>
+              Our forms have an optional, unchecked box to get text messages
+              about your request (for example, confirming a call time). Checking
+              it is never required to work with us or to get anything on this
+              site.
+            </p>
+            <ul style={list}>
+              <li style={{ marginBottom: 8 }}>
+                Messages are about your request only. Message frequency varies.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                Msg &amp; data rates may apply.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                Reply STOP to opt out at any time. Reply HELP for help, or email{" "}
+                <a href="mailto:team@simpl.pro" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)" }}>team@simpl.pro</a>.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                Carriers are not liable for delayed or undelivered messages.
+              </li>
+            </ul>
+            <p style={paragraph}>
+              <strong style={{ color: "var(--fg)" }}>
+                No mobile information will be shared with third parties or
+                affiliates for marketing or promotional purposes.
+              </strong>{" "}
+              Text messaging opt-in data and consent are never shared with any
+              third party. The only companies that handle your number are the
+              service providers that deliver our messages for us.
+            </p>
+          </div>
+
+          {/* 7. Your Rights */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>6. Your Rights</h2>
+            <h2 style={sectionHeading}>7. Your Rights</h2>
             <p style={paragraph}>
               Depending on your location, you may have the following rights
               regarding your personal information:
@@ -397,9 +454,9 @@ export default function PrivacyPage() {
             </p>
           </div>
 
-          {/* 7. Children's Privacy */}
+          {/* 8. Children's Privacy */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>7. Children&apos;s Privacy</h2>
+            <h2 style={sectionHeading}>8. Children&apos;s Privacy</h2>
             <p style={paragraph}>
               Simpl is not directed at children under the age of 13. We do not
               knowingly collect personal information from children under 13. If
@@ -421,9 +478,9 @@ export default function PrivacyPage() {
             </p>
           </div>
 
-          {/* 8. Changes to This Policy */}
+          {/* 9. Changes to This Policy */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>8. Changes to This Policy</h2>
+            <h2 style={sectionHeading}>9. Changes to This Policy</h2>
             <p style={paragraph}>
               We may update this Privacy Policy from time to time. When we do,
               we will update the &quot;Last updated&quot; date at the top of this
@@ -433,9 +490,9 @@ export default function PrivacyPage() {
             </p>
           </div>
 
-          {/* 9. Contact */}
+          {/* 10. Contact */}
           <div style={{ marginBottom: 0 }}>
-            <h2 style={sectionHeading}>9. Contact</h2>
+            <h2 style={sectionHeading}>10. Contact</h2>
             <p style={paragraph}>
               If you have questions about this Privacy Policy or want to
               exercise your data rights, contact us at:

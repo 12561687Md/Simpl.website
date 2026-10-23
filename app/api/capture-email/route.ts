@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getPool } from "../../../lib/db";
 import { resend } from "../../../lib/resend";
 import { isRateLimited, getClientIp } from "../../../lib/rate-limit";
+import { forwardLead } from "../../lib/backend";
 
 const findingSchema = z.object({
   severity: z.string().optional(),
@@ -299,6 +300,22 @@ export async function POST(req: Request) {
     const { name, email, scanUrl, scanScore, scanGrade, businessName, placeId, relationship, optIn, findings, categories } =
       parsed.data;
 
+    // Backend copy of the unlock: a 'lead' row, a team notification, and (when
+    // Matt switches it on) a CRM contact + Outreach deal. Runs alongside the
+    // website's own insert and never blocks the visitor's report.
+    const forwarded = forwardLead(
+      "/lead/scan",
+      {
+        email,
+        name: name || undefined,
+        url: scanUrl,
+        score: typeof scanScore === "number" ? scanScore : undefined,
+        business_name: businessName || undefined,
+        relationship: relationship || undefined,
+      },
+      { ip, userAgent: req.headers.get("user-agent") }
+    );
+
     try {
       const pool = getPool();
       await pool.query(
@@ -320,11 +337,14 @@ export async function POST(req: Request) {
         ]
       );
     } catch (dbError) {
-      console.error("capture-email: failed to insert lead", dbError);
-      return NextResponse.json(
-        { success: false, error: "Could not save your request. Try again." },
-        { status: 500 }
-      );
+      console.error("capture-email: failed to insert lead", dbError instanceof Error ? dbError.name : "error");
+      // If the backend has it, still send the report; otherwise ask them to retry.
+      if (!(await forwarded)) {
+        return NextResponse.json(
+          { success: false, error: "Could not save your request. Try again." },
+          { status: 500 }
+        );
+      }
     }
 
     try {
@@ -339,6 +359,8 @@ export async function POST(req: Request) {
       // Lead is already saved. Degrade gracefully so the user still sees success.
     }
 
+    // Serverless functions can be frozen after the response, so finish the hand-off first.
+    await forwarded;
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("capture-email: unexpected error", error);

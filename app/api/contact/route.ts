@@ -5,6 +5,7 @@ import { resend } from "../../../lib/resend";
 import { isRateLimited, getClientIp } from "../../../lib/rate-limit";
 import { esc } from "../../lib/email-brand";
 import { confirmationEmailHtml } from "../../lib/emails/contact-confirmation";
+import { forwardLead } from "../../lib/backend";
 
 const PHONE_REGEX = /^[+]?[\d\s().-]{7,20}$/;
 
@@ -19,6 +20,12 @@ const contactSchema = z.object({
   // risking a blind migration on the one flow that must never break.
   // TODO: add a `website` column to `leads` and store it properly.
   website: z.string().max(200).optional(),
+  company: z.string().max(160).optional(),
+  // Optional, unchecked by default on every form (carrier/A2P rules). Requires a phone.
+  smsConsent: z.boolean().optional(),
+  // Bot checks: a hidden field people never fill, and how long the form was open.
+  hp: z.string().max(200).optional(),
+  elapsedMs: z.number().nonnegative().optional(),
   // Which page the lead came from. Was hardcoded to "/start", which became wrong
   // the moment a second page carried the form.
   sourcePage: z.string().max(120).optional(),
@@ -30,10 +37,12 @@ const contactSchema = z.object({
 const SOURCE_PAGE_RE = /^\/[a-z0-9\-/]{0,118}$/;
 
 const RATE_LIMIT_MAX = 5;
+// A person needs a few seconds to fill even the short form.
+const MIN_FILL_MS = 2500;
 const TEAM_INBOX = "team@simpl.pro";
 
-function notificationEmailHtml(params: { name: string; email: string; phone?: string; message?: string; service?: string; website?: string; sourcePage?: string }) {
-  const { name, email, phone, message, service, website, sourcePage } = params;
+function notificationEmailHtml(params: { name: string; email: string; phone?: string; message?: string; service?: string; website?: string; company?: string; sourcePage?: string; smsConsent?: boolean }) {
+  const { name, email, phone, message, service, website, company, sourcePage, smsConsent } = params;
   const row = (label: string, value: string, pre = false) =>
     `<tr><td style="padding:4px 12px 4px 0;color:#666;${pre ? "vertical-align:top;" : ""}">${label}</td><td style="padding:4px 0;${pre ? "white-space:pre-wrap;" : ""}">${value}</td></tr>`;
   return `
@@ -44,6 +53,8 @@ function notificationEmailHtml(params: { name: string; email: string; phone?: st
         ${row("Name", esc(name))}
         ${row("Email", esc(email))}
         ${row("Phone", phone ? esc(phone) : "(none)")}
+        ${company ? row("Company", esc(company)) : ""}
+        ${row("Texts OK", smsConsent ? "Yes (checked the optional box)" : "No, do not text")}
         ${website ? row("Website", esc(website)) : ""}
         ${service ? row("Service", esc(service)) : ""}
         ${sourcePage ? row("From page", esc(sourcePage)) : ""}
@@ -75,7 +86,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: message }, { status: 400 });
     }
 
-    const { name, email, phone, message, service, website, sourcePage } = parsed.data;
+    const { name, email, phone, message, service, website, company, smsConsent, hp, elapsedMs, sourcePage } = parsed.data;
+
+    // Bots get the same success a person gets, and nothing is stored or sent.
+    if ((hp && hp.trim()) || (elapsedMs !== undefined && elapsedMs < MIN_FILL_MS)) {
+      return NextResponse.json({ success: true });
+    }
+    if (smsConsent && !phone) {
+      return NextResponse.json(
+        { success: false, error: "Add a phone number to get texts, or leave the box unchecked." },
+        { status: 400 }
+      );
+    }
 
     // Only accept source pages we actually ship, so a caller can't write
     // arbitrary strings into our own reporting.
@@ -83,19 +105,46 @@ export async function POST(req: Request) {
 
     // No `website` column on `leads` yet, so keep it with the message instead of
     // dropping it. See the schema comment above.
-    const storedMessage = [website ? `Website: ${website}` : null, message || null]
+    const storedMessage = [
+      company ? `Company: ${company}` : null,
+      website ? `Website: ${website}` : null,
+      smsConsent ? "Texts OK: yes (optional box checked)" : null,
+      message || null,
+    ]
       .filter(Boolean)
       .join("\n\n") || null;
 
-    try {
-      const pool = getPool();
-      await pool.query(
-        `INSERT INTO leads (name, email, phone, message, source, source_page)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [name, email, phone || null, storedMessage, "contact_form", fromPage]
-      );
-    } catch (dbError) {
-      console.error("contact: failed to insert lead", dbError);
+    // Two copies, so one outage never loses a lead: the website's own `leads`
+    // row, and the backend's (which feeds the CRM when that is switched on).
+    const [dbResult, forwarded] = await Promise.all([
+      getPool()
+        .query(
+          `INSERT INTO leads (name, email, phone, message, source, source_page)
+           VALUES ($1, $2, $3, $4, $5, $6)`,
+          [name, email, phone || null, storedMessage, "contact_form", fromPage]
+        )
+        .then(() => true)
+        .catch((dbError) => {
+          console.error("contact: failed to insert lead", dbError instanceof Error ? dbError.name : "error");
+          return false;
+        }),
+      forwardLead(
+        "/lead/contact",
+        {
+          name,
+          email,
+          phone: phone || undefined,
+          company: company || undefined,
+          website: website || undefined,
+          message: message || undefined,
+          service: service || undefined,
+          source_page: fromPage,
+          sms_consent: smsConsent === true,
+        },
+        { ip, userAgent: req.headers.get("user-agent") }
+      ),
+    ]);
+    if (!dbResult && !forwarded) {
       return NextResponse.json(
         { success: false, error: "Could not send your message. Try again." },
         { status: 500 }
@@ -119,7 +168,7 @@ export async function POST(req: Request) {
         from: "Simpl <team@simpl.pro>",
         to: TEAM_INBOX,
         subject: `New lead${service ? ` [${service}]` : ""}: ${name}${website ? ` (${website})` : ""}`,
-        html: notificationEmailHtml({ name, email, phone, message, service, website, sourcePage: fromPage }),
+        html: notificationEmailHtml({ name, email, phone, message, service, website, company, sourcePage: fromPage, smsConsent }),
       });
     } catch (emailError) {
       console.error("contact: failed to send notification email via Resend", emailError);

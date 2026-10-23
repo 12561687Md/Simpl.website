@@ -2,15 +2,18 @@
 
 import { useState } from "react";
 import { track } from "../../lib/analytics";
+import { Honeypot, SmsConsent, useFormTimer } from "./FormExtras";
 
 /**
- * "See your top prospects" request. Posts to the existing /api/contact
- * route (same DB row + team notification), tagged service "Top prospects sample"
+ * "See your top prospects" request. Posts to /api/contact (DB row + team
+ * notification, then forwarded to the backend's /lead/contact for the CRM),
+ * tagged service "Top prospects sample"
  * so it's obvious in the inbox which offer the lead came from.
  */
 export default function ProspectsForm({ sourcePage = "/top-prospects" }: { sourcePage?: string }) {
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [error, setError] = useState("");
+  const elapsed = useFormTimer();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,6 +28,8 @@ export default function ProspectsForm({ sourcePage = "/top-prospects" }: { sourc
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("Enter a valid work email.");
     if (!company) return setError("Which company is this for?");
     if (!sells) return setError("Tell us what you sell, one line is fine.");
+    const smsConsent = f.get("sms") === "yes";
+    if (smsConsent && !get("phone")) return setError("Add a phone number to get texts, or leave the box unchecked.");
     setError("");
     setState("sending");
     try {
@@ -36,10 +41,13 @@ export default function ProspectsForm({ sourcePage = "/top-prospects" }: { sourc
           email,
           phone: get("phone"),
           website: get("website"),
+          company,
           service: "Top prospects sample",
           sourcePage,
+          smsConsent,
+          hp: get("hp"),
+          elapsedMs: elapsed(),
           message: [
-            `Company: ${company}`,
             `What they sell: ${sells}`,
             `Territory: ${territory || "(not given)"}`,
             get("notes") ? `Notes: ${get("notes")}` : null,
@@ -73,6 +81,7 @@ export default function ProspectsForm({ sourcePage = "/top-prospects" }: { sourc
 
   return (
     <form className="eg-form" onSubmit={onSubmit} noValidate>
+      <Honeypot id="t25-hp" />
       <div className="row2">
         <div>
           <label htmlFor="t25-name">Your name</label>
@@ -111,6 +120,7 @@ export default function ProspectsForm({ sourcePage = "/top-prospects" }: { sourc
         <label htmlFor="t25-notes">Anything else (optional)</label>
         <textarea id="t25-notes" name="notes" rows={3} placeholder="The kind of account that's worth the most to you, a market you want to break into..." />
       </div>
+      <SmsConsent id="t25-sms" />
       {error && <div className="err" role="alert">{error}</div>}
       <div>
         <button type="submit" className="eg-btn primary" disabled={state === "sending"}>

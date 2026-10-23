@@ -6,7 +6,7 @@ import ScanTool from "../components/ScanTool";
 import ScrollReveal, { StaggerReveal, StaggerItem } from "../components/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Free Website Scan | Simpl",
+  title: { absolute: "Free Website Scan | Simpl" },
   description: "See exactly what Simpl checks: discoverability, performance, reputation, and spend. Type your domain, get your Simpl Score in 30 seconds.",
   openGraph: {
     images: OG_IMAGE,

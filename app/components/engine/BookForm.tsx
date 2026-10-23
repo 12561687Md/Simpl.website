@@ -2,14 +2,18 @@
 
 import { useState } from "react";
 import { track } from "../../lib/analytics";
+import { Honeypot, SmsConsent, useFormTimer } from "./FormExtras";
 
 /**
- * "Book a call" request. Posts to the existing /api/contact route (same DB
- * row + team notification), tagged service "Book a call".
+ * "Book a call" request. Posts to /api/contact (DB row + team notification,
+ * then forwarded to the backend's /lead/contact for the CRM), tagged service
+ * "Book a call". Shown on /book until a booking calendar link is set, and
+ * under the calendar after that.
  */
 export default function BookForm() {
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [error, setError] = useState("");
+  const elapsed = useFormTimer();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,6 +23,8 @@ export default function BookForm() {
     const email = get("email");
     if (name.length < 2) return setError("Tell us your name.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError("Enter a valid email.");
+    const smsConsent = f.get("sms") === "yes";
+    if (smsConsent && !get("phone")) return setError("Add a phone number to get texts, or leave the box unchecked.");
     setError("");
     setState("sending");
     try {
@@ -29,9 +35,13 @@ export default function BookForm() {
           name,
           email,
           phone: get("phone"),
+          company: get("company"),
           service: "Book a call",
           sourcePage: "/book",
-          message: [`Company: ${get("company") || "(not given)"}`, `Best times: ${get("times") || "(not given)"}`, get("topic") ? `Topic: ${get("topic")}` : null]
+          smsConsent,
+          hp: get("hp"),
+          elapsedMs: elapsed(),
+          message: [`Best times: ${get("times") || "(not given)"}`, get("topic") ? `Topic: ${get("topic")}` : null]
             .filter(Boolean)
             .join("\n"),
         }),
@@ -58,6 +68,7 @@ export default function BookForm() {
 
   return (
     <form className="eg-form" onSubmit={onSubmit} noValidate>
+      <Honeypot id="bk-hp" />
       <div className="row2">
         <div>
           <label htmlFor="bk-name">Your name</label>
@@ -86,6 +97,7 @@ export default function BookForm() {
         <label htmlFor="bk-topic">What do you want to cover? (optional)</label>
         <textarea id="bk-topic" name="topic" rows={3} placeholder="What you sell, your territory, or the local business you want found" />
       </div>
+      <SmsConsent id="bk-sms" />
       {error && <div className="err" role="alert">{error}</div>}
       <div>
         <button type="submit" className="eg-btn primary" disabled={state === "sending"}>

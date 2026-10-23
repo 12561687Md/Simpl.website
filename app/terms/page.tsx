@@ -89,7 +89,7 @@ export default function TermsPage() {
               lineHeight: 1.55,
             }}
           >
-            Last updated: June 2026
+            Last updated: October 23, 2026
           </p>
         </section>
 
@@ -135,16 +135,15 @@ export default function TermsPage() {
                 generates a digital presence score across six categories.
               </li>
               <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Paid Reports.</strong>{" "}
-                Detailed audit reports delivered as branded HTML documents
-                covering your website health, SEO, Google Business Profile,
-                and more.
+                <strong style={{ color: "var(--fg)" }}>Client acquisition services.</strong>{" "}
+                The Account Engine (a private portal of ranked accounts built
+                from public records), CRM setup and follow-up, and call
+                answering, scoped in writing for each client.
               </li>
               <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Agency Services.</strong>{" "}
-                Ongoing digital marketing and presence management on monthly
-                retainer, including quick wins, local SEO, paid advertising,
-                organic growth, and strategic consulting.
+                <strong style={{ color: "var(--fg)" }}>Local marketing services.</strong>{" "}
+                Local SEO, websites, Google Business Profile management and paid
+                advertising management, on a monthly retainer or a flat fee.
               </li>
             </ul>
             <p style={paragraph}>
@@ -258,10 +257,10 @@ export default function TermsPage() {
               </li>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
-                  Website build included with Simpl.team.
+                  Website build included with a retainer.
                 </strong>{" "}
                 Where Simpl provides a website build at no charge as part of a
-                Simpl.team engagement, that engagement carries a three-month
+                retainer engagement, that engagement carries a three-month
                 minimum term. If you cancel before the third billing period
                 ends, the remaining months of that minimum become due, or Simpl
                 may instead invoice the build at its standard rate. You keep the
@@ -291,10 +290,10 @@ export default function TermsPage() {
             <ul style={list}>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
-                  One-time reports.
+                  One-time services.
                 </strong>{" "}
-                Because reports are generated and delivered instantly, they are
-                non-refundable once delivered.
+                Flat-fee work is non-refundable once delivered. Anything not yet
+                started is refunded in full if you cancel.
               </li>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
@@ -414,9 +413,42 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 13. Contact */}
+          {/* 13. Text Messages (SMS) */}
+          <div style={sectionBlock} id="sms">
+            <h2 style={sectionHeading}>13. Text Messages (SMS)</h2>
+            <p style={paragraph}>
+              If you check the optional box on one of our forms, Simpl may text
+              you about your request, such as confirming or rescheduling a call.
+              Consent is not a condition of any purchase.
+            </p>
+            <ul style={list}>
+              <li style={{ marginBottom: 8 }}>
+                Message frequency varies with your request.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                Msg &amp; data rates may apply.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                Reply STOP to opt out at any time; you will get one message
+                confirming it. Reply HELP for help, or email{" "}
+                <a href="mailto:team@simpl.pro" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)" }}>team@simpl.pro</a>{" "}
+                or call (919) 428-9452.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                Carriers are not liable for delayed or undelivered messages.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                How we handle your number is in our{" "}
+                <a href="/privacy#sms" style={{ color: "var(--accent)", textDecoration: "none", borderBottom: "1px solid var(--accent)" }}>Privacy Policy</a>.
+                We never share your mobile number or consent with third parties
+                for marketing.
+              </li>
+            </ul>
+          </div>
+
+          {/* 14. Contact */}
           <div style={{ marginBottom: 0 }}>
-            <h2 style={sectionHeading}>13. Contact</h2>
+            <h2 style={sectionHeading}>14. Contact</h2>
             <p style={paragraph}>
               If you have questions about these Terms of Service, contact us at:
             </p>
