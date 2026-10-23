@@ -1,41 +1,41 @@
 import type { Metadata } from "next";
-import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import ScanTool from "../components/ScanTool";
-import ScrollReveal, { StaggerReveal, StaggerItem } from "../components/ScrollReveal";
+import { Section, QA, Crumbs, Eyebrow, Steps, FinalCta } from "../components/engine/ui";
+import { webPage, ldJson, pageMeta } from "../lib/schema";
 
+/* Kept live (not 301'd) because emails link to /scan?url=... to start a scan
+   directly. Same intent as /free-tools, so it points its canonical there and
+   stays out of the index (2026-10-22). Copy refreshed to the revamp 2026-10-23:
+   it only claims what the scanner actually measures. */
+const PATH = "/scan";
+const TITLE = "Free Website Scan: Your Simpl Score | Simpl";
+const DESCRIPTION =
+  "Free website scan for service businesses: your site, Google listing and search visibility scored 0 to 100 from live data, with the wins ranked. No credit card.";
+
+const base = pageMeta({ path: PATH, title: TITLE, description: DESCRIPTION });
 export const metadata: Metadata = {
-  title: { absolute: "Free Website Scan | Simpl" },
-  description: "See exactly what Simpl checks: discoverability, performance, reputation, and spend. Type your domain, get your Simpl Score in 30 seconds.",
-  openGraph: {
-    images: OG_IMAGE,
-    title: "Free Website Scan | Simpl",
-    description: "Type your domain, get your Simpl Score in 30 seconds. No signup, no email required.",
-    url: "https://www.simpl.pro/scan",
-    siteName: "Simpl",
-    type: "website",
-  },
-  // Merged into /free-tools (2026-10-22): same intent, so this URL points its
-  // canonical there and stays out of the index. It is kept live (not 301'd)
-  // because emails link to /scan?url=... to start a scan directly.
+  ...base,
   alternates: { canonical: "https://www.simpl.pro/free-tools" },
   robots: { index: false, follow: true },
 };
 
-const SURFACES = [
-  { code: "01 / DISCOVERABILITY", title: "Whether Google can find you.", items: ["Indexing health across every page", "Google Business Profile status and integrity", "Schema, sitemap, robots regressions", "Branded search results and SERP layout", "Map pack ranking and competitor displacement"] },
-  { code: "02 / PERFORMANCE", title: "Whether your site actually works.", items: ["Uptime monitoring (60-second resolution)", "Core Web Vitals across mobile and desktop", "Form submission delivery (silent fails)", "Checkout and order flow integrity", "Plugin, CMS, and framework regressions"] },
-  { code: "03 / REPUTATION", title: "What people are saying when you're not looking.", items: ["Review monitoring across Google, Yelp, industry sites", "Sentiment drift and rating velocity", "Response cadence on negative reviews", "Competitor rating delta over time", "New mentions across the social web"] },
-  { code: "04 / SPEND", title: "Where your marketing dollars actually end up.", items: ["Branded search defense (competitor bidding)", "Wasted spend detection on dead keywords", "Landing-page mismatch with ad copy", "Bid efficiency vs. category benchmarks", "Inventory audit across Google, Meta, Bing"] },
+const CHECKS = [
+  { h: "Website foundation", b: "Uptime, SSL, speed and how the site holds up on a phone." },
+  { h: "Crawlability", b: "Whether Google and AI search tools can read your site at all." },
+  { h: "On-page SEO", b: "Titles, descriptions, headings and structured data." },
+  { h: "Content and pages", b: "Service pages, trust signals and clear ways to reach you." },
+  { h: "Social presence", b: "Whether your profiles exist, link back and match." },
+  { h: "Google Business Profile", b: "Completeness, reviews and how you show up on the map." },
 ];
 
 const STEPS = [
-  { n: "01", h: "You give us a domain.", p: "No login, no credit card, no questionnaire. A field and a button." },
-  { n: "02", h: "Simpl runs all eight checks.", p: "Website, crawlability, SEO, content, trust, schema, social, and Google Business Profile. 50+ individual signals, most of which you've never seen." },
-  { n: "03", h: "We rank what's wrong.", p: "Findings get sorted by severity. Critical issues first, nice-to-haves last. The order usually surprises people." },
-  { n: "04", h: "You see your Simpl Score.", p: "A grade from A to F across 8 categories. Every finding explained in plain English. No jargon, no upsell walls." },
-  { n: "05", h: "We fix it, or you do.", p: "Start a plan and our team handles everything. Or take the findings and fix them yourself. Either way, you'll know exactly what's broken." },
+  { k: "Step 01", h: "Type your domain.", b: "No login, no credit card, no questionnaire. One field and a button." },
+  { k: "Step 02", h: "We check the live site.", b: "More than 60 signals across six categories, measured from your site and your Google listing as they are right now." },
+  { k: "Step 03", h: "You get your Simpl Score.", b: "A score from 0 to 100 and a grade for each category, in plain English. Nothing estimated, nothing invented." },
+  { k: "Step 04", h: "You see the wins, in order.", b: "Every finding is ranked by what moves the needle first. Unlock the full report with your email and it is yours to keep." },
+  { k: "Step 05", h: "Fix it yourself, or hand it to our team.", b: "Work through the list on your own, or book a free call and we will walk it through with you and scope what to fix first." },
 ];
 
 export default function ScanPage() {
@@ -43,94 +43,63 @@ export default function ScanPage() {
     <div>
       <Header />
       <main>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "WebApplication",
-          "name": "Simpl Free Website Scanner",
-          "description": "Free tool that scans your website, Google Business Profile, SEO, and digital presence. Get a Simpl Score from 0 to 100 in 30 seconds.",
-          "url": "https://www.simpl.pro/scan",
-          "applicationCategory": "BusinessApplication",
-          "operatingSystem": "Any",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-          },
-          "provider": {
-            "@type": "Organization",
-            "name": "Simpl",
-            "url": "https://www.simpl.pro"
-          }
-        }) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Free Scan", "item": "https://www.simpl.pro/scan" }
-          ]
-        }) }} />
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "140px 32px 96px" }}>
-          <ScrollReveal>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>The Simpl Scan</div>
-            <h1 style={{ margin: 0, fontSize: "clamp(40px, 6.4vw, 81px)", lineHeight: 1.04, letterSpacing: "-0.025em", fontWeight: 500, maxWidth: 1000 }}>
-              Type your domain.<br /><span style={{ color: "var(--muted)" }}>See what nobody told you.</span>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={ldJson(
+            webPage({ path: PATH, name: TITLE, description: DESCRIPTION }),
+            {
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Simpl free website scan",
+              url: `https://www.simpl.pro${PATH}`,
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Web",
+              isAccessibleForFree: true,
+              description: DESCRIPTION,
+              provider: { "@type": "Organization", name: "Simpl", url: "https://www.simpl.pro" },
+            }
+          )}
+        />
+        <section className="eg-hero tone-ink" style={{ paddingBottom: 80 }}>
+          <div className="eg-wrap">
+            <Crumbs items={[{ name: "Free scan", path: PATH }]} />
+            <Eyebrow>Free scan</Eyebrow>
+            <h1 className="eg-h1" style={{ maxWidth: 960 }}>
+              Type your domain. <em>See the wins waiting for you.</em>
             </h1>
-            <p style={{ marginTop: 40, maxWidth: 680, fontSize: 19, lineHeight: 1.55 }}>
-              One scan. No signup. No email. Simpl checks your entire digital presence and gives you a score from 0 to 100. Most businesses score lower than they expect.
+            <p className="eg-lead">
+              One free scan scores your website and Google listing 0 to 100 across six categories, from live data, and ranks what to fix first. It takes about a minute.
+              No credit card, no call.
             </p>
-            <div style={{ marginTop: 56 }}><ScanTool /></div>
-          </ScrollReveal>
-        </section>
-
-        <section style={{ maxWidth: 1120, margin: "0 auto", padding: "128px 32px" }}>
-          <ScrollReveal>
-            <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>How the scan works</div>
-            <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>Five steps. Thirty seconds. Here&apos;s what happens.</h2>
-          </ScrollReveal>
-          <StaggerReveal style={{ marginTop: 72, display: "grid", gap: 1, background: "var(--rule)", border: "1px solid var(--rule)" }}>
-            {STEPS.map((s) => (
-              <StaggerItem key={s.n} className="scan-step" style={{ background: "var(--bg)", padding: "32px 36px", display: "grid", gridTemplateColumns: "60px minmax(220px, 1fr) minmax(0, 2fr)", gap: 28, alignItems: "baseline" }}>
-                <div className="mono" style={{ color: "var(--fg)", fontSize: 13 }}>{s.n}</div>
-                <h3 style={{ fontSize: 22, fontWeight: 400, margin: 0 }}>{s.h}</h3>
-                <div style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.55 }}>{s.p}</div>
-              </StaggerItem>
-            ))}
-          </StaggerReveal>
-          <p style={{ marginTop: 40, fontSize: 17, lineHeight: 1.55, color: "var(--muted)", maxWidth: 680 }}>That&apos;s the process. But what exactly are those 50+ signals? Here&apos;s where it gets interesting.</p>
-        </section>
-
-        <section style={{ background: "var(--bg-soft)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
-          <div style={{ maxWidth: 1120, margin: "0 auto", padding: "128px 32px" }}>
-            <ScrollReveal>
-              <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 48 }}>What gets checked</div>
-              <h2 style={{ margin: 0, fontSize: "clamp(28px, 4vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400 }}>Four surfaces. 50+ signals. Most tools only check one.</h2>
-            </ScrollReveal>
-            <StaggerReveal style={{ marginTop: 72, display: "grid", gap: 1, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", background: "var(--rule)", border: "1px solid var(--rule)" }}>
-              {SURFACES.map((s) => (
-                <StaggerItem key={s.code} style={{ background: "var(--bg)", padding: "44px 36px 40px", minHeight: 360, display: "flex", flexDirection: "column", gap: 24 }}>
-                  <div className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--fg)", textTransform: "uppercase" }}>{s.code}</div>
-                  <h3 style={{ fontSize: 24, fontWeight: 400, margin: 0 }}>{s.title}</h3>
-                  <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 12, color: "var(--muted)", fontSize: 15 }}>
-                    {s.items.map((it) => <li key={it}>{it}</li>)}
-                  </ul>
-                </StaggerItem>
-              ))}
-            </StaggerReveal>
+            <div style={{ marginTop: 36, maxWidth: 760 }}>
+              <ScanTool />
+            </div>
           </div>
         </section>
 
-        {/* Closing CTA — the page's one accent moment */}
-        <section style={{ borderTop: "1px solid var(--rule)", padding: "120px 32px" }}>
-          <ScrollReveal scale>
-            <div style={{ maxWidth: 1120, margin: "0 auto", borderRadius: 24, border: "1px solid var(--accent-line)", background: "linear-gradient(155deg, rgba(137,207,240,0.12), rgba(137,207,240,0.02) 60%)", boxShadow: "0 40px 100px -50px rgba(137,207,240,0.45), inset 0 1px 0 rgba(255,255,255,0.04)", padding: "clamp(36px, 5vw, 64px)" }}>
-              <h2 style={{ margin: 0, fontSize: "clamp(32px, 4.6vw, 56px)", lineHeight: 1.05, letterSpacing: "-0.025em", fontWeight: 500, maxWidth: 820 }}>
-                Your competitors have already been scanned.<br /><span style={{ color: "var(--muted)" }}>Your turn takes thirty seconds.</span>
-              </h2>
-              <div style={{ marginTop: 48, maxWidth: 760 }}><ScanTool compact /></div>
-            </div>
-          </ScrollReveal>
-        </section>
+        <Section tone="paper" label="How the scan works">
+          <QA eyebrow="How it works" q="Five steps, about a minute." a="Here is exactly what happens after you hit the button." />
+          <Steps steps={STEPS} />
+        </Section>
+
+        <Section tone="mist" label="What it checks">
+          <QA eyebrow="What it checks" q="Six categories that decide whether customers find you." a="Each one is scored on its own, so you can see where the biggest wins are." />
+          <div className="eg-g3">
+            {CHECKS.map((c, i) => (
+              <div key={c.h} className="eg-card">
+                <span className="eg-num">0{i + 1}</span>
+                <h3 className="eg-h3">{c.h}</h3>
+                <p className="eg-body" style={{ fontSize: 15 }}>{c.b}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <FinalCta
+          heading="Rather talk it through?"
+          body="Book a free call and we will walk through your site, your Google listing and what to fix first, in plain English. No pitch, nothing to sign."
+          primary={{ label: "Book a free call", href: "/book" }}
+        />
       </main>
       <Footer />
     </div>

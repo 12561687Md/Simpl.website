@@ -178,7 +178,7 @@ export default function BlogHub({ posts }: { posts: BlogPost[] }) {
             </div>
           ) : (
             <p style={{ fontSize: 16, color: "var(--muted)", padding: "20px 0 40px" }}>
-              No answers match that yet. Try a different category, or <Link href="/start-now" style={{ color: "var(--accent)" }}>ask us directly</Link>.
+              No answers match that yet. Try a different category, or <Link href="/book" style={{ color: "var(--accent)" }}>ask us directly</Link>.
             </p>
           )}
         </section>

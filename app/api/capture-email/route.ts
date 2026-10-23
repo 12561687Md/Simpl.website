@@ -85,13 +85,14 @@ function buildEmailHtml(params: {
   if (name) q.set("name", name);
   q.set("email", params.email);
   if (scanUrl) q.set("website", scanUrl);
+  if (businessName) q.set("company", businessName);
   q.set(
     "message",
     businessName
       ? `Saw my Simpl Score for ${businessName}. I would like to talk through what to fix first.`
       : `Saw my Simpl Score. I would like to talk through what to fix first.`
   );
-  const contactUrl = `https://www.simpl.pro/start-now?${q.toString()}`;
+  const contactUrl = `https://www.simpl.pro/book?${q.toString()}`;
 
   const topFindings = findings
     .filter((f) => f.severity === "critical" || f.severity === "warning")
@@ -219,7 +220,7 @@ function buildEmailHtml(params: {
 
                       <div style="font-size:17px;font-weight:700;color:${INK};line-height:1.35;">Rather just talk it through?</div>
                       <div style="font-size:13px;line-height:1.6;color:${MUTED};padding-top:10px;">
-                        Fifteen minutes and we will tell you which of these to fix first, and what it is worth. No pitch, nothing to sign.
+                        Thirty minutes and we will tell you which of these to fix first, and what it is worth. No pitch, nothing to sign.
                       </div>
 
                       <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">

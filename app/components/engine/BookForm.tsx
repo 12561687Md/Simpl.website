@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { track } from "../../lib/analytics";
 import { Honeypot, SmsConsent, useFormTimer } from "./FormExtras";
 
@@ -14,6 +14,27 @@ export default function BookForm() {
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [error, setError] = useState("");
   const elapsed = useFormTimer();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Prefill from the query string so a link from the scan report email lands
+  // with what we already know filled in. Runs once on mount, only fills empty
+  // fields, and caps length so a crafted link cannot stuff the form.
+  useEffect(() => {
+    const form = formRef.current;
+    if (!form) return;
+    const q = new URLSearchParams(window.location.search);
+    const map: Record<string, string | null> = {
+      name: q.get("name"),
+      email: q.get("email"),
+      phone: q.get("phone"),
+      company: q.get("company") || q.get("website"),
+      topic: q.get("topic") || q.get("message"),
+    };
+    for (const [field, value] of Object.entries(map)) {
+      const el = form.elements.namedItem(field) as HTMLInputElement | HTMLTextAreaElement | null;
+      if (el && !el.value && value && value.trim()) el.value = value.trim().slice(0, 1000);
+    }
+  }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -67,7 +88,7 @@ export default function BookForm() {
   }
 
   return (
-    <form className="eg-form" onSubmit={onSubmit} noValidate>
+    <form ref={formRef} className="eg-form" onSubmit={onSubmit} noValidate>
       <Honeypot id="bk-hp" />
       <div className="row2">
         <div>

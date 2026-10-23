@@ -489,7 +489,7 @@ export default function ScanReport({
             convinced can convert straight from the top without scrolling to the
             bottom of the report. The report is still identified by the "Report:
             Digital Presence & Positioning Audit" line above. Promise-based CTA,
-            leads to the booking/contact form at /start-now. */}
+            leads to the booking page at /book. */}
         <div
           style={{
             marginTop: 26,
@@ -513,11 +513,11 @@ export default function ScanReport({
             </h1>
             <p style={{ color: "var(--muted)", fontSize: "clamp(14px, 1.5vw, 16px)", margin: "12px 0 0", lineHeight: 1.5, maxWidth: "52ch" }}>
               We&apos;ll fix everything in this report in priority order and get you found where customers are searching.
-              Start now, or book a free call first, no pitch attached.
+              It starts with a free call, no pitch attached.
             </p>
           </div>
           <a
-            href="/start-now"
+            href="/book"
             className="cta-primary"
             style={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap", color: "var(--accent-ink)", padding: "15px 26px", fontSize: 15, fontWeight: 700, borderRadius: 7, textDecoration: "none", flexShrink: 0 }}
           >
@@ -1123,7 +1123,7 @@ export default function ScanReport({
           </p>
           <div style={{ marginTop: 26, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <a
-              href="/start-now"
+              href="/book"
               className="cta-primary"
               style={{ display: "inline-flex", alignItems: "center", color: "var(--accent-ink)", padding: "15px 30px", fontSize: 15.5, fontWeight: 700, borderRadius: 7, textDecoration: "none" }}
             >
