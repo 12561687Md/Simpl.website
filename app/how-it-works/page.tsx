@@ -87,7 +87,7 @@ export default function HowItWorks() {
                 <h3>1449 Powell St, San Francisco</h3>
                 <div className="m-body" style={{ fontSize: 15 }}>Multi-unit residential (occupancy R-2) · DBI complaint 202658590</div>
               </div>
-              <div style={{ textAlign: "right" }}>
+              <div className="rc">
                 <div className="m-label">Reason to call</div>
                 <div className="m-blue" style={{ fontSize: 17, marginTop: 6 }}>Fire alarm service ordered</div>
               </div>
