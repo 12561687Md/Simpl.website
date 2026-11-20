@@ -67,18 +67,24 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
           <SecHead h2="What the record shows." id="example">
             <p className="m-body">Real public records, pulled in November 2026. Every number links to where it came from.</p>
           </SecHead>
-          <div className="m-split even" style={{ alignItems: "start" }}>
-            {records.length > 0 ? (
+          {records.length > 0 ? (
+            <div className="m-split even" style={{ alignItems: "start" }}>
               <div style={{ display: "grid", gap: 48 }}>
                 {records.map((r) => <RecordCard key={r.id} r={r} />)}
               </div>
-            ) : null}
-            <div style={{ display: "grid", gap: 24 }}>
+              <div style={{ display: "grid", gap: 24 }}>
+                {stats.map((s) => (
+                  <CountCard key={s.id} main={s} />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="m-grid2">
               {stats.map((s) => (
                 <CountCard key={s.id} main={s} />
               ))}
             </div>
-          </div>
+          )}
         </div>
       </section>
 
