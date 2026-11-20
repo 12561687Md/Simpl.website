@@ -13,28 +13,30 @@ const nextConfig: NextConfig = {
       // /performance re-pointed 2026-10-22 so it lands in one hop now that
       // /services/quick-wins itself redirects (see below).
       { source: "/performance", destination: "/free-tools", permanent: true },
-      { source: "/discoverability", destination: "/services/local-seo", permanent: true },
-      { source: "/reputation", destination: "/services/local-seo", permanent: true },
-      { source: "/spend", destination: "/services/paid-ads", permanent: true },
+      { source: "/discoverability", destination: "/", permanent: true },
+      { source: "/reputation", destination: "/", permanent: true },
+      { source: "/spend", destination: "/", permanent: true },
 
-      // Revamp 2026-10-22 (Account Engine positioning, docs/REVAMP_PLAN.md §9).
-      // Retired pages 301 to their closest new home so indexed URLs keep their
-      // equity instead of 404ing.
-      // 2026-10-22 (second pass): prices are off the site, so /pricing and the
-      // old /start tier grid land on the Account Engine page; /top-25 became
-      // /top-prospects; the noindexed /success-stories placeholder became the
-      // Noovis case study.
-      { source: "/start", destination: "/services/account-engine", permanent: true },
-      { source: "/pricing", destination: "/services/account-engine", permanent: true },
-      { source: "/top-25", destination: "/top-prospects", permanent: true },
-      { source: "/success-stories", destination: "/case-studies/noovis", permanent: true },
-      { source: "/case-studies", destination: "/case-studies/noovis", permanent: false },
+      // Market intelligence site (2026-11-20). Every retired page 301s to its
+      // closest new home so indexed URLs keep their equity instead of 404ing.
+      // The Noovis case study is NOT redirected to the draft partner page
+      // (that page is unlisted until Noovis approves it).
+      { source: "/start", destination: "/pricing", permanent: true },
+      { source: "/top-25", destination: "/book", permanent: true },
+      { source: "/top-prospects", destination: "/book", permanent: true },
       { source: "/contact", destination: "/book", permanent: true },
-      { source: "/how-it-works", destination: "/services/account-engine", permanent: true },
-      { source: "/services/quick-wins", destination: "/free-tools", permanent: true },
-      { source: "/services/organic-growth", destination: "/services/local-seo", permanent: true },
-      { source: "/services/strategy", destination: "/services", permanent: true },
-      { source: "/services/ai-quoting-agent", destination: "/services/ai-receptionist", permanent: true },
+      { source: "/faq", destination: "/#faq", permanent: true },
+      { source: "/success-stories", destination: "/", permanent: true },
+      { source: "/case-studies", destination: "/", permanent: true },
+      { source: "/case-studies/:path*", destination: "/", permanent: true },
+      { source: "/services", destination: "/how-it-works", permanent: true },
+      { source: "/services/account-engine", destination: "/how-it-works", permanent: true },
+      { source: "/services/:path*", destination: "/", permanent: true },
+      { source: "/industries/low-voltage-security", destination: "/industries/low-voltage-fiber-telecom", permanent: true },
+      { source: "/industries/building-systems", destination: "/industries", permanent: true },
+      { source: "/industries/senior-living-technology", destination: "/industries", permanent: true },
+      { source: "/industries/facility-services", destination: "/industries", permanent: true },
+      { source: "/industries/healthcare-technology", destination: "/industries", permanent: true },
     ];
   },
 };

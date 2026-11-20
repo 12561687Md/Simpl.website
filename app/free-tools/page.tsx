@@ -14,7 +14,7 @@ const TITLE = "Free Website Audit: Your SEO Score in 60 Seconds | Simpl";
 const DESCRIPTION =
   "Free website audit for service businesses: your site, Google listing, SEO and AI search visibility scored 0 to 100 from live data. No credit card.";
 
-export const metadata: Metadata = pageMeta({ path: PATH, title: TITLE, description: DESCRIPTION });
+export const metadata: Metadata = pageMeta({ path: PATH, title: TITLE, description: DESCRIPTION, noindex: true }); // local door parked 2026-11-20
 
 const CHECKS = [
   { h: "Website foundation", b: "Uptime, SSL, speed and mobile basics." },
@@ -119,7 +119,7 @@ export default function FreeToolsPage() {
             <h2 className="eg-h3" style={{ fontSize: 22 }}>Selling B2B?</h2>
             <p className="eg-body">
               Your website matters, but your next deal is more likely sitting in a permit, an inspection or an ownership change.{" "}
-              <Link href="/services/account-engine" className="eg-link">See how the Account Engine finds it</Link>.
+              <Link href="/how-it-works" className="eg-link">See how Simpl finds it</Link>.
             </p>
           </div>
         </Section>

@@ -1,23 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import { BrowserFrame, PortalHome, MOCK_CAPTION } from "../../components/portal/Portal";
-import { Section, Eyebrow, QA, Hero, FaqList, FinalCta, Related } from "../../components/engine/ui";
-import { INDUSTRY_DATA, getIndustry } from "../../lib/industries";
-import { CASE_STUDY } from "../../lib/site";
-import { faqPage, service, webPage, ldJson, pageMeta } from "../../lib/schema";
+import Reveal from "../../components/mi/Reveal";
+import { Shell, PageHero, SecHead, RecordCard, CountCard, Faq, FinalCta } from "../../components/mi/kit";
+import { INDUSTRY_PAGES, getIndustry } from "../../lib/industries";
+import { RECORDS, STATS } from "../../lib/records";
+import { SITE } from "../../lib/site";
+import { pageMeta, webPage, service, faqPage, ldJson } from "../../lib/schema";
 
 export function generateStaticParams() {
-  return INDUSTRY_DATA.map((i) => ({ slug: i.slug }));
+  return INDUSTRY_PAGES.map((i) => ({ slug: i.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const ind = getIndustry(slug);
-  if (!ind) return { title: "Not found" };
-  return pageMeta({ path: `/industries/${ind.slug}`, title: ind.metaTitle, description: ind.metaDescription });
+  if (!ind) return {};
+  return pageMeta({ path: `/industries/${ind.slug}`, title: ind.title, description: ind.description });
 }
 
 export default async function IndustryPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -25,137 +24,97 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
   const ind = getIndustry(slug);
   if (!ind) notFound();
   const path = `/industries/${ind.slug}`;
-  const idx = INDUSTRY_DATA.findIndex((i) => i.slug === ind.slug);
-  const siblings = [INDUSTRY_DATA[(idx + 1) % INDUSTRY_DATA.length], INDUSTRY_DATA[(idx + 2) % INDUSTRY_DATA.length]];
+  const records = ind.records.map((k) => RECORDS[k]);
+  const stats = ind.stats.map((k) => STATS[k]);
+  const others = INDUSTRY_PAGES.filter((i) => i.slug !== ind.slug);
 
   return (
-    <div>
-      <Header />
-      <main>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={ldJson(
-            webPage({ path, name: ind.metaTitle, description: ind.metaDescription }),
-            service({
-              name: `Account Engine for ${ind.name}`,
-              path,
-              serviceType: `B2B lead generation: ${ind.keyword}`,
-              description: ind.metaDescription,
-              audience: ind.name,
-            }),
-            faqPage(ind.faqs)
-          )}
-        />
+    <Shell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={ldJson(
+          webPage({ path, name: ind.title, description: ind.description }),
+          service({ name: `Market intelligence for ${ind.label.toLowerCase()}`, path, serviceType: "Market intelligence", audience: ind.who, description: ind.description }),
+          faqPage(ind.faqs)
+        )}
+      />
+      <PageHero
+        crumbs={[{ name: "Industries", path: "/industries" }, { name: ind.label, path }]}
+        h1={ind.h1}
+        lead={ind.lead}
+      >
+        <div className="m-ctas">
+          <Link href={SITE.primaryCta.href} className="m-btn primary">See your market <span className="arr" aria-hidden="true">&rarr;</span></Link>
+          <Link href="/how-it-works#sample" className="m-textlink">Read a sample brief</Link>
+        </div>
+      </PageHero>
 
-        <Hero
-          layout="split"
-          crumbs={[{ name: "Industries", path: "/industries" }, { name: ind.name, path }]}
-          eyebrow={ind.eyebrow}
-          h1={<>{ind.h1} <em>{ind.h1Dim}</em></>}
-          sub={ind.sub}
-          lead={ind.lead}
-          visual={
-            <BrowserFrame label={`Sample Account Engine home screen for ${ind.name.toLowerCase()} companies, with fictional accounts`} caption={MOCK_CAPTION}>
-              <PortalHome rows={ind.rows} />
-            </BrowserFrame>
-          }
-        />
-
-        <Section tone="paper" tight label="Who this is for">
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-            <span className="mono-label" style={{ marginRight: 8 }}>Built for teams selling</span>
-            {ind.buyers.map((b) => (
-              <span key={b} className="eg-chip">{b}</span>
+      <section className="m-sec" aria-labelledby="watch">
+        <div className="m-wrap m-split">
+          <SecHead h2="The records we watch." id="watch">
+            <p className="m-body">For {ind.who.charAt(0).toLowerCase() + ind.who.slice(1)}</p>
+          </SecHead>
+          <Reveal as="ul" className="m-triggers">
+            {ind.triggers.map((t) => (
+              <li key={t.t}><span className="t">{t.t}</span><span className="w">{t.w}</span></li>
             ))}
-          </div>
-        </Section>
+          </Reveal>
+        </div>
+      </section>
 
-        <Section tone="paper" className="same" label="Reasons to call">
-          <QA eyebrow="Reasons to call" q={ind.signalsQ} a={ind.signalsA} />
-          <div className="eg-g3">
-            {ind.signals.map((s) => (
-              <div key={s.h} className="eg-card">
-                <h3 className="eg-h3">{s.h}</h3>
-                <p className="eg-body" style={{ fontSize: 15 }}>{s.b}</p>
-                <div className="eg-src">
-                  Source:{" "}
-                  {s.href ? (
-                    <a href={s.href} target="_blank" rel="noopener noreferrer">{s.src} &#8599;</a>
-                  ) : (
-                    s.src
-                  )}
-                </div>
+      <section className="m-sec" aria-labelledby="example">
+        <div className="m-wrap">
+          <SecHead h2="What the record shows." id="example">
+            <p className="m-body">Real public records, pulled in November 2026. Every number links to where it came from.</p>
+          </SecHead>
+          <div className="m-split even" style={{ alignItems: "start" }}>
+            {records.length > 0 ? (
+              <div style={{ display: "grid", gap: 48 }}>
+                {records.map((r) => <RecordCard key={r.id} r={r} />)}
               </div>
-            ))}
-          </div>
-        </Section>
-
-        <Section tone="deep" label="Who decides">
-          <div className="eg-split">
-            <div>
-              <Eyebrow>Who decides</Eyebrow>
-              <h2 className="eg-h2">Who signs, by seat.</h2>
-              <p className="eg-answer">
-                For every account, the engine looks for the person in each seat that matters for your sale, from public sources, and keeps only the people it can confirm.
-              </p>
-            </div>
-            <div className="eg-g2">
-              {ind.seats.map((s) => (
-                <div key={s.seat} className="eg-card">
-                  <h3 className="eg-h3" style={{ fontSize: 17 }}>{s.seat}</h3>
-                  <p className="eg-body" style={{ fontSize: 14.5 }}>{s.why}</p>
-                </div>
+            ) : null}
+            <div style={{ display: "grid", gap: 24 }}>
+              {stats.map((s) => (
+                <CountCard key={s.id} main={s} />
               ))}
             </div>
           </div>
-        </Section>
+        </div>
+      </section>
 
-        <Section tone="mist" label="What you get">
-          <div className="eg-split">
-            <QA
-              eyebrow="What you get"
-              q={`What the Account Engine does for ${ind.name.toLowerCase()} teams`}
-              a="Your own branded portal with every account in your territory, scored every night on the signals above, a daily list of the best calls, the decision makers by seat, and a source link on every reason."
-            >
-              <div className="eg-links">
-                <Link href="/services/account-engine" className="eg-link">How the Account Engine works &rarr;</Link>
-                <Link href={`/blog/${ind.blog.slug}`} className="eg-link">{ind.blog.label} &rarr;</Link>
-              </div>
-            </QA>
-            {ind.slug === "low-voltage-security" ? (
-              <div className="eg-card feature">
-                <span className="mono-label" style={{ display: "block", marginBottom: 14 }}>Running today</span>
-                <h3 className="eg-h3" style={{ fontSize: 22 }}>Noovis, a network and smart-building integrator</h3>
-                <p className="eg-body">Noovis designs and installs fiber, structured cabling, security and networked building systems. Its Account Engine watches permits, licensing, ownership and inspection records across six states.</p>
-                <p style={{ marginTop: 18 }}><Link href={CASE_STUDY.href} className="eg-link">Read the Noovis case study &rarr;</Link></p>
-              </div>
-            ) : (
-              <ul className="eg-list">
-                <li><span><b>Every account in your territory,</b> not a purchased list</span></li>
-                <li><span><b>The reasons that predict your sales,</b> defined with you</span></li>
-                <li><span><b>A source link on every fact,</b> so your rep can quote it</span></li>
-                <li><span><b>Exports</b> to a spreadsheet or your CRM</span></li>
-              </ul>
-            )}
+      <section className="m-sec" aria-labelledby="why">
+        <div className="m-wrap m-split">
+          <SecHead h2="Why it gets you the call." id="why">
+            <p className="m-body">{ind.read}</p>
+          </SecHead>
+          <Reveal>
+            <div className="m-quote">
+              <p>{ind.opener}</p>
+              <div className="who">{ind.openerNote || "An opener built from the public record on this page."}</div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="m-sec" aria-labelledby="ind-faq">
+        <div className="m-wrap m-split">
+          <SecHead h2="Questions from your trade." id="ind-faq" />
+          <Faq faqs={ind.faqs} />
+        </div>
+      </section>
+
+      <section className="m-sec tight" aria-labelledby="other">
+        <div className="m-wrap">
+          <h2 className="m-label" id="other" style={{ margin: "0 0 18px", fontWeight: 400 }}>Other trades</h2>
+          <div className="m-chips">
+            {others.map((o) => (
+              <Link key={o.slug} href={`/industries/${o.slug}`} className="m-chip" style={{ textDecoration: "none", fontSize: 13, padding: "8px 14px" }}>{o.label}</Link>
+            ))}
           </div>
-        </Section>
+        </div>
+      </section>
 
-        <Section tone="ink" label="Frequently asked questions">
-          <QA eyebrow="Questions" q={`${ind.name}: common questions`} />
-          <FaqList faqs={ind.faqs} />
-        </Section>
-
-        <Related
-          heading="Other industries"
-          links={[
-            ...siblings.map((s) => ({ href: `/industries/${s.slug}`, label: s.name, desc: s.sub })),
-            { href: "/industries", label: "All industries", desc: "Every market we build engines for." },
-          ]}
-        />
-
-        <FinalCta heading="See the top prospects in your territory." />
-      </main>
-      <Footer />
-    </div>
+      <FinalCta sourcePage={path} h2={<>See your {ind.label.toLowerCase()} market.</>} defaultTrade={ind.label} />
+    </Shell>
   );
 }

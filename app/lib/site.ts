@@ -1,16 +1,14 @@
 /**
- * One source of truth for the site's structure (revamp 2026-10-22).
+ * One source of truth for the site's structure (market intelligence site,
+ * 2026-11-20, branch market-intel-site).
  *
- * Header, footer, hubs, related links and JSON-LD all read from here, so a
- * renamed service or a new industry changes in exactly one place.
+ * Positioning (docs/brand/BRAND.md + STANDING_CONTEXT, set 2026-11-18):
+ * "Simpl, the market intelligence partner for commercial building services",
+ * always paired with the outcome line below.
  *
- * Positioning: Simpl is a client acquisition partner for B2B companies. Door
- * one is the Account Engine (a private portal that reads the public record and
- * tells a sales team who to call, why now and who decides). Door two is local
- * SEO and websites for service businesses.
- *
- * Prices are deliberately NOT on the site (Matt, 2026-10-22). Every engagement
- * is scoped on a call.
+ * Prices are NOT on the site: the dashboard tiers in OFFER_AND_PRICING.md are
+ * "Recommended", not "Decided", so every price is said on a 15-minute call.
+ * The honest terms (pricing rule 11) ARE decided and are shown.
  */
 
 export const SITE = {
@@ -20,8 +18,10 @@ export const SITE = {
   phone: "(919) 428-9452",
   phoneHref: "tel:+19194289452",
   city: "Raleigh, NC",
-  primaryCta: { label: "See your top prospects", href: "/top-prospects" },
-  book: { label: "Book a call", href: "/book" },
+  positioning: "The market intelligence partner for commercial building services.",
+  outcome: "We find the buildings that need you, before your competitors know they exist.",
+  primaryCta: { label: "See your market", href: "/book" },
+  book: { label: "See your market", href: "/book" },
   login: { label: "Client login", href: "/login" },
 } as const;
 
@@ -31,43 +31,26 @@ export interface NavItem {
   desc: string;
 }
 
-/** Door one: the B2B client acquisition stack. */
-export const GROWTH_SERVICES: NavItem[] = [
-  { href: "/services/account-engine", label: "Account Engine", desc: "Who to call this week, with proof" },
-  { href: "/services/crm-follow-up", label: "CRM & follow-up", desc: "Every good account, followed up" },
-  { href: "/services/ai-receptionist", label: "AI receptionist", desc: "Every call answered, any hour" },
+export const NAV: NavItem[] = [
+  { href: "/industries", label: "Industries", desc: "Six trades, the records we watch for each" },
+  { href: "/how-it-works", label: "How it works", desc: "Read a sample brief" },
+  { href: "/pricing", label: "Pricing", desc: "Honest terms" },
+  { href: "/about", label: "About", desc: "Who builds it" },
 ];
 
-/** Door two: local SEO and websites for service businesses. */
-export const LOCAL_SERVICES: NavItem[] = [
-  { href: "/services/local-seo", label: "Local SEO", desc: "Found on Google Maps and in AI answers" },
-  { href: "/services/website-build", label: "Websites", desc: "Fast, findable, built to convert" },
-  { href: "/services/google-business-profile", label: "Google Business Profile", desc: "Own the map listing" },
-  { href: "/services/paid-ads", label: "PPC management", desc: "Google and Meta ads, no markup" },
-];
-
-/** Kept for older imports. */
-export const EASY_WINS = LOCAL_SERVICES;
-
+/** The six trades. Data for each page lives in app/lib/industries.ts. */
 export const INDUSTRIES: (NavItem & { slug: string })[] = [
-  { slug: "low-voltage-security", href: "/industries/low-voltage-security", label: "Low voltage & security", desc: "Integrators, access control, cabling" },
-  { slug: "senior-living-technology", href: "/industries/senior-living-technology", label: "Senior living technology", desc: "Nurse call, networks, resident tech" },
-  { slug: "building-systems", href: "/industries/building-systems", label: "Building systems", desc: "Fire protection, HVAC, elevators" },
-  { slug: "facility-services", href: "/industries/facility-services", label: "Facility services", desc: "Commercial cleaning, maintenance" },
-  { slug: "healthcare-technology", href: "/industries/healthcare-technology", label: "Healthcare technology", desc: "Medical equipment, healthcare IT" },
+  { slug: "elevator-service", href: "/industries/elevator-service", label: "Elevator service", desc: "Failed inspections, lapsed certificates" },
+  { slug: "fire-alarm-sprinkler", href: "/industries/fire-alarm-sprinkler", label: "Fire alarm & sprinkler", desc: "Alarm and sprinkler citations, abatement orders" },
+  { slug: "low-voltage-fiber-telecom", href: "/industries/low-voltage-fiber-telecom", label: "Low voltage, fiber & telecom", desc: "New space, renovations, elevator lines" },
+  { slug: "roofing-facade", href: "/industries/roofing-facade", label: "Roofing & facade", desc: "Unsafe facades, fire escape orders" },
+  { slug: "generators", href: "/industries/generators", label: "Generators", desc: "Emergency power citations" },
+  { slug: "commercial-construction", href: "/industries/commercial-construction", label: "Concrete & commercial construction", desc: "Recertification and retrofit deadlines" },
 ];
 
-export const CASE_STUDY = { href: "/case-studies/noovis", label: "Noovis case study", desc: "A network integrator's Account Engine" };
-
-export const RESOURCES: NavItem[] = [
-  { href: CASE_STUDY.href, label: "Case study: Noovis", desc: CASE_STUDY.desc },
-  { href: "/blog", label: "Blog", desc: "B2B prospecting playbooks" },
-  { href: "/free-tools", label: "Free website audit", desc: "For local service businesses" },
-  { href: "/faq", label: "FAQ", desc: "Straight answers" },
+/** Kept for older imports (blog, free-tools). The local door is parked. */
+export const GROWTH_SERVICES: NavItem[] = [
+  { href: "/how-it-works", label: "How it works", desc: "Read a sample brief" },
 ];
-
-export const COMPANY: NavItem[] = [
-  { href: "/about", label: "About Simpl", desc: "Who builds it and why" },
-  { href: "/book", label: "Book a call", desc: "30 minutes, no pitch deck" },
-  { href: "/login", label: "Client login", desc: "Go to your portal" },
-];
+export const LOCAL_SERVICES: NavItem[] = [];
+export const EASY_WINS = LOCAL_SERVICES;

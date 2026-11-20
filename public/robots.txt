@@ -4,6 +4,7 @@ Allow: /
 Disallow: /results
 Disallow: /audit
 Disallow: /api/
+Disallow: /partners/
 
 # GPTBot
 User-agent: GPTBot

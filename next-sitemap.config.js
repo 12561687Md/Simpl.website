@@ -29,22 +29,29 @@ module.exports = {
     "/scan",
     "/start-now",
     "/login",
+    // Market intelligence site (2026-11-20): the parked local door and the
+    // unvetted blog stay reachable but out of the sitemap (both noindexed),
+    // and the Noovis draft never goes in until Noovis approves it.
+    "/free-tools",
+    "/blog",
+    "/blog/*",
+    "/partners/*",
+    "/og",
     "/icon.svg",
     "/manifest.webmanifest",
   ],
 
   // Money pages first in priority; blog posts and the local door after.
   transform: async (config, path) => {
-    const top = ["/", "/services/account-engine", "/top-prospects"];
-    const high = ["/services", "/industries", "/case-studies/noovis", "/services/crm-follow-up", "/services/ai-receptionist", "/services/local-seo", "/free-tools"];
-    const priority = top.includes(path) ? 1.0 : high.includes(path) || path.startsWith("/industries/") ? 0.9 : config.priority;
+    const top = ["/", "/industries", "/how-it-works", "/pricing", "/book"];
+    const priority = top.includes(path) ? 1.0 : path.startsWith("/industries/") ? 0.9 : config.priority;
     return { loc: path, changefreq: config.changefreq, priority, lastmod: new Date().toISOString() };
   },
 
   robotsTxtOptions: {
     additionalSitemaps: [],
     policies: [
-      { userAgent: "*", allow: "/", disallow: ["/results", "/audit", "/api/"] },
+      { userAgent: "*", allow: "/", disallow: ["/results", "/audit", "/api/", "/partners/"] },
       // AI search and answer engines are welcome: being cited is the point.
       { userAgent: "GPTBot", allow: "/" },
       { userAgent: "ChatGPT-User", allow: "/" },

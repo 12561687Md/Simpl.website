@@ -4,7 +4,10 @@ import Footer from "../components/Footer";
 import { BLOG_POSTS } from "../lib/blog";
 import BlogHub from "./BlogHub";
 
+// Noindexed 2026-11-20 on the market-intel-site branch: posts predate the
+// repositioning and are not yet checked against the source-every-number rule.
 export const metadata: Metadata = {
+  robots: { index: false, follow: true },
   title: { absolute: "B2B Prospecting and Local SEO Guides | The Simpl Blog" },
   description:
     "Plain-English guides for B2B teams on buying signals, prospecting and follow-up, plus local SEO and website guides for service businesses.",

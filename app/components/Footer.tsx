@@ -1,58 +1,61 @@
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
 import { SimplWordmark } from "@/components/ui/simpl-brand";
-import { GROWTH_SERVICES, LOCAL_SERVICES, INDUSTRIES, RESOURCES, COMPANY, SITE } from "../lib/site";
+import { INDUSTRIES, SITE } from "../lib/site";
 
 /**
- * Site footer (revamp 2026-10-22). Every key page is linked here, so nothing
- * on the site is more than two clicks from anywhere (no orphan pages).
- * The props are kept for older call sites; the slide-in lead form is retired
- * because every page now ends on the FinalCta band.
+ * Site footer (market intelligence site, 2026-11-20). Every page is linked
+ * here so nothing is more than two clicks away. The props are kept for older
+ * call sites (blog, scan) that still pass them.
  */
-
-function Column({ label, links }: { label: string; links: { label: string; href: string }[] }) {
-  return (
-    <div>
-      <div className="lbl">{label}</div>
-      <nav aria-label={label}>
-        {links.map((l) => (
-          <Link key={l.href + l.label} href={l.href}>{l.label}</Link>
-        ))}
-      </nav>
-    </div>
-  );
-}
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Footer(_props: { showLeadForm?: boolean; sourcePage?: string } = {}) {
   return (
-    <footer className="sf">
-      <div className="eg-wrap">
+    <footer className="m-foot">
+      <div className="m-wrap">
         <div className="grid">
           <div>
             <Link href="/" aria-label="Simpl home" style={{ display: "inline-flex" }}>
-              <SimplWordmark size={32} />
+              <SimplWordmark size={26} />
             </Link>
             <p className="about">
-              Simpl is a client acquisition partner for B2B companies. We build your Account Engine: who to call this week, why now and who decides, with a source on every fact.
+              Simpl, the market intelligence partner for commercial building services. We find the buildings that need you, before your competitors know they exist.
             </p>
-            <div style={{ display: "grid", gap: 10 }}>
-              <a href={`mailto:${SITE.email}`} style={{ display: "inline-flex", gap: 10, alignItems: "center" }}><Mail size={15} color="#89CFF0" aria-hidden="true" /> {SITE.email}</a>
-              <a href={SITE.phoneHref} style={{ display: "inline-flex", gap: 10, alignItems: "center" }}><Phone size={15} color="#89CFF0" aria-hidden="true" /> {SITE.phone}</a>
-              <span style={{ display: "inline-flex", gap: 10, alignItems: "center", color: "#ADACA7", fontSize: 14 }}><MapPin size={15} color="#89CFF0" aria-hidden="true" /> Raleigh, NC. Serving the US.</span>
+            <div style={{ display: "grid", gap: 8, fontSize: 14.5 }}>
+              <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+              <a href={SITE.phoneHref}>{SITE.phone}</a>
+              <span>Raleigh, NC. Working across the US.</span>
             </div>
           </div>
-          <Column label="B2B growth" links={[...GROWTH_SERVICES, { href: "/top-prospects", label: "See your top prospects" }]} />
-          <Column label="Industries" links={[...INDUSTRIES, { href: "/industries", label: "All industries" }]} />
-          <Column label="Local businesses" links={[...LOCAL_SERVICES, { href: "/services", label: "All services" }]} />
-          <Column label="Company" links={[...RESOURCES, ...COMPANY]} />
+          <div>
+            <div className="lbl">Industries</div>
+            <nav aria-label="Industries">
+              {INDUSTRIES.map((i) => (
+                <Link key={i.href} href={i.href}>{i.label}</Link>
+              ))}
+            </nav>
+          </div>
+          <div>
+            <div className="lbl">Simpl</div>
+            <nav aria-label="Simpl">
+              <Link href="/how-it-works">How it works</Link>
+              <Link href="/how-it-works#sample">Sample brief</Link>
+              <Link href="/pricing">Pricing</Link>
+              <Link href="/about">About</Link>
+            </nav>
+          </div>
+          <div>
+            <div className="lbl">Get in touch</div>
+            <nav aria-label="Get in touch">
+              <Link href="/book">See your market</Link>
+              <Link href="/login">Client login</Link>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
+            </nav>
+          </div>
         </div>
         <div className="bottom">
-          <span>&copy; {new Date().getFullYear()} Simpl Systems LLC. All rights reserved.</span>
-          <span style={{ display: "flex", gap: 20 }}>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-          </span>
+          <span>&copy; {new Date().getFullYear()} Simpl Systems LLC</span>
+          <span>Every number on this site links to the public record it came from.</span>
         </div>
       </div>
     </footer>

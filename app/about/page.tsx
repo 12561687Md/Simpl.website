@@ -1,84 +1,69 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import AuthorBio from "../components/engine/AuthorBio";
-import { Section, QA, Hero, FinalCta } from "../components/engine/ui";
-import { SITE, CASE_STUDY } from "../lib/site";
-import { webPage, person, ldJson, pageMeta } from "../lib/schema";
+import Reveal from "../components/mi/Reveal";
+import { Shell, PageHero, SecHead, FinalCta, WHY_LESS } from "../components/mi/kit";
+import { SITE } from "../lib/site";
+import { pageMeta, webPage, person, ldJson } from "../lib/schema";
 
-/* Primary keyword: "B2B client acquisition partner" (brand page). */
 const PATH = "/about";
-const TITLE = "About Simpl: A B2B Client Acquisition Partner | Simpl";
+const TITLE = "About Simpl: Matt DuBois, Raleigh, NC | Simpl";
 const DESCRIPTION =
-  "Simpl is a B2B client acquisition partner based in Raleigh, NC. You work directly with the person who builds your Account Engine. No account managers.";
+  "Simpl is the market intelligence partner for commercial building services, built by Matt DuBois in Raleigh, North Carolina. You work directly with the person who builds it.";
 
 export const metadata: Metadata = pageMeta({ path: PATH, title: TITLE, description: DESCRIPTION });
 
-const BELIEFS = [
-  { h: "Proof on every line.", b: "If we can't link a fact to its record, it doesn't go in your portal. Your rep should never repeat something we can't back up." },
-  { h: "Sell what's built.", b: "Anything still rolling out is labeled that way. We never call a feature done until it is." },
-  { h: "Yours, not rented.", b: "Your portal, your lists and your data belong to you, under your name, exportable any time." },
-  { h: "No overhead in your invoice.", b: "You're not paying for an account manager, a sales team or an office. You work directly with the person who builds it." },
+const RULES = [
+  { h: "No link, no reason.", b: "If we can't point to the record, it doesn't go on your list. Your rep never repeats something we can't back up." },
+  { h: "Dated, always.", b: "Every row shows when the record was made and when we checked it. Nothing is presented as newer than it is." },
+  { h: "Sell what's built.", b: "Anything still in progress is labeled that way. We don't call a feature done until it is." },
+  { h: "No overhead in your invoice.", b: WHY_LESS },
 ];
 
 export default function AboutPage() {
   return (
-    <div>
-      <Header />
-      <main>
-        <script type="application/ld+json" dangerouslySetInnerHTML={ldJson(webPage({ path: PATH, name: TITLE, description: DESCRIPTION, type: "AboutPage" }), person())} />
+    <Shell>
+      <script type="application/ld+json" dangerouslySetInnerHTML={ldJson(webPage({ path: PATH, name: TITLE, description: DESCRIPTION, type: "AboutPage" }), person())} />
+      <PageHero
+        crumbs={[{ name: "About", path: PATH }]}
+        h1="Simpl is built by one person you can call."
+        lead="I'm Matt DuBois. I run Simpl from Raleigh, North Carolina. I build every territory myself: the record research, the ranking, and the list your team works from."
+      />
 
-        <Hero
-          crumbs={[{ name: "About", path: PATH }]}
-          eyebrow="About Simpl"
-          h1={<>A B2B client acquisition partner that <em>shows its work.</em></>}
-          sub="We build the engine. You make the calls."
-          lead="Simpl started by scanning and fixing how businesses show up online. Then we built a portal for a network integrator that sells into senior living and commercial buildings, and the question changed from &quot;how do we get found&quot; to &quot;who should we call this week?&quot; The Account Engine is the answer, and it is what we build now."
-        />
+      <section className="m-sec" aria-labelledby="why-h">
+        <div className="m-wrap m-split">
+          <SecHead h2="Why public records." id="why-h" />
+          <Reveal className="m-stack">
+            <p className="m-body" style={{ fontSize: 18 }}>
+              Simpl started by scanning how businesses show up online. Then I built a sales portal for a company that sells into commercial buildings, and the question changed from &ldquo;how do we get found&rdquo; to &ldquo;who should we call this week, and why?&rdquo;
+            </p>
+            <p className="m-body" style={{ fontSize: 18 }}>
+              The answer kept turning up in the same place: inspection results, violation notices, certificates and permits. All public, all dated, and almost all buried in portals nobody on a sales team has time to read. Simpl reads them so your team doesn&apos;t have to.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
-        <Section tone="paper" label="How we work">
-          <QA
-            eyebrow="How we work"
-            q="Who will you actually work with?"
-            a="The person who builds your engine. Not an account manager relaying messages, not a junior team learning on your market. One call to map your market, one person accountable for what ships."
-          />
-          <div className="eg-g2">
-            {BELIEFS.map((b) => (
-              <div key={b.h} className="eg-card">
-                <h3 className="eg-h3">{b.h}</h3>
-                <p className="eg-body" style={{ fontSize: 15 }}>{b.b}</p>
-              </div>
+      <section className="m-sec" aria-labelledby="rules-h">
+        <div className="m-wrap m-split">
+          <SecHead h2="How I work." id="rules-h" />
+          <Reveal as="ul" className="m-terms">
+            {RULES.map((r) => (
+              <li key={r.h}><span className="t">{r.h}</span><span className="b">{r.b}</span></li>
             ))}
-          </div>
-          <div style={{ marginTop: 28, maxWidth: 760 }} id="matt-dubois">
-            <AuthorBio />
-          </div>
-        </Section>
+          </Reveal>
+        </div>
+      </section>
 
-        <Section tone="deep" label="What we build">
-          <QA
-            eyebrow="What we build"
-            q="What does Simpl build?"
-            a="For B2B companies: the Account Engine, CRM and follow-up, and a 24/7 AI receptionist and support line. For local service businesses: local SEO, websites, Google Business Profile management and PPC."
-          />
-          <div className="eg-chips">
-            <Link href="/services/account-engine" className="eg-chip">Account Engine</Link>
-            <Link href="/services/crm-follow-up" className="eg-chip">CRM & follow-up</Link>
-            <Link href="/services/ai-receptionist" className="eg-chip">AI receptionist</Link>
-            <Link href="/services/local-seo" className="eg-chip">Local SEO</Link>
-            <Link href="/industries" className="eg-chip">Industries</Link>
-            <Link href={CASE_STUDY.href} className="eg-chip">Noovis case study</Link>
-          </div>
-          <p className="eg-body" style={{ marginTop: 30, maxWidth: 760 }}>
-            Simpl Systems LLC is based in {SITE.city} and works with companies across the United States. Reach us at{" "}
-            <a className="eg-link" href={`mailto:${SITE.email}`}>{SITE.email}</a> or <a className="eg-link" href={SITE.phoneHref}>{SITE.phone}</a>.
+      <section className="m-sec tight" aria-labelledby="contact-h">
+        <div className="m-wrap m-split">
+          <h2 className="m-h2" id="contact-h" style={{ fontSize: 30 }}>Reach me directly.</h2>
+          <p className="m-body" style={{ fontSize: 18 }}>
+            Simpl Systems LLC, {SITE.city}. Working with companies across the US.<br />
+            <a className="m-link" href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a className="m-link" href={SITE.phoneHref}>{SITE.phone}</a>
           </p>
-        </Section>
+        </div>
+      </section>
 
-        <FinalCta />
-      </main>
-      <Footer />
-    </div>
+      <FinalCta sourcePage={PATH} />
+    </Shell>
   );
 }

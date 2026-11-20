@@ -8,8 +8,8 @@ import { SITE } from "../lib/site";
 import { pageMeta, webPage, ldJson } from "../lib/schema";
 
 const PATH = "/login";
-const TITLE = "Client Login: Go to Your Account Engine Portal | Simpl";
-const DESCRIPTION = "Simpl clients: sign in to your company's Account Engine portal at yourcompany.simpl.pro. Enter your company name and we'll take you there.";
+const TITLE = "Client Login: Go to Your Simpl Dashboard | Simpl";
+const DESCRIPTION = "Simpl clients: sign in to your company's Simpl dashboard at yourcompany.simpl.pro. Enter your company name and we'll take you there.";
 
 // Utility page: kept out of the index (noindex, follow) and out of the sitemap.
 export const metadata: Metadata = pageMeta({ path: PATH, title: TITLE, description: DESCRIPTION, noindex: true });
@@ -30,7 +30,7 @@ export default function LoginPage() {
             <Crumbs items={[{ name: "Client login", path: PATH }]} />
             <Eyebrow>Client login</Eyebrow>
             <h1 className="eg-h1" style={{ fontSize: "clamp(34px, 4.6vw, 54px)" }}>Client login: go to your portal.</h1>
-            <p className="eg-lead">Your Account Engine lives at your own address. Enter your company name and we&apos;ll take you there.</p>
+            <p className="eg-lead">Your Simpl dashboard lives at your own address. Enter your company name and we&apos;ll take you there.</p>
             <div className="eg-form-card" style={{ marginTop: 34 }}>
               <PortalLogin />
             </div>

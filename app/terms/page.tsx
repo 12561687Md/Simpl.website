@@ -135,10 +135,10 @@ export default function TermsPage() {
                 generates a digital presence score across six categories.
               </li>
               <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Client acquisition services.</strong>{" "}
-                The Account Engine (a private portal of ranked accounts built
-                from public records), CRM setup and follow-up, and call
-                answering, scoped in writing for each client.
+                <strong style={{ color: "var(--fg)" }}>Market intelligence services.</strong>{" "}
+                A private sales dashboard of ranked buildings and accounts
+                built from public records, with related CRM setup, follow-up
+                and call answering, scoped in writing for each client.
               </li>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>Local marketing services.</strong>{" "}

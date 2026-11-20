@@ -1,7 +1,7 @@
 /**
  * JSON-LD builders. Schema sync rule: every page's structured data is built
  * from the same data that renders the page, so a copy change can't leave the
- * schema behind. No Offer/price blocks: prices are off the site (2026-10-22).
+ * schema behind. No Offer/price blocks: prices are said on a call (OFFER_AND_PRICING tiers are Recommended, not Decided).
  */
 import { SITE } from "./site";
 
@@ -19,11 +19,12 @@ export function organization() {
     email: SITE.email,
     telephone: "+1-919-428-9452",
     description:
-      "Simpl is a client acquisition partner for B2B companies. We build each client an Account Engine: a private, branded portal that reads the public record every night and tells their sales team which accounts to call, why now and who decides, with a source link on every fact. We also run local SEO and build websites for service businesses.",
+      "Simpl is the market intelligence partner for commercial building services. We read public records (inspections, violations, certificates, permits, deadlines), rank the buildings that need a client's trade and why, and hand their sales team who to call, with a link to the record behind every reason.",
     address: { "@type": "PostalAddress", addressLocality: "Raleigh", addressRegion: "NC", addressCountry: "US" },
     areaServed: { "@type": "Country", name: "United States" },
     founder: { "@id": AUTHOR_ID },
-    knowsAbout: ["B2B lead generation", "Sales prospecting", "Buying signals", "Public records research", "Local SEO", "Website design"],
+    slogan: "We find the buildings that need you, before your competitors know they exist.",
+    knowsAbout: ["Market intelligence", "Public records research", "Building inspection records", "Commercial building services", "B2B sales prospecting"],
     contactPoint: { "@type": "ContactPoint", email: SITE.email, telephone: "+1-919-428-9452", contactType: "sales", areaServed: "US" },
   };
 }
@@ -49,7 +50,7 @@ export function person() {
     jobTitle: "Founder",
     worksFor: { "@id": ORG_ID },
     url: `${SITE.url}/about`,
-    knowsAbout: ["B2B lead generation", "Sales prospecting", "Public records research", "Local SEO"],
+    knowsAbout: ["Market intelligence", "Public records research", "B2B sales prospecting"],
   };
 }
 
@@ -129,7 +130,7 @@ export function pageMeta(opts: { path: string; title: string; description: strin
       url,
       siteName: "Simpl",
       type: "website" as const,
-      images: opts.images || [{ url: "/brand/simpl-cover-1200x675.png", width: 1200, height: 675, alt: "Simpl, B2B lead generation from the public record" }],
+      images: opts.images || [{ url: "/og", width: 1200, height: 630, alt: "Simpl, the market intelligence partner for commercial building services" }],
     },
     ...(opts.noindex ? { robots: { index: false, follow: true } } : {}),
   };

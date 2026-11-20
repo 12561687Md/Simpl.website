@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: post.description,
     images: [{ url: post.image, width: 1600, height: 900, alt: post.imageAlt }],
   });
-  return { ...meta, openGraph: { ...meta.openGraph, type: "article" }, authors: [{ name: "Matt DuBois", url: "https://www.simpl.pro/about" }] };
+  return { ...meta, robots: { index: false, follow: true }, openGraph: { ...meta.openGraph, type: "article" }, authors: [{ name: "Matt DuBois", url: "https://www.simpl.pro/about" }] };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
