@@ -57,6 +57,12 @@ export default function FixYourBusinessPage() {
       {/* RIGHT: the wide, blue-glowing lead form */}
       <section className="start-panel start-right">
         <StartLeadCard />
+        {/* No site footer on this landing page, so the legal links live here. */}
+        <nav aria-label="Legal" style={{ marginTop: 14, textAlign: "center", fontSize: 12.5, color: "var(--muted)" }}>
+          <Link href="/privacy" style={{ color: "inherit" }}>Privacy</Link>
+          <span aria-hidden="true" style={{ margin: "0 8px" }}>&middot;</span>
+          <Link href="/terms" style={{ color: "inherit" }}>Terms</Link>
+        </nav>
       </section>
     </main>
   );

@@ -3,14 +3,52 @@ import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+/**
+ * Terms of Service. 2026-11-26: governing law and venue moved to North
+ * Carolina to match the client service agreement (Simpl.master
+ * docs/delivery/ONBOARDING_KIT/09_SERVICE_AGREEMENT.md), and a client portal
+ * section added (docs/security/PROFESSIONAL_OPS.md, section 2). Schema sync
+ * rule: the JSON-LD is built from the same constants the page renders.
+ */
+const EFFECTIVE = "November 27, 2026";
+const EFFECTIVE_ISO = "2026-11-27";
+const DESCRIPTION =
+  "Terms for using Simpl: the website, free scan, paid services and private client portals. North Carolina law applies.";
+
+const SCHEMA = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://www.simpl.pro/terms#webpage",
+    url: "https://www.simpl.pro/terms",
+    name: "Terms of Service",
+    description: DESCRIPTION,
+    inLanguage: "en-US",
+    dateModified: EFFECTIVE_ISO,
+    publisher: {
+      "@type": "Organization",
+      name: "Simpl",
+      url: "https://www.simpl.pro",
+      email: "team@simpl.pro",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+      { "@type": "ListItem", position: 2, name: "Terms of Service", item: "https://www.simpl.pro/terms" },
+    ],
+  },
+];
+
 export const metadata: Metadata = {
   title: "Terms of Service | Simpl",
-  description:
-    "Terms and conditions for using Simpl, the digital presence scanning and agency platform.",
+  description: DESCRIPTION,
   openGraph: {
     images: OG_IMAGE,
     title: "Terms of Service | Simpl",
-    description: "Terms and conditions for using Simpl, the digital presence scanning and agency platform.",
+    description: DESCRIPTION,
     url: "https://www.simpl.pro/terms",
     siteName: "Simpl",
     type: "website",
@@ -51,14 +89,10 @@ export default function TermsPage() {
     <div>
       <Header />
       <main>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Terms of Service", "item": "https://www.simpl.pro/terms" }
-          ]
-        }) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA).replace(/</g, "\\u003c") }}
+        />
         {/* Hero */}
         <section
           style={{
@@ -99,7 +133,7 @@ export default function TermsPage() {
               lineHeight: 1.55,
             }}
           >
-            Last updated: June 2026
+            Effective date: {EFFECTIVE}
           </p>
         </section>
 
@@ -123,14 +157,17 @@ export default function TermsPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>1. Acceptance of Terms</h2>
             <p style={paragraph}>
-              By accessing or using Simpl (&quot;we,&quot; &quot;us,&quot; or
-              &quot;our&quot;) at simpl.pro, you agree to be bound by these
-              Terms of Service. If you do not agree to these terms, do not use
+              By accessing or using Simpl
+              (&quot;Simpl,&quot; &quot;we,&quot; &quot;us,&quot; or
+              &quot;our&quot;), at simpl.pro or in any Simpl client portal, you
+              agree to be bound by these Terms of Service. If you do not agree to these terms, do not use
               our services.
             </p>
             <p style={paragraph}>
               These terms apply to all visitors, users, and customers of Simpl,
-              whether using the free scan tool or any paid service.
+              whether using the free scan tool, a client portal, or any paid
+              service. If your company has a signed service agreement with
+              Simpl, that agreement controls where it differs from these terms.
             </p>
           </div>
 
@@ -145,16 +182,15 @@ export default function TermsPage() {
                 generates a digital presence score across six categories.
               </li>
               <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Paid Reports.</strong>{" "}
-                Detailed audit reports delivered as branded HTML documents
-                covering your website health, SEO, Google Business Profile,
-                and more.
+                <strong style={{ color: "var(--fg)" }}>Market intelligence services.</strong>{" "}
+                A private client portal of ranked buildings and accounts built
+                from public records, with related CRM setup, follow-up and call
+                answering, scoped in writing for each client.
               </li>
               <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Agency Services.</strong>{" "}
-                Ongoing digital marketing and presence management on monthly
-                retainer, including quick wins, local SEO, paid advertising,
-                organic growth, and strategic consulting.
+                <strong style={{ color: "var(--fg)" }}>Local marketing services.</strong>{" "}
+                Local SEO, websites, Google Business Profile management and paid
+                advertising management, on a monthly retainer or a flat fee.
               </li>
             </ul>
             <p style={paragraph}>
@@ -196,10 +232,97 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 4. Scan Limitations */}
+          {/* 4. Client Portals */}
+          <div style={sectionBlock} id="portals">
+            <h2 style={sectionHeading}>4. Client Portals</h2>
+            <p style={paragraph}>
+              Simpl runs private, sign-in-only portals for its clients, such as
+              noovis.simpl.pro, sentrics.simpl.pro, the Action Elevator market
+              intelligence portal at action.simpl.pro, and Simpl&apos;s own
+              internal portal, hq.simpl.pro. This section applies to anyone who
+              signs in to one of them.
+            </p>
+            <ul style={list}>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>Accounts.</strong>{" "}
+                Each account is for one named person. Do not share your sign-in,
+                password or sign-in codes, and tell us right away at{" "}
+                <a
+                  href="mailto:team@simpl.pro"
+                  style={{
+                    color: "var(--accent)",
+                    textDecoration: "none",
+                    borderBottom: "1px solid var(--accent)",
+                  }}
+                >
+                  team@simpl.pro
+                </a>{" "}
+                if you think someone else has used your account. Your company
+                is responsible for who it asks us to give access to, and for
+                telling us when someone should lose it.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>Acceptable use.</strong>{" "}
+                Use the portal only for your company&apos;s own business and
+                only within the law, including calling, texting and email laws
+                in your own outreach. Do not copy the portal&apos;s data in bulk
+                with scripts or scrapers, resell or publish it, share it with
+                anyone outside your company, try to reach data or accounts that
+                are not yours, test or probe its security without our written
+                OK, or interfere with how it runs.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>Confidentiality of client data.</strong>{" "}
+                Your company&apos;s data in its portal belongs to your company.
+                We keep it confidential, use it only to provide your
+                company&apos;s service, never sell it, and never use it for
+                another client. You agree to keep what you see in the portal,
+                including how it works, confidential to your company.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>Data from public records.</strong>{" "}
+                Much of what a portal shows comes from public records and other
+                outside sources. Those sources can be incomplete, late or wrong,
+                so check anything important before you rely on it.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>Availability.</strong>{" "}
+                We work to keep the portals running, but we do not guarantee
+                they will always be available, fast or free of errors. We may
+                take a portal down for maintenance, and we may add, change or
+                remove features; we give notice before changes to how a portal
+                is laid out or works.
+              </li>
+              <li style={{ marginBottom: 8 }}>
+                <strong style={{ color: "var(--fg)" }}>Suspension and termination.</strong>{" "}
+                We may suspend or end an account that breaks these rules, puts
+                the portal or other users at risk, or when your company asks us
+                to. A portal ends when your company&apos;s agreement with Simpl
+                ends. Your company then gets an export of its data within 30
+                days, and then we delete it.
+              </li>
+            </ul>
+            <p style={paragraph}>
+              How we handle personal information in the portals is described in
+              our{" "}
+              <a
+                href="/privacy"
+                style={{
+                  color: "var(--accent)",
+                  textDecoration: "none",
+                  borderBottom: "1px solid var(--accent)",
+                }}
+              >
+                Privacy Policy
+              </a>
+              .
+            </p>
+          </div>
+
+          {/* 5. Scan Limitations */}
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>
-              4. Scan Limitations and Disclaimers
+              5. Scan Limitations and Disclaimers
             </h2>
             <p style={paragraph}>
               Simpl scans only publicly available data. We analyze HTML content,
@@ -222,9 +345,9 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 5. Intellectual Property */}
+          {/* 6. Intellectual Property */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>5. Intellectual Property</h2>
+            <h2 style={sectionHeading}>6. Intellectual Property</h2>
             <p style={paragraph}>
               <strong style={{ color: "var(--fg)" }}>Our property.</strong> The
               Simpl platform, including the scanning engine, scoring rubric,
@@ -241,9 +364,9 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 6. Payment Terms */}
+          {/* 7. Payment Terms */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>6. Payment Terms</h2>
+            <h2 style={sectionHeading}>7. Payment Terms</h2>
             <p style={paragraph}>
               Simpl offers a free website scan and report, plus paid services.
               All pricing is quoted individually. Your price is set by the
@@ -295,16 +418,16 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 7. Refund Policy */}
+          {/* 8. Refund Policy */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>7. Refund Policy</h2>
+            <h2 style={sectionHeading}>8. Refund Policy</h2>
             <ul style={list}>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
-                  One-time reports.
+                  One-time services.
                 </strong>{" "}
-                Because reports are generated and delivered instantly, they are
-                non-refundable once delivered.
+                Flat-fee work is non-refundable once delivered. Anything not yet
+                started is refunded in full if you cancel.
               </li>
               <li style={{ marginBottom: 8 }}>
                 <strong style={{ color: "var(--fg)" }}>
@@ -333,9 +456,9 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 8. Service Availability */}
+          {/* 9. Service Availability */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>8. Service Availability</h2>
+            <h2 style={sectionHeading}>9. Service Availability</h2>
             <p style={paragraph}>
               We make reasonable efforts to keep Simpl available and operational.
               However, we do not guarantee uninterrupted or error-free service.
@@ -348,9 +471,9 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 9. Limitation of Liability */}
+          {/* 10. Limitation of Liability */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>9. Limitation of Liability</h2>
+            <h2 style={sectionHeading}>10. Limitation of Liability</h2>
             <p style={paragraph}>
               To the fullest extent permitted by law, Simpl and its owners,
               employees, and contractors shall not be liable for any indirect,
@@ -371,9 +494,9 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 10. Termination */}
+          {/* 11. Termination */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>10. Termination</h2>
+            <h2 style={sectionHeading}>11. Termination</h2>
             <p style={paragraph}>
               <strong style={{ color: "var(--fg)" }}>By you.</strong> You may
               stop using Simpl at any time. If you are on a paid retainer, you
@@ -394,29 +517,33 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 11. Governing Law */}
+          {/* 12. Governing Law */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>11. Governing Law</h2>
+            <h2 style={sectionHeading}>12. Governing Law</h2>
             <p style={paragraph}>
               These Terms of Service are governed by and construed in accordance
-              with the laws of the State of New York, United States, without
-              regard to its conflict of law principles.
+              with the laws of the State of North Carolina, United States,
+              without regard to its conflict of law principles. This matches
+              our client service agreement.
             </p>
             <p style={paragraph}>
               Any disputes arising from these terms or your use of Simpl shall
-              be resolved in the state or federal courts located in New York,
-              and you consent to the jurisdiction of those courts.
+              be resolved in the state courts located in New Hanover County,
+              North Carolina, or the federal courts for the Eastern District of
+              North Carolina, and you consent to the jurisdiction of those
+              courts.
             </p>
           </div>
 
-          {/* 12. Changes to These Terms */}
+          {/* 13. Changes to These Terms */}
           <div style={sectionBlock}>
-            <h2 style={sectionHeading}>12. Changes to These Terms</h2>
+            <h2 style={sectionHeading}>13. Changes to These Terms</h2>
             <p style={paragraph}>
               We may update these Terms of Service from time to time. When we
-              do, we will update the &quot;Last updated&quot; date at the top of
-              this page. For material changes, we will make reasonable efforts
-              to notify affected users.
+              do, we will update the effective date at the top of this page.
+              For material changes, we will make reasonable efforts to notify
+              affected users, including client portal users by email or in the
+              portal.
             </p>
             <p style={paragraph}>
               Your continued use of Simpl after changes are posted constitutes
@@ -424,9 +551,9 @@ export default function TermsPage() {
             </p>
           </div>
 
-          {/* 13. Contact */}
+          {/* 14. Contact */}
           <div style={{ marginBottom: 0 }}>
-            <h2 style={sectionHeading}>13. Contact</h2>
+            <h2 style={sectionHeading}>14. Contact</h2>
             <p style={paragraph}>
               If you have questions about these Terms of Service, contact us at:
             </p>
@@ -469,7 +596,7 @@ export default function TermsPage() {
                 </a>
               </div>
               <div style={{ color: "var(--muted)" }}>
-                Location: United States
+                Location: Wilmington, North Carolina
               </div>
             </div>
           </div>

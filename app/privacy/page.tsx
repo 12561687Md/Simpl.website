@@ -1,22 +1,64 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { OG_IMAGE } from "../lib/og";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
+/**
+ * Privacy policy, rewritten 2026-11-26 (Simpl.master
+ * docs/security/PROFESSIONAL_OPS.md, section 2). One policy with a section per
+ * kind of person: website visitors, portal users, phone line callers, business
+ * contacts. The SMS section carries id="sms" so form consent lines can link to
+ * /privacy#sms. Schema sync rule: the JSON-LD below is built from the same
+ * constants the page renders (description, effective date).
+ */
+
+const EFFECTIVE = "November 27, 2026";
+const EFFECTIVE_ISO = "2026-11-27";
+const DESCRIPTION =
+  "What Simpl collects on its website, client portals, support phone line and business research, who helps us handle it, how long we keep it, and your choices. We never sell your data.";
+const EMAIL = "team@simpl.pro";
+
 export const metadata: Metadata = {
   title: "Privacy Policy | Simpl",
-  description:
-    "How Simpl collects, uses, and protects your information. We never sell your data.",
+  description: DESCRIPTION,
   openGraph: {
     images: OG_IMAGE,
     title: "Privacy Policy | Simpl",
-    description: "How Simpl collects, uses, and protects your information. We never sell your data.",
+    description: DESCRIPTION,
     url: "https://www.simpl.pro/privacy",
     siteName: "Simpl",
     type: "website",
   },
   alternates: { canonical: "https://www.simpl.pro/privacy" },
 };
+
+const SCHEMA = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://www.simpl.pro/privacy#webpage",
+    url: "https://www.simpl.pro/privacy",
+    name: "Privacy Policy",
+    description: DESCRIPTION,
+    inLanguage: "en-US",
+    dateModified: EFFECTIVE_ISO,
+    publisher: {
+      "@type": "Organization",
+      name: "Simpl",
+      url: "https://www.simpl.pro",
+      email: EMAIL,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.simpl.pro" },
+      { "@type": "ListItem", position: 2, name: "Privacy Policy", item: "https://www.simpl.pro/privacy" },
+    ],
+  },
+];
 
 const sectionHeading: React.CSSProperties = {
   margin: 0,
@@ -25,6 +67,12 @@ const sectionHeading: React.CSSProperties = {
   letterSpacing: "-0.015em",
   fontWeight: 500,
   marginBottom: 20,
+};
+
+const subHeading: React.CSSProperties = {
+  fontSize: 19,
+  fontWeight: 500,
+  margin: "24px 0 12px",
 };
 
 const paragraph: React.CSSProperties = {
@@ -46,19 +94,46 @@ const sectionBlock: React.CSSProperties = {
   marginBottom: 56,
 };
 
+const linkStyle: React.CSSProperties = {
+  color: "var(--accent)",
+  textDecoration: "none",
+  borderBottom: "1px solid var(--accent)",
+};
+
+function Section({ id, title, children }: { id?: string; title: string; children: ReactNode }) {
+  return (
+    <div style={sectionBlock} id={id}>
+      <h2 style={sectionHeading}>{title}</h2>
+      {children}
+    </div>
+  );
+}
+
+function Item({ label, children }: { label?: string; children: ReactNode }) {
+  return (
+    <li style={{ marginBottom: 8 }}>
+      {label && <strong style={{ color: "var(--fg)" }}>{label}</strong>} {children}
+    </li>
+  );
+}
+
+function Mail() {
+  return (
+    <a href={`mailto:${EMAIL}`} style={linkStyle}>
+      {EMAIL}
+    </a>
+  );
+}
+
 export default function PrivacyPage() {
   return (
     <div>
       <Header />
       <main>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.simpl.pro" },
-            { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://www.simpl.pro/privacy" }
-          ]
-        }) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA).replace(/</g, "\\u003c") }}
+        />
         {/* Hero */}
         <section
           style={{
@@ -99,7 +174,7 @@ export default function PrivacyPage() {
               lineHeight: 1.55,
             }}
           >
-            Last updated: June 2026
+            Effective date: {EFFECTIVE}
           </p>
         </section>
 
@@ -119,336 +194,386 @@ export default function PrivacyPage() {
             padding: "80px 32px 96px",
           }}
         >
-          {/* Intro */}
           <div style={sectionBlock}>
             <p style={paragraph}>
-              Simpl (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;)
-              operates the website at simpl.pro and the Simpl scanning and
-              digital presence platform. This Privacy Policy explains what
-              information we collect, how we use it, and your choices regarding
-              that information.
+              Simpl (&quot;Simpl,&quot; &quot;we,&quot; &quot;us&quot;)
+              runs the website at simpl.pro, the free website scan, private
+              client portals, and the research and support services we provide
+              to our business clients. This policy explains what we collect, why
+              we collect it, who helps us handle it, how long we keep it, and the
+              choices you have.
             </p>
             <p style={paragraph}>
-              By using Simpl, you agree to the collection and use of information
-              as described in this policy. If you do not agree, please do not use
-              our services.
+              We never sell personal information, and we never share it for
+              anyone else&apos;s advertising.
             </p>
           </div>
 
-          {/* 1. Information We Collect */}
-          <div style={sectionBlock}>
-            <h2 style={sectionHeading}>1. Information We Collect</h2>
-
-            <h3
-              style={{
-                fontSize: 19,
-                fontWeight: 500,
-                margin: "0 0 12px",
-              }}
-            >
-              Information you provide directly
-            </h3>
+          <Section title="1. Who this policy covers">
             <ul style={list}>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>URLs you scan.</strong>{" "}
-                When you use our free scan tool, you enter a website URL. No
-                account is required.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Email address.</strong>{" "}
-                If you request a full report, we ask for your email so we can
-                deliver it.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  Contact form submissions.
-                </strong>{" "}
-                Our pricing page includes a contact form that collects your name,
-                email, phone number, and message.
-              </li>
-            </ul>
-
-            <h3
-              style={{
-                fontSize: 19,
-                fontWeight: 500,
-                margin: "24px 0 12px",
-              }}
-            >
-              Information collected automatically
-            </h3>
-            <ul style={list}>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Scan results.</strong>{" "}
-                When a scan completes, the results are stored in our database for
-                historical reference.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  Local storage data.
-                </strong>{" "}
-                We use your browser&apos;s localStorage to cache scan results so
-                you can return to them without re-scanning. This data stays on
-                your device and is not sent to us.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  Anonymous analytics.
-                </strong>{" "}
-                We use Vercel Analytics and Vercel Speed Insights to understand
-                general usage patterns. These tools collect anonymous,
-                aggregated data such as page views and performance metrics. They
-                do not track individual users or use cookies.
-              </li>
-            </ul>
-
-            <h3
-              style={{
-                fontSize: 19,
-                fontWeight: 500,
-                margin: "24px 0 12px",
-              }}
-            >
-              Information we do not collect
-            </h3>
-            <ul style={list}>
-              <li style={{ marginBottom: 8 }}>
-                We do not use cookies for advertising or tracking.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                We do not use third-party ad trackers.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                We do not scrape or store passwords, credentials, or login
-                information from the websites we scan.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                We do not access admin panels, databases, or any
-                non-public areas of scanned websites. Our scans only read
-                publicly available HTML.
-              </li>
-            </ul>
-          </div>
-
-          {/* 2. How We Use Your Information */}
-          <div style={sectionBlock}>
-            <h2 style={sectionHeading}>2. How We Use Your Information</h2>
-            <p style={paragraph}>We use the information we collect to:</p>
-            <ul style={list}>
-              <li style={{ marginBottom: 8 }}>
-                Run scans and generate reports on your digital presence.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                Deliver scan results and reports to your email when requested.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                Respond to inquiries submitted through our contact form.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                Improve the accuracy and performance of our scanning platform.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                Understand general usage patterns through anonymous analytics.
-              </li>
+              <Item label="Website visitors.">
+                People who visit simpl.pro, run the free scan, or fill out one of
+                our forms (section 2).
+              </Item>
+              <Item label="Client portal users.">
+                People who sign in to a Simpl client portal, such as
+                noovis.simpl.pro, sentrics.simpl.pro, action.simpl.pro or our own
+                internal portal, hq.simpl.pro (section 3).
+              </Item>
+              <Item label="Phone line callers.">
+                People who call a support phone line we answer for one of our
+                clients (section 4).
+              </Item>
+              <Item label="Business contacts.">
+                People whose work contact details appear in the business research
+                we do for our clients or for our own outreach (section 5).
+              </Item>
             </ul>
             <p style={paragraph}>
-              We do not sell your personal information. We do not share your
-              email address with third parties for marketing purposes.
+              When we handle information for a client (for example, inside that
+              client&apos;s portal or on its phone line), we act on that
+              client&apos;s behalf under our written agreement with it. That
+              client&apos;s own privacy policy also applies.
             </p>
-          </div>
+          </Section>
 
-          {/* 3. How We Protect Your Information */}
-          <div style={sectionBlock}>
-            <h2 style={sectionHeading}>
-              3. How We Protect Your Information
-            </h2>
-            <p style={paragraph}>
-              We take reasonable measures to protect the information we collect.
-              Our database connections use SSL encryption. Access to production
-              systems is restricted to authorized personnel. API endpoints
-              validate all input server-side.
-            </p>
-            <p style={paragraph}>
-              No method of transmission over the internet or electronic storage
-              is 100% secure. While we work to protect your information, we
-              cannot guarantee absolute security.
-            </p>
-          </div>
+          <Section title="2. Website and free scan">
+            <h3 style={{ ...subHeading, marginTop: 0 }}>What you give us</h3>
+            <ul style={list}>
+              <Item label="Businesses and URLs you scan.">
+                When you use the free scan, you enter a business name or website
+                address. No account is needed.
+              </Item>
+              <Item label="Email address.">
+                If you unlock a full report, we ask for your email so we can send
+                it.
+              </Item>
+              <Item label="Form submissions.">
+                Our forms collect your name, email, company, website, phone
+                number if you give one, and your message.
+              </Item>
+              <Item label="Text message consent.">
+                If a form offers an optional box to get texts about your request
+                and you check it, we record that you agreed, the wording you
+                agreed to, and when. The box is never checked for you.
+              </Item>
+            </ul>
 
-          {/* 4. Data Retention */}
-          <div style={sectionBlock}>
-            <h2 style={sectionHeading}>4. Data Retention</h2>
-            <p style={paragraph}>
-              Scan results are stored in our database to provide scan history
-              and improve our platform. Contact form submissions are retained
-              as long as necessary to respond to your inquiry and for our
-              internal records.
-            </p>
-            <p style={paragraph}>
-              If you would like us to delete your data, contact us at{" "}
-              <a
-                href="mailto:team@simpl.pro"
-                style={{
-                  color: "var(--accent)",
-                  textDecoration: "none",
-                  borderBottom: "1px solid var(--accent)",
-                }}
-              >
-                team@simpl.pro
-              </a>{" "}
-              and we will process your request within 30 days.
-            </p>
-          </div>
+            <h3 style={subHeading}>What is collected automatically</h3>
+            <ul style={list}>
+              <Item label="Scan results.">
+                When a scan finishes, the results are stored in our database so
+                we can show scan history.
+              </Item>
+              <Item label="Browser storage.">
+                Your browser&apos;s local storage keeps recent scan results so
+                you can return to them without scanning again. That data stays
+                on your device.
+              </Item>
+              <Item label="Analytics.">
+                Vercel Analytics and Vercel Speed Insights count page views and
+                measure page speed without cookies. We may also use Google
+                Analytics, which sets first-party cookies to count visits and
+                form submissions. We never send it your name, email or phone
+                number.
+              </Item>
+              <Item label="Server logs.">
+                Our hosting providers record basic request details, such as IP
+                address, browser type and time, to keep the site running and
+                secure.
+              </Item>
+            </ul>
 
-          {/* 5. Third-Party Services */}
-          <div style={sectionBlock}>
-            <h2 style={sectionHeading}>5. Third-Party Services</h2>
+            <h3 style={subHeading}>What our scans read</h3>
             <p style={paragraph}>
-              We use the following third-party services to operate Simpl. Each
-              has its own privacy policy governing how it handles data:
+              Scans read only public information: a website&apos;s public pages,
+              its headers and metadata, and public business listings. We never
+              access password-protected areas, admin panels or databases of the
+              sites we scan. We do not use advertising cookies or third-party ad
+              trackers.
+            </p>
+          </Section>
+
+          <Section title="3. Client portals">
+            <p style={paragraph}>
+              Our clients&apos; teams sign in to private portals we build and
+              run for them. In a portal we collect:
             </p>
             <ul style={list}>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Vercel</strong> -
-                Website hosting, analytics, and performance monitoring.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Google Cloud Run</strong>{" "}
-                - API hosting for our scanning engine.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Neon</strong> - Database
-                hosting (PostgreSQL).
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>ScrapingBee</strong> -
-                Page fetching proxy used during scans to retrieve publicly
-                available HTML.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>SerpWow</strong> - Search
-                engine results data for visibility analysis.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  Google Places API
-                </strong>{" "}
-                - Business listing data for Google Business Profile analysis.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>Resend</strong> - Email
-                delivery service for sending scan reports.
-              </li>
+              <Item label="Account details.">
+                Your name, work email, username and role, set up by us or by your
+                company.
+              </Item>
+              <Item label="Sign-in data.">
+                Passwords are stored only as one-way hashes, never in readable
+                form. When you sign in, we may email a one-time code to your work
+                address as a second step. We record when you last signed in.
+              </Item>
+              <Item label="What you do in the portal.">
+                Notes, call and email logs, tickets and other entries you make,
+                so the portal works and your team shares one history.
+              </Item>
+              <Item label="Cookies.">
+                Portals use only the cookies needed to keep you signed in. They
+                do not use advertising or tracking cookies.
+              </Item>
             </ul>
             <p style={paragraph}>
-              We do not share your personal information with these services
-              beyond what is necessary to operate the platform. For example,
-              ScrapingBee receives the URL you scan but not your email address.
+              The business data inside a client&apos;s portal belongs to that
+              client. We use it only to provide that client&apos;s service, and
+              we never use one client&apos;s data for another client.
             </p>
-          </div>
+          </Section>
 
-          {/* 6. Your Rights */}
-          <div style={sectionBlock}>
-            <h2 style={sectionHeading}>6. Your Rights</h2>
+          <Section title="4. Support phone line">
             <p style={paragraph}>
-              Depending on your location, you may have the following rights
-              regarding your personal information:
+              We answer some support phone lines on behalf of our clients. These
+              calls are answered by an automated assistant, and the call tells
+              you at the start that it is recorded. When you call, we collect:
             </p>
             <ul style={list}>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  Right to know.
-                </strong>{" "}
-                You can request details about what personal information we have
-                collected about you.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  Right to delete.
-                </strong>{" "}
-                You can request that we delete your personal information.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  Right to opt out.
-                </strong>{" "}
-                We do not sell personal information, so there is nothing to opt
-                out of in that regard. If we send you emails, you can
-                unsubscribe at any time.
-              </li>
-              <li style={{ marginBottom: 8 }}>
-                <strong style={{ color: "var(--fg)" }}>
-                  Right to non-discrimination.
-                </strong>{" "}
-                We will not discriminate against you for exercising any of these
-                rights.
-              </li>
+              <Item label="The call itself.">
+                An audio recording of the call and a written transcript.
+              </Item>
+              <Item label="Call details.">
+                The number you call from, the time of the call, and how long it
+                lasted.
+              </Item>
+              <Item label="What you tell us.">
+                Your name, where you are (for example a building and room, or a
+                site number), and the problem you are reporting.
+              </Item>
+            </ul>
+            <p style={paragraph}>
+              We use this to open a support ticket, send it to the technicians of
+              the client whose line you called, reach on-call staff when a
+              problem is urgent, and check the quality of our answering. The
+              client receives the ticket, and it may also go into that
+              client&apos;s own help desk. A short summary goes to our internal
+              team chat so we can follow up; health details are kept out of that
+              summary.
+            </p>
+            <p style={paragraph}>
+              If you do not want to be recorded, say so on the call. The
+              assistant will take only what is needed to send help, such as your
+              location and a callback number. We do not use calls to market to
+              you.
+            </p>
+          </Section>
+
+          <Section title="5. Business contact data for B2B outreach">
+            <p style={paragraph}>
+              We research businesses and buildings to help our clients find
+              companies that may need their services, and to find clients for
+              Simpl. Our sources are public records (such as inspection, permit,
+              licensing and government filings), company websites, news, and
+              business data services.
+            </p>
+            <p style={paragraph}>
+              From these sources we keep business contact details: name, job
+              title, company, business address, work email and work phone. We
+              do not keep personal email addresses, and we do not collect
+              sensitive details, such as health information, about people for
+              outreach.
+            </p>
+            <p style={paragraph}>
+              We or our clients may contact you by email or phone about services
+              that fit your business. Every marketing email from us includes a
+              way to opt out. To stop contact from Simpl, reply to any email or
+              write to <Mail />. We will not contact you again, and we pass your
+              request to the client the outreach was for.
+            </p>
+          </Section>
+
+          <Section title="6. How we use information">
+            <ul style={list}>
+              <Item>Run scans and send the reports you ask for.</Item>
+              <Item>Answer your requests and follow up on a call you booked.</Item>
+              <Item>Provide, secure and fix the client portals and the phone line.</Item>
+              <Item>Research businesses for our clients and for our own outreach.</Item>
+              <Item>Text you about your request, only if you checked an optional text box.</Item>
+              <Item>Improve the accuracy and speed of our tools.</Item>
+              <Item>Meet legal duties and protect our services and users.</Item>
+            </ul>
+          </Section>
+
+          <Section id="sms" title="7. Text messages (SMS)">
+            <p style={paragraph}>
+              Some of our forms may offer an optional, unchecked box to get text
+              messages about your request (for example, confirming a call time).
+              Checking it is never required to work with us or to get anything on
+              this site.
+            </p>
+            <ul style={list}>
+              <Item>Messages are about your request only. Message frequency varies.</Item>
+              <Item>Msg &amp; data rates may apply.</Item>
+              <Item>
+                Reply STOP to opt out at any time. Reply HELP for help, or email{" "}
+                <Mail />.
+              </Item>
+              <Item>Carriers are not liable for delayed or undelivered messages.</Item>
+              <Item>
+                No mobile information will be shared with third parties or
+                affiliates for marketing or promotional purposes.
+              </Item>
             </ul>
             <p style={paragraph}>
               <strong style={{ color: "var(--fg)" }}>
-                California residents (CCPA):
+                Text messaging opt-in data and consent are never shared with any
+                third party.
               </strong>{" "}
-              Under the California Consumer Privacy Act, you have the right to
-              request disclosure of what personal information we collect, the
-              right to request deletion, and the right to opt out of the sale
-              of personal information. We do not sell personal information. To
-              exercise these rights, contact us at{" "}
-              <a
-                href="mailto:team@simpl.pro"
-                style={{
-                  color: "var(--accent)",
-                  textDecoration: "none",
-                  borderBottom: "1px solid var(--accent)",
-                }}
-              >
-                team@simpl.pro
-              </a>
-              .
+              The only companies that handle your number are the service
+              providers that deliver our messages for us.
             </p>
-          </div>
+          </Section>
 
-          {/* 7. Children's Privacy */}
-          <div style={sectionBlock}>
-            <h2 style={sectionHeading}>7. Children&apos;s Privacy</h2>
+          <Section title="8. Who helps us handle information">
             <p style={paragraph}>
-              Simpl is not directed at children under the age of 13. We do not
-              knowingly collect personal information from children under 13. If
-              we become aware that we have collected personal information from a
-              child under 13, we will take steps to delete that information
-              promptly. If you believe a child under 13 has provided us with
-              personal information, please contact us at{" "}
-              <a
-                href="mailto:team@simpl.pro"
-                style={{
-                  color: "var(--accent)",
-                  textDecoration: "none",
-                  borderBottom: "1px solid var(--accent)",
-                }}
-              >
-                team@simpl.pro
-              </a>
-              .
+              We use these service providers. Each handles information only to do
+              its job for us:
             </p>
-          </div>
-
-          {/* 8. Changes to This Policy */}
-          <div style={sectionBlock}>
-            <h2 style={sectionHeading}>8. Changes to This Policy</h2>
+            <ul style={list}>
+              <Item label="Google Cloud and Google Workspace.">
+                Hosting for our scan engine and client portals, file storage, and
+                our business email.
+              </Item>
+              <Item label="Neon.">Database hosting.</Item>
+              <Item label="Vercel.">Website hosting, analytics and speed monitoring.</Item>
+              <Item label="Cloudflare.">Domain name (DNS) service for simpl.pro and the portals.</Item>
+              <Item label="GoHighLevel.">
+                Our CRM and calendar. It stores the contact details and requests
+                you send us and your call bookings, and delivers our text
+                messages.
+              </Item>
+              <Item label="Resend.">Email delivery for reports, form replies and portal emails.</Item>
+              <Item label="Retell AI.">
+                Runs the support phone line, including call recordings and
+                transcripts.
+              </Item>
+              <Item label="ElevenLabs.">Provides the phone assistant&apos;s voice, through Retell.</Item>
+              <Item label="Anthropic and Google (Gemini).">
+                Process text inside our research, portal and content tools, such
+                as summarizing public records.
+              </Item>
+              <Item label="DataForSEO.">
+                Search ranking data for scans. It receives business names and
+                search terms, not your contact details.
+              </Item>
+              <Item label="ScrapingBee.">
+                Fetches public web pages during scans. It receives the address
+                being scanned, not your email.
+              </Item>
+              <Item label="Google Maps Platform and Mapbox.">
+                Business listing data for scans, and maps inside the portals.
+              </Item>
+              <Item label="Discord.">
+                Our internal team chat, where we receive ticket and request
+                alerts. Health details are kept out of it.
+              </Item>
+            </ul>
             <p style={paragraph}>
-              We may update this Privacy Policy from time to time. When we do,
-              we will update the &quot;Last updated&quot; date at the top of this
-              page. We encourage you to review this policy periodically. Your
-              continued use of Simpl after any changes indicates your acceptance
-              of the updated policy.
+              We also share information when the law requires it, to protect
+              people&apos;s safety or our rights, or as part of a sale or merger
+              of our business, in which case this policy continues to apply.
             </p>
-          </div>
+          </Section>
 
-          {/* 9. Contact */}
+          <Section title="9. How long we keep information">
+            <ul style={list}>
+              <Item label="Scan results.">Kept to show scan history, unless you ask us to delete them.</Item>
+              <Item label="Form submissions and leads.">
+                Kept as long as needed to answer you and for our business
+                records, unless you ask us to delete them.
+              </Item>
+              <Item label="Portal accounts and client data.">
+                Kept while the client agreement is active. When it ends, the
+                client gets an export of its data within 30 days, and then we
+                delete it.
+              </Item>
+              <Item label="Call recordings and transcripts.">
+                Kept as long as needed to resolve the ticket, review quality and
+                serve the client, then deleted. The client may keep its own copy
+                under its own policy.
+              </Item>
+              <Item label="Business contact data.">
+                Kept while it is useful for the outreach it was collected for. If
+                you opt out, we keep only what is needed to make sure you are not
+                contacted again.
+              </Item>
+            </ul>
+            <p style={paragraph}>
+              Backups may hold copies for a limited time after deletion.
+            </p>
+          </Section>
+
+          <Section title="10. How we protect information">
+            <p style={paragraph}>
+              Connections to our website, portals and databases are encrypted.
+              Portal passwords are stored as one-way hashes. Access to client
+              data is limited to the people doing the work, and passwords and
+              keys are kept out of our code. If a breach affects a client&apos;s
+              data, we tell that client within 72 hours, and we notify affected
+              people as the law requires.
+            </p>
+            <p style={paragraph}>
+              No system is perfectly secure. We work to protect your information
+              but cannot guarantee absolute security.
+            </p>
+          </Section>
+
+          <Section title="11. Your rights and choices">
+            <p style={paragraph}>Wherever you live, you can ask us to:</p>
+            <ul style={list}>
+              <Item label="Know and access.">
+                Tell you what personal information we have about you and give
+                you a copy.
+              </Item>
+              <Item label="Correct.">Fix information that is wrong.</Item>
+              <Item label="Delete.">Delete your personal information, unless the law requires us to keep it.</Item>
+              <Item label="Opt out.">
+                Stop marketing emails, calls or texts. We do not sell or share
+                personal information for advertising, so there is no sale to opt
+                out of.
+              </Item>
+            </ul>
+            <p style={paragraph}>
+              <strong style={{ color: "var(--fg)" }}>California residents (CCPA):</strong>{" "}
+              You have the right to know, delete and correct your personal
+              information, and to opt out of its sale or sharing. We do not sell
+              or share personal information. We will not treat you differently
+              for using any of these rights.
+            </p>
+            <p style={paragraph}>
+              To make a request, email <Mail /> with the subject &quot;Privacy
+              request.&quot; Someone you authorize can also make a request for
+              you. We confirm the request comes from you, usually by replying to
+              the email address we have on file, and we answer within 30 days. If
+              the information is held for one of our clients, we send your
+              request to that client and help it respond.
+            </p>
+          </Section>
+
+          <Section title="12. Children">
+            <p style={paragraph}>
+              Simpl is a business service and is not meant for children under 13.
+              We do not knowingly collect information from children under 13. If
+              you believe a child has given us information, email <Mail /> and we
+              will delete it.
+            </p>
+          </Section>
+
+          <Section title="13. Changes to this policy">
+            <p style={paragraph}>
+              When we update this policy, we change the effective date at the top
+              of this page. For important changes, we also tell client portal
+              users by email or in the portal.
+            </p>
+          </Section>
+
           <div style={{ marginBottom: 0 }}>
-            <h2 style={sectionHeading}>9. Contact</h2>
+            <h2 style={sectionHeading}>14. Contact</h2>
             <p style={paragraph}>
-              If you have questions about this Privacy Policy or want to
-              exercise your data rights, contact us at:
+              Questions about this policy, or a privacy request:
             </p>
             <div
               style={{
@@ -463,34 +588,15 @@ export default function PrivacyPage() {
                 <strong>Simpl</strong>
               </div>
               <div style={{ color: "var(--muted)" }}>
-                Email:{" "}
-                <a
-                  href="mailto:team@simpl.pro"
-                  style={{
-                    color: "var(--accent)",
-                    textDecoration: "none",
-                    borderBottom: "1px solid var(--accent)",
-                  }}
-                >
-                  team@simpl.pro
-                </a>
+                Email: <Mail />
               </div>
               <div style={{ color: "var(--muted)" }}>
-                Website:{" "}
-                <a
-                  href="https://www.simpl.pro"
-                  style={{
-                    color: "var(--accent)",
-                    textDecoration: "none",
-                    borderBottom: "1px solid var(--accent)",
-                  }}
-                >
-                  simpl.pro
+                Phone:{" "}
+                <a href="tel:+19194289452" style={linkStyle}>
+                  (919) 428-9452
                 </a>
               </div>
-              <div style={{ color: "var(--muted)" }}>
-                Location: United States
-              </div>
+              <div style={{ color: "var(--muted)" }}>Location: Wilmington, North Carolina</div>
             </div>
           </div>
         </section>
