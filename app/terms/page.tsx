@@ -157,7 +157,7 @@ export default function TermsPage() {
           <div style={sectionBlock}>
             <h2 style={sectionHeading}>1. Acceptance of Terms</h2>
             <p style={paragraph}>
-              By accessing or using Simpl, run by Simpl Systems LLC
+              By accessing or using Simpl
               (&quot;Simpl,&quot; &quot;we,&quot; &quot;us,&quot; or
               &quot;our&quot;), at simpl.pro or in any Simpl client portal, you
               agree to be bound by these Terms of Service. If you do not agree to these terms, do not use
@@ -567,7 +567,7 @@ export default function TermsPage() {
               }}
             >
               <div style={{ marginBottom: 4 }}>
-                <strong>Simpl Systems LLC</strong>
+                <strong>Simpl</strong>
               </div>
               <div style={{ color: "var(--muted)" }}>
                 Email:{" "}

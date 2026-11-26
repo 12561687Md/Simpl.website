@@ -196,7 +196,7 @@ export default function PrivacyPage() {
         >
           <div style={sectionBlock}>
             <p style={paragraph}>
-              Simpl Systems LLC (&quot;Simpl,&quot; &quot;we,&quot; &quot;us&quot;)
+              Simpl (&quot;Simpl,&quot; &quot;we,&quot; &quot;us&quot;)
               runs the website at simpl.pro, the free website scan, private
               client portals, and the research and support services we provide
               to our business clients. This policy explains what we collect, why
@@ -585,7 +585,7 @@ export default function PrivacyPage() {
               }}
             >
               <div style={{ marginBottom: 4 }}>
-                <strong>Simpl Systems LLC</strong>
+                <strong>Simpl</strong>
               </div>
               <div style={{ color: "var(--muted)" }}>
                 Email: <Mail />
